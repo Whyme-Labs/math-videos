@@ -6,6 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { useStrings } from "../i18n";
 import { BrandMark, BrandWordmark } from "../components/Brand";
 import { fadeIn, fadeOut, riseIn } from "../components/anim";
 import { Sfx } from "../components/Sfx";
@@ -15,6 +16,7 @@ import { alpha, colors } from "../theme";
 // Whyme Labs sting: the mark blooms out of a lemon glow, then the wordmark rises.
 export const BrandIntro: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps, durationInFrames } = useVideoConfig();
   const out = fadeOut(frame, durationInFrames - 20, 20);
 
@@ -76,7 +78,7 @@ export const BrandIntro: React.FC = () => {
             opacity: fadeIn(frame, 1.5 * fps),
           }}
         >
-          presents
+          {tx.presents}
         </div>
       </AbsoluteFill>
     </SceneShell>

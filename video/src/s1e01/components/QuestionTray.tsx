@@ -1,15 +1,16 @@
 import type React from "react";
 import { useCurrentFrame } from "remotion";
+import { useStrings } from "../i18n";
 import { alpha, colors, fonts } from "../theme";
 import { fadeIn } from "./anim";
 
 // The season-long "open questions" tray (top-right), introduced in the cold open.
-export const QUESTIONS = ["0.999… = 1 ?", "√2 a number?", "more fractions?"];
 
 export const QuestionTray: React.FC<{
   readonly style?: React.CSSProperties;
 }> = ({ style }) => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const pulse = 0.75 + 0.25 * Math.sin(frame / 12);
   return (
     <div
@@ -23,7 +24,7 @@ export const QuestionTray: React.FC<{
         ...style,
       }}
     >
-      {QUESTIONS.map((q) => (
+      {tx.tray.map((q) => (
         <div
           key={q}
           style={{

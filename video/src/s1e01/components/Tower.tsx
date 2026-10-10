@@ -1,5 +1,6 @@
 import type React from "react";
 import { alpha, colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 export type Floor = {
   readonly symbol: string;
@@ -27,6 +28,7 @@ export const Tower: React.FC<{
   readonly question: number[];
   readonly style?: React.CSSProperties;
 }> = ({ appear, built, question, style }) => {
+  const tx = useStrings();
   return (
     <div
       style={{
@@ -69,7 +71,7 @@ export const Tower: React.FC<{
               {floor.symbol}
             </span>
             <span style={{ fontSize: 34, color: colors.muted }}>
-              {floor.name}
+              {tx.floors[i]}
             </span>
             <span
               style={{

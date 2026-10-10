@@ -1,5 +1,6 @@
 import type React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { useStrings } from "../i18n";
 import { fadeIn, riseIn } from "../components/anim";
 import { BrandMark, BrandWordmark } from "../components/Brand";
 import { PLUCKS, Sfx } from "../components/Sfx";
@@ -11,6 +12,7 @@ const CHAIN = ["0", "S(0)", "S(S(0))", "S(S(S(0)))"];
 
 export const EndCard: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const cues = useCues("endCard");
   const spin = interpolate(frame, [0, 120], [0, 360]);
 
@@ -37,7 +39,7 @@ export const EndCard: React.FC = () => {
           <div
             style={{ fontFamily: fonts.title, fontSize: 150, fontWeight: 700 }}
           >
-            next
+            {tx.nextWord}
           </div>
           <svg
             width={130}
@@ -94,8 +96,8 @@ export const EndCard: React.FC = () => {
             opacity: fadeIn(frame, cues[1] + 140),
           }}
         >
-          Next episode ·{" "}
-          <span style={{ color: colors.text }}>Peano: Zero and “Next”</span>
+          {tx.nextEpisode}
+          <span style={{ color: colors.text }}>{tx.nextTitle}</span>
         </div>
         <div
           style={{
@@ -117,7 +119,7 @@ export const EndCard: React.FC = () => {
                 textTransform: "uppercase",
               }}
             >
-              What Is a Number? · Season 1
+              {tx.seriesLine}
             </span>
           </div>
         </div>

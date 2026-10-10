@@ -10,22 +10,11 @@ import { QuestionTray } from "../components/QuestionTray";
 import { PLUCKS, Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
-// Each attempt is typed into the dictionary, acted out on the right, then struck out.
-const ATTEMPTS = [
-  "the symbol 3",
-  "what all trios share",
-  "a point on the number line",
-  "2 + 1",
-];
-const LATER = [
-  "a name, not the number",
-  "Frege & Russell → E14",
-  "the real line → E08",
-  "zero and “next” → E02",
-];
+// Each attempt (tx.attempts) is typed into the dictionary, acted out on the right, then struck out.
 const STAGE_X = 900;
 const STAGE_W = 900;
 
@@ -50,6 +39,7 @@ const Finger: React.FC<{
 
 export const DefineThree: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("defineThree");
   const fingerAt = [10, 24, 38];
@@ -87,7 +77,7 @@ export const DefineThree: React.FC = () => {
         <Sfx key={f} name={PLUCKS[i + 2]} at={f} />
       ))}
       <Sfx name="page" at={cues[1]} />
-      {ATTEMPTS.map((a, k) => (
+      {tx.attempts.map((a, k) => (
         <Sfx key={a} name="scratch" at={strikeAt(k)} />
       ))}
       {[1, 2, 3, 4].map((g) => (
@@ -179,7 +169,7 @@ export const DefineThree: React.FC = () => {
         }}
       >
         <div style={{ fontSize: 64, fontWeight: 600 }}>
-          three{" "}
+          {tx.headword}{" "}
           <span
             style={{
               fontSize: 38,
@@ -187,10 +177,10 @@ export const DefineThree: React.FC = () => {
               color: colors.brandPurple,
             }}
           >
-            (n.)
+            {tx.pos}
           </span>
         </div>
-        {ATTEMPTS.map((a, k) => {
+        {tx.attempts.map((a, k) => {
           const start = cues[2 + k] + 2;
           if (frame < start) return null;
           const text = typed(a, frame, start, fps, 24);
@@ -280,7 +270,7 @@ export const DefineThree: React.FC = () => {
             ))}
           </div>
           <div style={{ fontSize: 34, color: colors.muted, marginTop: 24 }}>
-            the symbol changes · the amount doesn’t
+            {tx.symbolNote}
           </div>
         </div>
       </AbsoluteFill>
@@ -367,7 +357,7 @@ export const DefineThree: React.FC = () => {
             textAnchor="middle"
             opacity={ramp(frame, cues[3] + 60, 10)}
           >
-            to spot a trio, you already need 3
+            {tx.trioNote}
           </text>
         </svg>
       </AbsoluteFill>
@@ -428,7 +418,7 @@ export const DefineThree: React.FC = () => {
             fontFamily={fonts.title}
             opacity={lineGone}
           >
-            where did the line come from?
+            {tx.lineQuestion}
           </text>
         </svg>
       </AbsoluteFill>
@@ -456,7 +446,7 @@ export const DefineThree: React.FC = () => {
 
       {/* Verdict: each idea comes back later, done properly. */}
       <AbsoluteFill style={{ opacity: ramp(frame, cues[6] - 4, 10) }}>
-        {LATER.map((l, i) => (
+        {tx.later.map((l, i) => (
           <div
             key={l}
             style={{

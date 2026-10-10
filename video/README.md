@@ -9,9 +9,29 @@ and written up in [`../lessons`](../lessons), built with
 | Composition | Episode | Source | Script |
 |---|---|---|---|
 | `S1E01` | What Do We Mean by “Number”? | [`src/s1e01`](src/s1e01) | [`s1e01-narration.md`](s1e01-narration.md) |
+| `S1E01-ZH` | 数是什么？（中文版） | [`src/s1e01`](src/s1e01) | [`s1e01-narration-zh.md`](s1e01-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
+
+## Languages
+
+The same scenes render in English (`S1E01`) and Simplified Chinese
+(`S1E01-ZH`). Each composition passes a `locale` down through
+`LocaleProvider` (`i18n.tsx`):
+
+- **`narration.ts`** holds the captions for both languages. Each language
+  gets its own beat-snapped timeline and music plan. Chinese captions are
+  timed at about 7 characters per second.
+- **`i18n.tsx`** holds every on-screen label for both languages. Scenes
+  read them with `useStrings()`.
+- **Fonts:** Chinese characters fall back to Noto Sans SC and Noto Serif SC
+  behind the Latin fonts. Only the font chunks the Chinese text needs are
+  bundled (`public/fonts/zh`). Run `scripts/zh-fonts.py` after editing
+  Chinese text.
+
+To add a language, add its narration to `NARRATION`, its strings to
+`STRINGS`, a composition in `Root.tsx`, and fonts if its script needs them.
 
 ## How an episode is put together
 

@@ -11,6 +11,7 @@ import { QuestionTray } from "../components/QuestionTray";
 import { Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { alpha, colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 // One pile of 45 dots, regrouped four ways. The pile never changes; only the
 // grouping (and so the name) does.
@@ -95,10 +96,9 @@ const pile: P[] = Array.from({ length: N }, (_, i) => {
   return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
 });
 
-const NAMES = ["45", "101101₂", "63₇", "XLV", "forty-five"];
-
 export const Numerals: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("numerals");
   // When each grouping starts (scene frames).
@@ -159,7 +159,7 @@ export const Numerals: React.FC = () => {
                 fontSize={30}
                 textAnchor="middle"
               >
-                4 tens
+                {tx.fourTens}
               </text>
               <text
                 x={CX + 60}
@@ -168,7 +168,7 @@ export const Numerals: React.FC = () => {
                 fontSize={30}
                 textAnchor="middle"
               >
-                5 ones
+                {tx.fiveOnes}
               </text>
             </g>
             <g opacity={inStage(2)}>
@@ -217,7 +217,7 @@ export const Numerals: React.FC = () => {
                 fontSize={30}
                 textAnchor="middle"
               >
-                6 sevens
+                {tx.sixSevens}
               </text>
               <text
                 x={CX + 330}
@@ -226,7 +226,7 @@ export const Numerals: React.FC = () => {
                 fontSize={30}
                 textAnchor="middle"
               >
-                3 ones
+                {tx.threeOnes}
               </text>
             </g>
             <g opacity={inStage(4)}>
@@ -296,7 +296,7 @@ export const Numerals: React.FC = () => {
               );
             })}
             {/* Final: every name points at the same pile. */}
-            {NAMES.map((name, k) => {
+            {tx.names.map((name, k) => {
               const t = springIn(frame, at[5] + 16 + k * 5, fps, 12);
               const a = (-90 + k * 72) * (Math.PI / 180);
               const x = CX + 330 * Math.cos(a) * t;
@@ -352,7 +352,7 @@ export const Numerals: React.FC = () => {
                 scale: pulse(s),
               }}
             >
-              {NAMES[s - 1]}
+              {tx.names[s - 1]}
             </div>
           ))}
         </AbsoluteFill>

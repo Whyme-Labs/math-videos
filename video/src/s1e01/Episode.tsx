@@ -10,7 +10,9 @@ import {
   sceneOrder,
   sceneStartFrame,
   TRANSITION_FRAMES,
+  type Locale,
 } from "./narration";
+import { LocaleProvider } from "./i18n";
 import { BrandIntro } from "./scenes/BrandIntro";
 import { BuildDescribe } from "./scenes/BuildDescribe";
 import { ColdOpen } from "./scenes/ColdOpen";
@@ -26,19 +28,19 @@ import { WhyHard } from "./scenes/WhyHard";
 
 // S1E01 "What Do We Mean by 'Number'?". Scene lengths come from the narration
 // (narration.ts), so the script and the picture stay in sync.
-export const Episode: React.FC = () => {
+export const Episode: React.FC<{ readonly locale: Locale }> = ({ locale }) => {
   const { fps } = useVideoConfig();
   return (
-    <>
-      <Music segments={musicSegments} />
+    <LocaleProvider locale={locale}>
+      <Music segments={musicSegments(locale)} />
       {/* A soft whoosh under every crossfade between scenes. */}
       {sceneOrder.slice(1).map((id) => (
-        <Sfx key={id} name="whoosh" at={sceneStartFrame(id) - 2} />
+        <Sfx key={id} name="whoosh" at={sceneStartFrame(id, locale) - 2} />
       ))}
       <TransitionSeries>
         <TransitionSeries.Sequence
           name="Whyme Labs intro"
-          durationInFrames={sceneDuration("brand")}
+          durationInFrames={sceneDuration("brand", locale)}
           premountFor={fps}
         >
           <BrandIntro />
@@ -49,7 +51,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Title"
-          durationInFrames={sceneDuration("title")}
+          durationInFrames={sceneDuration("title", locale)}
           premountFor={fps}
         >
           <TitleCard />
@@ -60,7 +62,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Cold open"
-          durationInFrames={sceneDuration("coldOpen")}
+          durationInFrames={sceneDuration("coldOpen", locale)}
           premountFor={fps}
         >
           <ColdOpen />
@@ -71,7 +73,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Defining three"
-          durationInFrames={sceneDuration("defineThree")}
+          durationInFrames={sceneDuration("defineThree", locale)}
           premountFor={fps}
         >
           <DefineThree />
@@ -82,7 +84,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Numerals are names"
-          durationInFrames={sceneDuration("numerals")}
+          durationInFrames={sceneDuration("numerals", locale)}
           premountFor={fps}
         >
           <Numerals />
@@ -93,7 +95,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Division ladder"
-          durationInFrames={sceneDuration("ladder")}
+          durationInFrames={sceneDuration("ladder", locale)}
           premountFor={fps}
         >
           <Ladder />
@@ -104,7 +106,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Why the questions are hard"
-          durationInFrames={sceneDuration("whyHard")}
+          durationInFrames={sceneDuration("whyHard", locale)}
           premountFor={fps}
         >
           <WhyHard />
@@ -115,7 +117,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Cups and saucers"
-          durationInFrames={sceneDuration("matching")}
+          durationInFrames={sceneDuration("matching", locale)}
           premountFor={fps}
         >
           <Matching />
@@ -126,7 +128,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Number tower"
-          durationInFrames={sceneDuration("tower")}
+          durationInFrames={sceneDuration("tower", locale)}
           premountFor={fps}
         >
           <TowerScene />
@@ -137,7 +139,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Build or describe"
-          durationInFrames={sceneDuration("buildDescribe")}
+          durationInFrames={sceneDuration("buildDescribe", locale)}
           premountFor={fps}
         >
           <BuildDescribe />
@@ -148,7 +150,7 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="Roadmap"
-          durationInFrames={sceneDuration("roadmap")}
+          durationInFrames={sceneDuration("roadmap", locale)}
           premountFor={fps}
         >
           <Roadmap />
@@ -159,12 +161,12 @@ export const Episode: React.FC = () => {
         />
         <TransitionSeries.Sequence
           name="End card"
-          durationInFrames={sceneDuration("endCard")}
+          durationInFrames={sceneDuration("endCard", locale)}
           premountFor={fps}
         >
           <EndCard />
         </TransitionSeries.Sequence>
       </TransitionSeries>
-    </>
+    </LocaleProvider>
   );
 };

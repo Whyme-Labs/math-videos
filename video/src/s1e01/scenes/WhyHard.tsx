@@ -7,10 +7,11 @@ import {
 } from "remotion";
 import { glide, ramp, springIn } from "../components/motion";
 import { NumberLine, type Point, type Tick } from "../components/NumberLine";
-import { QuestionTray, QUESTIONS } from "../components/QuestionTray";
+import { QuestionTray } from "../components/QuestionTray";
 import { PLUCKS, Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { alpha, colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const LINE_W = 1500;
@@ -58,6 +59,7 @@ const ticksIn = (
 
 export const WhyHard: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("whyHard");
   const phaseA = interpolate(
@@ -222,7 +224,7 @@ export const WhyHard: React.FC = () => {
         }}
       >
         <div style={{ display: "flex", gap: 40 }}>
-          {QUESTIONS.map((q, i) => (
+          {tx.tray.map((q, i) => (
             <div
               key={q}
               style={{
@@ -248,7 +250,7 @@ export const WhyHard: React.FC = () => {
             opacity: ramp(frame, 30, 12),
           }}
         >
-          each one needs a definition
+          {tx.needsDefinition}
         </div>
       </AbsoluteFill>
 
@@ -359,7 +361,7 @@ export const WhyHard: React.FC = () => {
             fontFamily={fonts.math}
             opacity={ramp(frame, cues[2] + 50, 10)}
           >
-            + ⋯ forever?
+            {tx.forever}
           </text>
         </svg>
         {/* The zoom: every step is 10× closer, and the gap looks the same. */}
@@ -391,7 +393,7 @@ export const WhyHard: React.FC = () => {
             opacity: ramp(frame, zoomStart, 10),
           }}
         >
-          zoom ×{Math.round(10 ** z).toLocaleString()} · gap to 1 ={" "}
+          {tx.zoom(Math.round(10 ** z).toLocaleString(), "")[0]}
           <span style={{ color: colors.orange }}>
             {(1 - latest).toFixed(nines)}
           </span>
@@ -403,7 +405,7 @@ export const WhyHard: React.FC = () => {
             scale: springIn(frame, cues[3] + 130, fps, 11),
           }}
         >
-          the right tool: limits → E09
+          {tx.limitsTag}
         </Tag>
       </AbsoluteFill>
 
@@ -419,7 +421,9 @@ export const WhyHard: React.FC = () => {
             fontSize: 64,
           }}
         >
-          Is √2 a <span style={{ color: colors.highlight }}>number</span>?
+          {tx.sqrtTitle[0]}
+          <span style={{ color: colors.highlight }}>{tx.sqrtTitle[1]}</span>
+          {tx.sqrtTitle[2]}
         </div>
         <svg
           width={1920}
@@ -516,7 +520,7 @@ export const WhyHard: React.FC = () => {
             scale: springIn(frame, b0 + 280, fps, 11),
           }}
         >
-          no fraction lands on it → E07, E08
+          {tx.sqrtTag}
         </Tag>
       </AbsoluteFill>
 
@@ -532,8 +536,9 @@ export const WhyHard: React.FC = () => {
             fontSize: 64,
           }}
         >
-          More <span style={{ color: colors.highlight }}>fractions</span> than
-          whole numbers?
+          {tx.fracTitle[0]}
+          <span style={{ color: colors.highlight }}>{tx.fracTitle[1]}</span>
+          {tx.fracTitle[2]}
         </div>
         <svg
           width={1920}
@@ -565,7 +570,7 @@ export const WhyHard: React.FC = () => {
             fontSize={30}
             textAnchor="end"
           >
-            whole numbers →
+            {tx.wholeArrow}
           </text>
         </svg>
         <div style={{ position: "absolute", left: LINE_X, top: 470 }}>
@@ -592,7 +597,7 @@ export const WhyHard: React.FC = () => {
             opacity: ramp(frame, c0 + 40, 10),
           }}
         >
-          fractions between 0 and 1 alone: endless
+          {tx.fracEndless}
         </div>
         <Tag
           style={{
@@ -601,7 +606,7 @@ export const WhyHard: React.FC = () => {
             scale: springIn(frame, c0 + 100, fps, 11),
           }}
         >
-          define “same size” → E11
+          {tx.sameSizeTag}
         </Tag>
       </AbsoluteFill>
     </SceneShell>

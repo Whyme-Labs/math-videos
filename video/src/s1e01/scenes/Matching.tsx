@@ -11,6 +11,7 @@ import { PLUCKS, Sfx } from "../components/Sfx";
 import { springIn } from "../components/motion";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 const N = 6;
 const SPACING = 200;
@@ -37,9 +38,10 @@ const Saucer: React.FC = () => (
 
 export const Matching: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("matching");
-  const words = ["one", "two", "three", "four", "five", "six"];
+  const words = tx.numberWords;
 
   return (
     <SceneShell id="matching">
@@ -69,8 +71,9 @@ export const Matching: React.FC = () => {
             opacity: fadeIn(frame, 0),
           }}
         >
-          Same number,{" "}
-          <span style={{ color: colors.highlight }}>without counting</span>?
+          {tx.matchTitle[0]}
+          <span style={{ color: colors.highlight }}>{tx.matchTitle[1]}</span>
+          {tx.matchTitle[2]}
         </div>
         {Array.from({ length: N }).map((_, i) => {
           // Cup i drops onto saucer i, one after another.
@@ -127,7 +130,7 @@ export const Matching: React.FC = () => {
             opacity: fadeIn(frame, cues[1] + N * 14 + 25),
           }}
         >
-          ✓ nothing left over: equally many
+          {tx.matched}
         </div>
         <div
           style={{
@@ -140,7 +143,7 @@ export const Matching: React.FC = () => {
             opacity: fadeIn(frame, cues[2] + 110),
           }}
         >
-          counting = matching with number words · ↪ E11, E14
+          {tx.countingNote}
         </div>
       </AbsoluteFill>
     </SceneShell>

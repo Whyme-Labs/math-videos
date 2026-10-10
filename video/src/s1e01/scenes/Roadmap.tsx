@@ -6,20 +6,11 @@ import { PLUCKS, Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { FLOORS, Tower } from "../components/Tower";
 import { colors } from "../theme";
-
-const STEPS = [
-  { title: "Count", detail: "zero and “next”", eps: "E02" },
-  { title: "Calculate", detail: "+ and × from scratch", eps: "E03" },
-  { title: "Ground", detail: "numbers from sets", eps: "E04" },
-  {
-    title: "Repair",
-    detail: "one master tool, floor by floor",
-    eps: "E05–E10",
-  },
-];
+import { useStrings } from "../i18n";
 
 export const Roadmap: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const cues = useCues("roadmap");
   // ℕ is built by E02–E04; ℤ, ℚ, ℝ, ℂ light up during the "repair" line.
   const built = [
@@ -36,7 +27,7 @@ export const Roadmap: React.FC = () => {
 
   return (
     <SceneShell id="roadmap">
-      {STEPS.map((s, i) => (
+      {tx.steps.map((s, i) => (
         <Sfx key={s.title} name="tick" at={cues[i]} />
       ))}
       <Sfx name="pluck2" at={cues[2] + 20} />
@@ -62,10 +53,12 @@ export const Roadmap: React.FC = () => {
             width: 900,
           }}
         >
-          {STEPS.map((s, i) => {
+          {tx.steps.map((s, i) => {
             const active =
               frame >= cues[i] &&
-              (i === STEPS.length - 1 ? frame < cues[4] : frame < cues[i + 1]);
+              (i === tx.steps.length - 1
+                ? frame < cues[4]
+                : frame < cues[i + 1]);
             return (
               <div
                 key={s.title}

@@ -11,6 +11,7 @@ import { Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { FLOORS, Tower } from "../components/Tower";
 import { colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
@@ -70,6 +71,7 @@ const Check: React.FC<{ x: number; y: number; ok: boolean; s: number }> = ({
 
 export const TowerScene: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("tower");
   const drop = FLOORS.map((_, i) => springIn(frame, 8 + i * 9, fps, 11, 140));
@@ -206,9 +208,11 @@ export const TowerScene: React.FC = () => {
             ),
           }}
         >
-          each floor fixes an equation
+          {tx.towerIntro[0]}
           <br />
-          the floor below <span style={{ color: colors.red }}>can’t solve</span>
+          {tx.towerIntro[1]}
+          <span style={{ color: colors.red }}>{tx.towerIntro[2]}</span>
+          {tx.towerIntro[3]}
         </div>
 
         {/* Demo 1: x + 5 = 3 in ℕ, then in ℤ. */}
@@ -279,7 +283,7 @@ export const TowerScene: React.FC = () => {
               fontSize={30}
               textAnchor="middle"
             >
-              target
+              {tx.target}
             </text>
             <g opacity={1 - fix1}>
               <Arrow
@@ -298,7 +302,7 @@ export const TowerScene: React.FC = () => {
               textAnchor="middle"
               opacity={tryZero * (1 - fix1)}
             >
-              smallest x = 0 already overshoots
+              {tx.overshoot}
             </text>
             <Arrow
               x0={X(d1, -2)}
@@ -332,7 +336,7 @@ export const TowerScene: React.FC = () => {
               textAnchor="middle"
               opacity={Math.min(1, negs(1))}
             >
-              ℤ adds the negatives
+              {tx.zAdds}
             </text>
           </svg>
         </AbsoluteFill>
@@ -442,7 +446,7 @@ export const TowerScene: React.FC = () => {
               textAnchor="middle"
               opacity={halves(0)}
             >
-              ℚ fills in the fractions
+              {tx.qFills}
             </text>
           </svg>
         </AbsoluteFill>
@@ -509,7 +513,7 @@ export const TowerScene: React.FC = () => {
               textAnchor="middle"
               fontFamily={fonts.math}
             >
-              {fill3 > 0.9 ? "√2" : "hole"}
+              {fill3 > 0.9 ? "√2" : tx.hole}
             </text>
             <g
               transform={`translate(${X(d3, sweep)} ${LY - 120})`}
@@ -534,7 +538,7 @@ export const TowerScene: React.FC = () => {
               textAnchor="middle"
               opacity={ramp(frame, c + 60, 10) * (1 - fill3)}
             >
-              fractions everywhere, but none squares to 2
+              {tx.noneSquares}
             </text>
             <text
               x={SX + SW / 2}
@@ -544,7 +548,7 @@ export const TowerScene: React.FC = () => {
               textAnchor="middle"
               opacity={fill3}
             >
-              ℝ fills every hole
+              {tx.rFills}
             </text>
           </svg>
         </AbsoluteFill>
@@ -607,7 +611,7 @@ export const TowerScene: React.FC = () => {
                 fontSize={34}
                 textAnchor="middle"
               >
-                x² never goes below 0
+                {tx.neverNegative}
               </text>
             </g>
             {/* The plane: a vertical axis, and multiplying by i turns 1 a quarter turn to i. */}
@@ -663,7 +667,7 @@ export const TowerScene: React.FC = () => {
                 textAnchor="middle"
                 opacity={rot}
               >
-                ℂ adds a second direction
+                {tx.cAdds}
               </text>
             </g>
           </svg>
@@ -689,7 +693,7 @@ export const TowerScene: React.FC = () => {
           <div
             style={{ fontFamily: fonts.title, fontSize: 48, fontWeight: 700 }}
           >
-            What did we lose?
+            {tx.ledger}
           </div>
           {[0, 1, 2, 3].map((i) => (
             <div

@@ -1,5 +1,6 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { useStrings } from "../i18n";
 import { fadeIn, riseIn } from "../components/anim";
 import { BrandMark } from "../components/Brand";
 import { Sfx } from "../components/Sfx";
@@ -9,6 +10,7 @@ import { colors, fonts } from "../theme";
 
 export const TitleCard: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   return (
     <SceneShell id="title" showCaptions={false} showWatermark={false}>
@@ -31,7 +33,7 @@ export const TitleCard: React.FC = () => {
             translate: riseIn(frame, 5),
           }}
         >
-          Season 1 · Episode 1
+          {tx.season}
         </div>
         <div
           style={{
@@ -43,7 +45,7 @@ export const TitleCard: React.FC = () => {
             translate: riseIn(frame, 15),
           }}
         >
-          What Is a Number?
+          {tx.title}
         </div>
         <div
           style={{
@@ -54,7 +56,7 @@ export const TitleCard: React.FC = () => {
             translate: riseIn(frame, 35),
           }}
         >
-          What do we mean by “number”?
+          {tx.subtitle}
         </div>
       </AbsoluteFill>
       {/* ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ ⊂ ℂ as rings, each holding the one before. */}

@@ -10,6 +10,7 @@ import { QuestionTray } from "../components/QuestionTray";
 import { PLUCKS, Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { alpha, colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const CELL = 84;
@@ -34,6 +35,7 @@ const MOVES = [
 
 export const BuildDescribe: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("buildDescribe");
   const split = interpolate(frame, [cues[5] - 8, cues[5] + 4], [1, 0], clamp);
@@ -128,10 +130,10 @@ export const BuildDescribe: React.FC = () => {
               translate: `${(1 - springIn(frame, 2, fps, 11)) * -900}px 0px`,
             }}
           >
-            BUILD
+            {tx.build}
           </span>
           <span style={{ color: colors.muted, opacity: ramp(frame, 14, 8) }}>
-            or
+            {tx.or}
           </span>
           <span
             style={{
@@ -139,7 +141,7 @@ export const BuildDescribe: React.FC = () => {
               translate: `${(1 - springIn(frame, 2, fps, 11)) * 900}px 0px`,
             }}
           >
-            DESCRIBE
+            {tx.describe}
           </span>
         </div>
       </AbsoluteFill>
@@ -159,7 +161,7 @@ export const BuildDescribe: React.FC = () => {
             letterSpacing: 4,
           }}
         >
-          BUILD
+          {tx.build}
         </div>
         <div
           style={{
@@ -170,7 +172,7 @@ export const BuildDescribe: React.FC = () => {
             color: colors.muted,
           }}
         >
-          what it’s made of
+          {tx.madeOf}
         </div>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
           {/* The block, shrinking with each strike; the knight shows through. */}
@@ -225,7 +227,7 @@ export const BuildDescribe: React.FC = () => {
             opacity: ramp(frame, cues[2], 8),
           }}
         >
-          DESCRIBE
+          {tx.describe}
         </div>
         <svg
           width={1920}
@@ -311,7 +313,7 @@ export const BuildDescribe: React.FC = () => {
             opacity: ramp(frame, cues[4] + 30, 10),
           }}
         >
-          still a knight
+          {tx.stillKnight}
         </div>
       </AbsoluteFill>
 
@@ -328,7 +330,7 @@ export const BuildDescribe: React.FC = () => {
             letterSpacing: 4,
           }}
         >
-          DESCRIBE ℕ
+          {tx.describeN}
         </div>
         <div
           style={{
@@ -339,7 +341,7 @@ export const BuildDescribe: React.FC = () => {
             color: colors.muted,
           }}
         >
-          zero, and “next” (Peano · E02)
+          {tx.peanoNote}
         </div>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
           {chain.map((c, i) => {
@@ -409,7 +411,7 @@ export const BuildDescribe: React.FC = () => {
             letterSpacing: 4,
           }}
         >
-          BUILD ℕ
+          {tx.buildN}
         </div>
         <div
           style={{
@@ -420,7 +422,7 @@ export const BuildDescribe: React.FC = () => {
             color: colors.muted,
           }}
         >
-          from the empty set (von Neumann · E04)
+          {tx.vonNeumannNote}
         </div>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
           {/* 0 = ∅, 1 = {∅}, 2 = {∅, {∅}}: each new box holds all the earlier ones. */}
@@ -519,7 +521,7 @@ export const BuildDescribe: React.FC = () => {
             scale: interpolate(Math.min(1.1, verdict), [0, 1], [0.8, 1]),
           }}
         >
-          A number is anything that behaves like one.
+          {tx.verdict}
         </div>
       </AbsoluteFill>
     </SceneShell>

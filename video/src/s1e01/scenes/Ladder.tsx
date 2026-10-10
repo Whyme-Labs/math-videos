@@ -10,6 +10,7 @@ import { QuestionTray } from "../components/QuestionTray";
 import { PLUCKS, Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { alpha, colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 // Halving 45 for real: pair the dots up, the odd one out is the remainder,
 // each pair becomes one dot, repeat. Remainders read upward give 101101.
@@ -36,6 +37,7 @@ const boxCenter = (k: number) => ({ x: BOX_X + 32, y: ROW_Y + k * ROW_H + 32 });
 
 export const Ladder: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("ladder");
   // Step 0 is slow (it's the demonstration); the rest follow quickly.
@@ -147,9 +149,7 @@ export const Ladder: React.FC = () => {
             >
               {n}
               <tspan fill={colors.muted} fontSize={30}>
-                {tau < 0.6
-                  ? " dots: pair them up"
-                  : ` → ${Math.floor(n / 2)} pairs`}
+                {tau < 0.6 ? tx.pairUp : tx.pairs(Math.floor(n / 2))}
               </tspan>
             </text>
           ) : null}
@@ -257,8 +257,9 @@ export const Ladder: React.FC = () => {
             lineHeight: 1.4,
           }}
         >
-          Every whole number has{" "}
-          <b style={{ color: colors.primary }}>exactly one</b> base-b name.
+          {tx.theorem[0]}
+          <b style={{ color: colors.primary }}>{tx.theorem[1]}</b>
+          {tx.theorem[2]}
           <div
             style={{
               display: "flex",
@@ -267,7 +268,7 @@ export const Ladder: React.FC = () => {
               opacity: ramp(frame, cues[4], 10),
             }}
           >
-            {["division", "induction"].map((t, i) => (
+            {tx.needs.map((t, i) => (
               <span
                 key={t}
                 style={{
@@ -279,13 +280,13 @@ export const Ladder: React.FC = () => {
                   scale: springIn(frame, cues[4] + i * 6, fps, 10),
                 }}
               >
-                needs {t}
+                {t}
               </span>
             ))}
             <span
               style={{ fontSize: 28, color: colors.muted, padding: "8px 0" }}
             >
-              → proved in E02, E03
+              {tx.provedIn}
             </span>
           </div>
         </div>

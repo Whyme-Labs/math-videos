@@ -1,5 +1,6 @@
 import { Composition, Folder } from "remotion";
 import { Episode } from "./s1e01/Episode";
+import { withLocale } from "./s1e01/i18n";
 import { episodeDuration, FPS, sceneDuration } from "./s1e01/narration";
 import { BrandIntro } from "./s1e01/scenes/BrandIntro";
 import { BuildDescribe } from "./s1e01/scenes/BuildDescribe";
@@ -14,23 +15,73 @@ import { TitleCard } from "./s1e01/scenes/TitleCard";
 import { TowerScene } from "./s1e01/scenes/TowerScene";
 import { WhyHard } from "./s1e01/scenes/WhyHard";
 
+const SCENES = [
+  { id: "BrandIntro", scene: "brand", component: BrandIntro },
+  { id: "Title", scene: "title", component: TitleCard },
+  { id: "ColdOpen", scene: "coldOpen", component: ColdOpen },
+  { id: "DefineThree", scene: "defineThree", component: DefineThree },
+  { id: "Numerals", scene: "numerals", component: Numerals },
+  { id: "Ladder", scene: "ladder", component: Ladder },
+  { id: "WhyHard", scene: "whyHard", component: WhyHard },
+  { id: "Matching", scene: "matching", component: Matching },
+  { id: "Tower", scene: "tower", component: TowerScene },
+  { id: "BuildDescribe", scene: "buildDescribe", component: BuildDescribe },
+  { id: "Roadmap", scene: "roadmap", component: Roadmap },
+  { id: "EndCard", scene: "endCard", component: EndCard },
+] as const;
+
+const ZH_SCENES = SCENES.map((s) => ({
+  ...s,
+  component: withLocale(s.component, "zh"),
+}));
+
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="S1E01" component={Episode} durationInFrames={episodeDuration} fps={FPS} width={1920} height={1080} />
+      <Composition
+        id="S1E01"
+        component={Episode}
+        durationInFrames={episodeDuration("en")}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        defaultProps={{ locale: "en" as const }}
+      />
+      <Composition
+        id="S1E01-ZH"
+        component={Episode}
+        durationInFrames={episodeDuration("zh")}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        defaultProps={{ locale: "zh" as const }}
+      />
+      {/* Each scene on its own, generated from one list so English and Chinese stay in step. */}
       <Folder name="S1E01-Scenes">
-        <Composition id="S1E01-BrandIntro" component={BrandIntro} durationInFrames={sceneDuration("brand")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-Title" component={TitleCard} durationInFrames={sceneDuration("title")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-ColdOpen" component={ColdOpen} durationInFrames={sceneDuration("coldOpen")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-DefineThree" component={DefineThree} durationInFrames={sceneDuration("defineThree")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-Numerals" component={Numerals} durationInFrames={sceneDuration("numerals")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-Ladder" component={Ladder} durationInFrames={sceneDuration("ladder")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-WhyHard" component={WhyHard} durationInFrames={sceneDuration("whyHard")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-Matching" component={Matching} durationInFrames={sceneDuration("matching")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-Tower" component={TowerScene} durationInFrames={sceneDuration("tower")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-BuildDescribe" component={BuildDescribe} durationInFrames={sceneDuration("buildDescribe")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-Roadmap" component={Roadmap} durationInFrames={sceneDuration("roadmap")} fps={FPS} width={1920} height={1080} />
-        <Composition id="S1E01-EndCard" component={EndCard} durationInFrames={sceneDuration("endCard")} fps={FPS} width={1920} height={1080} />
+        {SCENES.map((s) => (
+          <Composition
+            key={s.id}
+            id={`S1E01-${s.id}`}
+            component={s.component}
+            durationInFrames={sceneDuration(s.scene, "en")}
+            fps={FPS}
+            width={1920}
+            height={1080}
+          />
+        ))}
+      </Folder>
+      <Folder name="S1E01-ZH-Scenes">
+        {ZH_SCENES.map((s) => (
+          <Composition
+            key={s.id}
+            id={`S1E01-ZH-${s.id}`}
+            component={s.component}
+            durationInFrames={sceneDuration(s.scene, "zh")}
+            fps={FPS}
+            width={1920}
+            height={1080}
+          />
+        ))}
       </Folder>
     </>
   );

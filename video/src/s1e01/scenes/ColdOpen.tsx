@@ -12,6 +12,7 @@ import { QuestionTray } from "../components/QuestionTray";
 import { Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { alpha, colors, fonts } from "../theme";
+import { useStrings } from "../i18n";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const CARD_W = 500;
@@ -20,11 +21,12 @@ const offset = (i: number) => (i - 1) * (CARD_W + GAP);
 
 const Card: React.FC<{
   readonly index: number;
+  readonly label: string;
   readonly title: string;
   readonly enter: number;
   readonly lit: number;
   readonly children: React.ReactNode;
-}> = ({ index, title, enter, lit, children }) => (
+}> = ({ index, label, title, enter, lit, children }) => (
   <div
     style={{
       width: CARD_W,
@@ -46,7 +48,7 @@ const Card: React.FC<{
     }}
   >
     <div style={{ fontSize: 28, color: colors.highlight, letterSpacing: 4 }}>
-      QUESTION {index}
+      {label}
     </div>
     <div
       style={{
@@ -74,6 +76,7 @@ const Card: React.FC<{
 
 export const ColdOpen: React.FC = () => {
   const frame = useCurrentFrame();
+  const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("coldOpen");
   const enter = [1, 3, 4].map((c) => springIn(frame, cues[c], fps, 13));
@@ -148,6 +151,7 @@ export const ColdOpen: React.FC = () => {
         >
           <Card
             index={1}
+            label={tx.question(1)}
             title="0.999… = 1 ?"
             enter={enter[0]}
             lit={focus === 0 ? 1 : 0}
@@ -190,7 +194,7 @@ export const ColdOpen: React.FC = () => {
                     scale: argue === 0 ? 1.15 : 0.9,
                   }}
                 >
-                  “= 1”
+                  {tx.sayYes}
                 </div>
                 <div
                   style={{
@@ -202,14 +206,15 @@ export const ColdOpen: React.FC = () => {
                     scale: argue === 1 ? 1.15 : 0.9,
                   }}
                 >
-                  “just short”
+                  {tx.sayNo}
                 </div>
               </div>
             </div>
           </Card>
           <Card
             index={2}
-            title="Is √2 a number?"
+            label={tx.question(2)}
+            title={tx.q2}
             enter={enter[1]}
             lit={focus === 1 ? 1 : 0}
           >
@@ -257,7 +262,8 @@ export const ColdOpen: React.FC = () => {
           </Card>
           <Card
             index={3}
-            title="More fractions?"
+            label={tx.question(3)}
+            title={tx.q3}
             enter={enter[2]}
             lit={focus === 2 ? 1 : 0}
           >
@@ -309,7 +315,7 @@ export const ColdOpen: React.FC = () => {
                 fontSize={28}
                 textAnchor="middle"
               >
-                vs 1, 2, 3, 4, …
+                {tx.vsWhole}
               </text>
             </svg>
           </Card>
@@ -329,7 +335,7 @@ export const ColdOpen: React.FC = () => {
             scale: interpolate(frame, [0, cues[1]], [0.9, 1.1], clamp),
           }}
         >
-          Three easy questions.
+          {tx.threeQuestions}
         </div>
       </AbsoluteFill>
     </SceneShell>
