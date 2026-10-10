@@ -42,8 +42,11 @@ and a bar every 1.875 s.
   the song's real ending (bars 72 to 80) closes the video. Every splice is
   a whole number of bars, so the beat never skips.
 - **`narration.ts`** builds the timeline on the grid. Each scene cut (the
-  middle of its crossfade) lands on the first beat of a bar, and each
-  caption change moves to the nearest beat. The scene animations key off
+  middle of its crossfade) lands on the next beat after its last caption
+  is read, and each caption change moves to the nearest beat. Captions are
+  timed to reading speed (`PACE = "reading"`, about 18 characters per
+  second). Lines whose animation needs longer have a minimum in
+  `MIN_SECONDS`. Set `PACE = "voiceover"` once narration is recorded. The scene animations key off
   the captions, so they hit the beat too.
 - **`SceneShell`** pulses the stage lights on every beat, and harder on
   the first beat of each bar.

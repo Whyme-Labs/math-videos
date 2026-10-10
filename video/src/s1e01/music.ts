@@ -21,14 +21,8 @@ export const nearestBeat = (t: number) =>
 
 export const nextBarIndex = (t: number) => Math.ceil((t - FIRST_BEAT_SECONDS) / BAR_SECONDS - 1e-6);
 
-// The video must end on a bar whose music plan splices cleanly: the filler
-// between the first play and the outro is whole loops plus a 4-bar multiple.
-export const alignEndBar = (bar: number) => {
-  const filler = bar - OUTRO_BARS - BODY_END_BAR;
-  if (filler <= 0) return bar;
-  const rem = (filler % BODY_BARS) % 4;
-  return rem === 0 ? bar : bar + (4 - rem);
-};
+export const nextBeat = (t: number) =>
+  FIRST_BEAT_SECONDS + Math.ceil((t - FIRST_BEAT_SECONDS) / BEAT_SECONDS - 1e-6) * BEAT_SECONDS;
 
 export type MusicSegment = { readonly videoStart: number; readonly songStart: number; readonly seconds: number };
 

@@ -1,4 +1,4 @@
-import { barTime, BEAT_SECONDS, alignEndBar, musicPlan, nearestBeat, nextBarIndex } from "./music";
+import { barTime, BEAT_SECONDS, musicPlan, nearestBeat, nextBarIndex, nextBeat } from "./music";
 
 // Narration for S1E01, condensed from lessons/s1/e01-what-is-a-number.md.
 // Each scene's timing is derived from these lines, so editing the script
@@ -96,21 +96,41 @@ export const narration: Record<SceneId, string[]> = {
   ],
 };
 
-// Speaking rate used to time captions: about 160 words per minute, a normal
-// voiceover pace, plus a short breath between lines.
-const WORDS_PER_SECOND = 2.67;
-const LINE_PADDING_SECONDS = 0.5;
-const MIN_LINE_SECONDS = 2.4;
+// "reading": captions only, timed to reading speed (about 18 characters per
+// second, a common subtitle rate). "voiceover": timed to a narrator speaking
+// at about 160 words per minute. Switch when a voiceover is recorded.
+export const PACE: "reading" | "voiceover" = "reading";
 
 export const lineSeconds = (line: string) =>
-  Math.max(MIN_LINE_SECONDS, line.split(/\s+/).length / WORDS_PER_SECOND + LINE_PADDING_SECONDS);
+  PACE === "reading"
+    ? Math.max(1.5, line.length / 18 + 0.25)
+    : Math.max(2.4, line.split(/\s+/).length / 2.67 + 0.5);
+
+// Lines whose animation needs more time than reading the caption takes
+// (scene id → line index → seconds). Values come from the scenes' frame offsets.
+const MIN_SECONDS: Partial<Record<SceneId, Record<number, number>>> = {
+  title: { 0: 2.8 },
+  coldOpen: { 0: 1.6, 1: 2.6, 3: 4.0, 4: 2.5, 5: 1.9 },
+  defineThree: { 0: 2.0, 2: 2.8, 3: 2.8, 4: 2.8, 5: 2.8 },
+  numerals: { 1: 2.0, 2: 5.4, 3: 3.0 },
+  ladder: { 0: 2.0, 1: 3.2, 2: 2.4, 4: 2.2 },
+  whyHard: { 0: 2.0, 3: 5.0, 4: 9.4, 5: 4.6 },
+  matching: { 1: 4.0, 2: 4.2 },
+  tower: { 0: 2.8, 2: 2.3, 3: 2.3, 4: 2.3, 5: 2.3, 6: 1.8, 7: 1.8 },
+  buildDescribe: { 0: 1.8, 2: 2.2, 4: 3.6, 5: 3.0, 6: 2.4 },
+  roadmap: { 3: 4.5, 4: 3.0 },
+  endCard: { 1: 7.0 },
+};
+
+const lineLength = (id: SceneId, index: number) =>
+  Math.max(lineSeconds(narration[id][index]), MIN_SECONDS[id]?.[index] ?? 0);
 
 // Scenes without narration (the brand sting) have a fixed length.
 const FIXED_SECONDS: Partial<Record<SceneId, number>> = { brand: 3.5 };
 const MIN_GAP_SECONDS = 1.5;
 
 export const FPS = 30;
-export const TRANSITION_FRAMES = 15;
+export const TRANSITION_FRAMES = 12;
 
 export const sceneOrder: SceneId[] = [
   "brand",
@@ -130,8 +150,9 @@ export const sceneOrder: SceneId[] = [
 type SceneTiming = { readonly start: number; readonly starts: number[]; readonly durationInFrames: number };
 
 // Cut to the beat (卡点): every scene cut (the middle of its crossfade) lands
-// on the first beat of a bar, and every caption change moves to the nearest
-// beat. Animations key off caption cues, so they land on the beat too.
+// on the next beat after the last caption is read, and every caption change
+// moves to the nearest beat. Animations key off caption cues, so they land on
+// the beat too. The video ends on a bar so the song's ending fits.
 const buildTimeline = () => {
   const half = TRANSITION_FRAMES / 2 / FPS;
   const timeline = {} as Record<SceneId, SceneTiming>;
@@ -145,22 +166,22 @@ const buildTimeline = () => {
     let naturalEnd = fixed ?? 0;
     if (fixed === undefined) {
       let t = 0;
-      lines.forEach((line, j) => {
+      lines.forEach((_, j) => {
         if (j > 0) {
           let snapped = nearestBeat(start + t) - start;
           while (snapped < rel[j - 1] + MIN_GAP_SECONDS) snapped += BEAT_SECONDS;
           rel.push(snapped);
           t = snapped;
         }
-        t += lineSeconds(line);
+        t += lineLength(id, j);
       });
       naturalEnd = t;
     }
     let end: number;
     if (index < sceneOrder.length - 1) {
-      end = barTime(nextBarIndex(start + naturalEnd - half - 0.15)) + half;
+      end = nextBeat(start + naturalEnd - half - 0.1) + half;
     } else {
-      endBar = alignEndBar(nextBarIndex(start + naturalEnd));
+      endBar = nextBarIndex(start + naturalEnd);
       end = barTime(endBar);
     }
     const durationInFrames = Math.round(end * FPS) - startFrame;
