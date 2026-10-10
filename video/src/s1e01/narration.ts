@@ -3,6 +3,7 @@
 // re-times the video. Scene components look up cue frames by line index.
 
 export type SceneId =
+  | "brand"
   | "title"
   | "coldOpen"
   | "defineThree"
@@ -16,6 +17,7 @@ export type SceneId =
   | "endCard";
 
 export const narration: Record<SceneId, string[]> = {
+  brand: [],
   title: ["Season one. What is a number?"],
   coldOpen: [
     "Here are three questions. Each one sounds like it belongs on a primary-school worksheet.",
@@ -101,7 +103,12 @@ export const lineSeconds = (line: string) =>
   Math.max(MIN_LINE_SECONDS, line.split(/\s+/).length / WORDS_PER_SECOND + LINE_PADDING_SECONDS);
 
 // Start frame of each line within its scene, plus the scene's total length.
+// Scenes without narration (the brand sting) have a fixed length.
+const FIXED_SECONDS: Partial<Record<SceneId, number>> = { brand: 4 };
+
 export const sceneTiming = (id: SceneId, fps: number) => {
+  const fixed = FIXED_SECONDS[id];
+  if (fixed !== undefined) return { starts: [0], durationInFrames: Math.round(fixed * fps) };
   const starts: number[] = [];
   let t = 0;
   for (const line of narration[id]) {
@@ -115,6 +122,7 @@ export const FPS = 30;
 export const TRANSITION_FRAMES = 15;
 
 export const sceneOrder: SceneId[] = [
+  "brand",
   "title",
   "coldOpen",
   "defineThree",

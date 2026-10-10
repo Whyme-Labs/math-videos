@@ -1,20 +1,22 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { fadeIn, riseIn } from "../components/anim";
+import { BrandMark } from "../components/Brand";
 import { SceneShell } from "../components/SceneShell";
 import { colors, fonts } from "../theme";
 
 export const TitleCard: React.FC = () => {
   const frame = useCurrentFrame();
   return (
-    <SceneShell id="title" showCaptions={false}>
+    <SceneShell id="title" showCaptions={false} showWatermark={false}>
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", bottom: -190 }}>
+        <BrandMark height={90} style={{ marginBottom: 36, opacity: fadeIn(frame, 0) }} />
         <div
           style={{
             fontSize: 36,
             letterSpacing: 8,
             textTransform: "uppercase",
-            color: colors.gold,
+            color: colors.highlight,
             opacity: fadeIn(frame, 5),
             translate: riseIn(frame, 5),
           }}
@@ -50,7 +52,7 @@ export const TitleCard: React.FC = () => {
             fontSize: 64,
             marginTop: 70,
             letterSpacing: 6,
-            color: colors.blue,
+            color: colors.primary,
             opacity: fadeIn(frame, 55, 25),
           }}
         >

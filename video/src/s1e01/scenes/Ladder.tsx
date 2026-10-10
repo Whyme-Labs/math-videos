@@ -3,7 +3,7 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { fadeIn, progress, riseIn } from "../components/anim";
 import { QuestionTray } from "../components/QuestionTray";
 import { SceneShell, useCues } from "../components/SceneShell";
-import { colors, fonts } from "../theme";
+import { alpha, colors, fonts } from "../theme";
 
 // Base-2 conversion of 45 by repeated division (checked: 45 = 101101₂).
 const STEPS: { n: number; q: number; r: number }[] = [];
@@ -58,7 +58,7 @@ export const Ladder: React.FC = () => {
                     alignItems: "center",
                     border: `3px solid ${colors.orange}`,
                     color: colors.orange,
-                    backgroundColor: lit ? "rgba(240,136,62,0.3)" : "transparent",
+                    backgroundColor: lit ? alpha(colors.orange, 0.3) : "transparent",
                   }}
                 >
                   {s.r}
@@ -98,7 +98,7 @@ export const Ladder: React.FC = () => {
             style={{
               opacity: theorem,
               translate: riseIn(frame, cues[3]),
-              borderLeft: `6px solid ${colors.blue}`,
+              borderLeft: `6px solid ${colors.primary}`,
               backgroundColor: colors.panel,
               padding: "26px 32px",
               borderRadius: 12,
@@ -106,7 +106,7 @@ export const Ladder: React.FC = () => {
               lineHeight: 1.45,
             }}
           >
-            <b style={{ color: colors.blue }}>Theorem.</b> For any base b ≥ 2, every whole number n ≥ 1 has
+            <b style={{ color: colors.primary }}>Theorem.</b> For any base b ≥ 2, every whole number n ≥ 1 has
             <b> exactly one</b> base-b numeral.
           </div>
           <div style={{ display: "flex", gap: 16, opacity: fadeIn(frame, cues[4]), translate: riseIn(frame, cues[4]) }}>
@@ -117,8 +117,8 @@ export const Ladder: React.FC = () => {
                   fontSize: 30,
                   padding: "10px 20px",
                   borderRadius: 999,
-                  border: `2px solid ${colors.gold}`,
-                  color: colors.gold,
+                  border: `2px solid ${colors.highlight}`,
+                  color: colors.highlight,
                 }}
               >
                 uses: {t}

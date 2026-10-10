@@ -46,18 +46,18 @@ export const DefineThree: React.FC = () => {
             width: 760,
             padding: 48,
             borderRadius: 20,
-            backgroundColor: "#f4ecd8",
-            color: "#2b2b2b",
+            backgroundColor: colors.paper,
+            color: colors.ink,
             fontFamily: fonts.math,
             opacity: fadeIn(frame, cues[1]),
             translate: riseIn(frame, cues[1]),
           }}
         >
           <div style={{ fontSize: 64, fontWeight: 600 }}>
-            three <span style={{ fontSize: 40, fontStyle: "italic", color: "#6b5d45" }}>(n.)</span>
+            three <span style={{ fontSize: 40, fontStyle: "italic", color: colors.brandPurple }}>(n.)</span>
           </div>
           <div style={{ fontSize: 44, marginTop: 24, display: "flex", alignItems: "center", gap: 6 }}>
-            1. <span style={{ display: "inline-block", width: 3, height: 50, backgroundColor: "#2b2b2b", opacity: blink }} />
+            1. <span style={{ display: "inline-block", width: 3, height: 50, backgroundColor: colors.ink, opacity: blink }} />
           </div>
         </div>
       </AbsoluteFill>
@@ -103,7 +103,7 @@ export const DefineThree: React.FC = () => {
             style={{
               marginTop: 30,
               fontSize: 44,
-              color: colors.gold,
+              color: colors.highlight,
               textAlign: "center",
               opacity: fadeIn(frame, cues[6]),
               scale: interpolate(fadeIn(frame, cues[6]), [0, 1], [0.95, 1]),

@@ -35,15 +35,15 @@ export const Numerals: React.FC = () => {
             opacity: fadeIn(frame, 0) * (1 - ring),
           }}
         >
-          A numeral is a <span style={{ color: colors.gold }}>name</span>.
+          A numeral is a <span style={{ color: colors.highlight }}>name</span>.
         </div>
         <div
           style={{
             width: 46,
             height: 46,
             borderRadius: 23,
-            backgroundColor: colors.blue,
-            boxShadow: `0 0 ${50 * glow}px ${colors.blue}`,
+            backgroundColor: colors.primary,
+            boxShadow: `0 0 ${50 * glow}px ${colors.primary}`,
             opacity: fadeIn(frame, cues[1]),
           }}
         />
@@ -78,7 +78,7 @@ export const Numerals: React.FC = () => {
                   y1={y}
                   x2={interpolate(ring, [0, 1], [x, 960 + 60 * Math.cos(angle)])}
                   y2={interpolate(ring, [0, 1], [y, 445 + 60 * Math.sin(angle)])}
-                  stroke={colors.gold}
+                  stroke={colors.highlight}
                   strokeWidth={3}
                   strokeDasharray="10 8"
                 />

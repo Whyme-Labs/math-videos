@@ -3,7 +3,7 @@ import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { fadeIn, progress, riseIn, window } from "../components/anim";
 import { QuestionTray } from "../components/QuestionTray";
 import { SceneShell, useCues } from "../components/SceneShell";
-import { colors, fonts } from "../theme";
+import { alpha, colors, fonts } from "../theme";
 
 const Tag: React.FC<{ readonly children: React.ReactNode; readonly style?: React.CSSProperties }> = ({ children, style }) => (
   <div
@@ -11,9 +11,9 @@ const Tag: React.FC<{ readonly children: React.ReactNode; readonly style?: React
       fontSize: 32,
       padding: "10px 24px",
       borderRadius: 999,
-      backgroundColor: "rgba(88,166,255,0.15)",
-      border: `2px solid ${colors.blue}`,
-      color: colors.blue,
+      backgroundColor: alpha(colors.primary, 0.12),
+      border: `2px solid ${colors.primary}`,
+      color: colors.primary,
       ...style,
     }}
   >
@@ -34,17 +34,17 @@ export const WhyHard: React.FC = () => {
       <QuestionTray />
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
         <div style={{ fontFamily: fonts.title, fontSize: 68, opacity: window(frame, 5, cues[1]) }}>
-          Questions about <span style={{ color: colors.gold }}>definitions</span>, in disguise.
+          Questions about <span style={{ color: colors.highlight }}>definitions</span>, in disguise.
         </div>
       </AbsoluteFill>
 
       {/* Question 1: finite sums, the infinite sum, and the shrinking gap. */}
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", gap: 36, opacity: window(frame, cues[1], cues[4]) }}>
         <div style={{ fontFamily: fonts.math, fontSize: 60 }}>
-          0.999 = <span style={{ color: colors.blue }}>9/10 + 9/100 + 9/1000</span>
+          0.999 = <span style={{ color: colors.primary }}>9/10 + 9/100 + 9/1000</span>
         </div>
         <div style={{ fontFamily: fonts.math, fontSize: 60, opacity: fadeIn(frame, cues[2]), translate: riseIn(frame, cues[2]) }}>
-          0.999… = <span style={{ color: colors.blue }}>9/10 + 9/100 + 9/1000 + ⋯</span>
+          0.999… = <span style={{ color: colors.primary }}>9/10 + 9/100 + 9/1000 + ⋯</span>
           <span style={{ color: colors.red }}> ?</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 10, opacity: fadeIn(frame, cues[3]) }}>
@@ -79,10 +79,10 @@ export const WhyHard: React.FC = () => {
         </svg>
         <div style={{ display: "flex", flexDirection: "column", gap: 30, width: 760 }}>
           <div style={{ fontFamily: fonts.mono, fontSize: 46, opacity: fadeIn(frame, cues[4] + 60) }}>
-            1.4² = <span style={{ color: colors.blue }}>1.96</span> &lt; 2
+            1.4² = <span style={{ color: colors.primary }}>1.96</span> &lt; 2
           </div>
           <div style={{ fontFamily: fonts.mono, fontSize: 46, opacity: fadeIn(frame, cues[4] + 90) }}>
-            1.5² = <span style={{ color: colors.blue }}>2.25</span> &gt; 2
+            1.5² = <span style={{ color: colors.primary }}>2.25</span> &gt; 2
           </div>
           <svg width={720} height={80} style={{ opacity: fadeIn(frame, cues[4] + 120) }}>
             <line x1={20} y1={40} x2={700} y2={40} stroke={colors.muted} strokeWidth={3} />
@@ -107,7 +107,7 @@ export const WhyHard: React.FC = () => {
 
       {/* Question 3: what does "more" mean for infinite collections? */}
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", gap: 44, opacity: window(frame, cues[5], end) }}>
-        <div style={{ display: "flex", gap: 22, fontFamily: fonts.mono, fontSize: 52, color: colors.blue }}>
+        <div style={{ display: "flex", gap: 22, fontFamily: fonts.mono, fontSize: 52, color: colors.primary }}>
           {["1", "2", "3", "4", "5", "6", "7", "…"].map((t, i) => (
             <span key={t} style={{ opacity: fadeIn(frame, cues[5] + 5 + i * 4) }}>{t}</span>
           ))}
@@ -116,7 +116,7 @@ export const WhyHard: React.FC = () => {
           style={{
             fontFamily: fonts.title,
             fontSize: 80,
-            color: colors.gold,
+            color: colors.highlight,
             opacity: fadeIn(frame, cues[5] + 50),
             scale: interpolate(fadeIn(frame, cues[5] + 50), [0, 1], [0.8, 1]),
           }}

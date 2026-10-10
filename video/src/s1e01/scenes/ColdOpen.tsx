@@ -25,7 +25,7 @@ const Card: React.FC<{
       ...style,
     }}
   >
-    <div style={{ fontSize: 30, color: colors.gold, letterSpacing: 4 }}>QUESTION {index}</div>
+    <div style={{ fontSize: 30, color: colors.highlight, letterSpacing: 4 }}>QUESTION {index}</div>
     <div style={{ fontFamily: fonts.math, fontSize: 54, marginTop: 18, textAlign: "center" }}>{title}</div>
     <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>{children}</div>
   </div>
@@ -60,7 +60,7 @@ export const ColdOpen: React.FC = () => {
           title="0.999… = 1 ?"
           style={{ opacity: fadeIn(frame, cues[1]), translate: riseIn(frame, cues[1]) }}
         >
-          <div style={{ fontFamily: fonts.mono, fontSize: 40, color: colors.blue, wordBreak: "break-all", textAlign: "center" }}>
+          <div style={{ fontFamily: fonts.mono, fontSize: 40, color: colors.primary, wordBreak: "break-all", textAlign: "center" }}>
             0.{"9".repeat(nines)}
             <span style={{ color: colors.muted }}>…</span>
           </div>
@@ -96,7 +96,7 @@ export const ColdOpen: React.FC = () => {
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 26, alignItems: "center" }}>
             <div style={{ fontSize: 30, color: colors.muted, marginBottom: 6 }}>than whole numbers?</div>
-            <div style={{ fontFamily: fonts.mono, fontSize: 34, color: colors.blue }}>1 2 3 4 5 …</div>
+            <div style={{ fontFamily: fonts.mono, fontSize: 34, color: colors.primary }}>1 2 3 4 5 …</div>
             <div style={{ fontSize: 34, color: colors.muted }}>vs</div>
             <div style={{ fontFamily: fonts.math, fontSize: 34, color: colors.orange, textAlign: "center", lineHeight: 1.5 }}>
               ½ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ …

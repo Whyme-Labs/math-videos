@@ -1,6 +1,7 @@
 import { Composition, Folder } from "remotion";
 import { Episode } from "./s1e01/Episode";
 import { episodeDuration, FPS, sceneDuration } from "./s1e01/narration";
+import { BrandIntro } from "./s1e01/scenes/BrandIntro";
 import { BuildDescribe } from "./s1e01/scenes/BuildDescribe";
 import { ColdOpen } from "./s1e01/scenes/ColdOpen";
 import { DefineThree } from "./s1e01/scenes/DefineThree";
@@ -18,6 +19,7 @@ export const RemotionRoot: React.FC = () => {
     <>
       <Composition id="S1E01" component={Episode} durationInFrames={episodeDuration} fps={FPS} width={1920} height={1080} />
       <Folder name="S1E01-Scenes">
+        <Composition id="S1E01-BrandIntro" component={BrandIntro} durationInFrames={sceneDuration("brand")} fps={FPS} width={1920} height={1080} />
         <Composition id="S1E01-Title" component={TitleCard} durationInFrames={sceneDuration("title")} fps={FPS} width={1920} height={1080} />
         <Composition id="S1E01-ColdOpen" component={ColdOpen} durationInFrames={sceneDuration("coldOpen")} fps={FPS} width={1920} height={1080} />
         <Composition id="S1E01-DefineThree" component={DefineThree} durationInFrames={sceneDuration("defineThree")} fps={FPS} width={1920} height={1080} />

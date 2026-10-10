@@ -1,6 +1,6 @@
 import type React from "react";
 import { useCurrentFrame } from "remotion";
-import { colors, fonts } from "../theme";
+import { alpha, colors, fonts } from "../theme";
 import { fadeIn } from "./anim";
 
 // The season-long "open questions" tray (top-right), introduced in the cold open.
@@ -29,9 +29,9 @@ export const QuestionTray: React.FC<{ readonly style?: React.CSSProperties }> = 
             fontSize: 24,
             padding: "8px 16px",
             borderRadius: 999,
-            border: `2px solid ${colors.gold}`,
-            color: colors.gold,
-            backgroundColor: "rgba(227,179,65,0.08)",
+            border: `2px solid ${colors.highlight}`,
+            color: colors.highlight,
+            backgroundColor: alpha(colors.highlight, 0.1),
             opacity: pulse,
           }}
         >

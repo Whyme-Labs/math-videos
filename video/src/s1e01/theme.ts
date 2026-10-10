@@ -22,19 +22,31 @@ export const fonts = {
   math: 'STIXTwoText, "DejaVu Serif", serif',
 };
 
-// Series palette (storyline/04-production-notes.md): blue = objects/vectors,
-// orange = measurements/remainders, gold = open questions.
+// Whyme Labs palette: violet stage, lemon light, orange glow (brand mark
+// gradient). Semantic roles follow storyline/04-production-notes.md:
+// primary = objects, orange = measurements/remainders, highlight = open questions.
 export const colors = {
-  bg: "#0e1116",
-  panel: "#161b22",
-  panelEdge: "#30363d",
-  text: "#e6edf3",
-  muted: "#8b949e",
-  blue: "#58a6ff",
-  orange: "#f0883e",
-  gold: "#e3b341",
-  green: "#3fb950",
-  red: "#f85149",
-  purple: "#bc8cff",
-  wood: "#b0773f",
+  bg: "#16052f",
+  bgMid: "#2b0a5a",
+  bgGlow: "#4a1491",
+  panel: "rgba(255,255,255,0.06)",
+  panelEdge: "rgba(201,160,255,0.28)",
+  text: "#fff8ec",
+  muted: "#c8b6e6",
+  violet: "#7c15bc",
+  brandPurple: "#613896",
+  primary: "#ffd102",
+  orange: "#ff9702",
+  highlight: "#f29ad8",
+  green: "#5eeaa0",
+  red: "#ff4d6d",
+  wood: "#ff7a1a",
+  paper: "#fff6d6",
+  ink: "#2a1450",
+};
+
+// rgba() helper for translucent fills of palette colours.
+export const alpha = (hex: string, a: number) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
 };

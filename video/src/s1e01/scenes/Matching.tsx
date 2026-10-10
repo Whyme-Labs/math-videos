@@ -18,8 +18,8 @@ const Cup: React.FC = () => (
 
 const Saucer: React.FC = () => (
   <svg width={160} height={50} viewBox="0 0 160 50">
-    <ellipse cx={80} cy={25} rx={76} ry={20} fill={colors.blue} />
-    <ellipse cx={80} cy={21} rx={44} ry={9} fill="#3b7fd0" />
+    <ellipse cx={80} cy={25} rx={76} ry={20} fill="#b38cff" />
+    <ellipse cx={80} cy={21} rx={44} ry={9} fill="#7c4ddb" />
   </svg>
 );
 
@@ -33,7 +33,7 @@ export const Matching: React.FC = () => {
       <QuestionTray />
       <AbsoluteFill>
         <div style={{ position: "absolute", top: 120, width: "100%", textAlign: "center", fontFamily: fonts.title, fontSize: 60, opacity: fadeIn(frame, 0) }}>
-          Same number, <span style={{ color: colors.gold }}>without counting</span>?
+          Same number, <span style={{ color: colors.highlight }}>without counting</span>?
         </div>
         {Array.from({ length: N }).map((_, i) => {
           // Cup i drops onto saucer i, one after another.
@@ -62,7 +62,7 @@ export const Matching: React.FC = () => {
                   textAlign: "center",
                   fontSize: 38,
                   fontFamily: fonts.title,
-                  color: colors.gold,
+                  color: colors.highlight,
                   opacity: fadeIn(frame, cues[2] + 20 + i * 12),
                   translate: riseIn(frame, cues[2] + 20 + i * 12, 15),
                 }}

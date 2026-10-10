@@ -22,7 +22,7 @@ const Board: React.FC<{ readonly t: number; readonly arrow: number; readonly cap
       {Array.from({ length: BOARD * BOARD }).map((_, k) => {
         const x = k % BOARD;
         const y = Math.floor(k / BOARD);
-        return <rect key={k} x={x * CELL} y={y * CELL} width={CELL} height={CELL} fill={(x + y) % 2 ? "#3a3f47" : "#c9c2b0"} />;
+        return <rect key={k} x={x * CELL} y={y * CELL} width={CELL} height={CELL} fill={(x + y) % 2 ? "#4b1f86" : "#ffe9a8"} />;
       })}
       <path
         d={`M ${2.5 * CELL} ${2.5 * CELL} L ${4.5 * CELL} ${2.5 * CELL} L ${4.5 * CELL} ${1.5 * CELL}`}
@@ -50,7 +50,7 @@ export const BuildDescribe: React.FC = () => {
   return (
     <SceneShell id="buildDescribe">
       <QuestionTray />
-      <AbsoluteFill style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 0 }}>
+      <AbsoluteFill style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 0, opacity: 1 - fadeIn(frame, cues[5] - 10, 20) }}>
         <div style={{ width: 760, display: "flex", flexDirection: "column", alignItems: "center", gap: 30, opacity: fadeIn(frame, cues[1]), translate: riseIn(frame, cues[1]) }}>
           <div style={{ fontSize: 46, fontWeight: 700, color: colors.wood, letterSpacing: 4 }}>BUILD</div>
           <div style={{ fontSize: 34, color: colors.muted }}>what it’s made of</div>
@@ -59,11 +59,11 @@ export const BuildDescribe: React.FC = () => {
         </div>
         <div style={{ width: 2, height: 600, backgroundColor: colors.panelEdge, opacity: fadeIn(frame, cues[1]) }} />
         <div style={{ width: 760, display: "flex", flexDirection: "column", alignItems: "center", gap: 30, opacity: fadeIn(frame, cues[2]), translate: riseIn(frame, cues[2]) }}>
-          <div style={{ fontSize: 46, fontWeight: 700, color: colors.blue, letterSpacing: 4 }}>DESCRIBE</div>
+          <div style={{ fontSize: 46, fontWeight: 700, color: colors.primary, letterSpacing: 4 }}>DESCRIBE</div>
           <div style={{ fontSize: 34, color: colors.muted }}>what it does</div>
           <Board t={capMove} arrow={arrow} cap={capIn} />
           <div style={{ fontSize: 30, color: colors.muted, opacity: 1 - capIn }}>moves in an L</div>
-          <div style={{ fontSize: 30, color: colors.gold, opacity: capIn, marginTop: -64 }}>a bottle cap is a perfectly good knight</div>
+          <div style={{ fontSize: 30, color: colors.highlight, opacity: capIn, marginTop: -64 }}>a bottle cap is a perfectly good knight</div>
         </div>
       </AbsoluteFill>
       {/* Numbers get both treatments, then the verdict. */}
@@ -72,12 +72,11 @@ export const BuildDescribe: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           gap: 34,
-          backgroundColor: colors.bg,
           opacity: fadeIn(frame, cues[5] - 10, 20),
         }}
       >
         <div style={{ display: "flex", gap: 30, alignItems: "center", fontSize: 40, opacity: fadeIn(frame, cues[5] + 10), translate: riseIn(frame, cues[5] + 10) }}>
-          <span style={{ color: colors.blue, fontWeight: 700, width: 240 }}>DESCRIBE</span>
+          <span style={{ color: colors.primary, fontWeight: 700, width: 240 }}>DESCRIBE</span>
           <span style={{ fontFamily: fonts.math }}>ℕ = zero + “next” (Peano)</span>
           <span style={{ color: colors.muted }}>→ E02</span>
         </div>
@@ -91,7 +90,7 @@ export const BuildDescribe: React.FC = () => {
             marginTop: 40,
             fontFamily: fonts.title,
             fontSize: 70,
-            color: colors.gold,
+            color: colors.highlight,
             opacity: fadeIn(frame, cues[6]),
             scale: interpolate(fadeIn(frame, cues[6]), [0, 1], [0.9, 1]),
           }}

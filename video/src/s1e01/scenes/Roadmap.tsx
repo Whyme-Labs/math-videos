@@ -45,10 +45,10 @@ export const Roadmap: React.FC = () => {
                   translate: riseIn(frame, cues[i]),
                 }}
               >
-                <span style={{ fontSize: 34, color: colors.gold, width: 40 }}>{i + 1}</span>
+                <span style={{ fontSize: 34, color: colors.highlight, width: 40 }}>{i + 1}</span>
                 <span style={{ fontSize: 54, fontWeight: 700, width: 270 }}>{s.title}</span>
                 <span style={{ fontSize: 32, color: colors.muted, flex: 1, whiteSpace: "nowrap" }}>{s.detail}</span>
-                <span style={{ fontSize: 30, color: colors.blue, whiteSpace: "nowrap" }}>{s.eps}</span>
+                <span style={{ fontSize: 30, color: colors.primary, whiteSpace: "nowrap" }}>{s.eps}</span>
               </div>
             );
           })}

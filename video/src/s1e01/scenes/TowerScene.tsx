@@ -30,8 +30,8 @@ export const TowerScene: React.FC = () => {
             width: 380,
             height: 460,
             borderRadius: 16,
-            backgroundColor: "#f4ecd8",
-            color: "#2b2b2b",
+            backgroundColor: colors.paper,
+            color: colors.ink,
             padding: 30,
             opacity: fadeIn(frame, cues[6]),
             translate: riseIn(frame, cues[6]),
@@ -39,7 +39,7 @@ export const TowerScene: React.FC = () => {
         >
           <div style={{ fontFamily: fonts.title, fontSize: 40, fontWeight: 700 }}>What did we lose?</div>
           {[0, 1, 2, 3].map((i) => (
-            <div key={i} style={{ borderBottom: "2px solid #c9bc9c", height: 70 }} />
+            <div key={i} style={{ borderBottom: "2px solid #e2cf8f", height: 70 }} />
           ))}
         </div>
         <Tower appear={appear} built={[0, 0, 0, 0, 0]} question={question} />
@@ -66,7 +66,7 @@ export const TowerScene: React.FC = () => {
                 <span style={{ color: colors.red, fontSize: 40 }}>✗</span>
                 <span style={{ fontFamily: fonts.math, fontSize: 46 }}>{d.eq}</span>
                 <span style={{ color: colors.muted, opacity: fadeIn(frame, start + 50) }}>
-                  ↑ needs <span style={{ fontFamily: fonts.math, color: colors.blue }}>{d.fix}</span>
+                  ↑ needs <span style={{ fontFamily: fonts.math, color: colors.primary }}>{d.fix}</span>
                 </span>
               </div>
             );
@@ -76,7 +76,7 @@ export const TowerScene: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 40,
+          top: 100,
           left: 80,
           fontSize: 34,
           color: colors.muted,

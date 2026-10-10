@@ -23,8 +23,10 @@ so it can be previewed and rendered separately.
 - **`components/`** has shared pieces that recur across the series: the
   number tower, the "open questions" tray, the caption shell, and
   animation helpers.
-- **`theme.ts`** has the palette and fonts from
-  `storyline/04-production-notes.md`. Fonts are bundled in `public/fonts`
+- **`theme.ts`** has the Whyme Labs violet and lemon palette and the fonts
+  (see "Brand" in `storyline/04-production-notes.md`). The brand intro,
+  watermark and logo components are in `components/Brand.tsx`, and the
+  logo cut-outs are in `public/brand`. Fonts are bundled in `public/fonts`
   (from Google Fonts, SIL Open Font License) so renders work offline.
 
 ## Commands

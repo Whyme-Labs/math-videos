@@ -27,14 +27,37 @@
 Optional end card: 3 exercises (one computational, one conceptual, one
 "stretch") and a short "common misconceptions" list.
 
+## Brand: Whyme Labs
+
+Every episode is a Whyme Labs production:
+- **Opening:** a 4-second sting, where the gradient mark blooms out of a lemon
+  glow, the wordmark rises, and "presents" appears.
+- **Title card:** the mark above the episode title.
+- **Content scenes:** a small mark-and-wordmark watermark in the top-left.
+- **End card:** a "Whyme Labs · series name" sign-off.
+
+Logo cut-outs live in `video/public/brand/`.
+
+**Palette:** violet and lemon yellow, like a violet stage lit by a warm
+lemon-orange light column. These values are in `video/src/s1e01/theme.ts`.
+
+| Role | Colour |
+|---|---|
+| Stage background | violet `#16052f` → `#2b0a5a` → `#4a1491` |
+| Brand purple | `#613896` |
+| Primary (objects, vectors, "built") | lemon `#ffd102` |
+| Measurements, remainders, covectors | orange `#ff9702` |
+| Open questions, key verdicts | lilac-pink `#f29ad8` |
+| Text / muted text | `#fff8ec` / `#c8b6e6` |
+
 ## Visual language (keep it consistent across all seasons)
 | Concept | Visual motif |
 |---|---|
 | Equivalence class / quotient | Points blurring into a single glowing blob |
 | Bijection / isomorphism | Two objects connected by "threads," then sliding onto each other |
 | The number tower | A building that gains a floor per extension; the "what we lost" ledger appears on the side |
-| Vectors | Arrows (one consistent color, e.g. blue) |
-| Covectors | Stacks of parallel level lines/planes (a contrasting color, e.g. orange) |
+| Vectors | Arrows (one consistent colour: lemon) |
+| Covectors | Stacks of parallel level lines/planes (contrasting colour: orange) |
 | Linear map | A grid transforming smoothly, with gridlines staying straight and parallel |
 | Basis / coordinates | A "camera" or "language" overlay that can change while the object stays fixed |
 | Diagonal argument | An infinite table with the diagonal lighting up and flipping |

@@ -1,7 +1,8 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { narration, sceneTiming, type SceneId } from "../narration";
-import { colors, fonts } from "../theme";
+import { alpha, colors, fonts } from "../theme";
+import { Watermark } from "./Brand";
 import { fadeIn } from "./anim";
 
 // Start frames of each narration line in this scene.
@@ -15,7 +16,8 @@ export const SceneShell: React.FC<{
   readonly id: SceneId;
   readonly children: React.ReactNode;
   readonly showCaptions?: boolean;
-}> = ({ id, children, showCaptions = true }) => {
+  readonly showWatermark?: boolean;
+}> = ({ id, children, showCaptions = true, showWatermark = true }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const { starts } = sceneTiming(id, fps);
@@ -27,11 +29,33 @@ export const SceneShell: React.FC<{
     <AbsoluteFill
       style={{
         backgroundColor: colors.bg,
-        backgroundImage: `radial-gradient(circle at 50% 35%, #1a2230 0%, ${colors.bg} 65%)`,
+        // Violet stage lit by a warm lemon/orange column, as in the brand mood board.
+        backgroundImage: [
+          `radial-gradient(ellipse 38% 60% at 50% 105%, ${alpha(colors.orange, 0.28)}, transparent 70%)`,
+          `linear-gradient(90deg, transparent 38%, ${alpha(colors.primary, 0.05)} 50%, transparent 62%)`,
+          `radial-gradient(circle at 50% 30%, ${colors.bgGlow} 0%, ${colors.bgMid} 45%, ${colors.bg} 100%)`,
+        ].join(", "),
         color: colors.text,
         fontFamily: fonts.body,
       }}
     >
+      {/* Soft light pillars at the edges of the stage. */}
+      {[0.06, 0.94].map((x) => (
+        <div
+          key={x}
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: `${x * 100}%`,
+            width: 70,
+            marginLeft: -35,
+            background: `linear-gradient(180deg, ${alpha(colors.highlight, 0.18)}, ${alpha(colors.orange, 0.1)} 60%, transparent)`,
+            filter: "blur(6px)",
+          }}
+        />
+      ))}
+      {showWatermark ? <Watermark /> : null}
       <AbsoluteFill style={{ bottom: 190 }}>{children}</AbsoluteFill>
       {showCaptions ? (
         <div
@@ -50,8 +74,8 @@ export const SceneShell: React.FC<{
             key={current}
             style={{
               opacity: fadeIn(frame, starts[current], 8),
-              backgroundColor: "rgba(0,0,0,0.55)",
-              border: `1px solid ${colors.panelEdge}`,
+              backgroundColor: alpha(colors.bg, 0.72),
+              border: `1px solid ${alpha(colors.primary, 0.35)}`,
               borderRadius: 16,
               padding: "18px 32px",
               fontSize: 38,

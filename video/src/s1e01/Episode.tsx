@@ -3,6 +3,7 @@ import { linearTiming, TransitionSeries } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { useVideoConfig } from "remotion";
 import { sceneDuration, TRANSITION_FRAMES } from "./narration";
+import { BrandIntro } from "./scenes/BrandIntro";
 import { BuildDescribe } from "./scenes/BuildDescribe";
 import { ColdOpen } from "./scenes/ColdOpen";
 import { DefineThree } from "./scenes/DefineThree";
@@ -21,6 +22,10 @@ export const Episode: React.FC = () => {
   const { fps } = useVideoConfig();
   return (
     <TransitionSeries>
+      <TransitionSeries.Sequence name="Whyme Labs intro" durationInFrames={sceneDuration("brand")} premountFor={fps}>
+        <BrandIntro />
+      </TransitionSeries.Sequence>
+      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
       <TransitionSeries.Sequence name="Title" durationInFrames={sceneDuration("title")} premountFor={fps}>
         <TitleCard />
       </TransitionSeries.Sequence>

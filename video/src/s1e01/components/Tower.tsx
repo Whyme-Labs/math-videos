@@ -1,5 +1,5 @@
 import type React from "react";
-import { colors, fonts } from "../theme";
+import { alpha, colors, fonts } from "../theme";
 
 export type Floor = {
   readonly symbol: string;
@@ -44,9 +44,9 @@ export const Tower: React.FC<{
               opacity: appear[i] ?? 0,
               translate: `0px ${(1 - (appear[i] ?? 0)) * 40}px`,
               borderRadius: 14,
-              border: `3px ${b > 0.5 ? "solid" : "dashed"} ${b > 0.5 ? colors.blue : colors.panelEdge}`,
-              backgroundColor: `rgba(88,166,255,${0.04 + 0.18 * b})`,
-              boxShadow: b > 0 ? `0 0 ${40 * b}px rgba(88,166,255,${0.45 * b})` : "none",
+              border: `3px ${b > 0.5 ? "solid" : "dashed"} ${b > 0.5 ? colors.primary : colors.panelEdge}`,
+              backgroundColor: alpha(colors.primary, 0.04 + 0.16 * b),
+              boxShadow: b > 0 ? `0 0 ${40 * b}px ${alpha(colors.orange, 0.5 * b)}` : "none",
               display: "flex",
               alignItems: "center",
               padding: "0 28px",
@@ -60,7 +60,7 @@ export const Tower: React.FC<{
                 marginLeft: "auto",
                 fontFamily: fonts.title,
                 fontSize: 60,
-                color: colors.gold,
+                color: colors.highlight,
                 opacity: question[i] ?? 0,
               }}
             >
