@@ -1,0 +1,26 @@
+# Math Videos
+
+A tutorial video series that rebuilds familiar mathematics from a different
+angle: instead of starting from rules to memorize, every topic starts from a
+question, hits a problem, and invents the structure that solves it.
+
+Two seasons are planned, plus a third that connects them:
+
+| Season | Title | Core question |
+|---|---|---|
+| 1 | **What Is a Number?** | Where do numbers come from, how big can infinity get, and what's left when we forget what numbers *are* and keep only what they *do*? |
+| 2 | **Spaces, Maps, and Measurements** | What does "linear" really mean, and which facts about a linear map don't depend on the coordinates you happen to pick? |
+| 3 | **Where the Roads Meet** | How groups, fields, and vector spaces turn out to be parts of one picture. |
+
+## Storyline documents
+
+- [`storyline/00-big-picture.md`](storyline/00-big-picture.md): the overall
+  thesis, the recurring threads, and how the seasons connect
+- [`storyline/01-numbers.md`](storyline/01-numbers.md): Season 1, episode by
+  episode
+- [`storyline/02-linear-algebra.md`](storyline/02-linear-algebra.md): Season
+  2, episode by episode
+- [`storyline/03-bridges-and-extensions.md`](storyline/03-bridges-and-extensions.md):
+  Season 3, plus optional side quests that go further
+- [`storyline/04-production-notes.md`](storyline/04-production-notes.md):
+  episode template, visual language, pacing, and audience
