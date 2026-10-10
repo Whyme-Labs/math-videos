@@ -21,6 +21,13 @@ Two seasons are planned, plus a third that connects them:
 - exercises with answers
 - history and references
 
+## Video
+
+[`video/`](video/README.md) is the Remotion project that renders the
+episodes. S1E01 is done; its narration script is in
+[`video/s1e01-narration.md`](video/s1e01-narration.md). The official
+Remotion agent skills are installed in `.claude/skills`.
+
 ## Storyline documents
 
 - [`storyline/00-big-picture.md`](storyline/00-big-picture.md): the overall
