@@ -18,8 +18,8 @@ export const Numerals: React.FC = () => {
   const frame = useCurrentFrame();
   const cues = useCues("numerals");
   // Label i is shown during [labelStart[i], labelStart[i+1]).
-  const labelStart = [cues[1] + 10, cues[2] + 10, cues[2] + 70, cues[2] + 130, cues[3] + 10];
-  const ring = progress(frame, cues[3] + 70, 40);
+  const labelStart = [cues[1] + 10, cues[2] + 10, cues[2] + 70, cues[2] + 130, cues[3] + 5];
+  const ring = progress(frame, cues[3] + 45, 35);
   const glow = 0.6 + 0.4 * Math.sin(frame / 10);
 
   return (
@@ -57,7 +57,7 @@ export const Numerals: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              opacity: window(frame, labelStart[i], i < NAMES.length - 1 ? labelStart[i + 1] : cues[3] + 70) * (1 - ring),
+              opacity: window(frame, labelStart[i], i < NAMES.length - 1 ? labelStart[i + 1] : cues[3] + 45) * (1 - ring),
             }}
           >
             <div style={{ fontFamily: fonts.math, fontSize: 110, color: colors.text }}>{n.text}</div>

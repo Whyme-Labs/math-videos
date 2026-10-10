@@ -36,7 +36,7 @@ export const ColdOpen: React.FC = () => {
   const cues = useCues("coldOpen");
   const { fps } = useVideoConfig();
   // In the final line, all three cards shrink toward the top-right tray.
-  const toTray = progress(frame, cues[5] + 60, 40);
+  const toTray = progress(frame, cues[5] + 10, 35);
   const nines = Math.min(12, Math.max(0, Math.floor((frame - cues[1]) / 6)));
   const diagonal = progress(frame, cues[3] + 20, 30);
   const sqrtDigits = "1.41421356237309504880";
@@ -104,7 +104,7 @@ export const ColdOpen: React.FC = () => {
           </div>
         </Card>
       </AbsoluteFill>
-      <Sequence name="Question tray" from={cues[5] + 85} premountFor={fps}>
+      <Sequence name="Question tray" from={cues[5] + 40} premountFor={fps}>
         <QuestionTray />
       </Sequence>
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>

@@ -109,7 +109,7 @@ export const DefineThree: React.FC = () => {
               scale: interpolate(fadeIn(frame, cues[6]), [0, 1], [0.95, 1]),
             }}
           >
-            Seeds of real answers, but not definitions yet.
+            Each returns later. None is a definition yet.
           </div>
         </div>
       </AbsoluteFill>

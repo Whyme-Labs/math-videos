@@ -14,7 +14,7 @@ const ROW_H = 74;
 export const Ladder: React.FC = () => {
   const frame = useCurrentFrame();
   const cues = useCues("ladder");
-  const stepEvery = 22;
+  const stepEvery = 15;
   const readUp = progress(frame, cues[2], 60);
   const digits = STEPS.map((s) => s.r).reverse().join("");
   const shown = Math.round(readUp * digits.length);

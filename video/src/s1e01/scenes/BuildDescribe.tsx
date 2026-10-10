@@ -95,7 +95,7 @@ export const BuildDescribe: React.FC = () => {
             scale: interpolate(fadeIn(frame, cues[6]), [0, 1], [0.9, 1]),
           }}
         >
-          A number is whatever behaves like one.
+          A number is anything that behaves like one.
         </div>
       </AbsoluteFill>
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>

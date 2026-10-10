@@ -15,7 +15,8 @@ so it can be previewed and rendered separately.
 
 ## How an episode is put together
 
-- **`narration.ts`** holds the voiceover, line by line. Scene lengths and
+- **`narration.ts`** holds the voiceover, line by line, edited with the
+  `unslop` and `humanizer` skills (run both on any new script). Scene lengths and
   every animation cue are computed from it, so editing the script re-times
   the picture. Lines are shown as captions until a voiceover is recorded.
 - **`scenes/`** has one component per scene, following the lesson's shot

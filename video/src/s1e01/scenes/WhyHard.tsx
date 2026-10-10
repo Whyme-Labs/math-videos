@@ -34,7 +34,7 @@ export const WhyHard: React.FC = () => {
       <QuestionTray />
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
         <div style={{ fontFamily: fonts.title, fontSize: 68, opacity: window(frame, 5, cues[1]) }}>
-          Questions about <span style={{ color: colors.highlight }}>definitions</span>, in disguise.
+          Each question needs a <span style={{ color: colors.highlight }}>definition</span>.
         </div>
       </AbsoluteFill>
 
