@@ -32,7 +32,7 @@ so it can be previewed and rendered separately.
 
 ## Music and cutting to the beat (卡点)
 
-The background track is `public/music/bgm.m4a`. It is kept out of git
+The background track is `public/music/bgm.wav`. It is kept out of git
 because it is licensed separately, so copy it there before rendering.
 `scripts/analyze-beats.py` measured it: 128 BPM, first beat at 0.472 s,
 and a bar every 1.875 s.

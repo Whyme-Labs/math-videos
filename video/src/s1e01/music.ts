@@ -1,7 +1,7 @@
-// Background music: "We Never" (instrumental), public/music/bgm.m4a.
+// Background music: "We Never" (instrumental), public/music/bgm.wav.
 // Measured with librosa (see video/README.md): a constant 128 BPM grid whose
 // first beat is at 0.4721 s and whose bars start every 4 beats from there.
-export const MUSIC_SRC = "music/bgm.m4a";
+export const MUSIC_SRC = "music/bgm.wav"; // WAV, not AAC, so bar-aligned trims are sample-accurate
 export const BEAT_SECONDS = 60 / 128;
 export const BAR_SECONDS = 4 * BEAT_SECONDS;
 export const FIRST_BEAT_SECONDS = 0.4721;
