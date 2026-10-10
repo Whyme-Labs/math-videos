@@ -2,7 +2,8 @@ import type React from "react";
 import { linearTiming, TransitionSeries } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { useVideoConfig } from "remotion";
-import { sceneDuration, TRANSITION_FRAMES } from "./narration";
+import { Music } from "./components/Music";
+import { musicSegments, sceneDuration, TRANSITION_FRAMES } from "./narration";
 import { BrandIntro } from "./scenes/BrandIntro";
 import { BuildDescribe } from "./scenes/BuildDescribe";
 import { ColdOpen } from "./scenes/ColdOpen";
@@ -21,54 +22,138 @@ import { WhyHard } from "./scenes/WhyHard";
 export const Episode: React.FC = () => {
   const { fps } = useVideoConfig();
   return (
-    <TransitionSeries>
-      <TransitionSeries.Sequence name="Whyme Labs intro" durationInFrames={sceneDuration("brand")} premountFor={fps}>
-        <BrandIntro />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Title" durationInFrames={sceneDuration("title")} premountFor={fps}>
-        <TitleCard />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Cold open" durationInFrames={sceneDuration("coldOpen")} premountFor={fps}>
-        <ColdOpen />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Defining three" durationInFrames={sceneDuration("defineThree")} premountFor={fps}>
-        <DefineThree />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Numerals are names" durationInFrames={sceneDuration("numerals")} premountFor={fps}>
-        <Numerals />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Division ladder" durationInFrames={sceneDuration("ladder")} premountFor={fps}>
-        <Ladder />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Why the questions are hard" durationInFrames={sceneDuration("whyHard")} premountFor={fps}>
-        <WhyHard />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Cups and saucers" durationInFrames={sceneDuration("matching")} premountFor={fps}>
-        <Matching />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Number tower" durationInFrames={sceneDuration("tower")} premountFor={fps}>
-        <TowerScene />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Build or describe" durationInFrames={sceneDuration("buildDescribe")} premountFor={fps}>
-        <BuildDescribe />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="Roadmap" durationInFrames={sceneDuration("roadmap")} premountFor={fps}>
-        <Roadmap />
-      </TransitionSeries.Sequence>
-      <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })} />
-      <TransitionSeries.Sequence name="End card" durationInFrames={sceneDuration("endCard")} premountFor={fps}>
-        <EndCard />
-      </TransitionSeries.Sequence>
-    </TransitionSeries>
+    <>
+      <Music segments={musicSegments} />
+      <TransitionSeries>
+        <TransitionSeries.Sequence
+          name="Whyme Labs intro"
+          durationInFrames={sceneDuration("brand")}
+          premountFor={fps}
+        >
+          <BrandIntro />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Title"
+          durationInFrames={sceneDuration("title")}
+          premountFor={fps}
+        >
+          <TitleCard />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Cold open"
+          durationInFrames={sceneDuration("coldOpen")}
+          premountFor={fps}
+        >
+          <ColdOpen />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Defining three"
+          durationInFrames={sceneDuration("defineThree")}
+          premountFor={fps}
+        >
+          <DefineThree />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Numerals are names"
+          durationInFrames={sceneDuration("numerals")}
+          premountFor={fps}
+        >
+          <Numerals />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Division ladder"
+          durationInFrames={sceneDuration("ladder")}
+          premountFor={fps}
+        >
+          <Ladder />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Why the questions are hard"
+          durationInFrames={sceneDuration("whyHard")}
+          premountFor={fps}
+        >
+          <WhyHard />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Cups and saucers"
+          durationInFrames={sceneDuration("matching")}
+          premountFor={fps}
+        >
+          <Matching />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Number tower"
+          durationInFrames={sceneDuration("tower")}
+          premountFor={fps}
+        >
+          <TowerScene />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Build or describe"
+          durationInFrames={sceneDuration("buildDescribe")}
+          premountFor={fps}
+        >
+          <BuildDescribe />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="Roadmap"
+          durationInFrames={sceneDuration("roadmap")}
+          premountFor={fps}
+        >
+          <Roadmap />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
+          presentation={fade()}
+          timing={linearTiming({ durationInFrames: TRANSITION_FRAMES })}
+        />
+        <TransitionSeries.Sequence
+          name="End card"
+          durationInFrames={sceneDuration("endCard")}
+          premountFor={fps}
+        >
+          <EndCard />
+        </TransitionSeries.Sequence>
+      </TransitionSeries>
+    </>
   );
 };

@@ -1,15 +1,13 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { narration, sceneTiming, type SceneId } from "../narration";
+import { beatPulse } from "../music";
+import { narration, sceneStartFrame, sceneTiming, type SceneId } from "../narration";
 import { alpha, colors, fonts } from "../theme";
 import { Watermark } from "./Brand";
 import { fadeIn } from "./anim";
 
 // Start frames of each narration line in this scene.
-export const useCues = (id: SceneId) => {
-  const { fps } = useVideoConfig();
-  return sceneTiming(id, fps).starts;
-};
+export const useCues = (id: SceneId) => sceneTiming(id).starts;
 
 // Background, safe-area content slot, and narration captions for one scene.
 export const SceneShell: React.FC<{
@@ -20,8 +18,10 @@ export const SceneShell: React.FC<{
 }> = ({ id, children, showCaptions = true, showWatermark = true }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const { starts } = sceneTiming(id, fps);
+  const { starts } = sceneTiming(id);
   const lines = narration[id];
+  // Lights pulse on the beat of the background music.
+  const pulse = beatPulse((sceneStartFrame(id) + frame) / fps);
   let current = 0;
   for (let i = 0; i < starts.length; i++) if (frame >= starts[i]) current = i;
 
@@ -50,11 +50,19 @@ export const SceneShell: React.FC<{
             left: `${x * 100}%`,
             width: 70,
             marginLeft: -35,
-            background: `linear-gradient(180deg, ${alpha(colors.highlight, 0.18)}, ${alpha(colors.orange, 0.1)} 60%, transparent)`,
+            background: `linear-gradient(180deg, ${alpha(colors.highlight, 0.18 + 0.22 * pulse)}, ${alpha(colors.orange, 0.1 + 0.15 * pulse)} 60%, transparent)`,
             filter: "blur(6px)",
           }}
         />
       ))}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `radial-gradient(ellipse 38% 45% at 50% 108%, ${alpha(colors.primary, 0.22)}, transparent 70%)`,
+          opacity: pulse,
+        }}
+      />
       {showWatermark ? <Watermark /> : null}
       <AbsoluteFill style={{ bottom: 190 }}>{children}</AbsoluteFill>
       {showCaptions ? (

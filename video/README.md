@@ -30,6 +30,28 @@ so it can be previewed and rendered separately.
   logo cut-outs are in `public/brand`. Fonts are bundled in `public/fonts`
   (from Google Fonts, SIL Open Font License) so renders work offline.
 
+## Music and cutting to the beat (卡点)
+
+The background track is `public/music/bgm.m4a`. It is kept out of git
+because it is licensed separately, so copy it there before rendering.
+`scripts/analyze-beats.py` measured it: 128 BPM, first beat at 0.472 s,
+and a bar every 1.875 s.
+
+- **`music.ts`** holds that beat grid and the splice plan. The song plays
+  from the start, the 120-second body (bars 8 to 72) loops as needed, and
+  the song's real ending (bars 72 to 80) closes the video. Every splice is
+  a whole number of bars, so the beat never skips.
+- **`narration.ts`** builds the timeline on the grid. Each scene cut (the
+  middle of its crossfade) lands on the first beat of a bar, and each
+  caption change moves to the nearest beat. The scene animations key off
+  the captions, so they hit the beat too.
+- **`SceneShell`** pulses the stage lights on every beat, and harder on
+  the first beat of each bar.
+
+For a new track, run the script, update the constants at the top of
+`music.ts` (tempo, first beat, body and outro bars), and the cuts re-snap
+on their own.
+
 ## Commands
 
 ```bash

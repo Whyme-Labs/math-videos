@@ -1,3 +1,5 @@
+import { barTime, BEAT_SECONDS, alignEndBar, musicPlan, nearestBeat, nextBarIndex } from "./music";
+
 // Narration for S1E01, condensed from lessons/s1/e01-what-is-a-number.md.
 // Each scene's timing is derived from these lines, so editing the script
 // re-times the video. Scene components look up cue frames by line index.
@@ -103,21 +105,9 @@ const MIN_LINE_SECONDS = 2.4;
 export const lineSeconds = (line: string) =>
   Math.max(MIN_LINE_SECONDS, line.split(/\s+/).length / WORDS_PER_SECOND + LINE_PADDING_SECONDS);
 
-// Start frame of each line within its scene, plus the scene's total length.
 // Scenes without narration (the brand sting) have a fixed length.
-const FIXED_SECONDS: Partial<Record<SceneId, number>> = { brand: 4 };
-
-export const sceneTiming = (id: SceneId, fps: number) => {
-  const fixed = FIXED_SECONDS[id];
-  if (fixed !== undefined) return { starts: [0], durationInFrames: Math.round(fixed * fps) };
-  const starts: number[] = [];
-  let t = 0;
-  for (const line of narration[id]) {
-    starts.push(Math.round(t * fps));
-    t += lineSeconds(line);
-  }
-  return { starts, durationInFrames: Math.round(t * fps) };
-};
+const FIXED_SECONDS: Partial<Record<SceneId, number>> = { brand: 3.5 };
+const MIN_GAP_SECONDS = 1.5;
 
 export const FPS = 30;
 export const TRANSITION_FRAMES = 15;
@@ -137,9 +127,62 @@ export const sceneOrder: SceneId[] = [
   "endCard",
 ];
 
-export const sceneDuration = (id: SceneId) => sceneTiming(id, FPS).durationInFrames;
+type SceneTiming = { readonly start: number; readonly starts: number[]; readonly durationInFrames: number };
 
-// Transitions overlap neighbouring scenes, so they shorten the total.
-export const episodeDuration =
-  sceneOrder.reduce((sum, id) => sum + sceneDuration(id), 0) -
-  TRANSITION_FRAMES * (sceneOrder.length - 1);
+// Cut to the beat (卡点): every scene cut (the middle of its crossfade) lands
+// on the first beat of a bar, and every caption change moves to the nearest
+// beat. Animations key off caption cues, so they land on the beat too.
+const buildTimeline = () => {
+  const half = TRANSITION_FRAMES / 2 / FPS;
+  const timeline = {} as Record<SceneId, SceneTiming>;
+  let startFrame = 0;
+  let endBar = 0;
+  sceneOrder.forEach((id, index) => {
+    const start = startFrame / FPS;
+    const lines = narration[id];
+    const fixed = FIXED_SECONDS[id];
+    const rel: number[] = [0];
+    let naturalEnd = fixed ?? 0;
+    if (fixed === undefined) {
+      let t = 0;
+      lines.forEach((line, j) => {
+        if (j > 0) {
+          let snapped = nearestBeat(start + t) - start;
+          while (snapped < rel[j - 1] + MIN_GAP_SECONDS) snapped += BEAT_SECONDS;
+          rel.push(snapped);
+          t = snapped;
+        }
+        t += lineSeconds(line);
+      });
+      naturalEnd = t;
+    }
+    let end: number;
+    if (index < sceneOrder.length - 1) {
+      end = barTime(nextBarIndex(start + naturalEnd - half - 0.15)) + half;
+    } else {
+      endBar = alignEndBar(nextBarIndex(start + naturalEnd));
+      end = barTime(endBar);
+    }
+    const durationInFrames = Math.round(end * FPS) - startFrame;
+    timeline[id] = {
+      start: startFrame,
+      starts: rel.map((r) => Math.round((start + r) * FPS) - startFrame),
+      durationInFrames,
+    };
+    startFrame += durationInFrames - TRANSITION_FRAMES;
+  });
+  return { timeline, endBar };
+};
+
+const { timeline, endBar } = buildTimeline();
+
+// Start frame of each line within its scene, plus the scene's total length.
+export const sceneTiming = (id: SceneId) => timeline[id];
+
+export const sceneStartFrame = (id: SceneId) => timeline[id].start;
+
+export const sceneDuration = (id: SceneId) => timeline[id].durationInFrames;
+
+export const episodeDuration = sceneStartFrame("endCard") + sceneDuration("endCard");
+
+export const musicSegments = musicPlan(endBar);

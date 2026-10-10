@@ -5,3 +5,6 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+
+# Background music is licensed separately; keep it out of git.
+public/music/
