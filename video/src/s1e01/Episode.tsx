@@ -3,7 +3,14 @@ import { linearTiming, TransitionSeries } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { useVideoConfig } from "remotion";
 import { Music } from "./components/Music";
-import { musicSegments, sceneDuration, TRANSITION_FRAMES } from "./narration";
+import { Sfx } from "./components/Sfx";
+import {
+  musicSegments,
+  sceneDuration,
+  sceneOrder,
+  sceneStartFrame,
+  TRANSITION_FRAMES,
+} from "./narration";
 import { BrandIntro } from "./scenes/BrandIntro";
 import { BuildDescribe } from "./scenes/BuildDescribe";
 import { ColdOpen } from "./scenes/ColdOpen";
@@ -24,6 +31,10 @@ export const Episode: React.FC = () => {
   return (
     <>
       <Music segments={musicSegments} />
+      {/* A soft whoosh under every crossfade between scenes. */}
+      {sceneOrder.slice(1).map((id) => (
+        <Sfx key={id} name="whoosh" at={sceneStartFrame(id) - 2} />
+      ))}
       <TransitionSeries>
         <TransitionSeries.Sequence
           name="Whyme Labs intro"

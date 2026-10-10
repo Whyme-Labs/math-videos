@@ -1,7 +1,14 @@
 import type React from "react";
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { BrandMark, BrandWordmark } from "../components/Brand";
 import { fadeIn, fadeOut, riseIn } from "../components/anim";
+import { Sfx } from "../components/Sfx";
 import { SceneShell } from "../components/SceneShell";
 import { alpha, colors } from "../theme";
 
@@ -13,7 +20,17 @@ export const BrandIntro: React.FC = () => {
 
   return (
     <SceneShell id="brand" showCaptions={false} showWatermark={false}>
-      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", bottom: -190, opacity: out }}>
+      <Sfx name="sparkle" at={2} />
+      <Sfx name="chime" at={1.5 * fps} volume={0.25} />
+
+      <AbsoluteFill
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          bottom: -190,
+          opacity: out,
+        }}
+      >
         <div
           style={{
             position: "absolute",
@@ -41,7 +58,14 @@ export const BrandIntro: React.FC = () => {
             opacity: fadeIn(frame, 0, 18),
           }}
         />
-        <BrandWordmark height={64} style={{ marginTop: 56, opacity: fadeIn(frame, 0.8 * fps), translate: riseIn(frame, 0.8 * fps) }} />
+        <BrandWordmark
+          height={64}
+          style={{
+            marginTop: 56,
+            opacity: fadeIn(frame, 0.8 * fps),
+            translate: riseIn(frame, 0.8 * fps),
+          }}
+        />
         <div
           style={{
             marginTop: 30,

@@ -48,6 +48,13 @@ and a bar every 1.875 s.
 - **`SceneShell`** pulses the stage lights on every beat, and harder on
   the first beat of each bar.
 
+Sound effects are original and committed. `scripts/make-sfx.py` synthesizes
+them into `public/sfx` (pops, ticks, whooshes, pencil scratches, cup clinks,
+thuds, page flicks, and bells and plucks tuned to G minor, the key of the
+track). `components/Sfx.tsx` plays one at a scene frame, for example
+`<Sfx name="pop" at={cues[1]} />`. The scenes place them on the frames
+where animations happen, and every scene cut gets a soft whoosh.
+
 For a new track, run the script, update the constants at the top of
 `music.ts` (tempo, first beat, body and outro bars), and the cuts re-snap
 on their own.

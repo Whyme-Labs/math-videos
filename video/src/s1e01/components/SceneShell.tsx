@@ -1,7 +1,12 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { beatPulse } from "../music";
-import { narration, sceneStartFrame, sceneTiming, type SceneId } from "../narration";
+import {
+  narration,
+  sceneStartFrame,
+  sceneTiming,
+  type SceneId,
+} from "../narration";
 import { alpha, colors, fonts } from "../theme";
 import { Watermark } from "./Brand";
 import { fadeIn } from "./anim";

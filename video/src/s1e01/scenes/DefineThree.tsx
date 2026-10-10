@@ -1,23 +1,43 @@
 import type React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { fadeIn, progress, riseIn } from "../components/anim";
+import { Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { QuestionTray } from "../components/QuestionTray";
 import { colors, fonts } from "../theme";
 
-const Hand: React.FC<{ readonly style?: React.CSSProperties }> = ({ style }) => (
+const Hand: React.FC<{ readonly style?: React.CSSProperties }> = ({
+  style,
+}) => (
   <svg width={300} height={420} viewBox="0 0 300 420" style={style}>
     {[40, 110, 180].map((x, i) => (
-      <rect key={x} x={x} y={i === 1 ? 10 : 40} width={60} height={220} rx={30} fill="#e8b996" />
+      <rect
+        key={x}
+        x={x}
+        y={i === 1 ? 10 : 40}
+        width={60}
+        height={220}
+        rx={30}
+        fill="#e8b996"
+      />
     ))}
     <rect x={30} y={200} width={250} height={200} rx={70} fill="#e8b996" />
   </svg>
 );
 
 const ATTEMPTS = [
-  { claim: "“3 is the symbol 3.”", flaw: "III, three, trois: a symbol is just a name." },
-  { claim: "“3 is what all trios have in common.”", flaw: "Circular: spotting a trio already needs 3." },
-  { claim: "“3 is a point on the number line.”", flaw: "Where did the line come from?" },
+  {
+    claim: "“3 is the symbol 3.”",
+    flaw: "III, three, trois: a symbol is just a name.",
+  },
+  {
+    claim: "“3 is what all trios have in common.”",
+    flaw: "Circular: spotting a trio already needs 3.",
+  },
+  {
+    claim: "“3 is a point on the number line.”",
+    flaw: "Where did the line come from?",
+  },
   { claim: "“3 is 2 + 1.”", flaw: "Then what are 2, 1 and + ?" },
 ];
 
@@ -29,6 +49,13 @@ export const DefineThree: React.FC = () => {
 
   return (
     <SceneShell id="defineThree">
+      <Sfx name="pop" at={5} />
+      <Sfx name="page" at={cues[1]} />
+      {ATTEMPTS.map((a, i) => (
+        <Sfx key={a.claim} name="scratch" at={cues[2 + i] + 45} />
+      ))}
+      <Sfx name="chime" at={cues[6]} volume={0.25} />
+
       <QuestionTray />
       {/* Phase 1: three fingers and an empty dictionary entry. */}
       <AbsoluteFill
@@ -40,7 +67,9 @@ export const DefineThree: React.FC = () => {
           opacity: 1 - phase2,
         }}
       >
-        <Hand style={{ opacity: fadeIn(frame, 5), translate: riseIn(frame, 5, 60) }} />
+        <Hand
+          style={{ opacity: fadeIn(frame, 5), translate: riseIn(frame, 5, 60) }}
+        />
         <div
           style={{
             width: 760,
@@ -54,17 +83,56 @@ export const DefineThree: React.FC = () => {
           }}
         >
           <div style={{ fontSize: 64, fontWeight: 600 }}>
-            three <span style={{ fontSize: 40, fontStyle: "italic", color: colors.brandPurple }}>(n.)</span>
+            three{" "}
+            <span
+              style={{
+                fontSize: 40,
+                fontStyle: "italic",
+                color: colors.brandPurple,
+              }}
+            >
+              (n.)
+            </span>
           </div>
-          <div style={{ fontSize: 44, marginTop: 24, display: "flex", alignItems: "center", gap: 6 }}>
-            1. <span style={{ display: "inline-block", width: 3, height: 50, backgroundColor: colors.ink, opacity: blink }} />
+          <div
+            style={{
+              fontSize: 44,
+              marginTop: 24,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            1.{" "}
+            <span
+              style={{
+                display: "inline-block",
+                width: 3,
+                height: 50,
+                backgroundColor: colors.ink,
+                opacity: blink,
+              }}
+            />
           </div>
         </div>
       </AbsoluteFill>
 
       {/* Phase 2: four attempts, each struck through with its flaw. */}
-      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: phase2 }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 34, width: 1500 }}>
+      <AbsoluteFill
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          opacity: phase2,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 34,
+            width: 1500,
+          }}
+        >
           {ATTEMPTS.map((a, i) => {
             const start = cues[2 + i];
             const strike = progress(frame, start + 45, 20);
@@ -79,8 +147,17 @@ export const DefineThree: React.FC = () => {
                   translate: riseIn(frame, start),
                 }}
               >
-                <div style={{ fontFamily: fonts.title, fontSize: 46, width: 900, whiteSpace: "nowrap" }}>
-                  <span style={{ position: "relative", display: "inline-block" }}>
+                <div
+                  style={{
+                    fontFamily: fonts.title,
+                    fontSize: 46,
+                    width: 900,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <span
+                    style={{ position: "relative", display: "inline-block" }}
+                  >
                     {a.claim}
                     <span
                       style={{
@@ -95,7 +172,16 @@ export const DefineThree: React.FC = () => {
                     />
                   </span>
                 </div>
-                <div style={{ fontSize: 34, color: colors.muted, width: 560, opacity: fadeIn(frame, start + 50) }}>{a.flaw}</div>
+                <div
+                  style={{
+                    fontSize: 34,
+                    color: colors.muted,
+                    width: 560,
+                    opacity: fadeIn(frame, start + 50),
+                  }}
+                >
+                  {a.flaw}
+                </div>
               </div>
             );
           })}

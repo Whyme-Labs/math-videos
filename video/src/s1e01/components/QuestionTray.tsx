@@ -6,7 +6,9 @@ import { fadeIn } from "./anim";
 // The season-long "open questions" tray (top-right), introduced in the cold open.
 export const QUESTIONS = ["0.999… = 1 ?", "√2 a number?", "more fractions?"];
 
-export const QuestionTray: React.FC<{ readonly style?: React.CSSProperties }> = ({ style }) => {
+export const QuestionTray: React.FC<{
+  readonly style?: React.CSSProperties;
+}> = ({ style }) => {
   const frame = useCurrentFrame();
   const pulse = 0.75 + 0.25 * Math.sin(frame / 12);
   return (

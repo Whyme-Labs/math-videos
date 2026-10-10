@@ -1,7 +1,14 @@
 import type React from "react";
-import { AbsoluteFill, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  Sequence,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { fadeIn, progress, riseIn } from "../components/anim";
 import { QuestionTray } from "../components/QuestionTray";
+import { Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { colors, fonts } from "../theme";
 
@@ -25,9 +32,29 @@ const Card: React.FC<{
       ...style,
     }}
   >
-    <div style={{ fontSize: 30, color: colors.highlight, letterSpacing: 4 }}>QUESTION {index}</div>
-    <div style={{ fontFamily: fonts.math, fontSize: 54, marginTop: 18, textAlign: "center" }}>{title}</div>
-    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>{children}</div>
+    <div style={{ fontSize: 30, color: colors.highlight, letterSpacing: 4 }}>
+      QUESTION {index}
+    </div>
+    <div
+      style={{
+        fontFamily: fonts.math,
+        fontSize: 54,
+        marginTop: 18,
+        textAlign: "center",
+      }}
+    >
+      {title}
+    </div>
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {children}
+    </div>
   </div>
 );
 
@@ -40,10 +67,19 @@ export const ColdOpen: React.FC = () => {
   const nines = Math.min(12, Math.max(0, Math.floor((frame - cues[1]) / 6)));
   const diagonal = progress(frame, cues[3] + 20, 30);
   const sqrtDigits = "1.41421356237309504880";
-  const shownDigits = Math.min(sqrtDigits.length, Math.max(0, Math.floor((frame - cues[3] - 50) / 3)));
+  const shownDigits = Math.min(
+    sqrtDigits.length,
+    Math.max(0, Math.floor((frame - cues[3] - 50) / 3)),
+  );
 
   return (
     <SceneShell id="coldOpen">
+      <Sfx name="pop" at={10} volume={0.3} />
+      <Sfx name="pop" at={cues[1]} />
+      <Sfx name="pop" at={cues[3]} />
+      <Sfx name="pop" at={cues[4]} />
+      <Sfx name="whoosh" at={cues[5] + 8} />
+
       <AbsoluteFill
         style={{
           flexDirection: "row",
@@ -58,9 +94,20 @@ export const ColdOpen: React.FC = () => {
         <Card
           index={1}
           title="0.999… = 1 ?"
-          style={{ opacity: fadeIn(frame, cues[1]), translate: riseIn(frame, cues[1]) }}
+          style={{
+            opacity: fadeIn(frame, cues[1]),
+            translate: riseIn(frame, cues[1]),
+          }}
         >
-          <div style={{ fontFamily: fonts.mono, fontSize: 40, color: colors.primary, wordBreak: "break-all", textAlign: "center" }}>
+          <div
+            style={{
+              fontFamily: fonts.mono,
+              fontSize: 40,
+              color: colors.primary,
+              wordBreak: "break-all",
+              textAlign: "center",
+            }}
+          >
             0.{"9".repeat(nines)}
             <span style={{ color: colors.muted }}>…</span>
           </div>
@@ -68,11 +115,29 @@ export const ColdOpen: React.FC = () => {
         <Card
           index={2}
           title="Is √2 a number?"
-          style={{ opacity: fadeIn(frame, cues[3]), translate: riseIn(frame, cues[3]) }}
+          style={{
+            opacity: fadeIn(frame, cues[3]),
+            translate: riseIn(frame, cues[3]),
+          }}
         >
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 20,
+            }}
+          >
             <svg width={220} height={220} viewBox="-10 -10 220 220">
-              <rect x={0} y={0} width={200} height={200} fill="none" stroke={colors.text} strokeWidth={4} />
+              <rect
+                x={0}
+                y={0}
+                width={200}
+                height={200}
+                fill="none"
+                stroke={colors.text}
+                strokeWidth={4}
+              />
               <line
                 x1={0}
                 y1={200}
@@ -81,9 +146,24 @@ export const ColdOpen: React.FC = () => {
                 stroke={colors.orange}
                 strokeWidth={6}
               />
-              <text x={100} y={225} fill={colors.muted} fontSize={24} textAnchor="middle">1</text>
+              <text
+                x={100}
+                y={225}
+                fill={colors.muted}
+                fontSize={24}
+                textAnchor="middle"
+              >
+                1
+              </text>
             </svg>
-            <div style={{ fontFamily: fonts.mono, fontSize: 26, color: colors.orange, height: 34 }}>
+            <div
+              style={{
+                fontFamily: fonts.mono,
+                fontSize: 26,
+                color: colors.orange,
+                height: 34,
+              }}
+            >
               {sqrtDigits.slice(0, shownDigits)}
               {shownDigits > 0 ? "…" : ""}
             </div>
@@ -92,13 +172,41 @@ export const ColdOpen: React.FC = () => {
         <Card
           index={3}
           title="More fractions?"
-          style={{ opacity: fadeIn(frame, cues[4]), translate: riseIn(frame, cues[4]) }}
+          style={{
+            opacity: fadeIn(frame, cues[4]),
+            translate: riseIn(frame, cues[4]),
+          }}
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: 26, alignItems: "center" }}>
-            <div style={{ fontSize: 30, color: colors.muted, marginBottom: 6 }}>than whole numbers?</div>
-            <div style={{ fontFamily: fonts.mono, fontSize: 34, color: colors.primary }}>1 2 3 4 5 …</div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 26,
+              alignItems: "center",
+            }}
+          >
+            <div style={{ fontSize: 30, color: colors.muted, marginBottom: 6 }}>
+              than whole numbers?
+            </div>
+            <div
+              style={{
+                fontFamily: fonts.mono,
+                fontSize: 34,
+                color: colors.primary,
+              }}
+            >
+              1 2 3 4 5 …
+            </div>
             <div style={{ fontSize: 34, color: colors.muted }}>vs</div>
-            <div style={{ fontFamily: fonts.math, fontSize: 34, color: colors.orange, textAlign: "center", lineHeight: 1.5 }}>
+            <div
+              style={{
+                fontFamily: fonts.math,
+                fontSize: 34,
+                color: colors.orange,
+                textAlign: "center",
+                lineHeight: 1.5,
+              }}
+            >
               ½ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ …
             </div>
           </div>
@@ -112,7 +220,10 @@ export const ColdOpen: React.FC = () => {
           style={{
             fontFamily: fonts.title,
             fontSize: 84,
-            opacity: Math.min(fadeIn(frame, 10), 1 - fadeIn(frame, cues[1] - 15)),
+            opacity: Math.min(
+              fadeIn(frame, 10),
+              1 - fadeIn(frame, cues[1] - 15),
+            ),
           }}
         >
           Three easy questions.

@@ -28,7 +28,14 @@ export const Tower: React.FC<{
   readonly style?: React.CSSProperties;
 }> = ({ appear, built, question, style }) => {
   return (
-    <div style={{ position: "relative", width: FLOOR_W, height: TOWER_HEIGHT, ...style }}>
+    <div
+      style={{
+        position: "relative",
+        width: FLOOR_W,
+        height: TOWER_HEIGHT,
+        ...style,
+      }}
+    >
       {FLOORS.map((floor, i) => {
         const y = TOWER_HEIGHT - (i + 1) * (FLOOR_H + GAP);
         const b = built[i] ?? 0;
@@ -46,15 +53,24 @@ export const Tower: React.FC<{
               borderRadius: 14,
               border: `3px ${b > 0.5 ? "solid" : "dashed"} ${b > 0.5 ? colors.primary : colors.panelEdge}`,
               backgroundColor: alpha(colors.primary, 0.04 + 0.16 * b),
-              boxShadow: b > 0 ? `0 0 ${40 * b}px ${alpha(colors.orange, 0.5 * b)}` : "none",
+              boxShadow:
+                b > 0
+                  ? `0 0 ${40 * b}px ${alpha(colors.orange, 0.5 * b)}`
+                  : "none",
               display: "flex",
               alignItems: "center",
               padding: "0 28px",
               gap: 26,
             }}
           >
-            <span style={{ fontFamily: fonts.math, fontSize: 72, lineHeight: 1 }}>{floor.symbol}</span>
-            <span style={{ fontSize: 34, color: colors.muted }}>{floor.name}</span>
+            <span
+              style={{ fontFamily: fonts.math, fontSize: 72, lineHeight: 1 }}
+            >
+              {floor.symbol}
+            </span>
+            <span style={{ fontSize: 34, color: colors.muted }}>
+              {floor.name}
+            </span>
             <span
               style={{
                 marginLeft: "auto",

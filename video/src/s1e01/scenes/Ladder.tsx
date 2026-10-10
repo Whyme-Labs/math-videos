@@ -2,12 +2,14 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { fadeIn, progress, riseIn } from "../components/anim";
 import { QuestionTray } from "../components/QuestionTray";
+import { PLUCKS, Sfx } from "../components/Sfx";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { alpha, colors, fonts } from "../theme";
 
 // Base-2 conversion of 45 by repeated division (checked: 45 = 101101₂).
 const STEPS: { n: number; q: number; r: number }[] = [];
-for (let n = 45; n > 0; n = Math.floor(n / 2)) STEPS.push({ n, q: Math.floor(n / 2), r: n % 2 });
+for (let n = 45; n > 0; n = Math.floor(n / 2))
+  STEPS.push({ n, q: Math.floor(n / 2), r: n % 2 });
 
 const ROW_H = 74;
 
@@ -16,15 +18,53 @@ export const Ladder: React.FC = () => {
   const cues = useCues("ladder");
   const stepEvery = 15;
   const readUp = progress(frame, cues[2], 60);
-  const digits = STEPS.map((s) => s.r).reverse().join("");
+  const digits = STEPS.map((s) => s.r)
+    .reverse()
+    .join("");
   const shown = Math.round(readUp * digits.length);
+  // Frame where each remainder lights up, so its pluck lands on the animation.
+  const digitFrames = Array.from({ length: digits.length }, (_, d) => {
+    let f = cues[2];
+    while (
+      f < cues[2] + 60 &&
+      Math.round(progress(f, cues[2], 60) * digits.length) <= d
+    )
+      f++;
+    return f;
+  });
   const theorem = fadeIn(frame, cues[3]);
 
   return (
     <SceneShell id="ladder">
+      {STEPS.map((s, i) => (
+        <Sfx
+          key={s.n}
+          name="tick"
+          at={i === 0 ? cues[0] + 30 : cues[1] + i * stepEvery}
+        />
+      ))}
+      {digitFrames.map((f, i) => (
+        <Sfx key={i} name={PLUCKS[i]} at={f} />
+      ))}
+      <Sfx name="chime" at={cues[3]} />
+      <Sfx name="pop" at={cues[4]} />
+
       <QuestionTray />
-      <AbsoluteFill style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 120 }}>
-        <div style={{ position: "relative", width: 640, height: STEPS.length * ROW_H }}>
+      <AbsoluteFill
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 120,
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            width: 640,
+            height: STEPS.length * ROW_H,
+          }}
+        >
           {STEPS.map((s, i) => {
             const start = cues[1] + i * stepEvery;
             const lit = readUp > 0 && STEPS.length - 1 - i < shown;
@@ -58,7 +98,9 @@ export const Ladder: React.FC = () => {
                     alignItems: "center",
                     border: `3px solid ${colors.orange}`,
                     color: colors.orange,
-                    backgroundColor: lit ? alpha(colors.orange, 0.3) : "transparent",
+                    backgroundColor: lit
+                      ? alpha(colors.orange, 0.3)
+                      : "transparent",
                   }}
                 >
                   {s.r}
@@ -70,13 +112,20 @@ export const Ladder: React.FC = () => {
           <svg
             width={60}
             height={STEPS.length * ROW_H}
-            style={{ position: "absolute", left: 650, top: 0, opacity: fadeIn(frame, cues[2]) }}
+            style={{
+              position: "absolute",
+              left: 650,
+              top: 0,
+              opacity: fadeIn(frame, cues[2]),
+            }}
           >
             <line
               x1={30}
               y1={STEPS.length * ROW_H - 20}
               x2={30}
-              y2={STEPS.length * ROW_H - 20 - readUp * (STEPS.length * ROW_H - 50)}
+              y2={
+                STEPS.length * ROW_H - 20 - readUp * (STEPS.length * ROW_H - 50)
+              }
               stroke={colors.orange}
               strokeWidth={5}
             />
@@ -89,10 +138,28 @@ export const Ladder: React.FC = () => {
           </svg>
         </div>
 
-        <div style={{ width: 780, display: "flex", flexDirection: "column", gap: 40 }}>
-          <div style={{ fontFamily: fonts.math, fontSize: 96, opacity: fadeIn(frame, cues[2]) }}>
-            45 = <span style={{ color: colors.orange }}>{digits.slice(0, shown)}</span>
-            <span style={{ fontSize: 52, color: colors.orange }}>{shown === digits.length ? "₂" : ""}</span>
+        <div
+          style={{
+            width: 780,
+            display: "flex",
+            flexDirection: "column",
+            gap: 40,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: fonts.math,
+              fontSize: 96,
+              opacity: fadeIn(frame, cues[2]),
+            }}
+          >
+            45 ={" "}
+            <span style={{ color: colors.orange }}>
+              {digits.slice(0, shown)}
+            </span>
+            <span style={{ fontSize: 52, color: colors.orange }}>
+              {shown === digits.length ? "₂" : ""}
+            </span>
           </div>
           <div
             style={{
@@ -106,10 +173,18 @@ export const Ladder: React.FC = () => {
               lineHeight: 1.45,
             }}
           >
-            <b style={{ color: colors.primary }}>Theorem.</b> For any base b ≥ 2, every whole number n ≥ 1 has
+            <b style={{ color: colors.primary }}>Theorem.</b> For any base b ≥
+            2, every whole number n ≥ 1 has
             <b> exactly one</b> base-b numeral.
           </div>
-          <div style={{ display: "flex", gap: 16, opacity: fadeIn(frame, cues[4]), translate: riseIn(frame, cues[4]) }}>
+          <div
+            style={{
+              display: "flex",
+              gap: 16,
+              opacity: fadeIn(frame, cues[4]),
+              translate: riseIn(frame, cues[4]),
+            }}
+          >
             {["division algorithm", "induction"].map((t) => (
               <span
                 key={t}
@@ -124,7 +199,11 @@ export const Ladder: React.FC = () => {
                 uses: {t}
               </span>
             ))}
-            <span style={{ fontSize: 30, padding: "10px 0", color: colors.muted }}>→ earned in E02, E03</span>
+            <span
+              style={{ fontSize: 30, padding: "10px 0", color: colors.muted }}
+            >
+              → earned in E02, E03
+            </span>
           </div>
         </div>
       </AbsoluteFill>
