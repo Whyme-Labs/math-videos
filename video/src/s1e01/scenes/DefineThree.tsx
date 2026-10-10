@@ -1,203 +1,479 @@
 import type React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { fadeIn, progress, riseIn } from "../components/anim";
-import { Sfx } from "../components/Sfx";
-import { SceneShell, useCues } from "../components/SceneShell";
+import {
+  AbsoluteFill,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { glide, ramp, springIn, typed } from "../components/motion";
 import { QuestionTray } from "../components/QuestionTray";
+import { PLUCKS, Sfx } from "../components/Sfx";
+import { SceneShell, useCues } from "../components/SceneShell";
 import { colors, fonts } from "../theme";
 
-const Hand: React.FC<{ readonly style?: React.CSSProperties }> = ({
-  style,
-}) => (
-  <svg width={300} height={420} viewBox="0 0 300 420" style={style}>
-    {[40, 110, 180].map((x, i) => (
-      <rect
-        key={x}
-        x={x}
-        y={i === 1 ? 10 : 40}
-        width={60}
-        height={220}
-        rx={30}
-        fill="#e8b996"
-      />
-    ))}
-    <rect x={30} y={200} width={250} height={200} rx={70} fill="#e8b996" />
-  </svg>
-);
+const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
+// Each attempt is typed into the dictionary, acted out on the right, then struck out.
 const ATTEMPTS = [
-  {
-    claim: "“3 is the symbol 3.”",
-    flaw: "III, three, trois: a symbol is just a name.",
-  },
-  {
-    claim: "“3 is what all trios have in common.”",
-    flaw: "Circular: spotting a trio already needs 3.",
-  },
-  {
-    claim: "“3 is a point on the number line.”",
-    flaw: "Where did the line come from?",
-  },
-  { claim: "“3 is 2 + 1.”", flaw: "Then what are 2, 1 and + ?" },
+  "the symbol 3",
+  "what all trios share",
+  "a point on the number line",
+  "2 + 1",
 ];
+const LATER = [
+  "a name, not the number",
+  "Frege & Russell → E14",
+  "the real line → E08",
+  "zero and “next” → E02",
+];
+const STAGE_X = 900;
+const STAGE_W = 900;
+
+const Finger: React.FC<{
+  readonly x: number;
+  readonly up: number;
+  readonly tall: boolean;
+}> = ({ x, up, tall }) => (
+  <rect
+    x={x}
+    y={tall ? 10 : 40}
+    width={60}
+    height={220}
+    rx={30}
+    fill="#e8b996"
+    style={{
+      transformOrigin: `${x + 30}px 250px`,
+      scale: `1 ${0.25 + 0.75 * up}`,
+    }}
+  />
+);
 
 export const DefineThree: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const cues = useCues("defineThree");
+  const fingerAt = [10, 24, 38];
+  const handPhase = interpolate(
+    frame,
+    [cues[1] - 6, cues[1] + 14],
+    [0, 1],
+    clamp,
+  );
+  const strikeAt = (k: number) => cues[2 + k] + 70;
+  const stageOpacity = (k: number) =>
+    interpolate(
+      frame,
+      [cues[2 + k], cues[2 + k] + 8, cues[3 + k] - 8, cues[3 + k]],
+      [0, 1, 1, 0],
+      clamp,
+    );
   const blink = Math.floor(frame / 15) % 2 === 0 ? 1 : 0;
-  const phase2 = progress(frame, cues[2] - 10, 25);
+
+  // Attempt 1: the glyph changes; the three dots under it don't.
+  const glyphs = ["3", "III", "three", "三", "trois"];
+  const glyphIdx = Math.min(
+    glyphs.length - 1,
+    Math.max(0, Math.floor((frame - cues[2] - 14) / 14)),
+  );
+  // Attempt 3: the line draws, then dissolves.
+  const lineDraw = ramp(frame, cues[4] + 6, 20);
+  const lineGone = ramp(frame, cues[4] + 50, 24);
+  // Attempt 4: unpacking 3 = 2 + 1 keeps asking for more.
+  const chain = ["3 = 2 + 1", "2 = 1 + 1", "1 = ?", "+ = ?"];
 
   return (
     <SceneShell id="defineThree">
-      <Sfx name="pop" at={5} />
+      {fingerAt.map((f, i) => (
+        <Sfx key={f} name={PLUCKS[i + 2]} at={f} />
+      ))}
       <Sfx name="page" at={cues[1]} />
-      {ATTEMPTS.map((a, i) => (
-        <Sfx key={a.claim} name="scratch" at={cues[2 + i] + 45} />
+      {ATTEMPTS.map((a, k) => (
+        <Sfx key={a} name="scratch" at={strikeAt(k)} />
+      ))}
+      {[1, 2, 3, 4].map((g) => (
+        <Sfx key={g} name="tick" at={cues[2] + 14 + g * 14} />
+      ))}
+      {[0, 1, 2].map((g) => (
+        <Sfx key={g} name="pop" at={cues[3] + 8 + g * 10} />
+      ))}
+      <Sfx name="whoosh" at={cues[4] + 50} volume={0.16} />
+      {chain.map((c, i) => (
+        <Sfx key={c} name="tick" at={cues[5] + 8 + i * 14} />
       ))}
       <Sfx name="chime" at={cues[6]} volume={0.25} />
-
       <QuestionTray />
-      {/* Phase 1: three fingers and an empty dictionary entry. */}
+
+      {/* Opening: a hand counts to three, then shrinks aside for the dictionary. */}
       <AbsoluteFill
         style={{
-          flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          gap: 140,
-          opacity: 1 - phase2,
+          opacity:
+            1 - interpolate(frame, [cues[2] - 10, cues[2]], [0, 1], clamp),
         }}
       >
-        <Hand
-          style={{ opacity: fadeIn(frame, 5), translate: riseIn(frame, 5, 60) }}
-        />
-        <div
+        <svg
+          width={300}
+          height={420}
+          viewBox="0 0 300 420"
           style={{
-            width: 760,
-            padding: 48,
-            borderRadius: 20,
-            backgroundColor: colors.paper,
-            color: colors.ink,
-            fontFamily: fonts.math,
-            opacity: fadeIn(frame, cues[1]),
-            translate: riseIn(frame, cues[1]),
+            position: "absolute",
+            left: interpolate(handPhase, [0, 1], [810, 1250]),
+            top: interpolate(handPhase, [0, 1], [180, 230]),
+            scale: interpolate(handPhase, [0, 1], [1.2, 0.9]),
           }}
         >
-          <div style={{ fontSize: 64, fontWeight: 600 }}>
-            three{" "}
-            <span
+          {[40, 110, 180].map((x, i) => (
+            <Finger
+              key={x}
+              x={x}
+              up={springIn(frame, fingerAt[i], fps, 10)}
+              tall={i === 1}
+            />
+          ))}
+          <rect
+            x={30}
+            y={200}
+            width={250}
+            height={200}
+            rx={70}
+            fill="#e8b996"
+          />
+        </svg>
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left:
+                interpolate(handPhase, [0, 1], [810, 1250]) +
+                [70, 140, 210][i] -
+                20,
+              top: interpolate(handPhase, [0, 1], [110, 170]),
+              fontFamily: fonts.title,
+              fontSize: 56,
+              color: colors.primary,
+              scale: springIn(frame, fingerAt[i] + 4, fps, 9),
+            }}
+          >
+            {i + 1}
+          </div>
+        ))}
+      </AbsoluteFill>
+
+      {/* The dictionary: every attempt is typed in, then crossed out. */}
+      <div
+        style={{
+          position: "absolute",
+          left: 110,
+          top: 150,
+          width: 720,
+          minHeight: 470,
+          padding: "36px 44px",
+          borderRadius: 20,
+          backgroundColor: colors.paper,
+          color: colors.ink,
+          fontFamily: fonts.math,
+          translate: `${(1 - Math.min(1, springIn(frame, cues[1], fps, 13))) * -900}px 0px`,
+          rotate: `${interpolate(springIn(frame, cues[1], fps, 13), [0, 1], [-6, -1])}deg`,
+        }}
+      >
+        <div style={{ fontSize: 64, fontWeight: 600 }}>
+          three{" "}
+          <span
+            style={{
+              fontSize: 38,
+              fontStyle: "italic",
+              color: colors.brandPurple,
+            }}
+          >
+            (n.)
+          </span>
+        </div>
+        {ATTEMPTS.map((a, k) => {
+          const start = cues[2 + k] + 2;
+          if (frame < start) return null;
+          const text = typed(a, frame, start, fps, 24);
+          const strike = glide(frame, strikeAt(k), fps, 10);
+          return (
+            <div
+              key={a}
               style={{
                 fontSize: 40,
-                fontStyle: "italic",
-                color: colors.brandPurple,
+                marginTop: 18,
+                display: "flex",
+                gap: 14,
+                color: frame >= strikeAt(k) ? "#8a7aa8" : colors.ink,
               }}
             >
-              (n.)
-            </span>
+              <span>{k + 1}.</span>
+              <span style={{ position: "relative" }}>
+                {text}
+                {text.length < a.length ? (
+                  <span style={{ opacity: blink }}>▌</span>
+                ) : null}
+                <span
+                  style={{
+                    position: "absolute",
+                    left: -4,
+                    right: -4,
+                    top: "54%",
+                    height: 5,
+                    borderRadius: 3,
+                    backgroundColor: colors.red,
+                    scale: `${strike} 1`,
+                    transformOrigin: "left",
+                  }}
+                />
+              </span>
+            </div>
+          );
+        })}
+        {frame < cues[2] ? (
+          <div style={{ fontSize: 40, marginTop: 18 }}>
+            1. <span style={{ opacity: blink }}>▌</span>
+          </div>
+        ) : null}
+      </div>
+
+      {/* Attempt 1: the symbol changes, the amount doesn't. */}
+      <AbsoluteFill style={{ opacity: stageOpacity(0) }}>
+        <div
+          style={{
+            position: "absolute",
+            left: STAGE_X,
+            width: STAGE_W,
+            top: 150,
+            textAlign: "center",
+          }}
+        >
+          <div
+            key={glyphIdx}
+            style={{
+              fontFamily: fonts.math,
+              fontSize: 150,
+              color: colors.text,
+              scale: springIn(frame, cues[2] + 14 + glyphIdx * 14, fps, 10),
+              height: 200,
+            }}
+          >
+            {glyphs[glyphIdx]}
           </div>
           <div
             style={{
-              fontSize: 44,
-              marginTop: 24,
               display: "flex",
-              alignItems: "center",
-              gap: 6,
+              justifyContent: "center",
+              gap: 30,
+              marginTop: 40,
             }}
           >
-            1.{" "}
-            <span
-              style={{
-                display: "inline-block",
-                width: 3,
-                height: 50,
-                backgroundColor: colors.ink,
-                opacity: blink,
-              }}
-            />
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
+                  backgroundColor: colors.primary,
+                }}
+              />
+            ))}
+          </div>
+          <div style={{ fontSize: 34, color: colors.muted, marginTop: 24 }}>
+            the symbol changes · the amount doesn’t
           </div>
         </div>
       </AbsoluteFill>
 
-      {/* Phase 2: four attempts, each struck through with its flaw. */}
-      <AbsoluteFill
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          opacity: phase2,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 34,
-            width: 1500,
-          }}
-        >
-          {ATTEMPTS.map((a, i) => {
-            const start = cues[2 + i];
-            const strike = progress(frame, start + 45, 20);
+      {/* Attempt 2: groups of three point back to "three": circular. */}
+      <AbsoluteFill style={{ opacity: stageOpacity(1) }}>
+        <svg width={1920} height={890} style={{ position: "absolute" }}>
+          {[
+            { cx: STAGE_X + 170, shape: "apple" },
+            { cx: STAGE_X + 450, shape: "star" },
+            { cx: STAGE_X + 730, shape: "dot" },
+          ].map((g, gi) => {
+            const s = springIn(frame, cues[3] + 8 + gi * 10, fps, 11);
             return (
-              <div
-                key={a.claim}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 40,
-                  opacity: fadeIn(frame, start),
-                  translate: riseIn(frame, start),
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: fonts.title,
-                    fontSize: 46,
-                    width: 900,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  <span
-                    style={{ position: "relative", display: "inline-block" }}
-                  >
-                    {a.claim}
-                    <span
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        top: "52%",
-                        height: 6,
-                        borderRadius: 3,
-                        width: `${strike * 100}%`,
-                        backgroundColor: colors.red,
-                      }}
+              <g key={g.shape} transform={`translate(${g.cx} 290) scale(${s})`}>
+                <ellipse
+                  rx={120}
+                  ry={80}
+                  fill="none"
+                  stroke={colors.highlight}
+                  strokeWidth={3}
+                  strokeDasharray="10 8"
+                />
+                {[-55, 0, 55].map((dx) =>
+                  g.shape === "star" ? (
+                    <text
+                      key={dx}
+                      x={dx}
+                      y={16}
+                      fill={colors.primary}
+                      fontSize={50}
+                      textAnchor="middle"
+                    >
+                      ★
+                    </text>
+                  ) : g.shape === "apple" ? (
+                    <circle key={dx} cx={dx} cy={0} r={20} fill={colors.red} />
+                  ) : (
+                    <rect
+                      key={dx}
+                      x={dx - 18}
+                      y={-18}
+                      width={36}
+                      height={36}
+                      rx={6}
+                      fill={colors.orange}
                     />
-                  </span>
-                </div>
-                <div
-                  style={{
-                    fontSize: 34,
-                    color: colors.muted,
-                    width: 560,
-                    opacity: fadeIn(frame, start + 50),
-                  }}
-                >
-                  {a.flaw}
-                </div>
-              </div>
+                  ),
+                )}
+              </g>
             );
           })}
+          <g
+            opacity={ramp(frame, cues[3] + 50, 10)}
+            transform={`rotate(${(frame - cues[3]) * 3} ${STAGE_X + 450} 560)`}
+          >
+            <path
+              d={`M ${STAGE_X + 450 + 90} 560 A 90 90 0 1 1 ${STAGE_X + 450 + 60} ${560 - 67}`}
+              fill="none"
+              stroke={colors.highlight}
+              strokeWidth={6}
+            />
+            <polygon
+              points={`${STAGE_X + 450 + 60},${560 - 95} ${STAGE_X + 450 + 82},${560 - 58} ${STAGE_X + 450 + 40},${560 - 55}`}
+              fill={colors.highlight}
+            />
+          </g>
+          <text
+            x={STAGE_X + 450}
+            y={575}
+            fill={colors.text}
+            fontSize={40}
+            textAnchor="middle"
+            fontFamily={fonts.math}
+            opacity={ramp(frame, cues[3] + 50, 10)}
+          >
+            3?
+          </text>
+          <text
+            x={STAGE_X + 450}
+            y={720}
+            fill={colors.muted}
+            fontSize={34}
+            textAnchor="middle"
+            opacity={ramp(frame, cues[3] + 60, 10)}
+          >
+            to spot a trio, you already need 3
+          </text>
+        </svg>
+      </AbsoluteFill>
+
+      {/* Attempt 3: the number line draws, then dissolves: where did it come from? */}
+      <AbsoluteFill style={{ opacity: stageOpacity(2) }}>
+        <svg width={1920} height={890} style={{ position: "absolute" }}>
+          <g opacity={1 - lineGone * 0.85}>
+            <line
+              x1={STAGE_X + 40}
+              y1={380}
+              x2={STAGE_X + 40 + 820 * lineDraw}
+              y2={380}
+              stroke={colors.muted}
+              strokeWidth={5}
+              strokeDasharray={
+                lineGone > 0
+                  ? `${20 - 16 * lineGone} ${8 + 30 * lineGone}`
+                  : undefined
+              }
+            />
+            {[0, 1, 2, 3, 4, 5].map((k) => (
+              <g key={k} opacity={ramp(frame, cues[4] + 6 + k * 3, 6)}>
+                <line
+                  x1={STAGE_X + 80 + k * 150}
+                  y1={366}
+                  x2={STAGE_X + 80 + k * 150}
+                  y2={394}
+                  stroke={colors.text}
+                  strokeWidth={3}
+                />
+                <text
+                  x={STAGE_X + 80 + k * 150}
+                  y={436}
+                  fill={colors.text}
+                  fontSize={32}
+                  textAnchor="middle"
+                  fontFamily={fonts.mono}
+                >
+                  {k}
+                </text>
+              </g>
+            ))}
+          </g>
+          <circle
+            cx={STAGE_X + 80 + 3 * 150}
+            cy={380}
+            r={18 + 4 * Math.sin(frame / 5)}
+            fill={colors.primary}
+            opacity={ramp(frame, cues[4] + 26, 8)}
+          />
+          <text
+            x={STAGE_X + 450}
+            y={560}
+            fill={colors.highlight}
+            fontSize={52}
+            textAnchor="middle"
+            fontFamily={fonts.title}
+            opacity={lineGone}
+          >
+            where did the line come from?
+          </text>
+        </svg>
+      </AbsoluteFill>
+
+      {/* Attempt 4: 3 = 2 + 1 just pushes the question down. */}
+      <AbsoluteFill style={{ opacity: stageOpacity(3) }}>
+        {chain.map((c, i) => (
           <div
+            key={c}
             style={{
-              marginTop: 30,
-              fontSize: 44,
-              color: colors.highlight,
-              textAlign: "center",
-              opacity: fadeIn(frame, cues[6]),
-              scale: interpolate(fadeIn(frame, cues[6]), [0, 1], [0.95, 1]),
+              position: "absolute",
+              left: STAGE_X + 200 + i * 60,
+              top: 170 + i * 110,
+              fontFamily: fonts.math,
+              fontSize: 62,
+              color: c.includes("?") ? colors.highlight : colors.text,
+              opacity: ramp(frame, cues[5] + 8 + i * 14, 6),
+              translate: `0px ${(1 - Math.min(1, springIn(frame, cues[5] + 8 + i * 14, fps, 11))) * -40}px`,
             }}
           >
-            Each returns later. None is a definition yet.
+            {c}
           </div>
-        </div>
+        ))}
+      </AbsoluteFill>
+
+      {/* Verdict: each idea comes back later, done properly. */}
+      <AbsoluteFill style={{ opacity: ramp(frame, cues[6] - 4, 10) }}>
+        {LATER.map((l, i) => (
+          <div
+            key={l}
+            style={{
+              position: "absolute",
+              left: STAGE_X + 60,
+              top: 180 + i * 100,
+              fontSize: 36,
+              padding: "12px 26px",
+              borderRadius: 999,
+              border: `2px solid ${colors.primary}`,
+              color: colors.primary,
+              translate: `${(1 - Math.min(1, springIn(frame, cues[6] + i * 6, fps, 12))) * 700}px 0px`,
+            }}
+          >
+            {i + 1}. {l}
+          </div>
+        ))}
       </AbsoluteFill>
     </SceneShell>
   );

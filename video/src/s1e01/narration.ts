@@ -110,14 +110,14 @@ export const lineSeconds = (line: string) =>
 // (scene id → line index → seconds). Values come from the scenes' frame offsets.
 const MIN_SECONDS: Partial<Record<SceneId, Record<number, number>>> = {
   title: { 0: 2.8 },
-  coldOpen: { 0: 1.6, 1: 2.6, 3: 4.0, 4: 2.5, 5: 1.9 },
-  defineThree: { 0: 2.0, 2: 2.8, 3: 2.8, 4: 2.8, 5: 2.8 },
-  numerals: { 1: 2.0, 2: 5.4, 3: 3.0 },
-  ladder: { 0: 2.0, 1: 3.2, 2: 2.4, 4: 2.2 },
-  whyHard: { 0: 2.0, 3: 5.0, 4: 9.4, 5: 4.6 },
+  coldOpen: { 0: 1.6, 1: 2.6, 2: 2.2, 3: 4.0, 4: 3.2, 5: 1.9 },
+  defineThree: { 0: 2.4, 2: 3.6, 3: 3.4, 4: 3.6, 5: 3.4, 6: 3.0 },
+  numerals: { 0: 1.8, 1: 2.4, 2: 5.8, 3: 3.4 },
+  ladder: { 0: 3.4, 1: 4.8, 2: 2.6, 3: 2.2, 4: 2.4 },
+  whyHard: { 0: 2.2, 1: 2.8, 2: 3.4, 3: 5.4, 4: 10.2, 5: 5.6 },
   matching: { 1: 4.0, 2: 4.2 },
-  tower: { 0: 2.8, 2: 2.3, 3: 2.3, 4: 2.3, 5: 2.3, 6: 1.8, 7: 1.8 },
-  buildDescribe: { 0: 1.8, 2: 2.2, 4: 3.6, 5: 3.0, 6: 2.4 },
+  tower: { 0: 2.6, 2: 4.8, 3: 4.6, 4: 4.2, 5: 4.8, 6: 2.0, 7: 1.8 },
+  buildDescribe: { 0: 2.0, 1: 2.0, 2: 2.6, 3: 2.6, 4: 3.4, 5: 4.2, 6: 2.6 },
   roadmap: { 3: 4.5, 4: 3.0 },
   endCard: { 1: 7.0 },
 };

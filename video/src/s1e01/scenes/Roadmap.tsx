@@ -108,7 +108,19 @@ export const Roadmap: React.FC = () => {
             );
           })}
         </div>
-        <Tower appear={[1, 1, 1, 1, 1]} built={built} question={question} />
+        <Tower
+          appear={[1, 1, 1, 1, 1]}
+          built={built}
+          question={question}
+          style={{
+            scale:
+              1 +
+              0.05 *
+                Math.max(
+                  ...built.map((b) => Math.sin(Math.min(1, b) * Math.PI)),
+                ),
+          }}
+        />
       </AbsoluteFill>
     </SceneShell>
   );

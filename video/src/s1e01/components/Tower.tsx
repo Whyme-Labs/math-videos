@@ -49,7 +49,7 @@ export const Tower: React.FC<{
               width: FLOOR_W,
               height: FLOOR_H,
               opacity: appear[i] ?? 0,
-              translate: `0px ${(1 - (appear[i] ?? 0)) * 40}px`,
+              translate: `0px ${(1 - (appear[i] ?? 0)) * -420}px`,
               borderRadius: 14,
               border: `3px ${b > 0.5 ? "solid" : "dashed"} ${b > 0.5 ? colors.primary : colors.panelEdge}`,
               backgroundColor: alpha(colors.primary, 0.04 + 0.16 * b),

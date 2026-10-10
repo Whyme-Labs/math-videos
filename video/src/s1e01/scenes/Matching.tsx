@@ -1,8 +1,14 @@
 import type React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { fadeIn, progress, riseIn } from "../components/anim";
+import {
+  AbsoluteFill,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { fadeIn, riseIn } from "../components/anim";
 import { QuestionTray } from "../components/QuestionTray";
 import { PLUCKS, Sfx } from "../components/Sfx";
+import { springIn } from "../components/motion";
 import { SceneShell, useCues } from "../components/SceneShell";
 import { colors, fonts } from "../theme";
 
@@ -31,6 +37,7 @@ const Saucer: React.FC = () => (
 
 export const Matching: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const cues = useCues("matching");
   const words = ["one", "two", "three", "four", "five", "six"];
 
@@ -67,7 +74,7 @@ export const Matching: React.FC = () => {
         </div>
         {Array.from({ length: N }).map((_, i) => {
           // Cup i drops onto saucer i, one after another.
-          const drop = progress(frame, cues[1] + i * 14, 22);
+          const drop = springIn(frame, cues[1] + i * 14, fps, 7, 220);
           return (
             <div key={i}>
               <div
@@ -84,7 +91,7 @@ export const Matching: React.FC = () => {
                 style={{
                   position: "absolute",
                   left: X0 + i * SPACING - 55,
-                  top: interpolate(drop, [0, 1], [270, 482]),
+                  top: interpolate(drop, [0, 1], [180, 482]),
                   opacity: fadeIn(frame, 30 + i * 5),
                 }}
               >

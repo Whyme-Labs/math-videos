@@ -1,5 +1,10 @@
 import type React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { beatPulse } from "../music";
 import {
   narration,
@@ -23,7 +28,7 @@ export const SceneShell: React.FC<{
 }> = ({ id, children, showCaptions = true, showWatermark = true }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const { starts } = sceneTiming(id);
+  const { starts, durationInFrames } = sceneTiming(id);
   const lines = narration[id];
   // Lights pulse on the beat of the background music.
   const pulse = beatPulse((sceneStartFrame(id) + frame) / fps);
@@ -69,7 +74,16 @@ export const SceneShell: React.FC<{
         }}
       />
       {showWatermark ? <Watermark /> : null}
-      <AbsoluteFill style={{ bottom: 190 }}>{children}</AbsoluteFill>
+      {/* Slow camera drift so no scene ever sits still. */}
+      <AbsoluteFill
+        style={{
+          bottom: 190,
+          scale: interpolate(frame, [0, durationInFrames], [1, 1.04]),
+          translate: `${interpolate(frame, [0, durationInFrames], [-8, 8])}px 0px`,
+        }}
+      >
+        {children}
+      </AbsoluteFill>
       {showCaptions ? (
         <div
           style={{
