@@ -116,6 +116,9 @@ Each episode below lists: **Hook**, **Core ideas**, **Key visual**, and
   points converging.
 - **Payoff:** "build vs. describe" again: two constructions, one
   description.
+- **Seed for Season 2 Part B:** the Cauchy-sequence construction works for
+  *any* space with a distance. Applied to spaces of functions, it produces
+  Banach and Hilbert spaces (S2 Ep. 21).
 
 ### Ep. 9: 0.999… = 1, and What Decimals Really Are
 - **Hook:** the internet's favorite argument.

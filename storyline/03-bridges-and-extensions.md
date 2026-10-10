@@ -19,13 +19,18 @@ from Season 2 and shows they were the same idea all along. It's shorter
   theorem says every finitely generated abelian group is ℤʳ ⊕ ℤ/n₁ ⊕ … .
   Over F[x], it says every linear map has a rational / Jordan canonical
   form.
+- Warm-up, "change the scalars": vector spaces over 𝔽₂ give
+  error-correcting codes (Hamming code), where a parity check is a linear
+  functional. Modules are "vector spaces over a ring." ℤ-modules are
+  exactly abelian groups. Not every module has a basis (ℤ/2ℤ as a
+  ℤ-module), which shows what fields were silently giving us in Season 2.
 - Visual: two columns, S1 and S2, merging into one statement. The "aha"
   episode of the series.
 
 ### Ep. 3: Groups Acting Linearly: Representation Theory
 - Represent a group by matrices (symmetries of a square become 2×2
   matrices). Irreducible representations; characters (the trace again, as a
-  coordinate-free invariant from S2 Ep. 9). Character tables as the
+  coordinate-free invariant from S2 Ep. 12). Character tables as the
   "fingerprint" of a group.
 - Applications: molecular vibrations, particle physics (SU(2), SU(3)),
   Fourier analysis on finite groups.
@@ -35,13 +40,16 @@ from Season 2 and shows they were the same idea all along. It's shorter
   the circle are e^{inθ}; those of ℝ give the Fourier transform. Pontryagin
   duality: a group and its dual group, just as V and V*. The FFT as a
   clever factorization.
-- Ties S2 Ep. 6 (covectors), S2 Ep. 16 (Fourier), and S1 Ep. 15 (groups)
-  together.
+- Representations of non-compact groups like ℝ live on Hilbert spaces
+  (S2 Act VIII), and the Fourier transform on L²(ℝ) is unitary
+  (Plancherel).
+- Ties S2 Ep. 6 (covectors), S2 Ep. 22 (continuous duals), S2 Ep. 27
+  (Fourier), and S1 Ep. 15 (groups) together.
 
 ### Ep. 5: Continuous Symmetry: Lie Groups at a Glance
 - Rotations form a group *and* a smooth space. Its tangent space at the
   identity (the Lie algebra) is a vector space: linear algebra captures the
-  infinitesimal version of symmetry. The matrix exponential (S2 Ep. 10)
+  infinitesimal version of symmetry. The matrix exponential (S2 Ep. 13)
   turns infinitesimal rotations into actual ones.
 - Quaternions double-cover 3D rotations (a nice payoff for the
   Cayley–Dickson side quest).
@@ -51,7 +59,7 @@ from Season 2 and shows they were the same idea all along. It's shorter
   Universal properties seen throughout the series: ℕ (an initial
   "Peano structure"), free groups, quotients, products and direct sums,
   the tensor product, ℚ as the "field of fractions" of ℤ.
-- Naturality: V ≅ V** is natural, V ≅ V* is not (S2 Ep. 7). Functors: the
+- Naturality: V ≅ V** is natural, V ≅ V* is not (S2 Ep. 8). Functors: the
   dual space is a contravariant functor.
 - Closing line: back to the thesis. *An object is what you can do with
   it.* Category theory is mathematics that takes this sentence literally.
@@ -77,12 +85,17 @@ it attaches. They work well as "bonus" uploads between main episodes.
 | Side quest | Attaches after | Idea |
 |---|---|---|
 | **Linear algebra over 𝔽₂: codes and puzzles** | S2 Ep. 3 | The "Lights Out" puzzle is solving Ax = b over 𝔽₂; Hamming codes. |
-| **Graphs as matrices** | S2 Ep. 9 | Adjacency and Laplacian matrices; counting walks; spectral clustering; why the second eigenvalue measures connectivity. |
-| **Differential forms** | S2 Ep. 8 | Exterior algebra + calculus; all the integral theorems (Green, Stokes, divergence) become one: ∫_∂M ω = ∫_M dω. |
-| **Linear algebra in machine learning** | S2 Ep. 15 | Neural network layers as linear maps + nonlinearities; embeddings and dot-product attention as inner products; low-rank adaptation (LoRA) as Eckart–Young in practice. |
-| **Quantum computing** | S2 Ep. 17 | Qubits in ℂ², multi-qubit systems as tensor products, gates as unitary matrices, entanglement. |
+| **Graphs as matrices** | S2 Ep. 12 | Adjacency and Laplacian matrices; counting walks; spectral clustering; why the second eigenvalue measures connectivity. |
+| **Differential forms** | S2 Ep. 11 | Exterior algebra + calculus; all the integral theorems (Green, Stokes, divergence) become one: ∫_∂M ω = ∫_M dω. |
+| **Linear algebra in machine learning** | S2 Ep. 18 | Neural network layers as linear maps + nonlinearities; embeddings and dot-product attention as inner products; low-rank adaptation (LoRA) as Eckart–Young in practice. |
+| **Quantum computing** | S2 Ep. 10 | Qubits in ℂ², multi-qubit systems as tensor products, gates as unitary matrices, entanglement. |
 | **Projective geometry** | S2 Ep. 5 | Lines through the origin as points; perspective drawing; why parallel lines "meet at infinity." |
-| **Special relativity** | S2 Ep. 11 | A "inner product" that isn't positive definite (Minkowski); Lorentz transformations as its symmetries. |
+| **Special relativity** | S2 Ep. 9 | A symmetric bilinear form with signature (+ − − −) (Minkowski); Lorentz transformations as its symmetries. |
+| **Lebesgue integration** | S2 Ep. 21 | Why the Riemann integral leaves holes in L¹; measuring sets before integrating functions; the convergence theorems. |
+| **Convex duality and optimization** | S2 Ep. 23 | Linear programming duality, Lagrange multipliers as functionals, the Legendre–Fenchel transform. |
+| **Kernel methods and RKHS** | S2 Ep. 28 | Hilbert spaces where evaluation *is* continuous; the "kernel trick" in machine learning; Gaussian processes. |
+| **Wavelets** | S2 Ep. 27 | Orthonormal bases localized in both time and frequency; JPEG 2000. |
+| **Operator algebras** | S2 Ep. 29 | C*-algebras: studying spaces through their algebras of operators; Gelfand duality. |
 
 ### History interludes (short, story-driven)
 - Pythagoras and the irrationality crisis (S1 Act II)
@@ -92,3 +105,8 @@ it attaches. They work well as "bonus" uploads between main episodes.
   spaces decades early (S2 Act I)
 - Emmy Noether and the birth of abstract algebra (S1 Act IV / S3 Ep. 2)
 - Hilbert's 1900 problems and the foundations crisis (S1 Ep. 14)
+- Banach and the Scottish Café, where the Lwów school wrote open
+  problems in a notebook, with prizes such as a live goose (S2 Part B)
+- von Neumann puts quantum mechanics on Hilbert space (1932) (S2 Ep. 29)
+- Dirac's delta and Schwartz's distributions (Fields Medal 1950)
+  (S2 Ep. 30)

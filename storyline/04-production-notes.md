@@ -4,6 +4,9 @@
 - **Target viewer:** a curious learner who has seen high-school algebra and
   maybe a first calculus or matrix course, and who wants to know *why*.
   Undergrads revisiting material "the right way" are the second audience.
+- **S2 Part B (functional analysis)** assumes comfort with limits,
+  series, and integrals. Open each of its episodes with a 60-second "analysis
+  recap" card so it stays accessible.
 - **No proofs are required to follow along**, but each episode shows at
   least one complete short proof. That way viewers see that the ideas are
   actually earned.
@@ -33,6 +36,11 @@ Optional end card: 3 exercises (one computational, one conceptual, one
 | Basis / coordinates | A "camera" or "language" overlay that can change while the object stays fixed |
 | Diagonal argument | An infinite table with the diagonal lighting up and flipping |
 | Invariants | A badge that stays put on screen while the coordinates churn underneath |
+| Multilinear map | A machine with several input slots, color-coded vector/covector |
+| Norms | Unit balls (diamond / circle / square) morphing as p changes |
+| Completion | S1's "zoom in and find holes" animation, replayed with functions |
+| Weak convergence | A bump escaping to infinity while fixed probes read 0 |
+| Spectrum | Points/regions in the complex plane lighting up as T − λI fails to invert |
 
 ## Recurring segments
 - **"Build or Describe?"**: a 30-second segment comparing a construction

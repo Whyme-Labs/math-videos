@@ -33,6 +33,9 @@ object:
 | ℂ as pairs of reals | the algebraic closure of ℝ |
 | A matrix in some basis | A linear map |
 | Coordinates of a tensor | The universal property of the tensor product |
+| L¹ as the completion of C[0, 1] under ∫\|f\| | Lebesgue-integrable functions (up to sets of measure zero) |
+| L²[0, 1], ℓ², Sobolev spaces | "the" separable infinite-dimensional Hilbert space |
+| δ "function" with infinite spike | δ(φ) = φ(0), a linear functional |
 
 Giving this tension a name early ("build vs. describe") gives viewers a lens
 they can use for the rest of the series.
@@ -46,7 +49,10 @@ when it comes back.
 1. **Extend to repair a defect.** ℕ can't subtract, so we build ℤ. ℤ can't
    divide, so we build ℚ. ℚ has holes, so we build ℝ. ℝ can't solve x² + 1 = 0,
    so we build ℂ. In Season 2: ℝ has no eigenvalues for a rotation, so we pass
-   to ℂ; a map can't be diagonalized, so we use generalized eigenvectors.
+   to ℂ; a map can't be diagonalized, so we use generalized eigenvectors;
+   function spaces have holes, so we complete them to Banach and Hilbert
+   spaces (ℚ → ℝ, one level up); the delta isn't a function, so we enlarge
+   functions to distributions.
 2. **Glue things together (equivalence classes and quotients).** The single
    most reused tool: ℤ as pairs of naturals, ℚ as pairs of integers, ℝ as
    classes of Cauchy sequences, ℤ/nℤ, quotient groups, quotient rings, the
@@ -61,8 +67,10 @@ when it comes back.
    whatever survives a change of viewpoint (cardinality under bijection;
    determinant, trace, and eigenvalues under change of basis).
 6. **Duality, or measuring things.** Covectors measure vectors. The dual of
-   the dual brings you back. Inner products identify the two. Teasers:
-   Pontryagin and Fourier duality.
+   the dual brings you back (sometimes: reflexivity). Inner products
+   identify the two (Riesz). Hahn–Banach guarantees enough measurements.
+   Distributions are *defined* by their measurements. Teasers: Pontryagin
+   and Fourier duality.
 7. **Structure-preserving maps matter more than objects.** Homomorphisms,
    linear maps, isomorphism theorems. This sets up category theory as the
    final "zoom out."
@@ -80,8 +88,14 @@ when it comes back.
                                    ▼   "a vector space is a set you can add and
                                        scale, where the scalars form a field"
                  SEASON 2: Spaces, Maps, and Measurements
-   Vector spaces → Linear maps → Duality → Invariants (det, eigen)
-                 → Inner products → Spectral theorem / SVD
+   Part A (finite dim):
+   Vector spaces → Linear maps → Linear functionals & duality
+     → Multilinear (bilinear forms, tensors, exterior algebra, det)
+     → Invariants (eigen, Jordan) → Inner products → Spectral / SVD
+   Part B (infinite dim):
+   Normed spaces → Banach (completeness) → Continuous duals, Hahn–Banach,
+     Big Three, weak convergence → Hilbert spaces, Fourier
+     → Compact & unbounded operators, spectrum → Distributions
                                    │
                                    ▼
                  SEASON 3: Where the Roads Meet
@@ -100,9 +114,13 @@ fields. Season 2 opens with "a vector space over a field." Having just met
 
 - **Linear path (recommended):** S1 → S2 → S3. Each season's callbacks pay
   off.
-- **Practical path:** S2 first, for viewers who need linear algebra now
-  (engineering, ML). S2 episodes give one-line recaps of the S1 facts they
-  use (fields, quotients, ℂ).
+- **Practical path:** S2 Part A first, for viewers who need linear algebra
+  now (engineering, ML). S2 episodes give one-line recaps of the S1 facts
+  they use (fields, quotients, ℂ). Part B needs S1 Ep. 7–8 (completeness)
+  first.
 - **Interleaved path:** S1 Acts I–II → S2 Acts I–II → S1 Acts III–IV → S2
-  Acts III–V → S3. This alternates a construction-heavy stretch with a
-  geometry-heavy one.
+  Acts III–V (Part A) → S2 Part B → S3. This alternates a
+  construction-heavy stretch with a geometry-heavy one.
+- **Functional analysis path:** S1 Ep. 5, 7, 8, 12, 14 → S2 Ep. 1–3, 6–8,
+  14–18 → S2 Part B. The shortest route to Hilbert spaces and
+  distributions.
