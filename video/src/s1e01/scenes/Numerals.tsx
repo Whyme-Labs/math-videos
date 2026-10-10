@@ -113,6 +113,9 @@ export const Numerals: React.FC = () => {
   const layouts = [scatter, baseTen, baseTwo, baseSeven, roman, pile];
   let stage = 0;
   for (let s = 0; s < at.length; s++) if (frame >= at[s]) stage = s;
+  // The big name changes once the dots have mostly arrived in the new grouping.
+  let labelStage = 0;
+  for (let s = 0; s < at.length; s++) if (frame >= at[s] + 16) labelStage = s;
 
   const dotPos = (i: number): P => {
     const from = layouts[Math.max(0, stage - 1)][i];
@@ -124,7 +127,7 @@ export const Numerals: React.FC = () => {
     stage === s ? springIn(frame, at[s] + 10, fps, 14) : 0;
   const appear = springIn(frame, 4, fps, 13);
   const pulse = (s: number) =>
-    interpolate(springIn(frame, at[s], fps, 9, 260), [0, 1], [0.6, 1]);
+    interpolate(springIn(frame, at[s] + 16, fps, 9, 260), [0, 1], [0.6, 1]);
 
   return (
     <SceneShell id="numerals">
@@ -345,7 +348,7 @@ export const Numerals: React.FC = () => {
                 fontFamily: fonts.math,
                 fontSize: 96,
                 color: colors.text,
-                opacity: stage === s ? 1 : 0,
+                opacity: labelStage === s ? 1 : 0,
                 scale: pulse(s),
               }}
             >
