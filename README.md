@@ -10,7 +10,7 @@ Two seasons are planned, plus a third that connects them:
 |---|---|---|
 | 1 | **What Is a Number?** | Where do numbers come from, how big can infinity get, and what's left when we forget what numbers *are* and keep only what they *do*? |
 | 2 | **Spaces, Maps, and Measurements** | What does "linear" really mean, which facts about a linear map don't depend on coordinates, and what survives in infinite dimensions (Banach and Hilbert spaces, distributions)? |
-| 3 | **Where the Roads Meet** | How groups, fields, and vector spaces turn out to be parts of one picture. |
+| 3 | **Where the Roads Meet** | How groups, fields, and vector spaces turn out to be parts of one picture, and how linear algebra done at every point becomes calculus on curved spaces (manifolds, differential forms, curvature). |
 
 ## Storyline documents
 
@@ -22,6 +22,7 @@ Two seasons are planned, plus a third that connects them:
   2, episode by episode (Part A: finite dimensions, including linear
   functionals and multilinear algebra; Part B: functional analysis)
 - [`storyline/03-bridges-and-extensions.md`](storyline/03-bridges-and-extensions.md):
-  Season 3, plus optional side quests that go further
+  Season 3 (algebra meets linear algebra; manifolds and differential forms;
+  category theory), plus optional side quests that go further
 - [`storyline/04-production-notes.md`](storyline/04-production-notes.md):
   episode template, visual language, pacing, and audience

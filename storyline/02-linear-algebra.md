@@ -49,7 +49,7 @@ functional that can be continuous or not, depending on the norm.
   positive reals under + (no negatives), points on a sphere.
 - **The superposition principle:** why linearity is everywhere in physics,
   and why it's the first approximation to everything else (calculus = local
-  linearization).
+  linearization, made literal by tangent spaces in S3 Ep. 6).
 - **Key visual:** a "vector space" stamp landing on wildly different
   objects.
 
@@ -224,7 +224,8 @@ products, cross products, and tensors are all examples.
   Hodge star). That's why it only "works" in 3D.
 - **Key visual:** a unit cube deforming into a parallelepiped, with the
   volume counter ticking; a flip turns it "inside out" (negative sign).
-- **Extension:** differential forms (side quest).
+- **Seed for S3:** put one of these forms on every tangent space of a curved
+  space and you get differential forms (S3 Ep. 7).
 
 ---
 

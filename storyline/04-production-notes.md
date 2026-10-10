@@ -7,6 +7,9 @@
 - **S2 Part B (functional analysis)** assumes comfort with limits,
   series, and integrals. Open each of its episodes with a 60-second "analysis
   recap" card so it stays accessible.
+- **S3 Act II (manifolds)** assumes multivariable calculus (partial
+  derivatives, line and surface integrals). Ep. 8 re-derives the classical
+  theorems, so viewers who half-remember them are fine.
 - **No proofs are required to follow along**, but each episode shows at
   least one complete short proof. That way viewers see that the ideas are
   actually earned.
@@ -41,6 +44,10 @@ Optional end card: 3 exercises (one computational, one conceptual, one
 | Completion | S1's "zoom in and find holes" animation, replayed with functions |
 | Weak convergence | A bump escaping to infinity while fixed probes read 0 |
 | Spectrum | Points/regions in the complex plane lighting up as T − λI fails to invert |
+| Manifold / charts | Overlapping curved patches peeling off onto flat sheets |
+| Tangent spaces | Small translucent planes attached to points, carrying S2's vector/covector colors |
+| Differential forms | Fields of level-line stacks (1-forms) and oriented cells (2-forms) |
+| Cohomology | A loop snagging on a hole, with its integral stuck at a nonzero value |
 
 ## Recurring segments
 - **"Build or Describe?"**: a 30-second segment comparing a construction

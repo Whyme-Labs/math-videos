@@ -99,11 +99,15 @@ when it comes back.
                                    │
                                    ▼
                  SEASON 3: Where the Roads Meet
-   Field extensions as vector spaces (impossible constructions)
-   Modules: vector spaces over rings (Jordan form = abelian groups!)
-   Representation theory: groups acting linearly
-   Fourier: the duality that unites everything
-   Category theory: the language of "what you can do with it"
+   Act I:  Field extensions as vector spaces (impossible constructions)
+           Modules: vector spaces over rings (Jordan form = abelian groups!)
+           Representation theory: groups acting linearly
+           Fourier: the duality that unites everything
+   Act II: Manifolds: spaces that are vector spaces up close
+           Tangent/cotangent spaces → differential forms → Stokes
+           → de Rham cohomology (calculus counts holes)
+           → Riemannian metrics, curvature, Gauss–Bonnet → Lie groups
+   Act III: Category theory: the language of "what you can do with it"
 ```
 
 **The handoff between seasons is the field.** Season 1 ends by defining
