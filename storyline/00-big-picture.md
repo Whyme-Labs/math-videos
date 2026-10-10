@@ -33,6 +33,7 @@ object:
 | ℂ as pairs of reals | the algebraic closure of ℝ |
 | A matrix in some basis | A linear map |
 | Coordinates of a tensor | The universal property of the tensor product |
+| Frege–Russell: 2 = the class of all pairs; von Neumann: 2 = {∅, {∅}} | Peano: whatever comes after the successor of 0 |
 | L¹ as the completion of C[0, 1] under ∫\|f\| | Lebesgue-integrable functions (up to sets of measure zero) |
 | L²[0, 1], ℓ², Sobolev spaces | "the" separable infinite-dimensional Hilbert space |
 | δ "function" with infinite spike | δ(φ) = φ(0), a linear functional |
@@ -91,11 +92,15 @@ when it comes back.
    Part A (finite dim):
    Vector spaces → Linear maps → Linear functionals & duality
      → Multilinear (bilinear forms, tensors, exterior algebra, det)
-     → Invariants (eigen, Jordan) → Inner products → Spectral / SVD
+     → Invariants (eigen, Jordan) → Inner products (real and unitary)
+     → Spectral / SVD
    Part B (infinite dim):
-   Normed spaces → Banach (completeness) → Continuous duals, Hahn–Banach,
-     Big Three, weak convergence → Hilbert spaces, Fourier
-     → Compact & unbounded operators, spectrum → Distributions
+   Normed spaces → Measure spaces & Lebesgue → Banach (completeness)
+     → Continuous duals, Hahn–Banach, Big Three, weak convergence
+     → Hilbert spaces, Fourier
+     → Compact & unbounded operators, spectrum
+     → Measure-preserving systems (Koopman: chaos as a unitary operator)
+     → Distributions
                                    │
                                    ▼
                  SEASON 3: Where the Roads Meet
@@ -125,6 +130,6 @@ fields. Season 2 opens with "a vector space over a field." Having just met
 - **Interleaved path:** S1 Acts I–II → S2 Acts I–II → S1 Acts III–IV → S2
   Acts III–V (Part A) → S2 Part B → S3. This alternates a
   construction-heavy stretch with a geometry-heavy one.
-- **Functional analysis path:** S1 Ep. 5, 7, 8, 12, 14 → S2 Ep. 1–3, 6–8,
-  14–18 → S2 Part B. The shortest route to Hilbert spaces and
+- **Functional analysis path:** S1 Ep. 5, 7, 8, 11, 12, 15 → S2 Ep. 1–3,
+  6–8, 14–19 → S2 Part B. The shortest route to Hilbert spaces and
   distributions.

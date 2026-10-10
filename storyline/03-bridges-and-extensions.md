@@ -15,7 +15,7 @@ Act II also uses multivariable calculus).
 ### Ep. 1: Fields Are Vector Spaces Over Fields
 - ℂ is a 2-dimensional vector space over ℝ; ℚ(√2) is 2-dimensional over ℚ;
   𝔽₈ is 3-dimensional over 𝔽₂. The tower law [L : F] = [L : K][K : F] is
-  just "dimensions multiply." It completes S1 Ep. 18: why |𝔽_q| must be a
+  just "dimensions multiply." It completes S1 Ep. 19: why |𝔽_q| must be a
   prime power (it's a vector space over 𝔽ₚ, so it has pⁿ elements).
 - Multiplication by α in a field extension is a linear map, and its
   determinant and trace are the field *norm* and *trace*.
@@ -49,8 +49,8 @@ Act II also uses multivariable calculus).
 - Representations of non-compact groups like ℝ live on Hilbert spaces
   (S2 Act VIII), and the Fourier transform on L²(ℝ) is unitary
   (Plancherel).
-- Ties S2 Ep. 6 (covectors), S2 Ep. 22 (continuous duals), S2 Ep. 27
-  (Fourier), and S1 Ep. 15 (groups) together.
+- Ties S2 Ep. 6 (covectors), S2 Ep. 24 (continuous duals), S2 Ep. 29
+  (Fourier), and S1 Ep. 16 (groups) together.
 
 ---
 
@@ -69,7 +69,7 @@ space up close but can be curved or twisted globally. Calculus on it is
 | Differential k-form | An alternating multilinear form (S2 Ep. 11) |
 | Change of variables in integrals | The determinant (S2 Ep. 11) |
 | Riemannian metric | An inner product at each point (S2 Ep. 14) |
-| Gradient as a vector | Riesz: covector → vector via the metric (S2 Ep. 15) |
+| Gradient as a vector | Riesz: covector → vector via the metric (S2 Ep. 16) |
 | de Rham cohomology | A quotient vector space (S1 Ep. 5, S2 Ep. 5) |
 | Hodge theory (side quest) | Hilbert spaces and the spectral theorem (S2 Part B) |
 
@@ -153,7 +153,7 @@ space up close but can be curved or twisted globally. Calculus on it is
 - **Core ideas:** a Riemannian metric = an inner product on each tangent
   space (S2 Ep. 14: "length is a choice," now a choice at every point).
   Lengths of curves, geodesics as "straightest" paths, the gradient vector
-  via the metric (S2 Ep. 15). **Gauss's Theorema Egregium:** curvature is
+  via the metric (S2 Ep. 16). **Gauss's Theorema Egregium:** curvature is
   intrinsic (the ant can measure it via triangle angle sums). Why maps of
   the Earth must distort. **Gauss–Bonnet:** the total curvature of a closed
   surface equals 2π · χ, so geometry integrates to topology.
@@ -163,7 +163,7 @@ space up close but can be curved or twisted globally. Calculus on it is
   sums > 180°, = 180°, < 180°.
 
 ### Ep. 11: Lie Groups: Continuous Symmetry
-- **Hook:** rotations form a group (S1 Ep. 15) *and* a smooth space
+- **Hook:** rotations form a group (S1 Ep. 16) *and* a smooth space
   (Ep. 5). What happens when both structures cooperate?
 - **Core ideas:** Lie groups (SO(3), SU(2), GL(n)); the Lie algebra =
   the tangent space at the identity, a vector space that captures
@@ -216,15 +216,17 @@ it attaches. They work well as "bonus" uploads between main episodes.
 | **Linear algebra over 𝔽₂: codes and puzzles** | S2 Ep. 3 | The "Lights Out" puzzle is solving Ax = b over 𝔽₂; Hamming codes. |
 | **Graphs as matrices** | S2 Ep. 12 | Adjacency and Laplacian matrices; counting walks; spectral clustering; why the second eigenvalue measures connectivity. |
 | **Geometric algebra** | S2 Ep. 11 | Clifford algebras: one product that combines dot and wedge; rotations as "sandwiches" (a 3D-graphics favorite). |
-| **Linear algebra in machine learning** | S2 Ep. 18 | Neural network layers as linear maps + nonlinearities; embeddings and dot-product attention as inner products; low-rank adaptation (LoRA) as Eckart–Young in practice. |
+| **Linear algebra in machine learning** | S2 Ep. 19 | Neural network layers as linear maps + nonlinearities; embeddings and dot-product attention as inner products; low-rank adaptation (LoRA) as Eckart–Young in practice. |
 | **Quantum computing** | S2 Ep. 10 | Qubits in ℂ², multi-qubit systems as tensor products, gates as unitary matrices, entanglement. |
 | **Projective geometry** | S2 Ep. 5 | Lines through the origin as points; perspective drawing; why parallel lines "meet at infinity." |
 | **Special relativity** | S2 Ep. 9 | A symmetric bilinear form with signature (+ − − −) (Minkowski); Lorentz transformations as its symmetries. |
-| **Lebesgue integration** | S2 Ep. 21 | Why the Riemann integral leaves holes in L¹; measuring sets before integrating functions; the convergence theorems. |
-| **Convex duality and optimization** | S2 Ep. 23 | Linear programming duality, Lagrange multipliers as functionals, the Legendre–Fenchel transform. |
-| **Kernel methods and RKHS** | S2 Ep. 28 | Hilbert spaces where evaluation *is* continuous; the "kernel trick" in machine learning; Gaussian processes. |
-| **Wavelets** | S2 Ep. 27 | Orthonormal bases localized in both time and frequency; JPEG 2000. |
-| **Operator algebras** | S2 Ep. 29 | C*-algebras: studying spaces through their algebras of operators; Gelfand duality. |
+| **Fractals and Hausdorff dimension** | S2 Ep. 22 | Measures that see "fractional dimension": the Cantor set has dimension log 2 / log 3. |
+| **Proof assistants** | S1 Ep. 14 | Russell's types today: formalize a small theorem in Lean live on screen. |
+| **Entropy and information** | S2 Ep. 32 | Kolmogorov–Sinai entropy measures how fast a measure-preserving system creates information; Shannon entropy connection. |
+| **Convex duality and optimization** | S2 Ep. 25 | Linear programming duality, Lagrange multipliers as functionals, the Legendre–Fenchel transform. |
+| **Kernel methods and RKHS** | S2 Ep. 30 | Hilbert spaces where evaluation *is* continuous; the "kernel trick" in machine learning; Gaussian processes. |
+| **Wavelets** | S2 Ep. 29 | Orthonormal bases localized in both time and frequency; JPEG 2000. |
+| **Operator algebras** | S2 Ep. 31 | C*-algebras: studying spaces through their algebras of operators; Gelfand duality. |
 
 ### Further along the manifold road
 | Side quest | Attaches after | Idea |
@@ -239,7 +241,7 @@ it attaches. They work well as "bonus" uploads between main episodes.
 ### History interludes (short, story-driven)
 - Pythagoras and the irrationality crisis (S1 Act II)
 - Cantor vs. Kronecker ("God made the integers…") (S1 Act III)
-- Galois's last night (S1 Ep. 19)
+- Galois's last night (S1 Ep. 20)
 - Grassmann's ignored *Ausdehnungslehre* (1844), which invented vector
   spaces decades early (S2 Act I)
 - Emmy Noether and the birth of abstract algebra (S1 Act IV / S3 Ep. 2),
@@ -247,9 +249,12 @@ it attaches. They work well as "bonus" uploads between main episodes.
 - Gauss surveys Hanover and finds the Theorema Egregium (S3 Ep. 10)
 - Riemann's 1854 lecture that invented manifolds (S3 Ep. 5)
 - Élie Cartan and the calculus of differential forms (S3 Ep. 7–8)
-- Hilbert's 1900 problems and the foundations crisis (S1 Ep. 14)
+- Russell's 1902 letter to Frege, and Russell writing *Introduction to
+  Mathematical Philosophy* in prison in 1918 (S1 Ep. 14)
+- Hilbert's 1900 problems and the foundations crisis (S1 Ep. 14–15)
+- Gödel, 25 years old, stuns the 1930 Königsberg conference (S1 Ep. 15)
 - Banach and the Scottish Café, where the Lwów school wrote open
   problems in a notebook, with prizes such as a live goose (S2 Part B)
-- von Neumann puts quantum mechanics on Hilbert space (1932) (S2 Ep. 29)
+- von Neumann puts quantum mechanics on Hilbert space (1932) (S2 Ep. 31)
 - Dirac's delta and Schwartz's distributions (Fields Medal 1950)
-  (S2 Ep. 30)
+  (S2 Ep. 33)

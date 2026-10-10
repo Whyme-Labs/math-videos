@@ -57,8 +57,9 @@ Each episode below lists: **Hook**, **Core ideas**, **Key visual**, and
 ### Ep. 4: Sets: The Universal Building Material
 - **Hook:** can numbers themselves be built out of something simpler?
 - **Core ideas:** naive sets; Russell's paradox (the set of all sets that
-  don't contain themselves) and why we need rules (ZF, explained in plain
-  language). The von Neumann construction: 0 = ∅, 1 = {∅}, 2 = {∅, {∅}},
+  don't contain themselves; the barber who shaves everyone who doesn't shave
+  himself) and why we need rules (ZF, explained in plain language). Mention
+  that Russell had his *own* fix (types), and that the full story is Ep. 14. The von Neumann construction: 0 = ∅, 1 = {∅}, 2 = {∅, {∅}},
   n + 1 = n ∪ {n}. It satisfies Peano.
 - **Twist:** Zermelo built them differently (n + 1 = {n}), and that version
   also satisfies Peano. So which one is the "real" 2? This is Benacerraf's
@@ -118,7 +119,7 @@ Each episode below lists: **Hook**, **Core ideas**, **Key visual**, and
   description.
 - **Seed for Season 2 Part B:** the Cauchy-sequence construction works for
   *any* space with a distance. Applied to spaces of functions, it produces
-  Banach and Hilbert spaces (S2 Ep. 21).
+  Banach and Hilbert spaces (S2 Ep. 23).
 
 ### Ep. 9: 0.999… = 1, and What Decimals Really Are
 - **Hook:** the internet's favorite argument.
@@ -146,7 +147,7 @@ Each episode below lists: **Hook**, **Core ideas**, **Key visual**, and
 
 ---
 
-## Act III: Sizes of Infinity (Cantor)
+## Act III: Infinity and the Foundations Crisis (Cantor, Russell, Gödel)
 
 *(Placement note: Act III can go before Ep. 10 if you want ℂ next to the
 algebra in Act IV. Keeping it here gives a "palate cleanser" between the
@@ -186,12 +187,68 @@ construction acts.)*
   models, mentioned in Ep. 2, explain why: in some of them the Goodstein
   sequence never reaches 0.)
 
-### Ep. 14: The Limits of the Axioms
+### Ep. 14: Russell's Dream: Is Mathematics Just Logic?
+- **Hook:** June 1902. Frege is about to publish the second volume of his
+  life's work, which reduces arithmetic to pure logic. A letter arrives
+  from a 29-year-old Bertrand Russell. Frege replies that "arithmetic
+  totters."
+- **Core ideas:**
+  - **Logicism:** the program (Frege, then Russell) of deriving all of
+    mathematics from logic alone, with no special mathematical axioms.
+  - **The Frege–Russell definition of number:** two collections have the
+    same number if they can be matched one-to-one (cups and saucers;
+    Hume's principle). The number 2 *is* the class of all pairs, and 3 is
+    the class of all triples. This is a *third* answer to "what is 2?",
+    next to von Neumann's and Zermelo's from Ep. 4, and it previews Cantor's
+    bijections from Ep. 11.
+  - **How the paradox breaks it:** Frege's logic let any property define a
+    set (unrestricted comprehension); "doesn't contain itself" breaks it.
+    Russell found related paradoxes, such as the Berry paradox: "the smallest
+    number not definable in under sixty letters" (a cousin of Ep. 12's
+    diagonal argument).
+  - **Russell's fix, the theory of types:** sets come in levels, and a set
+    can only contain things from lower levels, so "a set containing itself"
+    can't even be written. The *vicious circle principle*: nothing may be
+    defined in terms of a totality that includes itself.
+  - ***Principia Mathematica*** (Russell & Whitehead, 1910–13): three huge
+    volumes. The proof that 1 + 1 = 2 is completed hundreds of pages in,
+    with the comment "the above proposition is occasionally useful." The
+    weak points: the axioms of infinity and reducibility don't look like
+    pure logic.
+  - **The three schools** of the foundations crisis: logicism (Frege,
+    Russell): math is logic. Formalism (Hilbert): math is a game with
+    symbols, and we must prove the game is consistent. Intuitionism
+    (Brouwer): only what can be constructed exists, and the law of
+    excluded middle is suspect.
+- **Extrapolation:** Russell's types live on in computer science. Type
+  systems in programming languages, the Curry–Howard correspondence
+  ("proofs are programs"), and proof assistants like Lean and Coq, where
+  mathematicians today write proofs a computer checks, Principia-style.
+- **Key visual:** a tower of levels (individuals, sets of individuals, sets
+  of sets, …), with an arrow trying to loop back to its own level and being
+  blocked.
+- **Payoff:** Russell's dream sets up the question for the next episode:
+  can *any* system of rules capture all of mathematics?
+- **Quote for the end card:** Russell: "Mathematics may be defined as the
+  subject in which we never know what we are talking about, nor whether
+  what we are saying is true." It fits the series' thesis that structure
+  matters, not substance.
+
+### Ep. 15: The Limits of the Axioms
 - **Hook:** is there an infinity between ℕ and ℝ?
-- **Core ideas:** the Continuum Hypothesis; Gödel (1940) and Cohen (1963)
-  showed it can be neither proved nor disproved from ZFC. The Axiom of
-  Choice: obvious for finite sets, strange for infinite ones (Banach–Tarski
-  as a teaser, a well-ordering of ℝ that nobody can write down).
+- **Core ideas:**
+  - **Gödel's incompleteness theorems (1931):** any consistent system strong
+    enough for arithmetic has true statements it can't prove (the diagonal
+    trick from Ep. 12 applied to proofs), and it can't prove its own
+    consistency. This ends the full ambitions of both Principia and
+    Hilbert's program (Ep. 14), and explains Goodstein (Ep. 13).
+  - **The Continuum Hypothesis:** Gödel (1940) and Cohen (1963) showed it
+    can be neither proved nor disproved from ZFC.
+  - **The Axiom of Choice:** obvious for finite sets, strange for infinite
+    ones. Russell's own illustration: from infinitely many pairs of shoes
+    you can pick one from each pair ("take the left one"), but from
+    infinitely many pairs of socks you need Choice. Then Banach–Tarski as a
+    teaser, and a well-ordering of ℝ that nobody can write down.
 - **Payoff:** mathematics has *choices* built into its foundations. Seed
   for Season 2: every vector space has a basis, *if you accept Choice*.
 
@@ -199,7 +256,7 @@ construction acts.)*
 
 ## Act IV: Forget What It Is, Keep What It Does (Abstract Algebra)
 
-### Ep. 15: Groups: The Mathematics of Symmetry
+### Ep. 16: Groups: The Mathematics of Symmetry
 - **Hook:** a square has 8 symmetries; a clock has 12 positions. Same kind
   of structure?
 - **Core ideas:** the group axioms (closure, associativity, identity,
@@ -209,7 +266,7 @@ construction acts.)*
 - **Payoff:** ℤ under + is "the group freely generated by one element."
   Counting itself is a group-theoretic idea.
 
-### Ep. 16: Maps Between Groups and Quotient Groups
+### Ep. 17: Maps Between Groups and Quotient Groups
 - **Hook:** when are two groups "really the same"?
 - **Core ideas:** homomorphisms and isomorphisms; subgroups and cosets;
   Lagrange's theorem; normal subgroups; quotient groups (ℤ/nℤ, using Ep. 5's
@@ -218,7 +275,7 @@ construction acts.)*
 - **Payoff:** the isomorphism theorem comes back unchanged as rank–nullity
   in Season 2.
 
-### Ep. 17: Rings: Adding *and* Multiplying
+### Ep. 18: Rings: Adding *and* Multiplying
 - **Hook:** ℤ, polynomials, matrices, and clock arithmetic all let you add
   and multiply. What do they share?
 - **Core ideas:** ring axioms; zero divisors (in ℤ/6ℤ, 2 · 3 = 0); units;
@@ -228,7 +285,7 @@ construction acts.)*
 - **Payoff:** ℤ/nℤ and ℝ[x]/(x² + 1) are both quotient rings, and the
   second one is ℂ. Ep. 10's construction, seen again from a new angle.
 
-### Ep. 18: Fields, and the Impossible Constructions
+### Ep. 19: Fields, and the Impossible Constructions
 - **Hook:** for 2,000 years, nobody could trisect an angle with straightedge
   and compass. Why not?
 - **Core ideas:** fields: ℚ, ℝ, ℂ, ℤ/pℤ = 𝔽ₚ, and finite fields 𝔽_{p^n}
@@ -240,7 +297,7 @@ construction acts.)*
 - **Payoff:** a brief appearance of linear algebra inside number theory,
   used deliberately as a bridge to Season 2.
 
-### Ep. 19: Season Finale: Galois and the Symmetry of Roots
+### Ep. 20: Season Finale: Galois and the Symmetry of Roots
 - **Hook:** there's a formula for quadratics, cubics, and quartics. Why
   none for degree 5?
 - **Core ideas (at a story level, not a full proof):** permuting the roots

@@ -13,8 +13,8 @@ The season comes in two parts:
 
 | Part | Episodes | Question |
 |---|---|---|
-| **A: Finite dimensions** | 1–18 | Which properties of a linear map survive any change of coordinates? |
-| **B: Infinite dimensions** | 19–30 | What happens when spaces are made of functions, and how much of Part A can we save? |
+| **A: Finite dimensions** | 1–19 | Which properties of a linear map survive any change of coordinates? |
+| **B: Infinite dimensions** | 20–33 | What happens when spaces are made of functions, and how much of Part A can we save? |
 
 Part B is the natural place for a break or a separate playlist. It assumes
 a bit more calculus (limits, series, integrals), and each episode recaps the
@@ -44,7 +44,7 @@ functional that can be continuous or not, depending on the norm.
 
 ### Ep. 1: Anything You Can Add and Scale
 - **Core ideas:** the vector space axioms over a field F (callback to S1
-  Ep. 18). Examples: ℝⁿ, polynomials, functions ℝ → ℝ, solutions of linear
+  Ep. 19). Examples: ℝⁿ, polynomials, functions ℝ → ℝ, solutions of linear
   ODEs, sequences, 𝔽₂ⁿ (bit strings, where 1 + 1 = 0). Non-examples: the
   positive reals under + (no negatives), points on a sphere.
 - **The superposition principle:** why linearity is everywhere in physics,
@@ -63,7 +63,7 @@ functional that can be continuous or not, depending on the norm.
 - **Infinite dimension teaser:** polynomials have the basis 1, x, x², …;
   ℝ as a vector space over ℚ has uncountable dimension (callback to S1
   Ep. 12), and finding a basis for it needs the Axiom of Choice (callback to
-  S1 Ep. 14). Plant the question *"is this kind of basis even useful?"*
+  S1 Ep. 15). Plant the question *"is this kind of basis even useful?"*
   (Part B's answer: usually not.)
 - **Key visual:** the same vector described in two different bases, like
   the same sentence in two languages.
@@ -75,7 +75,7 @@ functional that can be continuous or not, depending on the norm.
   determined by what it does to a basis. Kernel (what gets crushed) and
   image (what can be reached). **Rank–nullity as conservation of dimension:**
   dim V = dim ker + dim im. Injective ↔ trivial kernel. Callback: this is the
-  First Isomorphism Theorem from S1 Ep. 16, with dimensions instead of group
+  First Isomorphism Theorem from S1 Ep. 17, with dimensions instead of group
   orders.
 - **Key visual:** a 3D space being squashed onto a plane, with the crushed
   line glowing.
@@ -130,7 +130,7 @@ as distributions.
   series.
 - **Payoff:** the gradient of a function is naturally a covector (df). It
   only becomes an arrow once you choose an inner product (set up for
-  Ep. 15).
+  Ep. 16).
 
 ### Ep. 7: Functionals Everywhere
 - **Hook:** "the value at 0," "the area under the curve," "the slope at 1,"
@@ -149,7 +149,7 @@ as distributions.
     "intersections of kernels."
 - **Key visual:** a polynomial being "measured" by a row of probes; swap the
   probes and the coordinates change.
-- **Seed for the finale (Ep. 30):** δ₀ ("value at 0") is a perfectly good
+- **Seed for the finale (Ep. 33):** δ₀ ("value at 0") is a perfectly good
   functional on polynomials. On a space of rough functions it stops making
   sense. Keep this problem in the back pocket.
 
@@ -164,7 +164,7 @@ as distributions.
 - **Big idea, named gently:** "natural" vs. "requires a choice." This is the
   first glimpse of category theory (S3).
 - **Seed for Part B:** "V** = V" fails in infinite dimensions. The spaces
-  where a version of it survives get a name: *reflexive* (Ep. 22).
+  where a version of it survives get a name: *reflexive* (Ep. 24).
 
 ---
 
@@ -252,7 +252,7 @@ products, cross products, and tensors are all examples.
   Seed for S3: V as a module over F[x] (the map T acts like "x").
 - **Payoff:** over ℂ, every linear map on a finite-dimensional space is
   classified by its Jordan form. (Part B: in infinite dimensions there's
-  nothing this clean. The spectrum is the replacement, Ep. 29.)
+  nothing this clean. The spectrum is the replacement, Ep. 31.)
 
 ---
 
@@ -263,32 +263,59 @@ products, cross products, and tensors are all examples.
   doesn't know what "perpendicular" means.
 - **Core ideas:** an inner product = a symmetric positive definite bilinear
   form (Ep. 9). The same space can carry many inner products (show stretched
-  "unit circles," i.e. ellipses). Complex inner products are sesquilinear.
-  Norms, angles, Cauchy–Schwarz, orthogonality. Inner products on function
+  "unit circles," i.e. ellipses). Norms, angles, Cauchy–Schwarz, orthogonality. Inner products on function
   spaces: ⟨f, g⟩ = ∫ f g. The parallelogram law identifies which norms come
   from an inner product.
 - **Key visual:** the same plane with different "unit circles": round,
   elliptical, and (as a norm that isn't from an inner product) a diamond
-  and a square. These shapes come back in Ep. 20.
+  and a square. These shapes come back in Ep. 21.
 
-### Ep. 15: Identifying Vectors and Covectors
+### Ep. 15: Unitary Spaces: Geometry over ℂ
+- **Hook:** try the dot product on ℂ²: the vector (1, i) gets "length²"
+  1 + i² = 0. A nonzero vector of length zero. Something must change.
+- **Core ideas:** a **unitary space** (complex inner product space) uses
+  ⟨u, v⟩ = Σ uₖ · conj(vₖ): linear in one slot, conjugate-linear in the
+  other (sesquilinear), and *Hermitian* (⟨v, u⟩ = conj⟨u, v⟩). Then
+  ⟨v, v⟩ = Σ|vₖ|² is real and positive again. The complex conjugate is
+  forced, not a convention. Unitary maps preserve this inner product:
+  U*U = I, columns form an orthonormal basis, all eigenvalues lie on the
+  unit circle. The **unitary group U(n)** contains the orthogonal group
+  O(n), and U(1) is just the circle of phases e^{iθ} (callback to S1 Ep. 10:
+  multiplying by e^{iθ} rotates).
+- **Key theorems:** **Schur:** every complex matrix is upper triangular in
+  some orthonormal basis (always possible over ℂ, not over ℝ). **Normal
+  operators** (TT* = T*T) are exactly the ones diagonalizable by a unitary
+  change of basis. Over ℂ, the real "rotation without eigenvectors" of
+  Ep. 12 becomes diagonal with eigenvalues e^{±iθ}.
+- **Examples:** the discrete Fourier transform matrix is unitary (after
+  scaling), so the DFT preserves energy (preview of Ep. 29); quantum gates
+  are unitary matrices; Hermitian matrices are the "real numbers," unitary
+  matrices the "unit circle," and positive matrices the "positive reals"
+  of matrix land (U = e^{iH}).
+- **Key visual:** the vector (1, i) traced as a point spinning around a
+  circle, showing why its length can't be 0, and a unitary map rotating
+  phases on several complex axes at once.
+- **Payoff:** from here on, Part B and quantum mechanics live in unitary
+  spaces. "Hilbert space" will mean a *complete* unitary space (Ep. 28).
+
+### Ep. 16: Identifying Vectors and Covectors
 - **Core ideas:** an inner product gives an isomorphism V → V*,
   v ↦ ⟨v, ·⟩ (finite-dimensional Riesz representation). *This* is why we
   usually pretend rows and columns are the same: we silently use the dot
   product. The gradient as an arrow = df converted using the inner product
   (resolves Ep. 6). The adjoint T† as the transpose made geometric:
   ⟨Tv, w⟩ = ⟨v, T†w⟩. Orthogonal / unitary maps preserve the inner product.
-- **Payoff:** the duality act and the geometry act snap together. Ep. 26
+- **Payoff:** the duality act and the geometry act snap together. Ep. 28
   repeats this trick in infinite dimensions, where it needs completeness.
 
-### Ep. 16: Projection and Least Squares
+### Ep. 17: Projection and Least Squares
 - **Core ideas:** orthogonal complements; orthogonal projection as "closest
   point"; Gram–Schmidt (and QR); least squares: the best-fit line *is* a
   projection onto the column space; the normal equations AᵀA x = Aᵀb.
 - **Key visual:** a vector dropping its shadow onto a plane; the residual is
   the perpendicular error.
 
-### Ep. 17: The Spectral Theorem
+### Ep. 18: The Spectral Theorem
 - **Hook:** some maps are guaranteed to be perfectly diagonalizable with
   perpendicular axes. Which ones, and why?
 - **Core ideas:** self-adjoint (symmetric / Hermitian) maps have real
@@ -298,14 +325,14 @@ products, cross products, and tensors are all examples.
   Normal operators.
 - **Key visual:** a tilted ellipse rotating to align with the axes.
 - **Seed for Part B:** quantum mechanics wants this theorem for operators on
-  *function spaces*. Does it survive? (Eps. 28–29.)
+  *function spaces*. Does it survive? (Eps. 30–31.)
 
-### Ep. 18: SVD: Every Map Is Rotate–Stretch–Rotate (Part A Finale)
-- **Hook:** Ep. 17 only covers special maps. What about *every* map, even
+### Ep. 19: SVD: Every Map Is Rotate–Stretch–Rotate (Part A Finale)
+- **Hook:** Ep. 18 only covers special maps. What about *every* map, even
   between different spaces?
 - **Core ideas:** A = UΣVᵀ: rotate, scale along the axes, rotate. Singular
   values as the "true size" of a map; the largest one is the **operator
-  norm** (plant this for Ep. 20); low-rank approximation (Eckart–Young); the
+  norm** (plant this for Ep. 21); low-rank approximation (Eckart–Young); the
   pseudoinverse; PCA; image compression demo.
 - **Key visual:** a unit sphere turning into an ellipsoid, decomposed into
   three moves.
@@ -324,7 +351,7 @@ This is the Season 1 story ℚ → ℝ replayed one level up.
 
 ## Act VI: Norms and Completeness
 
-### Ep. 19: What Breaks in Infinite Dimensions
+### Ep. 20: What Breaks in Infinite Dimensions
 - **Hook:** five facts from Part A that quietly fail.
   1. **Injective doesn't imply surjective:** the right shift on sequences.
   2. **Linear maps needn't be "nice":** differentiation on functions can
@@ -339,29 +366,53 @@ This is the Season 1 story ℚ → ℝ replayed one level up.
 - **Payoff:** a to-do list for Part B. Every later episode repairs one of
   these.
 
-### Ep. 20: Normed Spaces, Unit Balls, and Bounded Operators
+### Ep. 21: Normed Spaces, Unit Balls, and Bounded Operators
 - **Core ideas:** a norm is a length function (triangle inequality,
   scaling). The zoo: ℓ¹, ℓ², ℓ^∞ on sequences; the sup norm and the
   L¹ / L² norms on C[0, 1]. Same vector space, different norms, different
   notions of convergence (a spike that gets taller and thinner → 0 in L¹,
   not in sup). In finite dimensions all norms are equivalent; in infinite
   dimensions they aren't. **Bounded = continuous:** a linear map is
-  continuous iff ‖Tx‖ ≤ C‖x‖; the operator norm (callback to Ep. 18).
+  continuous iff ‖Tx‖ ≤ C‖x‖; the operator norm (callback to Ep. 19).
   Differentiation is unbounded in the sup norm. Riesz's lemma: the closed
   unit ball is compact iff the dimension is finite (repairs nothing, but
   explains item 4).
 - **Key visual:** unit balls of ℓᵖ in 2D morphing from diamond (p = 1)
   through circle (p = 2) to square (p = ∞).
 
-### Ep. 21: Banach Spaces: Where Limits Live
+### Ep. 22: Measure Spaces: How Big Is a Set?
+- **Hook:** what's the "length" of the rational numbers inside [0, 1]? Of
+  the Cantor set? And why does the Riemann integral choke on the function
+  that is 1 on rationals and 0 on irrationals?
+- **Core ideas:** a **measure space** (X, Σ, μ): a σ-algebra of measurable
+  sets and a countably additive measure. Lebesgue measure on ℝ: every
+  countable set has measure 0 (cover the rationals with intervals of total
+  length ε, a callback to S1 Ep. 11's countability), while the Cantor set
+  is uncountable *and* has measure 0. Why not measure *every* set? Vitali's
+  non-measurable set uses the Axiom of Choice (S1 Ep. 15, the same root as
+  Banach–Tarski). **The Lebesgue integral:** slice the range, not the
+  domain ("count the coins by denomination"). "Almost everywhere";
+  monotone and dominated convergence (integrals and limits can be
+  swapped). **Lᵖ spaces** are vector spaces of functions up to equality
+  almost everywhere, a quotient (S1 Ep. 5 again).
+- **Probability is measure theory:** a probability space is a measure
+  space of total mass 1 (Kolmogorov, 1933); random variables are measurable
+  functions; expectation is an integral.
+- **Key visual:** Riemann's vertical strips vs. Lebesgue's horizontal
+  slices of the same graph; the Cantor set losing its middle thirds while
+  "total length" drains to 0.
+- **Payoff:** the raw material for Lᵖ and L², which the next episodes turn
+  into Banach and Hilbert spaces.
+
+### Ep. 23: Banach Spaces: Where Limits Live
 - **Hook:** the sequence of polynomials 1 + x + x²/2! + … + xⁿ/n! is Cauchy
   in the space of polynomials, but its limit eˣ isn't a polynomial. Sound
   familiar? (It's √2 and ℚ again, from S1 Ep. 7.)
 - **Core ideas:** a Banach space is a complete normed space. ℓᵖ, C[0, 1]
   with sup norm, and Lᵖ. **Completion:** C[0, 1] under the L¹ norm has
   holes; filling them (with Cauchy sequences, exactly as in S1 Ep. 8)
-  produces L¹. The Lebesgue integral is what makes those new elements
-  concrete (side quest). Absolutely convergent series converge iff the
+  produces L¹. The Lebesgue integral from Ep. 22 is what makes those new
+  elements concrete. Absolutely convergent series converge iff the
   space is complete. Schauder bases (infinite sums) replace Hamel bases.
 - **Showcase, the Banach fixed-point theorem:** a contraction on a complete
   space has exactly one fixed point. Applications: Picard iteration proves
@@ -376,7 +427,7 @@ This is the Season 1 story ℚ → ℝ replayed one level up.
 Linear functionals return in a new form: we now require them to be
 **continuous**.
 
-### Ep. 22: The Continuous Dual
+### Ep. 24: The Continuous Dual
 - **Core ideas:** X* = bounded linear functionals, itself a Banach space.
   Computing duals: (ℓᵖ)* = ℓ^q with 1/p + 1/q = 1 (Hölder's inequality is
   the pairing); (ℓ¹)* = ℓ^∞, but (ℓ^∞)* is *bigger* than ℓ¹. (c₀)* = ℓ¹.
@@ -388,13 +439,13 @@ Linear functionals return in a new form: we now require them to be
 - **Key visual:** the ℓᵖ / ℓ^q unit balls as dual shapes (diamond ↔
   square).
 
-### Ep. 23: Hahn–Banach: There Are Enough Measurements
+### Ep. 25: Hahn–Banach: There Are Enough Measurements
 - **Hook:** in an infinite-dimensional space, how do we know there are any
   continuous functionals at all, let alone enough to tell vectors apart?
 - **Core ideas:** **analytic form:** a functional defined on a subspace and
   bounded by a norm extends to the whole space without growing. Corollary:
   X* separates points, and ‖x‖ = max over unit functionals |f(x)|. The
-  proof uses the Axiom of Choice (Zorn), another callback to S1 Ep. 14.
+  proof uses the Axiom of Choice (Zorn), another callback to S1 Ep. 15.
   **Geometric form:** a closed convex set and a point outside it can be
   separated by a hyperplane, i.e. the kernel of a functional (Ep. 6's
   level sets again).
@@ -405,7 +456,7 @@ Linear functionals return in a new form: we now require them to be
 - **Key visual:** a convex blob and a point, with a plane sliding between
   them.
 
-### Ep. 24: The Big Three Theorems
+### Ep. 26: The Big Three Theorems
 - **Hook:** some of the most useful theorems in analysis say "if it works
   for each one, it works uniformly." Where does that power come from?
 - **Core ideas:** the **Baire category theorem** (a complete space isn't a
@@ -421,8 +472,8 @@ Linear functionals return in a new form: we now require them to be
   Existence by pure structure.
 - **Payoff:** completeness (again!) gives these theorems their strength.
 
-### Ep. 25: Weak Convergence: Getting Compactness Back
-- **Hook:** Ep. 19 said the unit ball isn't compact. Optimization and PDEs
+### Ep. 27: Weak Convergence: Getting Compactness Back
+- **Hook:** Ep. 20 said the unit ball isn't compact. Optimization and PDEs
   need compactness. Can we cheat?
 - **Core ideas:** weak convergence: xₙ ⇀ x if every measurement converges,
   f(xₙ) → f(x) for all f ∈ X*. In ℓ², eₙ ⇀ 0 even though ‖eₙ‖ = 1: the
@@ -440,34 +491,34 @@ Linear functionals return in a new form: we now require them to be
 
 ## Act VIII: Hilbert Spaces and Operators
 
-### Ep. 26: Hilbert Spaces: Infinite-Dimensional Euclidean Geometry
+### Ep. 28: Hilbert Spaces: Infinite-Dimensional Euclidean Geometry
 - **Core ideas:** a Hilbert space = inner product + complete. ℓ², L².
   **Projection theorem:** every closed convex set has a unique closest
   point (fails without completeness, and fails in non-Hilbert Banach
   spaces). Orthogonal complements and H = M ⊕ M⊥ for closed M. **Riesz
   representation:** every continuous functional is ⟨·, y⟩ for a unique y,
-  so H ≅ H* (Ep. 15, now for infinite dimensions). Orthonormal bases in the
+  so H ≅ H* (Ep. 16, now for infinite dimensions). Orthonormal bases in the
   infinite-sum sense, Bessel and Parseval. **Every separable
   infinite-dimensional Hilbert space is isomorphic to ℓ²**, a big
   "describe, don't build" moment: L²[0, 1], L²(ℝ), and Sobolev spaces are
   all ℓ² in disguise.
-- **Key visual:** Ep. 16's "drop a shadow onto a plane," now onto an
+- **Key visual:** Ep. 17's "drop a shadow onto a plane," now onto an
   infinite-dimensional subspace, with the error shrinking term by term.
 
-### Ep. 27: Fourier: Functions as Infinite Vectors
+### Ep. 29: Fourier: Functions as Infinite Vectors
 - **Hook:** can a sound be broken into "basis vectors"?
 - **Core ideas:** {e^{inx}} is an orthonormal basis of L²[−π, π];
   Fourier coefficients are ⟨f, eₙ⟩, and partial sums are projections
-  (Ep. 16, infinitely many times). Riesz–Fischer and Parseval: the Fourier
+  (Ep. 17, infinitely many times). Riesz–Fischer and Parseval: the Fourier
   map L² → ℓ² is a unitary isomorphism (energy is preserved). Convergence
-  in L² vs. pointwise (callback to Ep. 24's divergence). Differentiation is
+  in L² vs. pointwise (callback to Ep. 26's divergence). Differentiation is
   diagonal in the Fourier basis, which is why Fourier solves the heat and
   wave equations. Other orthonormal bases: Legendre polynomials (Gram–Schmidt
   on 1, x, x², …), Hermite functions, wavelets.
 - **Payoff:** the eigenvector idea from Ep. 12 applied to calculus.
 
-### Ep. 28: Compact Operators: The Spectral Theorem Survives
-- **Hook:** does Ep. 17's spectral theorem survive in infinite dimensions?
+### Ep. 30: Compact Operators: The Spectral Theorem Survives
+- **Hook:** does Ep. 18's spectral theorem survive in infinite dimensions?
 - **Core ideas:** compact operators = limits of finite-rank operators (they
   send bounded sets to nearly finite-dimensional ones). Integral operators
   (Tf)(x) = ∫ K(x, y) f(y) dy are compact. **Spectral theorem for compact
@@ -479,8 +530,8 @@ Linear functionals return in a new form: we now require them to be
   Kernel methods in machine learning (Mercer's theorem) as a side note.
 - **Key visual:** eigenvalues plotted as dots marching toward 0.
 
-### Ep. 29: Spectrum Beyond Eigenvalues, and Quantum Mechanics
-- **Hook:** Ep. 19's "multiply by x" has no eigenvectors. Yet physicists
+### Ep. 31: Spectrum Beyond Eigenvalues, and Quantum Mechanics
+- **Hook:** Ep. 20's "multiply by x" has no eigenvectors. Yet physicists
   measure position all the time.
 - **Core ideas:** the spectrum σ(T) = {λ : T − λI has no bounded inverse},
   which can be much larger than the set of eigenvalues. Examples: the right
@@ -499,7 +550,48 @@ Linear functionals return in a new form: we now require them to be
 - **Payoff:** Jordan form (Ep. 13) is replaced by the spectral theorem as
   the classification tool.
 
-### Ep. 30: Season Finale: Distributions: Functionals as Generalized Functions
+### Ep. 32: Measure-Preserving Systems: Linear Algebra Meets Chaos
+- **Hook:** stir cream into coffee. The motion is nonlinear and chaotic,
+  but it preserves volume. Will the cream ever come back to where it
+  started? Will it spread evenly?
+- **Core ideas:** a **measure-preserving system** (X, μ, T): a map T with
+  μ(T⁻¹A) = μ(A) for every measurable set A (Ep. 22). Examples:
+  - rotation of the circle by an angle α
+  - the doubling map x ↦ 2x mod 1
+  - Arnold's cat map on the torus
+  - Hamiltonian flows: Liouville's theorem says phase-space volume is
+    conserved
+  - shifts on sequences of coin flips
+  
+  **Poincaré recurrence:** almost every point returns arbitrarily close to
+  where it started. **Ergodicity:** the only invariant sets are null or
+  full, so time averages equal space averages. Irrational rotations are
+  ergodic, which gives Weyl's equidistribution theorem (the digits of nα
+  spread out evenly). Mixing is a stronger property: the cream really does
+  spread out.
+- **The linear-algebra twist (Koopman, 1931):** a *nonlinear* map T on X
+  becomes a *linear* operator on functions, U_T f = f ∘ T, and because T
+  preserves measure, **U_T is unitary on L²** (Ep. 15, Ep. 28). Chaos
+  becomes a question about the spectrum of a unitary operator (Ep. 31):
+  - ergodic ⟺ eigenvalue 1 is simple (only constants are invariant)
+  - irrational rotations have pure point spectrum (eigenfunctions e^{2πinx})
+  - mixing systems have no other eigenfunctions
+  
+  **von Neumann's mean ergodic theorem** is a Hilbert space theorem: the
+  averages (1/N) Σ Uⁿ f converge to the projection of f onto the invariant
+  subspace (Ep. 17's projections). Birkhoff's pointwise version follows.
+- **Applications:** statistical mechanics (why thermodynamics works),
+  Monte Carlo methods and Markov chain mixing, and the Green–Tao theorem
+  (arbitrarily long arithmetic progressions of primes) whose proof uses
+  ergodic-theory ideas.
+- **Key visual:** the cat map scrambling a picture of a cat and then, after
+  enough iterations, the cat reappearing (recurrence); next to it, a single
+  orbit of an irrational rotation slowly filling the circle evenly.
+- **Payoff:** "linearize by acting on functions" is one of the most
+  powerful moves in mathematics, and it only works because of unitary
+  operators on Hilbert space.
+
+### Ep. 33: Season Finale: Distributions: Functionals as Generalized Functions
 - **Hook:** the Dirac delta "δ(x) = 0 except at 0, where it's so infinite
   that ∫δ = 1." Physicists use it every day. Is it a function?
 - **Core ideas:** no, it's a *linear functional*: δ(φ) = φ(0) on smooth test
@@ -514,8 +606,9 @@ Linear functionals return in a new form: we now require them to be
   the weak form of Poisson's equation −Δu = f has exactly one solution
   (Lax–Milgram). That's how finite element software works.
 - **Season montage:** the arc of "measurement": Ep. 6 covectors → Ep. 7
-  evaluations → Ep. 10 tensor slots → Ep. 15 Riesz in finite dimensions →
-  Ep. 22 continuous duals → Ep. 23 Hahn–Banach → Ep. 26 Riesz in Hilbert
-  space → distributions. *A function can be thought of as nothing more than
+  evaluations → Ep. 10 tensor slots → Ep. 16 Riesz in finite dimensions →
+  Ep. 24 continuous duals → Ep. 25 Hahn–Banach → Ep. 28 Riesz in Hilbert
+  space → Ep. 32 Koopman (study a system through functions on it) →
+  distributions. *A function can be thought of as nothing more than
   the way it responds to measurements.* This is Season 1's thesis again
   ("an object is what you can do with it"), now about functions.
