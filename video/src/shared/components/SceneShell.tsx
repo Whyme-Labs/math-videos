@@ -5,7 +5,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { beatPulse } from "../music";
+import { stageSwell } from "../music";
 import { useEpisode } from "../episode";
 import { useLocale } from "../locale";
 import { alpha, colors, fonts } from "../theme";
@@ -29,8 +29,8 @@ export const SceneShell: React.FC<{
   const episode = useEpisode();
   const { start, starts, durationInFrames } = episode.sceneTiming(id, locale);
   const lines = episode.narration[locale][id];
-  // Lights pulse on the beat of the background music.
-  const pulse = beatPulse((start + frame) / fps);
+  // Lights breathe gently with the bar (no per-beat flashing: it read as flicker).
+  const swell = stageSwell((start + frame) / fps);
   let current = 0;
   for (let i = 0; i < starts.length; i++) if (frame >= starts[i]) current = i;
 
@@ -59,7 +59,7 @@ export const SceneShell: React.FC<{
             left: `${x * 100}%`,
             width: 70,
             marginLeft: -35,
-            background: `linear-gradient(180deg, ${alpha(colors.highlight, 0.18 + 0.22 * pulse)}, ${alpha(colors.orange, 0.1 + 0.15 * pulse)} 60%, transparent)`,
+            background: `linear-gradient(180deg, ${alpha(colors.highlight, 0.24 + 0.05 * swell)}, ${alpha(colors.orange, 0.14 + 0.04 * swell)} 60%, transparent)`,
             filter: "blur(6px)",
           }}
         />
@@ -69,7 +69,7 @@ export const SceneShell: React.FC<{
           position: "absolute",
           inset: 0,
           background: `radial-gradient(ellipse 38% 45% at 50% 108%, ${alpha(colors.primary, 0.22)}, transparent 70%)`,
-          opacity: pulse,
+          opacity: 0.55 + 0.12 * swell,
         }}
       />
       {showWatermark ? <Watermark /> : null}

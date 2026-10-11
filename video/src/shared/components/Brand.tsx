@@ -1,5 +1,6 @@
 import type React from "react";
 import { Img, staticFile } from "remotion";
+import { colors } from "../theme";
 
 // Whyme Labs brand assets (public/brand), cut out from the official logos.
 export const BRAND = {
@@ -47,5 +48,36 @@ export const Watermark: React.FC = () => (
   >
     <BrandMark height={46} />
     <BrandWordmark height={20} />
+  </div>
+);
+
+// End-card sign-off: mark, wordmark, and the series line under it.
+export const SignOff: React.FC<{
+  readonly line: string;
+  readonly style?: React.CSSProperties;
+}> = ({ line, style }) => (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 22,
+      marginTop: 30,
+      ...style,
+    }}
+  >
+    <BrandMark height={70} />
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <BrandWordmark height={30} />
+      <span
+        style={{
+          fontSize: 24,
+          letterSpacing: 4,
+          color: colors.muted,
+          textTransform: "uppercase",
+        }}
+      >
+        {line}
+      </span>
+    </div>
   </div>
 );

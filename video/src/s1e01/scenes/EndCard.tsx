@@ -2,7 +2,7 @@ import type React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { useStrings } from "../i18n";
 import { fadeIn, riseIn } from "../../shared/components/anim";
-import { BrandMark, BrandWordmark } from "../../shared/components/Brand";
+import { SignOff } from "../../shared/components/Brand";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { colors, fonts } from "../../shared/theme";
@@ -99,30 +99,10 @@ export const EndCard: React.FC = () => {
           {tx.nextEpisode}
           <span style={{ color: colors.text }}>{tx.nextTitle}</span>
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 22,
-            marginTop: 30,
-            opacity: fadeIn(frame, cues[1] + 170),
-          }}
-        >
-          <BrandMark height={70} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <BrandWordmark height={30} />
-            <span
-              style={{
-                fontSize: 24,
-                letterSpacing: 4,
-                color: colors.muted,
-                textTransform: "uppercase",
-              }}
-            >
-              {tx.seriesLine}
-            </span>
-          </div>
-        </div>
+        <SignOff
+          line={tx.seriesLine}
+          style={{ opacity: fadeIn(frame, cues[1] + 170) }}
+        />
       </AbsoluteFill>
     </SceneShell>
   );

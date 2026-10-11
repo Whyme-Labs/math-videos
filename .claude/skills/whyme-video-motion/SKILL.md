@@ -36,6 +36,10 @@ reader.
 - **Transform things instead of replacing them.** Morph, regroup, slide or
   zoom the same object so the viewer sees that it is the same thing in a new
   form. Cutting to a new slide loses that link.
+- **Move things, don't flash them.** Motion means position, scale and
+  drawing-on. Rapid brightness or opacity changes on big areas read as
+  flicker (the user asked for less of it after S1E01). Use `beatPulse` only
+  on small accents, never on the background.
 - **Use the camera.** `Camera` pushes in on the detail being discussed and
   pulls back to show context. Zooming into 0.999… or into √2 on the number
   line *is* the argument.
@@ -91,7 +95,8 @@ the series one feel.
 | `typed(text, frame, start, fps, 28)` | typewriter for definitions and dictionary entries |
 | `hop(t, x0, y0, x1, y1, h)` | pieces jumping along an arc (knight moves, counting along a line) |
 | `shake(frame, start, 14)` | "no, that fails", 18 frames, paired with a red ✗ and the `thud` SFX |
-| `beatPulse(seconds)` | pulse lights or accents on the beat (SceneShell already uses it) |
+| `stageSwell(seconds)` | slow once-per-bar swell; SceneShell uses it for the stage lights |
+| `beatPulse(seconds)` | sharp per-beat pulse; small accents only, never backgrounds |
 | `Camera` | push-ins and pans |
 
 - Use `interpolate` with clamping, `spring` or the helpers above for
@@ -106,7 +111,9 @@ the series one feel.
 
 - Make a contact sheet (`whyme-video` skill). Each row of 6 frames should
   look different from the row above.
-- Look for any stretch of 2 s or more where only the caption changes.
+- Look for any stretch of 2 s or more where only the caption changes. In
+  S1E02 the fixes were usually a counting token hopping along a chain, a
+  recap of the previous idea, or empty slots that fill in later.
 - Watch the end of each line. Did the animation finish before the caption
   changed? If not, the line needs a `MIN_SECONDS` entry or a faster
   animation. If it finished long before, trim the entry.

@@ -6,8 +6,9 @@ description: House rules and the end-to-end workflow for Whyme Labs math videos 
 # Whyme Labs math videos
 
 Every episode of the series should look, sound and move like the same show.
-S1E01 (`video/src/s1e01`) is the reference implementation. When this skill
-and the S1E01 code disagree, fix one of them so they agree again.
+S1E01 and S1E02 (`video/src/s1e01`, `video/src/s1e02`) are the reference
+implementations, built on the shared code in `video/src/shared`. When this
+skill and the code disagree, fix one of them so they agree again.
 
 ## The five skills
 
@@ -64,25 +65,35 @@ all of them.
 
 ```
 video/
-  src/Root.tsx            compositions: SNENN, SNENN-ZH, plus per-scene folders
+  src/Root.tsx            one <SNENNCompositions /> per episode
+  src/shared/             everything that makes episodes look alike
+    theme.ts              palette + fonts (zh-fonts.json: Chinese font chunks)
+    music.ts              beat grid, splice plan, stageSwell / beatPulse
+    timeline.ts           makeEpisodeTiming: narration → beat-snapped cues
+    episode.tsx           makeEpisodeCompositions: films EN + ZH, scene folders
+    locale.tsx            Locale, useLocale, series-wide strings (useSeries)
+    components/           SceneShell, Brand (+ SignOff), Music, Sfx, Camera,
+                          motion/anim helpers, NumberLine, Tower, QuestionTray
+    scenes/BrandIntro.tsx the 3.5 s sting, same in every episode
   src/sNeNN/              one folder per episode
-    Episode.tsx           TransitionSeries of scenes, Music, whoosh per cut
-    narration.ts          EN + ZH lines, MIN_SECONDS, beat-snapped timeline
-    i18n.tsx              every on-screen string, EN + ZH
+    narration.ts          EN + ZH lines, MIN_SECONDS, order → makeEpisodeTiming
+    i18n.tsx              every on-screen string, EN + ZH (useStrings)
+    Episode.tsx           scene list → makeEpisodeCompositions("SNENN", …)
     scenes/               one component per scene
+    components/           drawings only this episode needs
   public/brand|fonts|sfx  committed assets
   public/music/bgm.wav    licensed separately, gitignored
   scripts/                analyze-beats.py, make-sfx.py, zh-fonts.py
   out/                    renders, gitignored
 ```
 
-Today the shared building blocks (`theme.ts`, `music.ts`,
-`components/SceneShell.tsx`, `Brand.tsx`, `Music.tsx`, `Sfx.tsx`, `motion.ts`,
-`anim.ts`, `Camera.tsx`, `NumberLine.tsx`, `Tower.tsx`, `QuestionTray.tsx`)
-live inside `src/s1e01`. Before building a second episode, move them to
-`src/shared/` and import them from both episodes, so the look cannot drift.
-Keep episode-specific code (narration, strings, scenes) in the episode
-folder.
+Start a new episode by copying the shape of `src/s1e02`: write
+`narration.ts`, `i18n.tsx` and the scenes, list them in `Episode.tsx`, and
+add `<SNENNCompositions />` to `Root.tsx`. That gives you `SNENN`, `SNENN-ZH`
+and every scene on its own (`SNENN-<Key>`, `SNENN-ZH-<Key>`). Anything a
+second episode would reuse belongs in `src/shared`, and a change there
+changes every episode, so re-check the older ones (render a few stills and
+compare) when you touch it.
 
 ## Definition of done
 
@@ -94,6 +105,8 @@ An episode or scene change is finished when all of these hold:
 - [ ] Every narration line has something moving that shows its idea, and
       every animation is keyed to a cue from `useCues`, not to a hard-coded
       second.
+- [ ] No flicker: nothing large changes brightness on every beat, and
+      nothing blinks. The stage only breathes once per bar (`stageSwell`).
 - [ ] No dead air. Each caption stays up about as long as it takes to read
       it, and a scene cuts on the next beat after its last line. A
       `MIN_SECONDS` entry exists only where the animation needs it.

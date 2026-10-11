@@ -11,13 +11,12 @@ export const QuestionTray: React.FC<{
 }> = ({ style }) => {
   const frame = useCurrentFrame();
   const tx = useSeries();
-  const pulse = 0.75 + 0.25 * Math.sin(frame / 12);
   return (
     <div
       style={{
         position: "absolute",
         top: 32,
-        right: 40,
+        right: 80,
         display: "flex",
         gap: 12,
         opacity: fadeIn(frame, 0, 20),
@@ -35,7 +34,7 @@ export const QuestionTray: React.FC<{
             border: `2px solid ${colors.highlight}`,
             color: colors.highlight,
             backgroundColor: alpha(colors.highlight, 0.1),
-            opacity: pulse,
+            opacity: 0.9,
           }}
         >
           {q}

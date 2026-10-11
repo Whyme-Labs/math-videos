@@ -89,7 +89,15 @@ a legend. Pick a colour by role, not by taste.
 
 - `SceneShell` gives children an `AbsoluteFill` that ends 190 px above the
   bottom, so content never sits behind the caption box. It also adds a
-  slow 4 % drift (zoom and pan) so no frame is ever frozen.
+  slow 4 % drift (zoom and pan) so no frame is ever frozen. The drift
+  pushes things near the edges outward by up to ~45 px, so keep content
+  at least 80 px from the left and right edges.
+- **The stage never flickers.** The background lights breathe once per
+  bar with a small, smooth swell (`stageSwell` in `music.ts`). The user
+  found the earlier per-beat flash distracting. Don't pulse large areas,
+  the background or text on the beat, and don't blink or flicker anything.
+  Show "unreal" or "ghost" things with steady translucency, dashed outlines
+  and a slow drift instead.
 - Leave the top-left (watermark) and top-right (question tray, when shown)
   corners clear.
 - The scene heading, when there is one, goes centred near y 120.

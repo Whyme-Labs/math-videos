@@ -10,6 +10,8 @@ and written up in [`../lessons`](../lessons), built with
 |---|---|---|---|
 | `S1E01` | What Do We Mean by “Number”? | [`src/s1e01`](src/s1e01) | [`s1e01-narration.md`](s1e01-narration.md) |
 | `S1E01-ZH` | 数是什么？（中文版） | [`src/s1e01`](src/s1e01) | [`s1e01-narration-zh.md`](s1e01-narration-zh.md) |
+| `S1E02` | Peano: Zero and “Next” | [`src/s1e02`](src/s1e02) | [`s1e02-narration.md`](s1e02-narration.md) |
+| `S1E02-ZH` | 零，与“下一个”（中文版） | [`src/s1e02`](src/s1e02) | [`s1e02-narration-zh.md`](s1e02-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -40,11 +42,16 @@ To add a language, add its narration to `NARRATION`, its strings to
   every animation cue are computed from it, so editing the script re-times
   the picture. Lines are shown as captions until a voiceover is recorded.
 - **`scenes/`** has one component per scene, following the lesson's shot
-  list (`lessons/s1/e01-what-is-a-number.md`, "Visual and animation notes").
-- **`components/`** has shared pieces that recur across the series: the
-  number tower, the "open questions" tray, the caption shell, and
-  animation helpers.
-- **`theme.ts`** has the Whyme Labs violet and lemon palette and the fonts
+  list (for example `lessons/s1/e02-peano-zero-and-next.md`, "Visual and
+  animation notes").
+- **`Episode.tsx`** lists the scenes and registers the compositions with
+  `makeEpisodeCompositions`.
+- **`src/shared/`** holds everything episodes have in common: the caption
+  shell, brand pieces, sound and music components, animation helpers, the
+  number tower, the "open questions" tray, the timeline builder
+  (`timeline.ts`) and the composition helper (`episode.tsx`). A change there
+  changes every episode.
+- **`shared/theme.ts`** has the Whyme Labs violet and lemon palette and the fonts
   (see "Brand" in `storyline/04-production-notes.md`). The brand intro,
   watermark and logo components are in `components/Brand.tsx`, and the
   logo cut-outs are in `public/brand`. Fonts are bundled in `public/fonts`
@@ -57,7 +64,7 @@ because it is licensed separately, so copy it there before rendering.
 `scripts/analyze-beats.py` measured it: 128 BPM, first beat at 0.472 s,
 and a bar every 1.875 s.
 
-- **`music.ts`** holds that beat grid and the splice plan. The song plays
+- **`shared/music.ts`** holds that beat grid and the splice plan. The song plays
   from the start, the 120-second body (bars 8 to 72) loops as needed, and
   the song's real ending (bars 72 to 80) closes the video. Every splice is
   a whole number of bars, so the beat never skips.
@@ -66,15 +73,16 @@ and a bar every 1.875 s.
   is read, and each caption change moves to the nearest beat. Captions are
   timed to reading speed (`PACE = "reading"`, about 18 characters per
   second). Lines whose animation needs longer have a minimum in
-  `MIN_SECONDS`. Set `PACE = "voiceover"` once narration is recorded. The scene animations key off
+  `MIN_SECONDS`. Set `PACE = "voiceover"` (in `shared/timeline.ts`) once narration is recorded. The scene animations key off
   the captions, so they hit the beat too.
-- **`SceneShell`** pulses the stage lights on every beat, and harder on
-  the first beat of each bar.
+- **`SceneShell`** lets the stage lights swell gently once per bar
+  (`stageSwell`). An earlier per-beat flash read as flicker, so it was
+  dropped.
 
 Sound effects are original and committed. `scripts/make-sfx.py` synthesizes
 them into `public/sfx` (pops, ticks, whooshes, pencil scratches, cup clinks,
 thuds, page flicks, and bells and plucks tuned to G minor, the key of the
-track). `components/Sfx.tsx` plays one at a scene frame, for example
+track). `shared/components/Sfx.tsx` plays one at a scene frame, for example
 `<Sfx name="pop" at={cues[1]} />`. The scenes place them on the frames
 where animations happen, and every scene cut gets a soft whoosh.
 
@@ -87,7 +95,7 @@ on their own.
 ```bash
 npm i
 npm run dev                                   # Remotion Studio preview
-npx remotion render S1E01 out/s1e01.mp4       # full episode
+npx remotion render S1E02 out/s1e02.mp4       # full episode (S1E02-ZH for Chinese)
 npx remotion still S1E01-Tower out/tower.png --frame=900   # one frame
 npm run lint                                  # eslint + tsc
 ```

@@ -74,10 +74,20 @@ export const musicPlan = (endBar: number): MusicSegment[] => {
 };
 
 // 0..1 pulse that peaks on each beat and decays quickly; bars hit harder.
+// Too flashy for the whole background (it flickers twice a second); use it
+// only for small accents. The stage uses stageSwell.
 export const beatPulse = (seconds: number) => {
   const k = Math.floor((seconds - FIRST_BEAT_SECONDS) / BEAT_SECONDS);
   if (k < 0) return 0;
   const since = seconds - (FIRST_BEAT_SECONDS + k * BEAT_SECONDS);
   const strength = k % 4 === 0 ? 1 : 0.45;
   return strength * Math.exp(-since / 0.16);
+};
+
+// 0..1 slow swell, one smooth cosine per bar, brightest on the downbeat.
+// The stage lights breathe with the music instead of flashing on every beat.
+export const stageSwell = (seconds: number) => {
+  if (seconds < FIRST_BEAT_SECONDS) return 1;
+  const phase = ((seconds - FIRST_BEAT_SECONDS) / BAR_SECONDS) % 1;
+  return 0.5 + 0.5 * Math.cos(2 * Math.PI * phase);
 };

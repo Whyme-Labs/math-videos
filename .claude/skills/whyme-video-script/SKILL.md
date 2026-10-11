@@ -79,7 +79,7 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
   ```bash
   cd video
   npm i --no-save @fontsource-variable/noto-sans-sc
-  python3 scripts/zh-fonts.py      # rewrites src/sNeNN/zh-fonts.json + public/fonts/zh
+  python3 scripts/zh-fonts.py      # scans all of src, rewrites src/shared/zh-fonts.json + public/fonts/zh
   ```
   Commit both outputs. A missed character shows up as tofu (□) in the
   render.

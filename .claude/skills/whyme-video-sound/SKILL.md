@@ -24,8 +24,9 @@ video.
   the last line is read (`nextBeat`).
 - The video ends on a bar (`nextBarIndex`), so the song's ending fits.
 - Animations key off cues, so they hit the beat as well.
-- `SceneShell` pulses the stage lights on each beat, harder on the first
-  beat of a bar.
+- `SceneShell` lets the stage lights swell gently once per bar
+  (`stageSwell`). Per-beat flashing (`beatPulse`) looked like flicker on the
+  whole background, so it is only for small accents.
 
 **Splice plan** (`musicPlan(endBar)`): intro and body play once (bars 0–72).
 For a longer video, the body (bars 8–72) loops whole, then a partial body
