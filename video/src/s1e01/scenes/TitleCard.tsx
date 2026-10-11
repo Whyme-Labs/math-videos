@@ -1,12 +1,12 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { useStrings } from "../i18n";
-import { fadeIn, riseIn } from "../components/anim";
-import { BrandMark } from "../components/Brand";
-import { Sfx } from "../components/Sfx";
-import { springIn } from "../components/motion";
-import { SceneShell } from "../components/SceneShell";
-import { colors, fonts } from "../theme";
+import { fadeIn, riseIn } from "../../shared/components/anim";
+import { BrandMark } from "../../shared/components/Brand";
+import { Sfx } from "../../shared/components/Sfx";
+import { springIn } from "../../shared/components/motion";
+import { SceneShell } from "../../shared/components/SceneShell";
+import { colors, fonts } from "../../shared/theme";
 
 export const TitleCard: React.FC = () => {
   const frame = useCurrentFrame();

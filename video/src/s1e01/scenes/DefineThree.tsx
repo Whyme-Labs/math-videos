@@ -5,11 +5,11 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { glide, ramp, springIn, typed } from "../components/motion";
-import { QuestionTray } from "../components/QuestionTray";
-import { PLUCKS, Sfx } from "../components/Sfx";
-import { SceneShell, useCues } from "../components/SceneShell";
-import { colors, fonts } from "../theme";
+import { glide, ramp, springIn, typed } from "../../shared/components/motion";
+import { QuestionTray } from "../../shared/components/QuestionTray";
+import { PLUCKS, Sfx } from "../../shared/components/Sfx";
+import { SceneShell, useCues } from "../../shared/components/SceneShell";
+import { colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;

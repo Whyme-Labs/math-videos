@@ -1,6 +1,6 @@
 import type React from "react";
 import { useCurrentFrame } from "remotion";
-import { useStrings } from "../i18n";
+import { useSeries } from "../locale";
 import { alpha, colors, fonts } from "../theme";
 import { fadeIn } from "./anim";
 
@@ -10,7 +10,7 @@ export const QuestionTray: React.FC<{
   readonly style?: React.CSSProperties;
 }> = ({ style }) => {
   const frame = useCurrentFrame();
-  const tx = useStrings();
+  const tx = useSeries();
   const pulse = 0.75 + 0.25 * Math.sin(frame / 12);
   return (
     <div

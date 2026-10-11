@@ -1,21 +1,10 @@
-import type React from "react";
-import { createContext, useContext } from "react";
-import type { Locale } from "./narration";
+import { useLocale, type Locale } from "../shared/locale";
 
 // On-screen text for each language. Narration lives in narration.ts.
 const EN = {
-  presents: "presents",
   season: "Season 1 · Episode 1",
   title: "What Is a Number?",
   subtitle: "What do we mean by “number”?",
-  tray: ["0.999… = 1 ?", "√2 a number?", "more fractions?"],
-  floors: [
-    "natural numbers",
-    "integers",
-    "rationals",
-    "reals",
-    "complex numbers",
-  ],
   // Cold open
   threeQuestions: "Three easy questions.",
   question: (n: number) => `QUESTION ${n}`,
@@ -119,12 +108,9 @@ const EN = {
 export type Strings = typeof EN;
 
 const ZH: Strings = {
-  presents: "出品",
   season: "第一季 · 第一集",
   title: "数是什么？",
   subtitle: "我们说的“数”，到底是什么？",
-  tray: ["0.999… = 1 ?", "√2 是数吗？", "分数更多吗？"],
-  floors: ["自然数", "整数", "有理数", "实数", "复数"],
   threeQuestions: "三个简单的问题。",
   question: (n: number) => `问题 ${n}`,
   q2: "√2 是数吗？",
@@ -203,27 +189,4 @@ const ZH: Strings = {
 
 const STRINGS: Record<Locale, Strings> = { en: EN, zh: ZH };
 
-const LocaleContext = createContext<Locale>("en");
-
-export const LocaleProvider: React.FC<{
-  readonly locale: Locale;
-  readonly children: React.ReactNode;
-}> = ({ locale, children }) => (
-  <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>
-);
-
-export const useLocale = () => useContext(LocaleContext);
-export const useStrings = () => STRINGS[useContext(LocaleContext)];
-
-// Render a scene in a given language (for standalone scene compositions).
-export const withLocale = <P extends object>(
-  Component: React.FC<P>,
-  locale: Locale,
-): React.FC<P> => {
-  const Wrapped: React.FC<P> = (props) => (
-    <LocaleProvider locale={locale}>
-      <Component {...props} />
-    </LocaleProvider>
-  );
-  return Wrapped;
-};
+export const useStrings = () => STRINGS[useLocale()];

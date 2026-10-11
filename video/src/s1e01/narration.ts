@@ -1,11 +1,5 @@
-import {
-  barTime,
-  BEAT_SECONDS,
-  musicPlan,
-  nearestBeat,
-  nextBarIndex,
-  nextBeat,
-} from "./music";
+import type { Locale } from "../shared/locale";
+import { makeEpisodeTiming } from "../shared/timeline";
 
 // Narration for S1E01, condensed from lessons/s1/e01-what-is-a-number.md.
 // Each scene's timing is derived from these lines, so editing the script
@@ -181,26 +175,10 @@ const ZH: Record<SceneId, string[]> = {
   ],
 };
 
-export type Locale = "en" | "zh";
-export const LOCALES: Locale[] = ["en", "zh"];
 export const NARRATION: Record<Locale, Record<SceneId, string[]>> = {
   en: EN,
   zh: ZH,
 };
-
-// "reading": captions only, timed to reading speed (about 18 characters per
-// second, a common subtitle rate). "voiceover": timed to a narrator speaking
-// at about 160 words per minute. Switch when a voiceover is recorded.
-export const PACE: "reading" | "voiceover" = "reading";
-
-// Chinese captions are read at about 7 characters per second (a common
-// subtitle rate); spaces don't count.
-export const lineSeconds = (line: string, locale: Locale = "en") =>
-  locale === "zh"
-    ? Math.max(1.5, line.replace(/\s/g, "").length / 7 + 0.25)
-    : PACE === "reading"
-      ? Math.max(1.5, line.length / 18 + 0.25)
-      : Math.max(2.4, line.split(/\s+/).length / 2.67 + 0.5);
 
 // Lines whose animation needs more time than reading the caption takes
 // (scene id → line index → seconds). Values come from the scenes' frame offsets.
@@ -218,18 +196,8 @@ const MIN_SECONDS: Partial<Record<SceneId, Record<number, number>>> = {
   endCard: { 1: 7.0 },
 };
 
-const lineLength = (id: SceneId, index: number, locale: Locale) =>
-  Math.max(
-    lineSeconds(NARRATION[locale][id][index], locale),
-    MIN_SECONDS[id]?.[index] ?? 0,
-  );
-
 // Scenes without narration (the brand sting) have a fixed length.
 const FIXED_SECONDS: Partial<Record<SceneId, number>> = { brand: 3.5 };
-const MIN_GAP_SECONDS = 1.5;
-
-export const FPS = 30;
-export const TRANSITION_FRAMES = 12;
 
 export const sceneOrder: SceneId[] = [
   "brand",
@@ -246,73 +214,9 @@ export const sceneOrder: SceneId[] = [
   "endCard",
 ];
 
-type SceneTiming = {
-  readonly start: number;
-  readonly starts: number[];
-  readonly durationInFrames: number;
-};
-
-// Cut to the beat (卡点): every scene cut (the middle of its crossfade) lands
-// on the next beat after the last caption is read, and every caption change
-// moves to the nearest beat. Animations key off caption cues, so they land on
-// the beat too. The video ends on a bar so the song's ending fits.
-const buildTimeline = (locale: Locale) => {
-  const half = TRANSITION_FRAMES / 2 / FPS;
-  const timeline = {} as Record<SceneId, SceneTiming>;
-  let startFrame = 0;
-  let endBar = 0;
-  sceneOrder.forEach((id, index) => {
-    const start = startFrame / FPS;
-    const lines = NARRATION[locale][id];
-    const fixed = FIXED_SECONDS[id];
-    const rel: number[] = [0];
-    let naturalEnd = fixed ?? 0;
-    if (fixed === undefined) {
-      let t = 0;
-      lines.forEach((_, j) => {
-        if (j > 0) {
-          let snapped = nearestBeat(start + t) - start;
-          while (snapped < rel[j - 1] + MIN_GAP_SECONDS)
-            snapped += BEAT_SECONDS;
-          rel.push(snapped);
-          t = snapped;
-        }
-        t += lineLength(id, j, locale);
-      });
-      naturalEnd = t;
-    }
-    let end: number;
-    if (index < sceneOrder.length - 1) {
-      end = nextBeat(start + naturalEnd - half - 0.1) + half;
-    } else {
-      endBar = nextBarIndex(start + naturalEnd);
-      end = barTime(endBar);
-    }
-    const durationInFrames = Math.round(end * FPS) - startFrame;
-    timeline[id] = {
-      start: startFrame,
-      starts: rel.map((r) => Math.round((start + r) * FPS) - startFrame),
-      durationInFrames,
-    };
-    startFrame += durationInFrames - TRANSITION_FRAMES;
-  });
-  return { timeline, endBar };
-};
-
-const TIMELINES = { en: buildTimeline("en"), zh: buildTimeline("zh") };
-
-// Start frame of each line within its scene, plus the scene's total length.
-export const sceneTiming = (id: SceneId, locale: Locale = "en") =>
-  TIMELINES[locale].timeline[id];
-
-export const sceneStartFrame = (id: SceneId, locale: Locale = "en") =>
-  TIMELINES[locale].timeline[id].start;
-
-export const sceneDuration = (id: SceneId, locale: Locale = "en") =>
-  TIMELINES[locale].timeline[id].durationInFrames;
-
-export const episodeDuration = (locale: Locale = "en") =>
-  sceneStartFrame("endCard", locale) + sceneDuration("endCard", locale);
-
-export const musicSegments = (locale: Locale = "en") =>
-  musicPlan(TIMELINES[locale].endBar);
+export const S1E01 = makeEpisodeTiming({
+  narration: NARRATION,
+  order: sceneOrder,
+  minSeconds: MIN_SECONDS,
+  fixedSeconds: FIXED_SECONDS,
+});

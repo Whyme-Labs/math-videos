@@ -5,12 +5,18 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { glide, hop, ramp, shake, springIn } from "../components/motion";
-import { QuestionTray } from "../components/QuestionTray";
-import { Sfx } from "../components/Sfx";
-import { SceneShell, useCues } from "../components/SceneShell";
-import { FLOORS, Tower } from "../components/Tower";
-import { colors, fonts } from "../theme";
+import {
+  glide,
+  hop,
+  ramp,
+  shake,
+  springIn,
+} from "../../shared/components/motion";
+import { QuestionTray } from "../../shared/components/QuestionTray";
+import { Sfx } from "../../shared/components/Sfx";
+import { SceneShell, useCues } from "../../shared/components/SceneShell";
+import { FLOORS, Tower } from "../../shared/components/Tower";
+import { colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;

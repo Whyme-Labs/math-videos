@@ -1,6 +1,6 @@
 import type React from "react";
 import { alpha, colors, fonts } from "../theme";
-import { useStrings } from "../i18n";
+import { useSeries } from "../locale";
 
 export type Floor = {
   readonly symbol: string;
@@ -28,7 +28,7 @@ export const Tower: React.FC<{
   readonly question: number[];
   readonly style?: React.CSSProperties;
 }> = ({ appear, built, question, style }) => {
-  const tx = useStrings();
+  const tx = useSeries();
   return (
     <div
       style={{

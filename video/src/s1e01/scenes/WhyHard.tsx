@@ -5,13 +5,18 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { glide, ramp, springIn } from "../components/motion";
-import { NumberLine, type Point, type Tick } from "../components/NumberLine";
-import { QuestionTray } from "../components/QuestionTray";
-import { PLUCKS, Sfx } from "../components/Sfx";
-import { SceneShell, useCues } from "../components/SceneShell";
-import { alpha, colors, fonts } from "../theme";
+import { glide, ramp, springIn } from "../../shared/components/motion";
+import {
+  NumberLine,
+  type Point,
+  type Tick,
+} from "../../shared/components/NumberLine";
+import { QuestionTray } from "../../shared/components/QuestionTray";
+import { PLUCKS, Sfx } from "../../shared/components/Sfx";
+import { SceneShell, useCues } from "../../shared/components/SceneShell";
+import { alpha, colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
+import { useSeries } from "../../shared/locale";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const LINE_W = 1500;
@@ -60,6 +65,7 @@ const ticksIn = (
 export const WhyHard: React.FC = () => {
   const frame = useCurrentFrame();
   const tx = useStrings();
+  const series = useSeries();
   const { fps } = useVideoConfig();
   const cues = useCues("whyHard");
   const phaseA = interpolate(
@@ -224,7 +230,7 @@ export const WhyHard: React.FC = () => {
         }}
       >
         <div style={{ display: "flex", gap: 40 }}>
-          {tx.tray.map((q, i) => (
+          {series.tray.map((q, i) => (
             <div
               key={q}
               style={{

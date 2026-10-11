@@ -5,12 +5,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { fadeIn, riseIn } from "../components/anim";
-import { QuestionTray } from "../components/QuestionTray";
-import { PLUCKS, Sfx } from "../components/Sfx";
-import { springIn } from "../components/motion";
-import { SceneShell, useCues } from "../components/SceneShell";
-import { colors, fonts } from "../theme";
+import { fadeIn, riseIn } from "../../shared/components/anim";
+import { QuestionTray } from "../../shared/components/QuestionTray";
+import { PLUCKS, Sfx } from "../../shared/components/Sfx";
+import { springIn } from "../../shared/components/motion";
+import { SceneShell, useCues } from "../../shared/components/SceneShell";
+import { colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
 const N = 6;

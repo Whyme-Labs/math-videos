@@ -5,11 +5,17 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { glide, hop, lerp, ramp, springIn } from "../components/motion";
-import { QuestionTray } from "../components/QuestionTray";
-import { PLUCKS, Sfx } from "../components/Sfx";
-import { SceneShell, useCues } from "../components/SceneShell";
-import { alpha, colors, fonts } from "../theme";
+import {
+  glide,
+  hop,
+  lerp,
+  ramp,
+  springIn,
+} from "../../shared/components/motion";
+import { QuestionTray } from "../../shared/components/QuestionTray";
+import { PLUCKS, Sfx } from "../../shared/components/Sfx";
+import { SceneShell, useCues } from "../../shared/components/SceneShell";
+import { alpha, colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
 // Halving 45 for real: pair the dots up, the odd one out is the remainder,

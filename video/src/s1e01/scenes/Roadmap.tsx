@@ -1,11 +1,11 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { fadeIn, progress, riseIn } from "../components/anim";
-import { QuestionTray } from "../components/QuestionTray";
-import { PLUCKS, Sfx } from "../components/Sfx";
-import { SceneShell, useCues } from "../components/SceneShell";
-import { FLOORS, Tower } from "../components/Tower";
-import { colors } from "../theme";
+import { fadeIn, progress, riseIn } from "../../shared/components/anim";
+import { QuestionTray } from "../../shared/components/QuestionTray";
+import { PLUCKS, Sfx } from "../../shared/components/Sfx";
+import { SceneShell, useCues } from "../../shared/components/SceneShell";
+import { FLOORS, Tower } from "../../shared/components/Tower";
+import { colors } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
 export const Roadmap: React.FC = () => {

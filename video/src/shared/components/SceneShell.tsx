@@ -6,23 +6,19 @@ import {
   useVideoConfig,
 } from "remotion";
 import { beatPulse } from "../music";
-import { useLocale } from "../i18n";
-import {
-  NARRATION,
-  sceneStartFrame,
-  sceneTiming,
-  type SceneId,
-} from "../narration";
+import { useEpisode } from "../episode";
+import { useLocale } from "../locale";
 import { alpha, colors, fonts } from "../theme";
 import { Watermark } from "./Brand";
 import { fadeIn } from "./anim";
 
 // Start frames of each narration line in this scene.
-export const useCues = (id: SceneId) => sceneTiming(id, useLocale()).starts;
+export const useCues = (id: string) =>
+  useEpisode().sceneTiming(id, useLocale()).starts;
 
 // Background, safe-area content slot, and narration captions for one scene.
 export const SceneShell: React.FC<{
-  readonly id: SceneId;
+  readonly id: string;
   readonly children: React.ReactNode;
   readonly showCaptions?: boolean;
   readonly showWatermark?: boolean;
@@ -30,10 +26,11 @@ export const SceneShell: React.FC<{
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const locale = useLocale();
-  const { starts, durationInFrames } = sceneTiming(id, locale);
-  const lines = NARRATION[locale][id];
+  const episode = useEpisode();
+  const { start, starts, durationInFrames } = episode.sceneTiming(id, locale);
+  const lines = episode.narration[locale][id];
   // Lights pulse on the beat of the background music.
-  const pulse = beatPulse((sceneStartFrame(id, locale) + frame) / fps);
+  const pulse = beatPulse((start + frame) / fps);
   let current = 0;
   for (let i = 0; i < starts.length; i++) if (frame >= starts[i]) current = i;
 
