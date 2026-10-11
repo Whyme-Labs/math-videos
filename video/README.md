@@ -102,6 +102,20 @@ match the takes.
 
 ## Agent skills
 
-The official Remotion agent skills are installed in `../.claude/skills`
-(`remotion-best-practices` and the others), so Claude Code sessions in this
-repo follow Remotion's conventions.
+The house rules for the series are repo skills in `../.claude/skills`. Claude
+Code sessions load them automatically, and they're also plain Markdown for
+people to read:
+
+| Skill | Covers |
+|---|---|
+| [`whyme-video`](../.claude/skills/whyme-video/SKILL.md) | workflow, file layout, definition of done, QA contact sheets, delivery |
+| [`whyme-video-style`](../.claude/skills/whyme-video-style/SKILL.md) | brand, palette and colour roles, fonts (EN + ZH), layout grid, type scale, motifs |
+| [`whyme-video-motion`](../.claude/skills/whyme-video-motion/SKILL.md) | show-don't-tell rules, cue-based timing, pacing, motion helpers |
+| [`whyme-video-sound`](../.claude/skills/whyme-video-sound/SKILL.md) | beat grid and music splices (卡点), SFX vocabulary and mix |
+| [`whyme-video-script`](../.claude/skills/whyme-video-script/SKILL.md) | narration voice, captions, unslop + humanizer passes, Chinese edition, posting copy per platform |
+
+The official Remotion agent skills (`remotion-best-practices` and the
+others) are installed there too, so sessions follow Remotion's conventions.
+
+Posting copy for S1E01 (YouTube, X, LinkedIn, TikTok, bilibili, 抖音, in
+English and Chinese) is in [`s1e01-social.md`](s1e01-social.md).

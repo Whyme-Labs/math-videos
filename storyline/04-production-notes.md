@@ -80,19 +80,12 @@ lemon-orange light column. These values are in `video/src/s1e01/theme.ts`.
 - **Callback stamp:** a small on-screen tag (e.g. "↩ S1E5") whenever an old
   idea comes back, which rewards binge watchers and sends new viewers back.
 
-## Tooling suggestions
-- **Animation:** [Manim Community](https://www.manim.community/) is well
-  suited to this style (grid transforms, number lines, LaTeX).
-  Alternatives: Motion Canvas (TypeScript), or Blender for 3D scenes.
-- **Repo layout (proposed):**
-  ```
-  storyline/          # this plan
-  scripts/s1e01/      # narration script + shot list per episode
-  scenes/s1e01/       # Manim scene files per episode
-  assets/             # shared styles, color palette, fonts
-  ```
-- Put the shared color palette and the motifs above in one Manim style
-  module so every episode looks the same.
+## Tooling
+The episodes are built with [Remotion](https://www.remotion.dev) in
+[`video/`](../video/README.md). The style, motion, sound, script and workflow
+rules are written down as repo skills in `.claude/skills/whyme-video*`. Change
+those skills (and `video/src/.../theme.ts`) together with this file, so the
+plan and the rules don't drift apart.
 
 ## Production order suggestion
 1. Make **S1 Ep. 11 (Hilbert's Hotel)** or **S2 Ep. 4 (Matrices as
