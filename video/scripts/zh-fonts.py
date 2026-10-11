@@ -1,7 +1,7 @@
-"""Pick the Noto Sans SC / Noto Serif SC chunks the Chinese edition needs.
+"""Pick the Noto Sans SC (思源黑体) chunks the Chinese edition needs.
 
 Usage:
-    npm i --no-save @fontsource-variable/noto-sans-sc @fontsource-variable/noto-serif-sc
+    npm i --no-save @fontsource-variable/noto-sans-sc
     python3 scripts/zh-fonts.py
 
 Scans the Chinese text in src/s1e01 (narration.ts and i18n.tsx), copies the
@@ -28,10 +28,13 @@ def ranges(spec):
 
 
 OUT.mkdir(parents=True, exist_ok=True)
+for old in OUT.glob("*.woff2"):
+    old.unlink()
 manifest = []
-for family, pkg in [("Noto Sans SC", "noto-sans-sc"), ("Noto Serif SC", "noto-serif-sc")]:
+for family, pkg in [("Noto Sans SC", "noto-sans-sc")]:
     unicode_map = json.loads((FONTSOURCE / pkg / "unicode.json").read_text())
-    for key, spec in sorted(unicode_map.items(), key=lambda kv: int(kv[0].strip("[]"))):
+    # Keys are chunk numbers like "[42]", plus a few named subsets like "latin".
+    for key, spec in sorted(unicode_map.items(), key=lambda kv: kv[0].strip("[]").zfill(4)):
         if any(a <= ord(c) <= b for c in chars for a, b in ranges(spec)):
             idx = key.strip("[]")
             shutil.copy(FONTSOURCE / pkg / "files" / f"{pkg}-{idx}-wght-normal.woff2", OUT / f"{pkg}-{idx}.woff2")

@@ -15,7 +15,8 @@ for (const [family, file] of Object.entries(FAMILIES)) {
   loadFont({ family, url: staticFile(`fonts/${file}`), weight: "100 900" });
 }
 
-// Chinese: Noto Sans SC / Noto Serif SC (Fontsource, SIL OFL), only the
+// Chinese: Noto Sans SC (思源黑体, Fontsource, SIL OFL) for every Chinese
+// character, titles included, so the Chinese edition uses one family. Only the
 // unicode-range chunks that cover the characters the Chinese edition uses.
 // Regenerate zh-fonts.json and public/fonts/zh after changing Chinese text.
 for (const chunk of zhFonts) {
@@ -29,10 +30,10 @@ for (const chunk of zhFonts) {
 
 // Math symbols (ℕ, ℤ, ⊂, ∅) are outside the latin subset and fall back to DejaVu Serif.
 export const fonts = {
-  title: 'Fraunces, "Noto Serif SC", serif',
+  title: 'Fraunces, "Noto Sans SC", serif',
   body: 'Inter, "Noto Sans SC", sans-serif',
   mono: 'JetBrainsMono, "Noto Sans SC", monospace',
-  math: 'STIXTwoText, "DejaVu Serif", "Noto Serif SC", serif',
+  math: 'STIXTwoText, "DejaVu Serif", "Noto Sans SC", serif',
 };
 
 // Whyme Labs palette: violet stage, lemon light, orange glow (brand mark

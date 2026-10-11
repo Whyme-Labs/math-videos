@@ -25,8 +25,8 @@ The same scenes render in English (`S1E01`) and Simplified Chinese
   timed at about 7 characters per second.
 - **`i18n.tsx`** holds every on-screen label for both languages. Scenes
   read them with `useStrings()`.
-- **Fonts:** Chinese characters fall back to Noto Sans SC and Noto Serif SC
-  behind the Latin fonts. Only the font chunks the Chinese text needs are
+- **Fonts:** every Chinese character, titles included, uses Noto Sans SC
+  (思源黑体), behind the Latin fonts. Only the font chunks the Chinese text needs are
   bundled (`public/fonts/zh`). Run `scripts/zh-fonts.py` after editing
   Chinese text.
 
