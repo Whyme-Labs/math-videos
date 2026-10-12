@@ -5,6 +5,13 @@ const EN = {
   season: "Season 1 · Episode 2",
   title: "Zero and “Next”",
   subtitle: "Peano’s five rules for counting",
+  // Ancient China aside (Chinese edition only; English kept for type parity)
+  ropeSource: "Knotted cords · Book of Changes",
+  knotIsNext: "one more knot = next",
+  laoziSource: "Tao Te Ching, ch. 42",
+  daoChain: ["Tao", "one", "two", "three", "all things"],
+  sheng: "begets",
+  startWord: "start",
   // Cold open
   rule1: "① a start: 0",
   rule2: "② every number has a next",
@@ -12,6 +19,10 @@ const EN = {
   // Broken worlds
   worlds: ["loop", "merge", "ghosts"],
   stuck: "stuck",
+  loopNote: "", // Chinese edition: the sexagenary cycle
+  // Dedekind's second world: tally marks (EN) or counting rods (ZH)
+  rods: false,
+  zeroBlank: "",
   // Peano's axioms
   peanoTag: "Giuseppe Peano · 1889",
   axioms: [
@@ -65,11 +76,20 @@ const ZH: Strings = {
   season: "第一季 · 第 2 集",
   title: "零，与“下一个”",
   subtitle: "皮亚诺的五条计数规则",
+  ropeSource: "上古结绳而治 ——《周易·系辞下》",
+  knotIsNext: "多打一个结 = 下一个",
+  laoziSource: "《道德经》第四十二章",
+  daoChain: ["道", "一", "二", "三", "万物"],
+  sheng: "生",
+  startWord: "起点",
   rule1: "① 一个起点：0",
   rule2: "② 每个数都有下一个",
   forever: "一直数下去",
   worlds: ["循环", "合流", "幽灵"],
   stuck: "卡住了",
+  loopNote: "甲子 → 乙丑 → … → 癸亥 → 甲子",
+  rods: true,
+  zeroBlank: "空位 = 零",
   peanoTag: "皮亚诺 · 1889",
   axioms: [
     "0 是一个数",
@@ -88,7 +108,7 @@ const ZH: Strings = {
   ghostNote: "0′ 不是 0，前面也没有任何数",
   dedekindTag: "戴德金 · 1888",
   dots: "圆点",
-  tallies: "划记",
+  tallies: "算筹",
   perfectMatch: "没有剩下 · 没有重复",
   cupsCallback: "↩ 第 1 集 杯子和碟子",
   naturals: "自然数",

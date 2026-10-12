@@ -88,20 +88,26 @@ export const makeEpisodeCompositions = <Id extends string>(
   const suffix = (l: Locale) => (l === "en" ? "" : `-${l.toUpperCase()}`);
   const films = LOCALES.map((locale) => {
     const Component: React.FC = () => (
-      <Film timing={any} scenes={scenes} locale={locale} />
+      <Film
+        timing={any}
+        scenes={scenes.filter((s) => timing.shows(s.id, locale))}
+        locale={locale}
+      />
     );
     return { locale, Component };
   });
   const sceneSets = LOCALES.map((locale) => ({
     locale,
-    scenes: scenes.map((s) => {
-      const Component: React.FC = () => (
-        <Providers timing={any} locale={locale}>
-          <s.component />
-        </Providers>
-      );
-      return { ...s, Component };
-    }),
+    scenes: scenes
+      .filter((s) => timing.shows(s.id, locale))
+      .map((s) => {
+        const Component: React.FC = () => (
+          <Providers timing={any} locale={locale}>
+            <s.component />
+          </Providers>
+        );
+        return { ...s, Component };
+      }),
   }));
 
   const Compositions: React.FC = () => (

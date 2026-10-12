@@ -5,7 +5,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { fadeIn } from "../../shared/components/anim";
+import { fadeIn, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import { ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
@@ -90,6 +90,25 @@ export const Broken: React.FC = () => {
         >
           ↻ {tx.stuck}
         </div>
+        {/* Chinese edition: the sexagenary cycle is a loop too. */}
+        {tx.loopNote ? (
+          <div
+            style={{
+              position: "absolute",
+              left: XS[0] - 270,
+              width: 540,
+              top: Y + 190,
+              textAlign: "center",
+              fontSize: 32,
+              fontFamily: fonts.title,
+              color: colors.highlight,
+              opacity: fadeIn(frame, cues[1] + 24) * emphasis(0),
+              translate: riseIn(frame, cues[1] + 24, 16),
+            }}
+          >
+            {tx.loopNote}
+          </div>
+        ) : null}
         {/* The ghosts are never reached. */}
         <div
           style={{

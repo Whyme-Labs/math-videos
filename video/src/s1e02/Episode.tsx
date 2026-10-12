@@ -1,6 +1,7 @@
 import { makeEpisodeCompositions, type SceneEntry } from "../shared/episode";
 import { BrandIntro } from "../shared/scenes/BrandIntro";
 import { S1E02, type SceneId } from "./narration";
+import { Ancient } from "./scenes/Ancient";
 import { Broken } from "./scenes/Broken";
 import { BuildDescribe } from "./scenes/BuildDescribe";
 import { ColdOpen } from "./scenes/ColdOpen";
@@ -22,6 +23,12 @@ const SCENES: SceneEntry<SceneId>[] = [
     component: BrandIntro,
   },
   { id: "title", key: "Title", name: "Title", component: TitleCard },
+  {
+    id: "ancient",
+    key: "Ancient",
+    name: "结绳与道生一 (Chinese edition only)",
+    component: Ancient,
+  },
   {
     id: "coldOpen",
     key: "ColdOpen",

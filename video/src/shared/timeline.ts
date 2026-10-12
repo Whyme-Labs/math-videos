@@ -32,9 +32,13 @@ export const lineSeconds = (line: string, locale: Locale = "en") =>
 const MIN_GAP_SECONDS = 1.5;
 
 export type EpisodeSpec<Id extends string> = {
-  // Caption lines per scene, per language. Line counts must match across languages.
+  // Caption lines per scene, per language. Line counts must match across
+  // languages for every scene both languages show.
   readonly narration: Record<Locale, Record<Id, string[]>>;
   readonly order: readonly Id[];
+  // Scenes shown in one language only (e.g. a Chinese-history aside in the
+  // Chinese edition). They are left out of the other languages' films.
+  readonly onlyIn?: Partial<Record<Id, Locale>>;
   // Lines whose animation needs more time than reading the caption takes
   // (scene id → line index → seconds). Values come from the scenes' frame offsets.
   readonly minSeconds?: Partial<Record<Id, Record<number, number>>>;
@@ -58,9 +62,10 @@ const buildTimeline = <Id extends string>(
 ) => {
   const half = TRANSITION_FRAMES / 2 / FPS;
   const timeline = {} as Record<Id, SceneTiming>;
+  const order = orderFor(spec, locale);
   let startFrame = 0;
   let endBar = 0;
-  spec.order.forEach((id, index) => {
+  order.forEach((id, index) => {
     const start = startFrame / FPS;
     const lines = spec.narration[locale][id];
     const fixed = spec.fixedSeconds?.[id];
@@ -84,7 +89,7 @@ const buildTimeline = <Id extends string>(
       naturalEnd = t;
     }
     let end: number;
-    if (index < spec.order.length - 1) {
+    if (index < order.length - 1) {
       end = nextBeat(start + naturalEnd - half - 0.1) + half;
     } else {
       endBar = nextBarIndex(start + naturalEnd);
@@ -101,12 +106,17 @@ const buildTimeline = <Id extends string>(
   return { timeline, endBar };
 };
 
+// The scenes one language's film shows, in order.
+const orderFor = <Id extends string>(spec: EpisodeSpec<Id>, locale: Locale) =>
+  spec.order.filter((id) => (spec.onlyIn?.[id] ?? locale) === locale);
+
 export type EpisodeTiming<Id extends string> = ReturnType<
   typeof makeEpisodeTiming<Id>
 >;
 
 export const makeEpisodeTiming = <Id extends string>(spec: EpisodeSpec<Id>) => {
   for (const id of spec.order) {
+    if (spec.onlyIn?.[id]) continue;
     const n = spec.narration.en[id].length;
     for (const locale of LOCALES)
       if (spec.narration[locale][id].length !== n)
@@ -117,10 +127,12 @@ export const makeEpisodeTiming = <Id extends string>(spec: EpisodeSpec<Id>) => {
   ) as Record<Locale, ReturnType<typeof buildTimeline<Id>>>;
   const sceneTiming = (id: Id, locale: Locale = "en") =>
     timelines[locale].timeline[id];
-  const last = spec.order[spec.order.length - 1];
+  const last = (locale: Locale) => orderFor(spec, locale).slice(-1)[0];
   return {
     narration: spec.narration,
     order: spec.order,
+    // Whether a scene appears in a language's film.
+    shows: (id: Id, locale: Locale) => (spec.onlyIn?.[id] ?? locale) === locale,
     // Start frame of each line within its scene, plus the scene's total length.
     sceneTiming,
     sceneStartFrame: (id: Id, locale: Locale = "en") =>
@@ -128,8 +140,8 @@ export const makeEpisodeTiming = <Id extends string>(spec: EpisodeSpec<Id>) => {
     sceneDuration: (id: Id, locale: Locale = "en") =>
       sceneTiming(id, locale).durationInFrames,
     episodeDuration: (locale: Locale = "en") =>
-      sceneTiming(last, locale).start +
-      sceneTiming(last, locale).durationInFrames,
+      sceneTiming(last(locale), locale).start +
+      sceneTiming(last(locale), locale).durationInFrames,
     musicSegments: (locale: Locale = "en") =>
       musicPlan(timelines[locale].endBar),
   };

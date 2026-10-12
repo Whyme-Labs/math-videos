@@ -8,6 +8,7 @@ import { makeEpisodeTiming } from "../shared/timeline";
 export type SceneId =
   | "brand"
   | "title"
+  | "ancient"
   | "coldOpen"
   | "broken"
   | "peano"
@@ -21,6 +22,7 @@ export type SceneId =
 const EN: Record<SceneId, string[]> = {
   brand: [],
   title: ["Season one, episode two. Zero and next."],
+  ancient: [], // Chinese edition only
   coldOpen: [
     "Imagine teaching a machine to count. It knows no digits, no apples, no number line.",
     "What's the least you could tell it so it counts forever and never gets stuck?",
@@ -83,6 +85,12 @@ const EN: Record<SceneId, string[]> = {
 const ZH: Record<SceneId, string[]> = {
   brand: [],
   title: ["第一季，第二集。零，和“下一个”。"],
+  // 只在中文版出现：古人怎么“数下去”。
+  ancient: [
+    "上古的人结绳记事：多一件事，就在绳上多打一个结。",
+    "老子说：道生一，一生二，二生三，三生万物。",
+    "读起来就像在数数：有一个起点，一步一步“生”出后面的一切。",
+  ],
   coldOpen: [
     "假设你要教一台机器数数。它不认识数字，没见过苹果，也没有数轴。",
     "最少要告诉它什么，它才能一直数下去，永远不卡住？",
@@ -92,7 +100,7 @@ const ZH: Record<SceneId, string[]> = {
   ],
   broken: [
     "不够。光有这两条，还会冒出一些奇怪的世界。",
-    "循环：二的下一个又回到零，像钟表一样。",
+    "循环：二的下一个又回到零，就像干支纪年，癸亥之后又是甲子。",
     "合流：三的下一个又回到二，从此原地打转。",
     "幽灵：旁边还有第二条链，从零往上数，永远到不了那里。",
   ],
@@ -119,8 +127,8 @@ const ZH: Record<SceneId, string[]> = {
   ],
   dedekind: [
     "这些规则把坏世界都排除干净了吗？是的。戴德金在 1888 年就证明了，比皮亚诺还早一年。",
-    "任取两个满足全部五条规则的世界。一个用圆点数数，一个用划记。",
-    "零对零，然后下一个对下一个。",
+    "任取两个满足全部五条规则的世界。一个用圆点数数，一个用古人的算筹。",
+    "零对零，算筹里空着就是零；然后下一个对下一个。",
     "这五条规则保证配对完美：没有剩下的，也没有配了两次的。",
     "所以，除了换个名字，这样的世界只有一个。我们叫它自然数。",
   ],
@@ -151,6 +159,7 @@ export const NARRATION: Record<Locale, Record<SceneId, string[]>> = {
 // (scene id → line index → seconds). Values come from the scenes' frame offsets.
 const MIN_SECONDS: Partial<Record<SceneId, Record<number, number>>> = {
   title: { 0: 2.8 },
+  ancient: { 0: 3.4, 1: 3.6, 2: 3.4 },
   coldOpen: { 0: 3.4, 2: 2.0, 3: 3.4, 4: 1.8 },
   broken: { 0: 2.0, 1: 3.4, 2: 3.6, 3: 3.6 },
   peano: { 0: 2.6, 1: 2.6, 2: 3.4, 3: 3.4, 4: 3.0 },
@@ -168,6 +177,7 @@ const FIXED_SECONDS: Partial<Record<SceneId, number>> = { brand: 3.5 };
 export const sceneOrder: SceneId[] = [
   "brand",
   "title",
+  "ancient",
   "coldOpen",
   "broken",
   "peano",
@@ -184,4 +194,5 @@ export const S1E02 = makeEpisodeTiming({
   order: sceneOrder,
   minSeconds: MIN_SECONDS,
   fixedSeconds: FIXED_SECONDS,
+  onlyIn: { ancient: "zh" },
 });

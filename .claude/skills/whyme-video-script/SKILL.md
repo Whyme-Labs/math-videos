@@ -85,6 +85,28 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
   render.
 - Keep a readable script in `video/sNeNN-narration-zh.md`, next to the
   English one.
+- **Bring in Chinese mathematical and cultural history where it fits.**
+  Viewers of the Chinese edition get more from an idea when it connects to
+  something they already know. S1E02's Chinese edition adds a scene on 结绳记事
+  and 道生一，一生二…, uses the 干支 cycle (癸亥 → 甲子) as its loop example, and
+  counts with 算筹 (counting rods, with a blank for zero) instead of tally
+  marks. Rules for these additions:
+  - Every claim must be accurate and sourced. Name the source on screen
+    (《周易·系辞下》, 《道德经》第四十二章, 《九章算术》), and quote the original
+    wording exactly.
+  - Draw parallels, not equations. Laozi was not stating Peano's axioms, so
+    say "读起来就像在数数", not "老子早就发现了".
+  - Keep each addition short: one scene of 2–4 lines, or one swapped example
+    or visual. The episode still has to answer its own question.
+  - **Mechanics.** A scene only in Chinese goes in the spec with
+    `onlyIn: { <scene>: "zh" }`, and its English narration is `[]`. A
+    swapped example inside a shared scene is a string in `i18n.tsx` (empty
+    in English) or a flag such as `rods: true`. Shared scenes must keep the
+    same line count in both languages.
+  - Good candidates for later episodes: 《庄子·天下》"一尺之棰，日取其半，万世不竭"
+    (0.999…, limits), 刘徽割圆术 (π, completing the reals), negative numbers in
+    《九章算术》 (ℤ), 勾股/弦图 (√2), 《孙子算经》's remainder problem
+    (modular arithmetic), and 杨辉三角 (combinatorics).
 
 ## Titles and posts for each platform
 

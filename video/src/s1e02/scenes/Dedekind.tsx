@@ -61,6 +61,22 @@ const Tally: React.FC<{ readonly n: number }> = ({ n }) => (
   </g>
 );
 
+// Counting rods (算筹), vertical form for units: 1–5 are that many upright
+// rods; 6–9 put a crossbar (worth 5) on top. Zero is an empty space.
+const Rods: React.FC<{ readonly n: number }> = ({ n }) => {
+  const ups = n > 5 ? n - 5 : n;
+  const top = n > 5 ? -4 : -18;
+  return (
+    <g stroke={colors.orange} strokeWidth={5} strokeLinecap="round">
+      {n > 5 ? <line x1={-16} y1={-16} x2={16} y2={-16} /> : null}
+      {Array.from({ length: ups }).map((_, k) => {
+        const cx = (k - (ups - 1) / 2) * 9;
+        return <line key={k} x1={cx} y1={top} x2={cx} y2={18} />;
+      })}
+    </g>
+  );
+};
+
 const Node: React.FC<{
   readonly x: number;
   readonly y: number;
@@ -229,7 +245,7 @@ export const Dedekind: React.FC = () => {
                   color={colors.orange}
                   scale={Math.min(1, botIn(i))}
                 >
-                  <Tally n={i} />
+                  {tx.rods ? <Rods n={i} /> : <Tally n={i} />}
                 </Node>
               </g>
             ))}
@@ -351,6 +367,24 @@ export const Dedekind: React.FC = () => {
         >
           {tx.tallies}
         </div>
+        {/* Chinese edition: rods had no zero symbol, just a blank. */}
+        {tx.zeroBlank ? (
+          <div
+            style={{
+              position: "absolute",
+              left: x(0) - 90,
+              width: 180,
+              top: BOTTOM + R + 64,
+              textAlign: "center",
+              fontSize: 28,
+              color: colors.orange,
+              opacity: fadeIn(frame, c2 + 6) * (1 - merge),
+              translate: riseIn(frame, c2 + 6, 14),
+            }}
+          >
+            {tx.zeroBlank}
+          </div>
+        ) : null}
         <div
           style={{
             position: "absolute",
