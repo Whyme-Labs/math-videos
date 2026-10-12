@@ -6,7 +6,7 @@ import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import { springIn } from "../../shared/components/motion";
 import { SceneShell } from "../../shared/components/SceneShell";
 import { colors, fonts } from "../../shared/theme";
-import { NextArrow, NumberNode } from "../components/graph";
+import { NextArrow, NumberNode } from "../../shared/components/graph";
 import { useStrings } from "../i18n";
 
 // Behind the title, the counting chain 0 → 1 → 2 → … builds itself and drifts left.

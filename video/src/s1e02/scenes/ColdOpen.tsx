@@ -13,7 +13,12 @@ import {
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { NextArrow, NumberNode, Robot, Token } from "../components/graph";
+import {
+  NextArrow,
+  NumberNode,
+  Robot,
+  Token,
+} from "../../shared/components/graph";
 import { useStrings } from "../i18n";
 
 const ROBOT = { x: 250, y: 520 };

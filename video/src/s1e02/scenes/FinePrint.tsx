@@ -16,7 +16,7 @@ import {
   NumberNode,
   Token,
   tokenPosition,
-} from "../components/graph";
+} from "../../shared/components/graph";
 import { useStrings } from "../i18n";
 
 // Each row is a set of numbers: dot k is lit when k is in the set.

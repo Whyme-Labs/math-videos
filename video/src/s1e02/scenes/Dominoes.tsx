@@ -13,51 +13,18 @@ import {
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
+import { Domino, DOMINO_H } from "../../shared/components/Domino";
 import { useStrings } from "../i18n";
 
 const N = 13;
 const GAP = 118;
-const W = 44;
-const H = 160;
+const H = DOMINO_H;
 const FLOOR = 720; // real table
 const GHOST_FLOOR = 330; // the second table
 const GHOSTS = 6;
 const dx = (i: number) => 220 + i * GAP;
 const gx = (i: number) => 520 + i * GAP;
 const fallEase = Easing.bezier(0.5, 0, 0.8, 1); // accelerates like gravity
-
-const Domino: React.FC<{
-  readonly x: number;
-  readonly floor: number;
-  readonly label: string;
-  readonly angle: number;
-  readonly rise?: number;
-  readonly ghost?: boolean;
-}> = ({ x, floor, label, angle, rise = 1, ghost = false }) => (
-  <g
-    transform={`rotate(${angle} ${x + W / 2} ${floor}) translate(${x - W / 2} ${floor - H * rise}) scale(1 ${rise})`}
-  >
-    <rect
-      width={W}
-      height={H}
-      rx={7}
-      fill={ghost ? alpha(colors.muted, 0.08) : colors.primary}
-      stroke={ghost ? colors.muted : alpha(colors.orange, 0.8)}
-      strokeWidth={3}
-      strokeDasharray={ghost ? "8 8" : undefined}
-    />
-    <text
-      x={W / 2}
-      y={44}
-      fill={ghost ? colors.muted : colors.ink}
-      fontSize={28}
-      fontFamily={fonts.math}
-      textAnchor="middle"
-    >
-      {label}
-    </text>
-  </g>
-);
 
 export const Dominoes: React.FC = () => {
   const frame = useCurrentFrame();

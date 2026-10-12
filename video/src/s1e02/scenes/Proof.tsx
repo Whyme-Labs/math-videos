@@ -17,7 +17,7 @@ import {
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { NextArrow, NumberNode } from "../components/graph";
+import { NextArrow, NumberNode } from "../../shared/components/graph";
 import { useStrings } from "../i18n";
 
 const N = 8;

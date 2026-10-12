@@ -5,7 +5,7 @@ import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { NextArrow } from "../components/graph";
+import { NextArrow } from "../../shared/components/graph";
 import { useStrings } from "../i18n";
 
 // Chinese edition only: counting before numerals. Knots on a cord (结绳记事),

@@ -1,5 +1,5 @@
 import type React from "react";
-import { alpha, colors, fonts } from "../../shared/theme";
+import { alpha, colors, fonts } from "../theme";
 import { NextArrow, NumberNode, type Pt, Token, tokenPosition } from "./graph";
 
 // The three broken worlds of "zero and next": a loop, a merge (ρ), and a
@@ -15,14 +15,14 @@ const LOOP: Pt[] = [
   { x: 0, y: -90 },
   { x: 120, y: 70 },
 ];
-const MERGE: Pt[] = [
+export const MERGE: Pt[] = [
   { x: -200, y: 60 },
   { x: -85, y: 60 },
   { x: 30, y: 60 },
   { x: 150, y: -60 },
 ];
-const MERGE_FORWARD = { x: 130, y: 60 }; // bend of 2 → 3
-const MERGE_BACK = { x: 40, y: -70 }; // bend of 3 → 2
+export const MERGE_FORWARD = { x: 130, y: 60 }; // bend of 2 → 3
+export const MERGE_BACK = { x: 40, y: -70 }; // bend of 3 → 2
 const realNode = (i: number): Pt => ({ x: -205 + i * 98, y: 75 });
 const ghostNode = (i: number): Pt => ({ x: -205 + i * 98, y: -70 });
 

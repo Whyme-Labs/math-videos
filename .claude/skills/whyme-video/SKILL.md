@@ -6,7 +6,7 @@ description: House rules and the end-to-end workflow for Whyme Labs math videos 
 # Whyme Labs math videos
 
 Every episode of the series should look, sound and move like the same show.
-S1E01 and S1E02 (`video/src/s1e01`, `video/src/s1e02`) are the reference
+S1E01–S1E03 (`video/src/s1e01` … `s1e03`) are the reference
 implementations, built on the shared code in `video/src/shared`. When this
 skill and the code disagree, fix one of them so they agree again.
 
@@ -73,7 +73,9 @@ video/
     episode.tsx           makeEpisodeCompositions: films EN + ZH, scene folders
     locale.tsx            Locale, useLocale, series-wide strings (useSeries)
     components/           SceneShell, Brand (+ SignOff), Music, Sfx, Camera,
-                          motion/anim helpers, NumberLine, Tower, QuestionTray
+                          motion/anim helpers, NumberLine, Tower, QuestionTray,
+                          graph (number nodes, "next" arrows, tokens, robot),
+                          worlds (loop / merge / ghost worlds), Domino
     scenes/BrandIntro.tsx the 3.5 s sting, same in every episode
   src/sNeNN/              one folder per episode
     narration.ts          EN + ZH lines, MIN_SECONDS, order → makeEpisodeTiming

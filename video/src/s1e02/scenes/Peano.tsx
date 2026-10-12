@@ -17,7 +17,7 @@ import {
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { World, type WorldKind } from "../components/worlds";
+import { World, type WorldKind } from "../../shared/components/worlds";
 import { useStrings } from "../i18n";
 
 const KINDS: WorldKind[] = ["loop", "merge", "ghosts"];

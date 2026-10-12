@@ -1,6 +1,6 @@
 import type React from "react";
-import { alpha, colors, fonts } from "../../shared/theme";
-import { lerp } from "../../shared/components/motion";
+import { alpha, colors, fonts } from "../theme";
+import { lerp } from "./motion";
 
 // Numbers as nodes and "next" as arrows, in the S1E01 chain style:
 // lemon nodes, pink "next" arrows.

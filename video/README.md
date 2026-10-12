@@ -12,6 +12,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E01-ZH` | 数是什么？（中文版） | [`src/s1e01`](src/s1e01) | [`s1e01-narration-zh.md`](s1e01-narration-zh.md) |
 | `S1E02` | Peano: Zero and “Next” | [`src/s1e02`](src/s1e02) | [`s1e02-narration.md`](s1e02-narration.md) |
 | `S1E02-ZH` | 零，与“下一个”（中文版） | [`src/s1e02`](src/s1e02) | [`s1e02-narration-zh.md`](s1e02-narration-zh.md) |
+| `S1E03` | Arithmetic from Scratch | [`src/s1e03`](src/s1e03) | [`s1e03-narration.md`](s1e03-narration.md) |
+| `S1E03-ZH` | 从零开始的算术（中文版） | [`src/s1e03`](src/s1e03) | [`s1e03-narration-zh.md`](s1e03-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
