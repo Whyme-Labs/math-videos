@@ -129,4 +129,5 @@ others) are installed there too, so sessions follow Remotion's conventions.
 
 Posting copy for S1E01 (YouTube, X, LinkedIn, TikTok, bilibili, 抖音, in
 English and Chinese) is in [`s1e01-social.md`](s1e01-social.md), and for
-S1E02 in [`s1e02-social.md`](s1e02-social.md).
+S1E02 in [`s1e02-social.md`](s1e02-social.md), and for S1E03 in
+[`s1e03-social.md`](s1e03-social.md).
