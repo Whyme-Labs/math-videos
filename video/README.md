@@ -14,6 +14,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E02-ZH` | 零，与“下一个”（中文版） | [`src/s1e02`](src/s1e02) | [`s1e02-narration-zh.md`](s1e02-narration-zh.md) |
 | `S1E03` | Arithmetic from Scratch | [`src/s1e03`](src/s1e03) | [`s1e03-narration.md`](s1e03-narration.md) |
 | `S1E03-ZH` | 从零开始的算术（中文版） | [`src/s1e03`](src/s1e03) | [`s1e03-narration-zh.md`](s1e03-narration-zh.md) |
+| `S1E04` | Sets: The Universal Building Material | [`src/s1e04`](src/s1e04) | [`s1e04-narration.md`](s1e04-narration.md) |
+| `S1E04-ZH` | 集合：万物的积木（中文版） | [`src/s1e04`](src/s1e04) | [`s1e04-narration-zh.md`](s1e04-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.

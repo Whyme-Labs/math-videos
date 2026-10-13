@@ -16,6 +16,11 @@
  },
  {
   "family": "Noto Sans SC",
+  "file": "fonts/zh/noto-sans-sc-70.woff2",
+  "unicodeRange": "U+5fc4,U+5fc9,U+5fcb,U+5fce-5fd6,U+5fda-5fde,U+5fe1-5fe2,U+5fe4-5fe5,U+5fea,U+5fed-5fee,U+5ff1-5ff3,U+5ff6,U+5ff8,U+5ffb,U+5ffe-5fff,U+6002-6006,U+600a,U+600d,U+600f,U+6014,U+6019,U+601b,U+6020,U+6023,U+6026,U+6029,U+602b,U+602e-602f,U+6031,U+6033,U+6035,U+6039,U+603f,U+6041-6043,U+6046,U+604f,U+6053-6054,U+6058-605b,U+605d-605e,U+6060,U+6063,U+6065,U+6067,U+606a-606c,U+6075,U+6078-6079,U+607b,U+607d,U+607f,U+6083,U+6085-6087,U+608a,U+608c,U+608e-608f,U+6092-6093,U+6095-6097,U+609b-609d,U+60a2,U+60a7,U+60a9-60ab,U+60ad,U+60af-60b1,U+60b3-60b6,U+60b8,U+60bb,U+60bd-60be,U+60c0-60c3,U+60c6-60c9,U+60cb,U+60ce,U+60d3-60d4,U+60d7-60db,U+60dd,U+60e1-60e4,U+60e6,U+60ea,U+60ec"
+ },
+ {
+  "family": "Noto Sans SC",
   "file": "fonts/zh/noto-sans-sc-71.woff2",
   "unicodeRange": "U+5e98,U+5e9b,U+5e9d,U+5ea0-5ea5,U+5ea8,U+5eab,U+5eaf,U+5eb3,U+5eb5-5eb6,U+5eb9,U+5ebe,U+5ec1-5ec3,U+5ec6,U+5ec8,U+5ecb-5ecc,U+5ed1-5ed2,U+5ed4,U+5ed9-5edb,U+5edd,U+5edf-5ee0,U+5ee2-5ee3,U+5ee8,U+5eea,U+5eec,U+5eef-5ef0,U+5ef3-5ef4,U+5ef8,U+5efb-5efc,U+5efe-5eff,U+5f01,U+5f07,U+5f0b-5f0e,U+5f10-5f12,U+5f14,U+5f1a,U+5f22,U+5f28-5f29,U+5f2c-5f2d,U+5f35-5f36,U+5f38,U+5f3b-5f43,U+5f45-5f4a,U+5f4c-5f4e,U+5f50,U+5f54,U+5f56-5f59,U+5f5b-5f5f,U+5f61,U+5f63,U+5f65,U+5f67-5f68,U+5f6b,U+5f6e-5f6f,U+5f72-5f78,U+5f7a,U+5f7e-5f7f,U+5f82-5f83,U+5f87,U+5f89-5f8a,U+5f8d,U+5f91,U+5f93,U+5f95,U+5f98-5f99,U+5f9c,U+5f9e,U+5fa0,U+5fa6-5fa9,U+5fac-5fad,U+5faf,U+5fb3-5fb5,U+5fb9,U+5fbc"
  },
