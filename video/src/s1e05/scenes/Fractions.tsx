@@ -258,6 +258,9 @@ export const Fractions: React.FC = () => {
               fill={colors.primary}
               fontSize={28}
               fontFamily={fonts.math}
+              stroke={colors.bg}
+              strokeWidth={8}
+              paintOrder="stroke"
               opacity={fadeIn(frame, halfAt(h) + 4) * fadeOut(frame, c3, 10)}
             >
               ({HALF[h]}, {2 * HALF[h]})
