@@ -29,6 +29,9 @@ export const EndCard: React.FC = () => {
       <Sfx name="pop" at={c0 + 10} volume={0.3} />
       <Sfx name="whoosh" at={c0 + 20} volume={0.12} />
       <Sfx name="ding" at={c0 + 40} />
+      {[0, 1, 2, 3].map((i) => (
+        <Sfx key={i} name="tick" at={c0 + 50 + i * 10} volume={0.18} />
+      ))}
       <Sfx name="pop" at={c1 + 6} />
       <Sfx name="chime" at={c1 + 40} />
       <Sfx name="page" at={c1 + 70} />
@@ -80,6 +83,22 @@ export const EndCard: React.FC = () => {
                     color={p.color}
                   />
                 </g>
+              );
+            })}
+            {["(1, 2)", "(2, 4)", "(3, 6)", "(4, 8)"].map((t, i) => {
+              return (
+                <text
+                  key={t}
+                  x={i < 2 ? 680 : 1240}
+                  y={Y - 50 + (i % 2) * 120}
+                  fill={colors.primary}
+                  fontSize={32}
+                  textAnchor="middle"
+                  fontFamily={fonts.math}
+                  opacity={fadeIn(frame, c0 + 50 + i * 10)}
+                >
+                  {t}
+                </text>
               );
             })}
             <text

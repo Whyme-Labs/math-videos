@@ -1,6 +1,6 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { fadeIn, riseIn } from "../../shared/components/anim";
+import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import {
   glide,
@@ -55,6 +55,8 @@ export const CloseTo: React.FC = () => {
   const failAt = c1 + 56;
   const failShake = shake(frame, failAt + 14, 12);
   const ruler = glide(frame, c2 + 4, fps, 22);
+  const zone = ramp(frame, c0 + 50, 20);
+  const band = lerp(0, 0.6, glide(frame, c0 + 100, fps, 24));
 
   return (
     <SceneShell id="closeTo">
@@ -65,6 +67,8 @@ export const CloseTo: React.FC = () => {
       {linkAt.map((at, i) => (
         <Sfx key={`l${i}`} name="ding" at={at + 12} volume={0.22} />
       ))}
+      <Sfx name="whoosh" at={c0 + 50} volume={0.12} />
+      <Sfx name="whoosh" at={c0 + 100} volume={0.12} />
       <Sfx name="thud" at={failAt + 14} />
       <Sfx name="whoosh" at={c2 + 4} volume={0.14} />
       <Sfx name="pop" at={c2 + 26} />
@@ -110,16 +114,39 @@ export const CloseTo: React.FC = () => {
               />
               <text
                 x={px(v)}
-                y={LINE_Y + 110}
+                y={LINE_Y + 60}
                 fill={colors.muted}
-                fontSize={30}
+                fontSize={34}
                 textAnchor="middle"
                 fontFamily={fonts.mono}
               >
-                {v}
+                {v === 0 ? "" : v}
               </text>
             </g>
           ))}
+          {/* everything within 1 of a point: first around 0, then around 0.6 */}
+          <g opacity={fadeIn(frame, c0 + 50) * fadeOut(frame, c1, 10)}>
+            <rect
+              x={Math.max(X0 - 120, px(band - zone))}
+              y={LINE_Y - 34}
+              width={px(band + zone) - Math.max(X0 - 120, px(band - zone))}
+              height={68}
+              rx={12}
+              fill={alpha(colors.orange, 0.18)}
+              stroke={alpha(colors.orange, 0.7)}
+              strokeWidth={2}
+            />
+            <text
+              x={px(band + zone) - 14}
+              y={LINE_Y - 50}
+              fill={colors.orange}
+              fontSize={30}
+              textAnchor="end"
+              fontFamily={fonts.math}
+            >
+              &lt; 1
+            </text>
+          </g>
           {/* links */}
           <Arc
             from={0}

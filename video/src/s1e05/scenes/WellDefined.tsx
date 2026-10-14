@@ -109,6 +109,11 @@ export const WellDefined: React.FC = () => {
   return (
     <SceneShell id="wellDefined">
       <Sfx name="pop" at={c0 + 6} />
+      {[0, 6, 12, 18].map((d) => (
+        <Sfx key={`mm${d}`} name="tick" at={c0 + 46 + d} volume={0.16} />
+      ))}
+      <Sfx name="tick" at={c3 + 40} volume={0.16} />
+      <Sfx name="tick" at={c3 + 46} volume={0.16} />
       <Sfx name="whoosh" at={c0 + 20} volume={0.12} />
       {runs.map((r, i) => (
         <Sfx key={`d${i}`} name="tick" at={r.drop + 14} />
@@ -132,6 +137,28 @@ export const WellDefined: React.FC = () => {
             <ClockFace cx={C.x} cy={C.y} r={R} lit={lit} dot={14} />
           </g>
 
+          {/* more members of the picked blobs */}
+          {[
+            { k: 9, ns: [21, 33], from: c0 + 46, to: c3 },
+            { k: 5, ns: [17, 29], from: c0 + 52, to: c3 },
+            { k: 0, ns: [24, 36], from: c3 + 40, to: c5 },
+          ].map(({ k, ns, from, to }) =>
+            ns.map((n, j) => {
+              const a = (k / 12) * 2 * Math.PI + (j === 0 ? -0.26 : 0.26);
+              return (
+                <Chip
+                  key={n}
+                  cx={C.x + (R + 88) * Math.sin(a)}
+                  cy={C.y - (R + 88) * Math.cos(a)}
+                  label={n}
+                  r={22}
+                  color={colors.orange}
+                  scale={Math.min(1, springIn(frame, from + j * 6, fps, 11))}
+                  opacity={fadeOut(frame, to, 10)}
+                />
+              );
+            }),
+          )}
           {/* the machine */}
           <g opacity={machineOut}>
             <g opacity={fadeIn(frame, c0 + 6)}>

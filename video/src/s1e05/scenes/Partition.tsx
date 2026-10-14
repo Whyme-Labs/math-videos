@@ -1,6 +1,6 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
+import { fadeIn, fadeOut, riseIn, window } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
@@ -67,6 +67,7 @@ export const Partition: React.FC = () => {
   const b = { x: bx + 140, y: Y + 20 };
   const x = { x: 960, y: Y };
   const blobsOut = fadeOut(frame, c2, 12);
+  const pieceAt = (i: number) => c2 + 76 + i * 20;
 
   const arrow = (
     p: { x: number; y: number },
@@ -93,6 +94,8 @@ export const Partition: React.FC = () => {
       <Sfx name="pop" at={c0 + 10} volume={0.3} />
       <Sfx name="whoosh" at={c0 + 30} volume={0.14} />
       <Sfx name="pop" at={c0 + 56} />
+      <Sfx name="tick" at={c0 + 76} />
+      <Sfx name="tick" at={c0 + 88} />
       <Sfx name="tick" at={c1 + 16} />
       <Sfx name="tick" at={c1 + 28} />
       <Sfx name="scratch" at={c1 + 34} volume={0.22} />
@@ -101,6 +104,9 @@ export const Partition: React.FC = () => {
         <Sfx key={i} name="scratch" at={c2 + 10 + i * 8} volume={0.18} />
       ))}
       <Sfx name="sparkle" at={c2 + 54} />
+      {PIECES.map((_, i) => (
+        <Sfx key={`p${i}`} name="tick" at={pieceAt(i)} volume={0.18} />
+      ))}
       <QuestionTray />
 
       <AbsoluteFill>
@@ -145,6 +151,22 @@ export const Partition: React.FC = () => {
                 </text>
               </g>
             ))}
+            {["x ∈ [a]", "x ∈ [b]"].map((t, i) => (
+              <text
+                key={t}
+                x={i === 0 ? ax - 60 : bx + 60}
+                y={Y + 230}
+                fill={colors.highlight}
+                fontSize={36}
+                textAnchor="middle"
+                fontFamily={fonts.math}
+                opacity={
+                  fadeIn(frame, c0 + 76 + i * 12) * fadeOut(frame, c1 + 40, 10)
+                }
+              >
+                {t}
+              </text>
+            ))}
             <text
               x={x.x}
               y={Y - 200}
@@ -182,6 +204,17 @@ export const Partition: React.FC = () => {
                 points={pts}
                 fill={alpha(PIECE_COLORS[i], 0.14)}
                 opacity={fadeIn(frame, c2 + 44 + i * 3)}
+              />
+            ))}
+            {/* one piece at a time: each element is in exactly one */}
+            {PIECES.map((pts, i) => (
+              <polygon
+                key={`h${i}`}
+                points={pts}
+                fill={alpha(colors.primary, 0.12)}
+                stroke={colors.primary}
+                strokeWidth={5}
+                opacity={window(frame, pieceAt(i), pieceAt(i) + 22, 6)}
               />
             ))}
             <rect

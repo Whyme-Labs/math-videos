@@ -35,8 +35,8 @@ export const ColdOpen: React.FC = () => {
   const side = glide(frame, c4 + 2, fps, 22);
   const pieOpacity =
     frame < c4 ? fadeOut(frame, c3 - 2, 10) : fadeIn(frame, c4 + 4);
-  const pieScale = frame < c4 ? 1 : 0.55;
-  const pieShift = frame < c4 ? 0 : -470;
+  const pieScale = frame < c4 ? 1 : 0.7;
+  const pieShift = frame < c4 ? 0 : -450;
   const clockScale = lerp(1, 0.62, side);
   const clockShift = lerp(0, 330, side);
   const tilde = springIn(frame, c4 + 16, fps, 10);
@@ -93,7 +93,10 @@ export const ColdOpen: React.FC = () => {
                     fontSize={84}
                     textAnchor="middle"
                     fontFamily={fonts.math}
-                    opacity={asPairs && frame < c4 ? fadeIn(frame, c2 + 6) : 1}
+                    opacity={
+                      (asPairs && frame < c4 ? fadeIn(frame, c2 + 6) : 1) *
+                      (i === 1 ? 1 - over : 1)
+                    }
                   >
                     {asPairs && frame < c4 ? p.pair : p.frac}
                   </text>
@@ -253,6 +256,25 @@ export const ColdOpen: React.FC = () => {
           </div>
         </div>
 
+        {/* Both pairs tied to the ~ */}
+        <svg width={1920} height={890} style={{ position: "absolute" }}>
+          {[
+            `M 560 300 Q 700 200 850 330`,
+            `M 1370 300 Q 1220 200 1070 330`,
+          ].map((d, i) => (
+            <path
+              key={i}
+              d={d}
+              fill="none"
+              stroke={colors.highlight}
+              strokeWidth={4}
+              strokeLinecap="round"
+              pathLength={1}
+              strokeDasharray="1 1"
+              strokeDashoffset={1 - ramp(frame, c4 + 34 + i * 8, 16)}
+            />
+          ))}
+        </svg>
         {/* Declared the same */}
         <div
           style={{

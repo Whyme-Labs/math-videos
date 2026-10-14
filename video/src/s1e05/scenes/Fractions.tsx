@@ -52,7 +52,7 @@ export const Fractions: React.FC = () => {
   const ray = ramp(frame, c1 + 4, 20);
   const halfAt = (i: number) => c1 + 10 + i * 10;
   const zero = Math.min(1, springIn(frame, c3 + 6, fps, 10));
-  const glue = glide(frame, c3 + 50, fps, 24);
+  const glue = glide(frame, c3 + 70, fps, 24);
   const end = rayEnd(1, 2);
 
   return (
@@ -60,6 +60,7 @@ export const Fractions: React.FC = () => {
       <Sfx name="tick" at={c0 + 4} volume={0.2} />
       <Sfx name="page" at={c0 + 10} />
       <Sfx name="ding" at={c0 + 44} volume={0.25} />
+      <Sfx name="thud" at={c0 + 76} volume={0.25} />
       <Sfx name="scratch" at={c1 + 4} volume={0.22} />
       {HALF.map((_, i) => (
         <Sfx key={i} name={PLUCKS[i]} at={halfAt(i)} volume={0.28} />
@@ -72,7 +73,7 @@ export const Fractions: React.FC = () => {
       )}
       <Sfx name="pop" at={c3 + 6} />
       <Sfx name="scratch" at={c3 + 16} volume={0.2} />
-      <Sfx name="thud" at={c3 + 66} />
+      <Sfx name="thud" at={c3 + 86} />
       <QuestionTray />
 
       <AbsoluteFill>
@@ -195,20 +196,29 @@ export const Fractions: React.FC = () => {
             const lit = isHalf
               ? Math.min(1, springIn(frame, halfAt(h), fps, 10))
               : 0;
-            const x = lerp(gx(p), (O.x + gx(N)) / 2, glue * 0.55);
-            const y = lerp(gy(q), (O.y + gy(N)) / 2, glue * 0.55);
+            const x =
+              lerp(gx(p), (O.x + gx(N)) / 2, glue * 0.7) +
+              glue * 6 * Math.sin(frame / 11 + i);
+            const y =
+              lerp(gy(q), (O.y + gy(N)) / 2, glue * 0.7) +
+              glue * 6 * Math.cos(frame / 13 + i * 1.3);
+            const probe = (p === 1 && q === 2) || (p === 2 && q === 4);
+            const probeOn = frame >= c0 + 40 && frame < c1;
+            const miss = p === 2 && q === 3 && frame >= c0 + 76 && frame < c1;
             return (
               <g key={i} opacity={fadeIn(frame, c0 + 4 + (p + q))}>
                 <circle
                   cx={x}
                   cy={y}
-                  r={6 + 8 * lit}
+                  r={(probe && probeOn) || miss ? 12 : 6 + 8 * lit}
                   fill={
-                    glue > 0
+                    glue > 0 || miss
                       ? colors.red
-                      : lit > 0
-                        ? colors.primary
-                        : alpha(colors.muted, 0.5)
+                      : probe && probeOn
+                        ? colors.green
+                        : lit > 0
+                          ? colors.primary
+                          : alpha(colors.muted, 0.5)
                   }
                 />
               </g>
@@ -224,7 +234,7 @@ export const Fractions: React.FC = () => {
             stroke={colors.red}
             strokeWidth={3}
             opacity={glue}
-            transform={`translate(${shake(frame, c3 + 66, 10)} 0)`}
+            transform={`translate(${shake(frame, c3 + 86, 10)} 0)`}
           />
           {/* (0, 0) */}
           <circle cx={O.x} cy={O.y} r={16 * zero} fill={colors.red} />
@@ -292,6 +302,10 @@ export const Fractions: React.FC = () => {
         >
           (1, 2) ~ (2, 4): 1·4 = 2·2{" "}
           <span style={{ color: colors.green }}>✓</span>
+          <div style={{ marginTop: 14, opacity: fadeIn(frame, c0 + 76) }}>
+            (1, 2) ≁ (2, 3): 1·3 ≠ 2·2{" "}
+            <span style={{ color: colors.red }}>✗</span>
+          </div>
         </div>
         <div
           style={{
@@ -353,8 +367,8 @@ export const Fractions: React.FC = () => {
               fontSize: 46,
               marginTop: 24,
               color: colors.red,
-              opacity: fadeIn(frame, c3 + 66),
-              translate: `${shake(frame, c3 + 66, 10)}px 0px`,
+              opacity: fadeIn(frame, c3 + 86),
+              translate: `${shake(frame, c3 + 86, 10)}px 0px`,
             }}
           >
             ✗ {tx.allGlued}
@@ -365,8 +379,8 @@ export const Fractions: React.FC = () => {
               fontSize: 48,
               marginTop: 24,
               color: colors.primary,
-              opacity: fadeIn(frame, c3 + 84),
-              translate: riseIn(frame, c3 + 84, 16),
+              opacity: fadeIn(frame, c3 + 104),
+              translate: riseIn(frame, c3 + 104, 16),
             }}
           >
             {tx.denomZero}

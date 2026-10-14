@@ -56,6 +56,10 @@ export const Relations: React.FC = () => {
     { name: tx.transitive, math: "a ~ b, b ~ c ⇒ a ~ c", at: c3 + 4 },
   ];
   const chain = [0, 3, 6];
+  // Last line: the three classes {0,3,6}, {1,4,7}, {2,5,8} light up in turn.
+  const classAt = (k: number) => c4 + 50 + k * 20;
+  const classLit = (a: number, b: number) =>
+    a % 3 === b % 3 && frame >= classAt(a % 3) && frame < classAt(a % 3) + 22;
   const chainX = (i: number) => PANEL_X + 110 + i * 200;
   const CHAIN_Y = 650;
 
@@ -82,6 +86,14 @@ export const Relations: React.FC = () => {
       <Sfx name="ding" at={c3 + 40} />
       <Sfx name="whoosh" at={c4 + 4} volume={0.12} />
       <Sfx name="sparkle" at={c4 + 34} />
+      {[0, 1, 2].map((k) => (
+        <Sfx
+          key={`k${k}`}
+          name={PLUCKS[k + 2]}
+          at={c4 + 50 + k * 20}
+          volume={0.2}
+        />
+      ))}
       <QuestionTray />
 
       <AbsoluteFill>
@@ -138,7 +150,8 @@ export const Relations: React.FC = () => {
             const a = Math.floor(i / N);
             const b = i % N;
             const at = lightAt(a, b);
-            const on = Math.min(1, springIn(frame, at, fps, 11));
+            const on =
+              frame >= at ? Math.min(1, springIn(frame, at, fps, 11)) : 0;
             const chainHit =
               frame >= c3 &&
               frame < c4 &&
@@ -158,7 +171,11 @@ export const Relations: React.FC = () => {
                     cx={dotX(b)}
                     cy={dotY(a)}
                     r={14 * on}
-                    fill={chainHit ? colors.highlight : colors.primary}
+                    fill={
+                      chainHit || classLit(a, b)
+                        ? colors.highlight
+                        : colors.primary
+                    }
                   />
                 ) : null}
               </g>

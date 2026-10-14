@@ -14,8 +14,8 @@ import { useStrings } from "../i18n";
 // the 12 points of a clock. The class of 3 is pink throughout.
 
 const N = 36;
-const C = { x: 960, y: 470 };
-const R = 290;
+const C = { x: 960, y: 490 };
+const R = 280;
 const BLOB_R = 62;
 const member = (n: number) => {
   const k = n % 12;
@@ -34,8 +34,9 @@ export const Blobs: React.FC = () => {
   const [c0, c1, c2, c3, c4] = cues;
   const gather = (k: number) => glide(frame, c1 + 6 + k * 3, fps, 26);
   const shrink = glide(frame, c2 + 6, fps, 20);
-  const fly = glide(frame, c3 + 10, fps, 20);
-  const sweep = ramp(frame, c4 + 10, 50);
+  // The hand turns to 3 once the clock has formed, then sweeps a full turn.
+  const sweep =
+    3 * glide(frame, c2 + 44, fps, 30) + 12 * ramp(frame, c4 + 10, 90);
 
   return (
     <SceneShell id="blobs">
@@ -48,6 +49,8 @@ export const Blobs: React.FC = () => {
       <Sfx name="scratch" at={c2 + 24} volume={0.2} />
       <Sfx name="whoosh" at={c3 + 10} volume={0.12} />
       <Sfx name="ding" at={c3 + 30} />
+      <Sfx name="tick" at={c3 + 66} />
+      <Sfx name="tick" at={c3 + 76} />
       <Sfx name="sparkle" at={c4 + 20} />
       <QuestionTray />
 
@@ -55,7 +58,7 @@ export const Blobs: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 110,
+            top: 96,
             width: "100%",
             textAlign: "center",
             fontSize: 44,
@@ -99,8 +102,8 @@ export const Blobs: React.FC = () => {
             <line
               x1={C.x}
               y1={C.y}
-              x2={C.x + 170 * Math.sin(((3 + 12 * sweep) / 12) * 2 * Math.PI)}
-              y2={C.y - 170 * Math.cos(((3 + 12 * sweep) / 12) * 2 * Math.PI)}
+              x2={C.x + 170 * Math.sin((sweep / 12) * 2 * Math.PI)}
+              y2={C.y - 170 * Math.cos((sweep / 12) * 2 * Math.PI)}
               stroke={colors.primary}
               strokeWidth={8}
               strokeLinecap="round"
@@ -124,8 +127,8 @@ export const Blobs: React.FC = () => {
             return (
               <Chip
                 key={n}
-                cx={lerp(s.x, m.x, t)}
-                cy={lerp(s.y, m.y, t)}
+                cx={lerp(s.x + 8 * Math.sin(frame / 18 + n), m.x, t)}
+                cy={lerp(s.y + 8 * Math.cos(frame / 22 + n * 1.7), m.y, t)}
                 label={n}
                 r={22}
                 color={k === 3 ? colors.highlight : colors.primary}
@@ -134,22 +137,27 @@ export const Blobs: React.FC = () => {
               />
             );
           })}
-          {/* 15 and 3 fly into the same point */}
+          {/* 15 and 3 fly into the same point, then 27 and 39 follow */}
           {[
-            { n: 15, x: 1620, y: 300 },
-            { n: 3, x: 1620, y: 640 },
-          ].map((c, i) => (
-            <Chip
-              key={c.n}
-              cx={lerp(c.x, THREE.x, fly)}
-              cy={lerp(c.y, THREE.y, fly)}
-              label={c.n}
-              r={30}
-              color={colors.highlight}
-              scale={Math.min(1, springIn(frame, c3 + 2 + i * 4, fps, 11))}
-              opacity={fly < 1 ? 1 : fadeOut(frame, c3 + 30, 8)}
-            />
-          ))}
+            { n: 15, x: 1620, y: 300, at: c3 + 10 },
+            { n: 3, x: 1620, y: 640, at: c3 + 10 },
+            { n: 27, x: 1700, y: 180, at: c3 + 46 },
+            { n: 39, x: 1700, y: 760, at: c3 + 56 },
+          ].map((c) => {
+            const t = glide(frame, c.at, fps, 20);
+            return (
+              <Chip
+                key={c.n}
+                cx={lerp(c.x, THREE.x, t)}
+                cy={lerp(c.y, THREE.y, t)}
+                label={c.n}
+                r={30}
+                color={colors.highlight}
+                scale={Math.min(1, springIn(frame, c.at - 8, fps, 11))}
+                opacity={t < 1 ? 1 : fadeOut(frame, c.at + 20, 8)}
+              />
+            );
+          })}
         </svg>
 
         {/* labels */}

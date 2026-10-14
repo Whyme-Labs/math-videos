@@ -1,8 +1,14 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { fadeIn, riseIn } from "../../shared/components/anim";
+import { fadeIn, riseIn, window } from "../../shared/components/anim";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
-import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
+import {
+  glide,
+  hop,
+  lerp,
+  ramp,
+  springIn,
+} from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
@@ -92,6 +98,14 @@ export const ZoomOut: React.FC = () => {
   const cardAt = (i: number) => c0 + 6 + i * 14;
   const up = glide(frame, c1 + 2, fps, 22);
   const stampAt = (i: number) => c1 + 14 + i * 8;
+  // A dot runs through the recipe once all four cards are up.
+  const runAt = (i: number) => c0 + 70 + i * 22;
+  const seg = [0, 1, 2].findIndex((i) => frame < runAt(i + 1));
+  const k = seg < 0 ? 2 : seg;
+  const t = ramp(frame, runAt(k), 22);
+  const packet = hop(t, cardX(k), CARD_Y - 130, cardX(k + 1), CARD_Y - 130, 50);
+  const bump = (i: number) =>
+    i === 0 ? 0 : 0.07 * window(frame, runAt(i - 1) + 20, runAt(i - 1) + 34, 6);
 
   return (
     <SceneShell id="zoomOut">
@@ -99,6 +113,9 @@ export const ZoomOut: React.FC = () => {
         <Sfx key={i} name={PLUCKS[i]} at={cardAt(i)} volume={0.28} />
       ))}
       <Sfx name="ding" at={cardAt(3) + 10} volume={0.25} />
+      {[0, 1, 2].map((i) => (
+        <Sfx key={`r${i}`} name="tick" at={runAt(i) + 20} volume={0.2} />
+      ))}
       <Sfx name="whoosh" at={c1 + 2} volume={0.14} />
       {QUOTIENTS.map((_, i) => (
         <Sfx key={`q${i}`} name="pop" at={stampAt(i)} volume={0.22} />
@@ -138,13 +155,20 @@ export const ZoomOut: React.FC = () => {
               <path d="M 0 0 L 10 5 L 0 10 z" fill={colors.muted} />
             </marker>
           </defs>
+          <circle
+            cx={packet.x}
+            cy={packet.y}
+            r={14}
+            fill={colors.highlight}
+            opacity={window(frame, runAt(0), runAt(3) + 6, 6)}
+          />
           {[0, 1, 2, 3].map((i) => {
             const s = Math.min(1, springIn(frame, cardAt(i), fps, 11));
             return (
               <g
                 key={i}
                 opacity={s}
-                transform={`translate(${cardX(i)} ${CARD_Y}) scale(${s})`}
+                transform={`translate(${cardX(i)} ${CARD_Y}) scale(${s + bump(i)})`}
               >
                 <rect
                   x={-CARD_W / 2}
@@ -186,10 +210,8 @@ export const ZoomOut: React.FC = () => {
           top: 520,
           flexDirection: "row",
           justifyContent: "center",
-          flexWrap: "wrap",
-          gap: 22,
-          paddingLeft: 140,
-          paddingRight: 140,
+          gap: 16,
+          flexWrap: "nowrap",
         }}
       >
         {QUOTIENTS.map((q, i) => {
@@ -202,7 +224,7 @@ export const ZoomOut: React.FC = () => {
                 alignItems: "baseline",
                 gap: 14,
                 height: 76,
-                padding: "0 26px",
+                padding: "0 20px",
                 borderRadius: 999,
                 border: `3px solid ${colors.primary}`,
                 backgroundColor: alpha(colors.primary, 0.1),
@@ -211,7 +233,7 @@ export const ZoomOut: React.FC = () => {
                 lineHeight: "76px",
               }}
             >
-              <span style={{ fontFamily: fonts.math, fontSize: 44 }}>{q}</span>
+              <span style={{ fontFamily: fonts.math, fontSize: 40 }}>{q}</span>
               <span style={{ fontSize: 26, color: colors.muted }}>
                 ↪ {tx.stamps[i]}
               </span>
