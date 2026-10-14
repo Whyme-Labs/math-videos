@@ -256,25 +256,6 @@ export const ColdOpen: React.FC = () => {
           </div>
         </div>
 
-        {/* Both pairs tied to the ~ */}
-        <svg width={1920} height={890} style={{ position: "absolute" }}>
-          {[
-            `M 560 300 Q 700 200 850 330`,
-            `M 1370 300 Q 1220 200 1070 330`,
-          ].map((d, i) => (
-            <path
-              key={i}
-              d={d}
-              fill="none"
-              stroke={colors.highlight}
-              strokeWidth={4}
-              strokeLinecap="round"
-              pathLength={1}
-              strokeDasharray="1 1"
-              strokeDashoffset={1 - ramp(frame, c4 + 34 + i * 8, 16)}
-            />
-          ))}
-        </svg>
         {/* Declared the same */}
         <div
           style={{

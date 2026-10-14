@@ -105,8 +105,9 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     same line count in both languages.
   - Good candidates for later episodes: 《庄子·天下》"一尺之棰，日取其半，万世不竭"
     (0.999…, limits), 刘徽割圆术 (π, completing the reals), negative numbers in
-    《九章算术》 (ℤ), 勾股/弦图 (√2), 《孙子算经》's remainder problem
-    (modular arithmetic), and 杨辉三角 (combinatorics).
+    《九章算术》 (ℤ), 勾股/弦图 (√2), and 杨辉三角 (combinatorics).
+    Already used: 结绳记事 and 干支 (S1E02), 里耶秦简九九表 (S1E03),
+    “有生于无” and 《墨经》 (S1E04), 《孙子算经》's 物不知数 (S1E05).
 
 ## Titles and posts for each platform
 

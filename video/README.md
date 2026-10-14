@@ -16,6 +16,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E03-ZH` | 从零开始的算术（中文版） | [`src/s1e03`](src/s1e03) | [`s1e03-narration-zh.md`](s1e03-narration-zh.md) |
 | `S1E04` | Sets: The Universal Building Material | [`src/s1e04`](src/s1e04) | [`s1e04-narration.md`](s1e04-narration.md) |
 | `S1E04-ZH` | 集合：万物的积木（中文版） | [`src/s1e04`](src/s1e04) | [`s1e04-narration-zh.md`](s1e04-narration-zh.md) |
+| `S1E05` | The Master Tool: Equivalence Classes | [`src/s1e05`](src/s1e05) | [`s1e05-narration.md`](s1e05-narration.md) |
+| `S1E05-ZH` | 万能工具：等价类（中文版） | [`src/s1e05`](src/s1e05) | [`s1e05-narration-zh.md`](s1e05-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.

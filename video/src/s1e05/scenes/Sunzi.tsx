@@ -105,6 +105,14 @@ export const Sunzi: React.FC = () => {
       )}
       <Sfx name="ding" at={c2 + 6} />
       <Sfx name="sparkle" at={c2 + 30} />
+      {[0, 1, 2].map((i) => (
+        <Sfx
+          key={`c${i}`}
+          name={PLUCKS[i + 2]}
+          at={c2 + 40 + i * 12}
+          volume={0.22}
+        />
+      ))}
 
       <AbsoluteFill>
         {/* Source */}
@@ -161,7 +169,7 @@ export const Sunzi: React.FC = () => {
                   cx={c.x}
                   cy={c.y}
                   r={CIRCLE_R}
-                  fill={alpha(colors.primary, 0.05)}
+                  fill={alpha(colors.primary, 0.05 * fadeIn(frame, c1 + 20))}
                   stroke={colors.primary}
                   strokeWidth={3}
                   pathLength={1}
@@ -225,6 +233,28 @@ export const Sunzi: React.FC = () => {
             }
           />
         </svg>
+        {/* 23 checked against each count */}
+        {[
+          [3, 7, 2],
+          [5, 4, 3],
+          [7, 3, 2],
+        ].map(([d, q, r], i) => (
+          <div
+            key={d}
+            style={{
+              position: "absolute",
+              left: 1400,
+              top: 360 + i * 70,
+              fontFamily: fonts.math,
+              fontSize: 40,
+              color: colors.text,
+              opacity: fadeIn(frame, c2 + 40 + i * 12),
+              translate: riseIn(frame, c2 + 40 + i * 12, 16),
+            }}
+          >
+            23 = {d}·{q} + <span style={{ color: colors.highlight }}>{r}</span>
+          </div>
+        ))}
         <div
           style={{
             position: "absolute",

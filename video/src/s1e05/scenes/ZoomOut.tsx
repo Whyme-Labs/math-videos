@@ -204,43 +204,51 @@ export const ZoomOut: React.FC = () => {
         ))}
       </AbsoluteFill>
 
-      {/* quotients to come */}
-      <AbsoluteFill
-        style={{
-          top: 520,
-          flexDirection: "row",
-          justifyContent: "center",
-          gap: 16,
-          flexWrap: "nowrap",
-        }}
-      >
-        {QUOTIENTS.map((q, i) => {
-          const s = Math.min(1, springIn(frame, stampAt(i), fps, 11));
-          return (
-            <div
-              key={q}
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                gap: 14,
-                height: 76,
-                padding: "0 20px",
-                borderRadius: 999,
-                border: `3px solid ${colors.primary}`,
-                backgroundColor: alpha(colors.primary, 0.1),
-                opacity: s,
-                scale: s,
-                lineHeight: "76px",
-              }}
-            >
-              <span style={{ fontFamily: fonts.math, fontSize: 40 }}>{q}</span>
-              <span style={{ fontSize: 26, color: colors.muted }}>
-                ↪ {tx.stamps[i]}
-              </span>
-            </div>
-          );
-        })}
-      </AbsoluteFill>
+      {/* quotients to come, in two rows */}
+      {[QUOTIENTS.slice(0, 3), QUOTIENTS.slice(3)].map((row, r) => (
+        <div
+          key={r}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 470 + r * 100,
+            display: "flex",
+            justifyContent: "center",
+            gap: 20,
+          }}
+        >
+          {row.map((q, j) => {
+            const i = r * 3 + j;
+            const s = Math.min(1, springIn(frame, stampAt(i), fps, 11));
+            return (
+              <div
+                key={q}
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 14,
+                  height: 76,
+                  padding: "0 22px",
+                  borderRadius: 999,
+                  border: `3px solid ${colors.primary}`,
+                  backgroundColor: alpha(colors.primary, 0.1),
+                  opacity: s,
+                  scale: s,
+                  lineHeight: "76px",
+                }}
+              >
+                <span style={{ fontFamily: fonts.math, fontSize: 40 }}>
+                  {q}
+                </span>
+                <span style={{ fontSize: 26, color: colors.muted }}>
+                  ↪ {tx.stamps[i]}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </SceneShell>
   );
 };
