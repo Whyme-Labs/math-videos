@@ -239,8 +239,8 @@ export const Mediant: React.FC = () => {
           {/* two outputs, two different lines */}
           <circle
             cx={(rayEnd(2, 5).x + rayEnd(3, 7).x) / 2}
-            cy={rayEnd(2, 5).y + 6}
-            r={46}
+            cy={rayEnd(2, 5).y + 40}
+            r={40}
             fill="none"
             stroke={colors.red}
             strokeWidth={4}
