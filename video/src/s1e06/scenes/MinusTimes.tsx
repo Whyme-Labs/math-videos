@@ -119,7 +119,7 @@ export const MinusTimes: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: 760,
+            left: 1300,
             width: 400,
             textAlign: "center",
             top: 560,
