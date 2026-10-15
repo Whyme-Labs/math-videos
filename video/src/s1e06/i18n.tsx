@@ -41,8 +41,6 @@ const EN = {
   // Ledger
   ring: "ring",
   field: "field",
-  ringOps: "+ − ×",
-  fieldOps: "+ − × ÷",
   lost: "lost",
   lostZ: "a smallest number",
   lostQ: "a next number",
@@ -84,8 +82,6 @@ const ZH: Strings = {
   notWellDefined: "不是良定义",
   ring: "环",
   field: "域",
-  ringOps: "+ − ×",
-  fieldOps: "+ − × ÷",
   lost: "失去",
   lostZ: "最小的数",
   lostQ: "“下一个”数",

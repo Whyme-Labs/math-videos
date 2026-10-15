@@ -2,7 +2,7 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
-import { glide, lerp, ramp } from "../../shared/components/motion";
+import { glide, hop, lerp, ramp } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
@@ -13,7 +13,7 @@ import { useStrings } from "../i18n";
 // that "should" give the same difference lie on one diagonal; each diagonal
 // is one integer, and the diagonals collapse onto the number line.
 
-const L: Lattice = { ox: 330, oy: 790, cell: 66, min: 0, max: 7 };
+const L: Lattice = { ox: 300, oy: 810, cell: 76, min: 0, max: 7 };
 const PANEL_X = 1010;
 const MINUS2: [number, number][] = [
   [0, 2],
@@ -54,6 +54,7 @@ export const ZPairs: React.FC = () => {
   const collapse = (d: number) =>
     glide(frame, c4 + 4 + Math.abs(d) * 2, fps, 24);
   const panelOut = fadeOut(frame, c4, 12);
+  const stepAt = (k: number) => c4 + 56 + k * 10;
 
   return (
     <SceneShell id="zPairs">
@@ -69,6 +70,15 @@ export const ZPairs: React.FC = () => {
       <Sfx name="chime" at={c3 + 22} />
       <Sfx name="whoosh" at={c4 + 4} volume={0.18} />
       <Sfx name="sparkle" at={c4 + 34} />
+      {[0, 1, 2, 3, 4].map((k) => (
+        <Sfx
+          key={`h${k}`}
+          name={PLUCKS[4 - k]}
+          at={c4 + 65 + k * 10}
+          volume={0.2}
+        />
+      ))}
+      <Sfx name="ding" at={c4 + 106} />
       <QuestionTray />
 
       <AbsoluteFill>
@@ -150,6 +160,68 @@ export const ZPairs: React.FC = () => {
             opacity={fadeIn(frame, c0 + 20) * fadeOut(frame, c3, 10)}
           >
             (3, 5)
+          </text>
+          {/* (3, 5): three along, five up */}
+          <g opacity={fadeIn(frame, c0 + 30) * fadeOut(frame, c1 + 40, 10)}>
+            <line
+              x1={at(L, 3, 5).x}
+              y1={at(L, 3, 5).y}
+              x2={at(L, 3, 0).x}
+              y2={L.oy}
+              stroke={colors.highlight}
+              strokeWidth={3}
+              strokeDasharray="8 6"
+            />
+            <line
+              x1={at(L, 3, 5).x}
+              y1={at(L, 3, 5).y}
+              x2={L.ox}
+              y2={at(L, 0, 5).y}
+              stroke={colors.highlight}
+              strokeWidth={3}
+              strokeDasharray="8 6"
+            />
+            <circle
+              cx={at(L, 3, 0).x}
+              cy={L.oy}
+              r={10}
+              fill={colors.highlight}
+            />
+            <circle
+              cx={L.ox}
+              cy={at(L, 0, 5).y}
+              r={10}
+              fill={colors.highlight}
+            />
+          </g>
+          {/* 3 − 5 on the new line: five steps left from 3 land on −2 */}
+          {(() => {
+            const k = Math.min(
+              4,
+              Math.max(0, Math.floor((frame - stepAt(0)) / 10)),
+            );
+            const t = ramp(frame, stepAt(k), 9);
+            const p = hop(t, nlX(3 - k), NL_Y - 30, nlX(2 - k), NL_Y - 30, 44);
+            return (
+              <circle
+                cx={frame < stepAt(0) ? nlX(3) : p.x}
+                cy={frame < stepAt(0) ? NL_Y - 30 : p.y}
+                r={14}
+                fill={colors.highlight}
+                opacity={fadeIn(frame, stepAt(0) - 8)}
+              />
+            );
+          })()}
+          <text
+            x={nlX(-2)}
+            y={NL_Y - 80}
+            fill={colors.highlight}
+            fontSize={44}
+            textAnchor="middle"
+            fontFamily={fonts.math}
+            opacity={fadeIn(frame, stepAt(4) + 10)}
+          >
+            3 − 5 = −2
           </text>
           {/* the number line the diagonals become */}
           <g opacity={fadeIn(frame, c4 + 30)}>

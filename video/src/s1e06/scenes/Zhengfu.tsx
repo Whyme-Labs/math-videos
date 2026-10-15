@@ -2,7 +2,7 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
-import { springIn } from "../../shared/components/motion";
+import { glide, lerp, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
@@ -36,6 +36,9 @@ export const Zhengfu: React.FC = () => {
   const pairIn = (i: number) =>
     Math.min(1, springIn(frame, c2 + 14 + i * 8, fps, 11));
 
+  // 3 − (−2): the two black rods cross over and turn red ("异名相益"),
+  // then go back for the next line.
+  const flip = glide(frame, c0 + 96, fps, 20) - glide(frame, c1 + 2, fps, 16);
   const rod = (x: number, start: number, fill: string, edge: string) => {
     const s = Math.min(1, springIn(frame, start, fps, 12));
     return (
@@ -68,6 +71,8 @@ export const Zhengfu: React.FC = () => {
       {[0, 1].map((i) => (
         <Sfx key={`s${i}`} name="page" at={slipAt(i)} volume={0.22} />
       ))}
+      <Sfx name="whoosh" at={c0 + 96} volume={0.14} />
+      <Sfx name="ding" at={c0 + 114} />
       <Sfx name="chime" at={c1 + 6} />
       <Sfx name="whoosh" at={c2 + 6} volume={0.14} />
       <Sfx name="pop" at={c2 + 14} />
@@ -84,8 +89,8 @@ export const Zhengfu: React.FC = () => {
             width: BOARD.w,
             height: BOARD.h,
             borderRadius: 24,
-            backgroundColor: alpha(colors.wood, 0.14),
-            border: `3px solid ${alpha(colors.wood, 0.6)}`,
+            backgroundColor: alpha(colors.paper, 0.85),
+            border: `4px solid ${alpha(colors.wood, 0.8)}`,
             opacity: fadeIn(frame, c0 + 4) * rodsOut,
           }}
         />
@@ -93,11 +98,16 @@ export const Zhengfu: React.FC = () => {
           rod(RED_X(i), redAt(i), colors.red, alpha(colors.paper, 0.4)),
         )}
         {[0, 1].map((i) =>
-          rod(BLACK_X(i), blackAt(i), colors.ink, alpha(colors.paper, 0.7)),
+          rod(
+            lerp(BLACK_X(i), RED_X(3 + i), flip),
+            blackAt(i),
+            flip > 0.5 ? colors.red : colors.ink,
+            colors.ink,
+          ),
         )}
         {[
           { x: RED_X(1), t: tx.positive, c: colors.red, at: c1 + 20 },
-          { x: BLACK_X(0) + 22, t: tx.negative, c: colors.text, at: c1 + 30 },
+          { x: BLACK_X(0) + 22, t: tx.negative, c: colors.ink, at: c1 + 30 },
         ].map((l) => (
           <div
             key={l.t}
@@ -117,6 +127,20 @@ export const Zhengfu: React.FC = () => {
             {l.t}
           </div>
         ))}
+        <div
+          style={{
+            position: "absolute",
+            left: BOARD.x,
+            width: BOARD.w,
+            top: BOARD.y + BOARD.h + 20,
+            textAlign: "center",
+            fontFamily: fonts.math,
+            fontSize: 44,
+            opacity: fadeIn(frame, c0 + 110) * fadeOut(frame, c1, 10),
+          }}
+        >
+          3 − (−2) = 5
+        </div>
         {/* Liu Hui */}
         <div
           style={{

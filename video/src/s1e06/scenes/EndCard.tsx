@@ -16,10 +16,10 @@ const X0 = 460;
 const UNIT = 500;
 const SQRT2 = Math.SQRT2;
 
-// Fractions p/q in [0, 2] with q ≤ 12, in lowest terms, smallest q first.
+// Fractions p/q in [0, 2] with q ≤ 20, in lowest terms, smallest q first.
 const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
 const RATIONALS: { v: number; q: number }[] = [];
-for (let q = 1; q <= 12; q++)
+for (let q = 1; q <= 20; q++)
   for (let p = 0; p <= 2 * q; p++)
     if (gcd(p, q) === 1) RATIONALS.push({ v: p / q, q });
 
@@ -77,7 +77,7 @@ export const EndCard: React.FC = () => {
           {RATIONALS.map((r, i) => {
             const x = sx(r.v);
             if (x < -20 || x > 1940) return null;
-            const s = Math.min(1, springIn(frame, c0 + 6 + r.q * 6, fps, 12));
+            const s = Math.min(1, springIn(frame, c0 + 6 + r.q * 5, fps, 12));
             return (
               <circle
                 key={i}

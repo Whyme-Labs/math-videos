@@ -12,7 +12,7 @@ import { useStrings } from "../i18n";
 // distributive law. Below, an arrow for −1 is multiplied by −1 and swings
 // round to +1.
 
-const LINE_Y = 760;
+const LINE_Y = 790;
 const UNIT = 150;
 const nx = (n: number) => 960 + n * UNIT;
 const STEPS = [
@@ -45,6 +45,8 @@ export const MinusTimes: React.FC = () => {
       ))}
       <Sfx name="pop" at={stepAt(2) + 10} volume={0.25} />
       <Sfx name="sparkle" at={c2 + 8} />
+      <Sfx name="whoosh" at={c2 + 40} volume={0.12} />
+      <Sfx name="ding" at={c2 + 66} volume={0.22} />
       <QuestionTray />
 
       <AbsoluteFill>
@@ -117,9 +119,11 @@ export const MinusTimes: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: 1240,
-            top: 380,
-            padding: "14px 30px",
+            left: 760,
+            width: 400,
+            textAlign: "center",
+            top: 560,
+            padding: "10px 0",
             borderRadius: 20,
             border: `4px solid ${colors.highlight}`,
             backgroundColor: alpha(colors.highlight, 0.12),
@@ -191,6 +195,30 @@ export const MinusTimes: React.FC = () => {
               r={13}
               fill={swing > 0.5 ? colors.primary : colors.highlight}
             />
+            {/* −2 also swings to +2 in the last line */}
+            {(() => {
+              const sw = glide(frame, c2 + 40, fps, 26);
+              const a2 = Math.PI * sw;
+              return (
+                <g opacity={fadeIn(frame, c2 + 30)}>
+                  <line
+                    x1={nx(0)}
+                    y1={LINE_Y}
+                    x2={nx(0) - 2 * UNIT * Math.cos(a2)}
+                    y2={LINE_Y - 2 * UNIT * Math.sin(a2)}
+                    stroke={colors.orange}
+                    strokeWidth={6}
+                    strokeLinecap="round"
+                  />
+                  <circle
+                    cx={nx(0) - 2 * UNIT * Math.cos(a2)}
+                    cy={LINE_Y - 2 * UNIT * Math.sin(a2)}
+                    r={11}
+                    fill={colors.orange}
+                  />
+                </g>
+              );
+            })()}
             <text
               x={nx(-2.4)}
               y={LINE_Y - 60}

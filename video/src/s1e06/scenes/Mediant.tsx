@@ -1,6 +1,6 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { fadeIn, riseIn } from "../../shared/components/anim";
+import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import { lerp, ramp, shake } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
@@ -96,6 +96,8 @@ export const Mediant: React.FC = () => {
   return (
     <SceneShell id="mediant">
       <Sfx name="page" at={c0 + 6} />
+      <Sfx name="scratch" at={c0 + 30} volume={0.18} />
+      <Sfx name="scratch" at={c0 + 50} volume={0.18} />
       <Sfx name="pop" at={c1 + 6} />
       <Sfx name="scratch" at={c1 + 20} volume={0.2} />
       <Sfx name="pop" at={c1 + 44} />
@@ -124,6 +126,19 @@ export const Mediant: React.FC = () => {
           }}
         >
           {tx.mediantName}
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            left: PANEL_X,
+            top: 330,
+            fontFamily: fonts.math,
+            fontSize: 40,
+            color: colors.muted,
+            opacity: fadeIn(frame, c0 + 64) * fadeOut(frame, c1, 10),
+          }}
+        >
+          1/1 ⊕ 1/2 = 2/3
         </div>
         {row(
           <>
@@ -182,7 +197,7 @@ export const Mediant: React.FC = () => {
             t={ramp(frame, c1 + 20, 14)}
             color={colors.primary}
             name="2/5"
-            dx={34}
+            dx={-34}
           />
           <Ray
             p={3}
@@ -190,8 +205,32 @@ export const Mediant: React.FC = () => {
             t={ramp(frame, c1 + 60, 14)}
             color={colors.orange}
             name="3/7"
-            dx={70}
+            dx={46}
           />
+          {/* adding tops and bottoms is adding arrows: (1, 1) + (1, 2) = (2, 3) */}
+          <g opacity={fadeIn(frame, c0 + 30) * (1 - fadeIn(frame, c1, 10))}>
+            {[
+              { a: [0, 0], b: [1, 1], s: c0 + 30 },
+              { a: [1, 1], b: [2, 3], s: c0 + 50 },
+            ].map(({ a, b, s: st }) => {
+              const p0 = at(L, a[0], a[1]);
+              const p1 = at(L, b[0], b[1]);
+              const t = ramp(frame, st, 14);
+              return (
+                <line
+                  key={st}
+                  x1={p0.x}
+                  y1={p0.y}
+                  x2={lerp(p0.x, p1.x, t)}
+                  y2={lerp(p0.y, p1.y, t)}
+                  stroke={colors.muted}
+                  strokeWidth={5}
+                  strokeLinecap="round"
+                />
+              );
+            })}
+            {pt(2, 3, colors.text, c0 + 64)}
+          </g>
           {pt(1, 2, colors.highlight, c1 + 6)}
           {pt(1, 3, colors.text, c1 + 6)}
           {pt(2, 5, colors.primary, c1 + 20)}

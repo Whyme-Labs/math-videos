@@ -30,7 +30,13 @@ export const Ledger: React.FC = () => {
   const flow = Math.max(0, frame - (c2 + 10));
   const halfAt = (k: number) => c2 + 50 + k * 6;
 
-  const plaque = (i: number, name: string, ops: string, start: number) => (
+  const plaque = (
+    i: number,
+    name: string,
+    ops: string[],
+    example: string,
+    start: number,
+  ) => (
     <div
       style={{
         position: "absolute",
@@ -48,7 +54,29 @@ export const Ledger: React.FC = () => {
       >
         {name}
       </span>
-      <span style={{ fontFamily: fonts.math, fontSize: 42 }}>{ops}</span>
+      {ops.map((o, k) => (
+        <span
+          key={o}
+          style={{
+            fontFamily: fonts.math,
+            fontSize: 42,
+            opacity: fadeIn(frame, start + 8 + k * 10),
+          }}
+        >
+          {o}
+        </span>
+      ))}
+      <span
+        style={{
+          fontFamily: fonts.math,
+          fontSize: 32,
+          color: colors.muted,
+          marginLeft: 16,
+          opacity: fadeIn(frame, start + 14 + ops.length * 10),
+        }}
+      >
+        {example}
+      </span>
     </div>
   );
 
@@ -58,6 +86,12 @@ export const Ledger: React.FC = () => {
       <Sfx name="sparkle" at={c0 + 22} />
       <Sfx name="whoosh" at={c1 + 4} volume={0.16} />
       <Sfx name="sparkle" at={c1 + 22} />
+      {[0, 1, 2].map((k) => (
+        <Sfx key={`o${k}`} name="tick" at={c0 + 32 + k * 10} volume={0.18} />
+      ))}
+      {[0, 1, 2, 3].map((k) => (
+        <Sfx key={`f${k}`} name="tick" at={c1 + 32 + k * 10} volume={0.18} />
+      ))}
       <Sfx name="page" at={c2 + 6} />
       <Sfx name="tick" at={c2 + 14} volume={0.2} />
       {[0, 1, 2, 3, 4].map((k) => (
@@ -67,13 +101,13 @@ export const Ledger: React.FC = () => {
 
       <AbsoluteFill>
         <Tower
-          appear={[1, zIn, qIn, 0.35, 0.35]}
+          appear={[1, zIn, qIn, 1, 1]}
           built={[1, ramp(frame, c0 + 20, 12), ramp(frame, c1 + 20, 12), 0, 0]}
           question={[0, 0, 0, 1, 1]}
           style={{ position: "absolute", left: TOWER_LEFT, top: TOWER_TOP }}
         />
-        {plaque(1, tx.ring, tx.ringOps, c0 + 24)}
-        {plaque(2, tx.field, tx.fieldOps, c1 + 24)}
+        {plaque(1, tx.ring, ["+", "−", "×"], "3 − 5 = −2", c0 + 24)}
+        {plaque(2, tx.field, ["+", "−", "×", "÷"], "2 ÷ 3 = 2/3", c1 + 24)}
 
         {/* what did we lose? */}
         <div

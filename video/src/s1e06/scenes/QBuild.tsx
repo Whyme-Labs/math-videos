@@ -13,7 +13,7 @@ import { useStrings } from "../i18n";
 // the centre; the row q = 0 is left out, because (0, 0) would glue every
 // line into one. Inverses swap p and q: a mirror across the diagonal.
 
-const L: Lattice = { ox: 620, oy: 470, cell: 52, min: -4, max: 4 };
+const L: Lattice = { ox: 600, oy: 480, cell: 62, min: -4, max: 4 };
 const R = 4.6 * L.cell;
 const PANEL_X = 1010;
 // Directions of the lines drawn, in the order they sweep in.
@@ -47,6 +47,8 @@ export const QBuild: React.FC = () => {
     <SceneShell id="qBuild">
       <Sfx name="pop" at={c0 + 18} />
       <Sfx name="thud" at={c0 + 40} volume={0.3} />
+      <Sfx name="tick" at={c0 + 60} volume={0.2} />
+      <Sfx name="tick" at={c0 + 76} volume={0.2} />
       <Sfx name="page" at={c1 + 6} />
       {DIRS.map((_, i) =>
         i % 2 === 0 ? (
@@ -192,6 +194,20 @@ export const QBuild: React.FC = () => {
           >
             ✗ {tx.noIntAnswer}
           </div>
+          {["2 · 1 = 2 < 3", "2 · 2 = 4 > 3"].map((r, i) => (
+            <div
+              key={r}
+              style={{
+                fontSize: 40,
+                color: colors.muted,
+                marginTop: 12,
+                opacity: fadeIn(frame, c0 + 60 + i * 16),
+                translate: riseIn(frame, c0 + 60 + i * 16, 14),
+              }}
+            >
+              {r}
+            </div>
+          ))}
         </div>
         <div
           style={{

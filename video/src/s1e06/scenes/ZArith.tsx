@@ -13,7 +13,7 @@ import { useStrings } from "../i18n";
 // arrow after the other. Different representatives land on the same
 // diagonal, and (3, 5) + (5, 3) lands on the diagonal of 0.
 
-const L: Lattice = { ox: 300, oy: 800, cell: 60, min: 0, max: 8 };
+const L: Lattice = { ox: 280, oy: 820, cell: 68, min: 0, max: 8 };
 const PANEL_X = 960;
 type V = [number, number];
 
@@ -129,6 +129,8 @@ export const ZArith: React.FC = () => {
       <Sfx name="scratch" at={c2 + 14} volume={0.18} />
       <Sfx name="ding" at={c2 + 50} />
       <Sfx name="sparkle" at={c2 + 64} />
+      <Sfx name="tick" at={c0 + 84} volume={0.2} />
+      <Sfx name="ding" at={c2 + 96} volume={0.22} />
       <QuestionTray />
 
       <AbsoluteFill>
@@ -202,6 +204,28 @@ export const ZArith: React.FC = () => {
             t={ramp(frame, c2 + 30, 14)}
             color={colors.primary}
           />
+          {/* another opposite pair: (1, 4) + (4, 1) = (5, 5) */}
+          <Arrow
+            from={[0, 0]}
+            by={[1, 4]}
+            t={ramp(frame, c2 + 70, 12)}
+            color={alpha(colors.highlight, 0.7)}
+            dashed
+          />
+          <Arrow
+            from={[1, 4]}
+            by={[4, 1]}
+            t={ramp(frame, c2 + 84, 12)}
+            color={alpha(colors.primary, 0.7)}
+            dashed
+          />
+          <circle
+            cx={at(L, 5, 5).x}
+            cy={at(L, 5, 5).y}
+            r={12}
+            fill={colors.green}
+            opacity={fadeIn(frame, c2 + 96, 8)}
+          />
           <circle
             cx={at(L, 8, 8).x}
             cy={at(L, 8, 8).y}
@@ -220,6 +244,19 @@ export const ZArith: React.FC = () => {
           200,
           out01,
         )}
+        <div
+          style={{
+            position: "absolute",
+            left: PANEL_X + 40,
+            top: 340,
+            fontFamily: fonts.math,
+            fontSize: 34,
+            color: colors.muted,
+            opacity: fadeIn(frame, c0 + 84) * fadeOut(frame, c1 + 20, 10),
+          }}
+        >
+          = (2 + 5, 7 + 1)
+        </div>
         {sumRow(
           <span style={{ color: colors.green }}>(7, 8) ~ (0, 1) = −1</span>,
           c0 + 66,
@@ -268,6 +305,20 @@ export const ZArith: React.FC = () => {
           }}
         >
           [a, b] + [b, a] = [0, 0]
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            left: PANEL_X,
+            top: 530,
+            fontFamily: fonts.math,
+            fontSize: 40,
+            color: colors.muted,
+            opacity: fadeIn(frame, c2 + 90),
+            translate: riseIn(frame, c2 + 90, 16),
+          }}
+        >
+          (1, 4) + (4, 1) = (5, 5) = 0
         </div>
         <div
           style={{

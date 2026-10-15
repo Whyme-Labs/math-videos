@@ -47,6 +47,11 @@ export const ColdOpen: React.FC = () => {
       <Sfx name="thud" at={fallAt + 14} />
       <Sfx name="pop" at={c1 + 6} />
       <Sfx name="page" at={c1 + 22} />
+      <Sfx name="page" at={c1 + 44} volume={0.2} />
+      <Sfx name="page" at={c1 + 62} volume={0.2} />
+      <Sfx name="tick" at={fallAt + 30} volume={0.2} />
+      <Sfx name="tick" at={fallAt + 44} volume={0.2} />
+      <Sfx name="tick" at={c2 + 44} volume={0.2} />
       <Sfx name="scratch" at={c2 + 6} />
       <Sfx name="sparkle" at={c2 + 24} />
       <Sfx name="pop" at={c3 + 6} />
@@ -97,12 +102,33 @@ export const ColdOpen: React.FC = () => {
               </text>
             </g>
           ))}
+          {[0, 1].map((k) => (
+            <g key={k} opacity={fadeIn(frame, fallAt + 30 + k * 14)}>
+              <path
+                d={`M ${nx(-k)} ${LINE_Y - 20} Q ${nx(-k - 0.5)} ${LINE_Y - 90} ${nx(-k - 1)} ${LINE_Y - 20}`}
+                fill="none"
+                stroke={colors.highlight}
+                strokeWidth={4}
+                strokeDasharray="10 8"
+              />
+              <text
+                x={nx(-k - 1)}
+                y={LINE_Y + 10}
+                fill={colors.highlight}
+                fontSize={48}
+                textAnchor="middle"
+                fontFamily={fonts.title}
+              >
+                ?
+              </text>
+            </g>
+          ))}
           <circle
             cx={tok.x}
             cy={tok.y}
             r={20}
             fill={colors.highlight}
-            opacity={fadeIn(frame, c0 + 14) * (1 - fall * 0.8)}
+            opacity={fadeIn(frame, c0 + 14) * (1 - fall)}
           />
         </svg>
         <div
@@ -176,6 +202,26 @@ export const ColdOpen: React.FC = () => {
               ?
             </span>
           </div>
+          {["−(−a) = a", "a − b = a + (−b)"].map((r, i) => (
+            <div
+              key={r}
+              style={{
+                fontFamily: fonts.math,
+                fontSize: 40,
+                marginTop: 12,
+                color: colors.muted,
+                opacity: fadeIn(frame, c1 + 44 + i * 18),
+                translate: riseIn(frame, c1 + 44 + i * 18, 16),
+              }}
+            >
+              {r}{" "}
+              <span
+                style={{ color: colors.highlight, fontFamily: fonts.title }}
+              >
+                ?
+              </span>
+            </div>
+          ))}
         </div>
         <div
           style={{
@@ -204,6 +250,18 @@ export const ColdOpen: React.FC = () => {
           </div>
           <div style={{ fontSize: 36, color: colors.primary, marginTop: 20 }}>
             {tx.built}
+          </div>
+          <div
+            style={{
+              fontFamily: fonts.math,
+              fontSize: 40,
+              color: colors.muted,
+              marginTop: 18,
+              opacity: fadeIn(frame, c2 + 44) * fadeOut(frame, c3 - 2, 10),
+              translate: riseIn(frame, c2 + 44, 16),
+            }}
+          >
+            ℕ × ℕ ∋ (3, 5)
           </div>
         </div>
         {/* and division */}
