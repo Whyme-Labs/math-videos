@@ -18,6 +18,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E04-ZH` | 集合：万物的积木（中文版） | [`src/s1e04`](src/s1e04) | [`s1e04-narration-zh.md`](s1e04-narration-zh.md) |
 | `S1E05` | The Master Tool: Equivalence Classes | [`src/s1e05`](src/s1e05) | [`s1e05-narration.md`](s1e05-narration.md) |
 | `S1E05-ZH` | 万能工具：等价类（中文版） | [`src/s1e05`](src/s1e05) | [`s1e05-narration-zh.md`](s1e05-narration-zh.md) |
+| `S1E06` | Subtraction and Division: ℤ and ℚ | [`src/s1e06`](src/s1e06) | [`s1e06-narration.md`](s1e06-narration.md) |
+| `S1E06-ZH` | 减法与除法：整数和有理数（中文版） | [`src/s1e06`](src/s1e06) | [`s1e06-narration-zh.md`](s1e06-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
