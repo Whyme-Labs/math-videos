@@ -6,7 +6,7 @@ import { Sfx } from "../../shared/components/Sfx";
 import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { scatter } from "../components/pieces";
+import { scatter } from "../../shared/components/pieces";
 import { useStrings } from "../i18n";
 
 // Behind the title: 36 scattered dots drift into 12 blobs (same remainder ÷ 12).

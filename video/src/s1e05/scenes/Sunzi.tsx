@@ -5,7 +5,7 @@ import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Chip, scatter } from "../components/pieces";
+import { Chip, scatter } from "../../shared/components/pieces";
 import { useStrings } from "../i18n";
 
 // Chinese edition only: 《孙子算经》卷下 "物不知数". 23 things counted in

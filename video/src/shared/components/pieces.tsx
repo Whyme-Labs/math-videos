@@ -1,7 +1,7 @@
 import type React from "react";
-import { alpha, colors, fonts } from "../../shared/theme";
+import { alpha, colors, fonts } from "../theme";
 
-// Drawings shared by the S1E05 scenes: pies for fractions, number chips,
+// Pies for fractions, number chips (first used in S1E05),
 // and the 12-point clock that the blobs of "same remainder ÷ 12" become.
 
 // A wedge from angle a0 to a1 (radians, 0 = up, clockwise).

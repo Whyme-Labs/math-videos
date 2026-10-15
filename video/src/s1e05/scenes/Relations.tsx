@@ -6,7 +6,7 @@ import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Chip } from "../components/pieces";
+import { Chip } from "../../shared/components/pieces";
 import { useStrings } from "../i18n";
 
 // A relation on {0, …, 8} drawn as the grid A × A: row a, column b lights up

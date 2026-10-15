@@ -6,7 +6,7 @@ import { Sfx } from "../../shared/components/Sfx";
 import { glide, lerp, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Pie } from "../components/pieces";
+import { Pie } from "../../shared/components/pieces";
 import { useStrings } from "../i18n";
 
 // 1/2 and 2/4 slide into one blob: one fraction. Then the teaser for E06:

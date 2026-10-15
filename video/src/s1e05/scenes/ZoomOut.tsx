@@ -12,7 +12,7 @@ import {
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { scatter } from "../components/pieces";
+import { scatter } from "../../shared/components/pieces";
 import { useStrings } from "../i18n";
 
 // The recipe in four cards, then the quotients still to come.

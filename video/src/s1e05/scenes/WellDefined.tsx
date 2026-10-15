@@ -6,7 +6,7 @@ import { glide, lerp, shake, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Chip, ClockFace, clockPos } from "../components/pieces";
+import { Chip, ClockFace, clockPos } from "../../shared/components/pieces";
 import { useStrings } from "../i18n";
 
 // The well-definedness test. Pick members of blobs on the clock, run them

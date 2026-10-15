@@ -6,7 +6,12 @@ import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Chip, ClockFace, clockPos, scatter } from "../components/pieces";
+import {
+  Chip,
+  ClockFace,
+  clockPos,
+  scatter,
+} from "../../shared/components/pieces";
 import { useStrings } from "../i18n";
 
 // The key visual of the series' quotients: numbers coloured by class drift
