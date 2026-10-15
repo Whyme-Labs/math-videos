@@ -189,7 +189,7 @@ export const Mediant: React.FC = () => {
             t={ramp(frame, c1 + 30, 14)}
             color={alpha(colors.highlight, 0.8)}
             name="1/2"
-            dx={44}
+            dx={58}
           />
           <Ray
             p={2}
@@ -197,7 +197,7 @@ export const Mediant: React.FC = () => {
             t={ramp(frame, c1 + 20, 14)}
             color={colors.primary}
             name="2/5"
-            dx={-34}
+            dx={-52}
           />
           <Ray
             p={3}
@@ -205,7 +205,7 @@ export const Mediant: React.FC = () => {
             t={ramp(frame, c1 + 60, 14)}
             color={colors.orange}
             name="3/7"
-            dx={0}
+            dx={16}
           />
           {/* adding tops and bottoms is adding arrows: (1, 1) + (1, 2) = (2, 3) */}
           <g opacity={fadeIn(frame, c0 + 30) * (1 - fadeIn(frame, c1, 10))}>
