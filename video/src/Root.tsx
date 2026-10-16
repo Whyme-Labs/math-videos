@@ -4,6 +4,7 @@ import { S1E03Compositions } from "./s1e03/Episode";
 import { S1E04Compositions } from "./s1e04/Episode";
 import { S1E05Compositions } from "./s1e05/Episode";
 import { S1E06Compositions } from "./s1e06/Episode";
+import { S1E07Compositions } from "./s1e07/Episode";
 
 // One entry per episode: the full film in English and Chinese, plus every
 // scene on its own (folders "<code>-Scenes" and "<code>-ZH-Scenes").
@@ -16,6 +17,7 @@ export const RemotionRoot: React.FC = () => {
       <S1E04Compositions />
       <S1E05Compositions />
       <S1E06Compositions />
+      <S1E07Compositions />
     </>
   );
 };
