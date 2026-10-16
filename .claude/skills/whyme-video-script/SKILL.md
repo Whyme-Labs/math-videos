@@ -108,7 +108,8 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     杨辉三角 (combinatorics).
     Already used: 结绳记事 and 干支 (S1E02), 里耶秦简九九表 (S1E03),
     “有生于无” and 《墨经》 (S1E04), 《孙子算经》's 物不知数 (S1E05),
-    《九章算术》正负术 and 刘徽's red and black rods (S1E06).
+    《九章算术》正负术 and 刘徽's red and black rods (S1E06), 《九章算术》少广章
+    开方不尽 and 刘徽's 微少/微多 (S1E07).
 
 ## Titles and posts for each platform
 
