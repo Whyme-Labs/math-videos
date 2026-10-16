@@ -43,8 +43,17 @@ const ABOVE: F[] = [
   { p: 58, q: 41 },
   { p: 99, q: 70 },
 ];
-const OTHERS_BELOW = [1.32, 1.35, 1.37, 1.39];
-const OTHERS_ABOVE = [1.52, 1.54];
+// More members of each side: fractions with small bottoms, away from √2.
+const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+const fractions = (lo: number, hi: number) => {
+  const out: number[] = [];
+  for (let q = 2; q <= 30; q++)
+    for (let p = Math.ceil(lo * q); p <= Math.floor(hi * q); p++)
+      if (gcd(p, q) === 1) out.push(p / q);
+  return out.sort((a, b) => a - b);
+};
+const OTHERS_BELOW = fractions(1.3, 1.405);
+const OTHERS_ABOVE = fractions(1.43, 1.55);
 const val = (f: F) => f.p / f.q;
 const px = (v: number) => X0 + ((v - LO) / (HI - LO)) * (X1 - X0);
 const inLens = (v: number) => v >= LO2 && v <= HI2;
@@ -108,7 +117,8 @@ export const Armies: React.FC = () => {
   ) =>
     list.map((f, k) => {
       const v = val(f);
-      if (lens && !inLens(v)) return null;
+      if (lens && (!inLens(v) || map(v) < X0 - 30 || map(v) > X1 + 30))
+        return null;
       const color = side === 0 ? colors.primary : colors.orange;
       const showLabel = lens || !inLens(v);
       const dy = side === 0 ? -30 - (k % 2) * 34 : 46 + (k % 2) * 34;
@@ -133,9 +143,11 @@ export const Armies: React.FC = () => {
 
   return (
     <SceneShell id="armies">
-      {OTHERS_BELOW.map((_, i) => (
-        <Sfx key={`b${i}`} name="tick" at={c0 + 8 + i * 5} volume={0.16} />
-      ))}
+      {OTHERS_BELOW.map((_, i) =>
+        i % 4 === 0 ? (
+          <Sfx key={`b${i}`} name="tick" at={c0 + 8 + i * 3} volume={0.14} />
+        ) : null,
+      )}
       <Sfx name="pop" at={c0 + 40} />
       <Sfx name="page" at={c1 + 6} />
       {BELOW.slice(1).map((_, k) => (
@@ -191,7 +203,7 @@ export const Armies: React.FC = () => {
                 key={`ob${i}`}
                 cx={px(v)}
                 cy={Y}
-                r={9 * Math.min(1, springIn(frame, c0 + 8 + i * 5, fps, 12))}
+                r={8 * Math.min(1, springIn(frame, c0 + 8 + i * 3, fps, 12))}
                 fill={colors.primary}
               />
             ))}
@@ -200,7 +212,7 @@ export const Armies: React.FC = () => {
                 key={`oa${i}`}
                 cx={px(v)}
                 cy={Y}
-                r={9 * Math.min(1, springIn(frame, c0 + 40 + i * 5, fps, 12))}
+                r={8 * Math.min(1, springIn(frame, c0 + 40 + i * 3, fps, 12))}
                 fill={colors.orange}
               />
             ))}
