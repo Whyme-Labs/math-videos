@@ -16,14 +16,18 @@ import { useStrings } from "../i18n";
 
 // S = {q : q² < 2} and its upper bounds. The improvement map
 // q → (2q + 2)/(q + 2) moves fractions that are too small up, and fractions
-// that are too big down, and neither side ever reaches √2. Last line: zoom
-// into the slot between them.
+// that are too big down. A magnifier below the main line (×30 around √2)
+// shows the later steps; in the last line it zooms further onto the empty
+// slot.
 
 const X0 = 260;
 const X1 = 1660;
-const Y = 470;
+const Y = 330; // the main line
 const LO = 1.3;
 const HI = 1.55;
+const Y2 = 600; // the magnifier
+const LO2 = 1.41;
+const HI2 = 1.418;
 const SQRT2 = Math.SQRT2;
 type F = { p: number; q: number };
 const BELOW: F[] = [
@@ -42,6 +46,8 @@ const ABOVE: F[] = [
 const OTHERS_BELOW = [1.32, 1.35, 1.37, 1.39];
 const OTHERS_ABOVE = [1.52, 1.54];
 const val = (f: F) => f.p / f.q;
+const px = (v: number) => X0 + ((v - LO) / (HI - LO)) * (X1 - X0);
+const inLens = (v: number) => v >= LO2 && v <= HI2;
 
 export const Armies: React.FC = () => {
   const frame = useCurrentFrame();
@@ -49,39 +55,81 @@ export const Armies: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("armies");
   const [c0, c1, c2, c3] = cues;
+  const lensIn = fadeIn(frame, c1 + 40);
   const zoom = glide(frame, c3 + 6, fps, 34);
-  const scale = lerp(1, 60, zoom);
-  const px = (v: number) => {
-    const base = X0 + ((v - LO) / (HI - LO)) * (X1 - X0);
-    const pivot = X0 + ((SQRT2 - LO) / (HI - LO)) * (X1 - X0);
+  const scale = lerp(1, 12, zoom);
+  const px2 = (v: number) => {
+    const base = X0 + ((v - LO2) / (HI2 - LO2)) * (X1 - X0);
+    const pivot = X0 + ((SQRT2 - LO2) / (HI2 - LO2)) * (X1 - X0);
     return lerp(base, 960 + (base - pivot) * scale, zoom);
   };
   const stepAt = (side: 0 | 1, k: number) =>
     (side === 0 ? c1 + 30 : c2 + 10) + k * 18;
+  const arrive = (side: 0 | 1, k: number) =>
+    k === 0 ? (side === 0 ? c0 + 26 : c0 + 40) : stepAt(side, k - 1) + 14;
 
-  // Current position of the hopping marker on each side.
-  const marker = (list: F[], side: 0 | 1) => {
-    let x = px(val(list[0]));
-    let y = Y;
+  // The hopping marker on one side of a line.
+  const marker = (
+    list: F[],
+    side: 0 | 1,
+    map: (v: number) => number,
+    y: number,
+  ) => {
+    let x = map(val(list[0]));
+    let yy = y;
     for (let k = 0; k < list.length - 1; k++) {
       const t = ramp(frame, stepAt(side, k), 14);
       if (t > 0) {
         const p = hop(
           t,
-          px(val(list[k])),
-          Y,
-          px(val(list[k + 1])),
-          Y,
-          side === 0 ? 70 : -70,
+          map(val(list[k])),
+          y,
+          map(val(list[k + 1])),
+          y,
+          side === 0 ? 50 : -50,
         );
         x = p.x;
-        y = p.y;
+        yy = p.y;
       }
     }
-    return { x, y };
+    return { x, y: yy };
   };
-  const mB = marker(BELOW, 0);
-  const mA = marker(ABOVE, 1);
+  const mB = marker(BELOW, 0, px, Y);
+  const mA = marker(ABOVE, 1, px, Y);
+  const mB2 = marker(BELOW, 0, px2, Y2);
+  const mA2 = marker(ABOVE, 1, px2, Y2);
+
+  const points = (
+    list: F[],
+    side: 0 | 1,
+    map: (v: number) => number,
+    y: number,
+    lens: boolean,
+  ) =>
+    list.map((f, k) => {
+      const v = val(f);
+      if (lens && !inLens(v)) return null;
+      const color = side === 0 ? colors.primary : colors.orange;
+      const showLabel = lens || !inLens(v);
+      const dy = side === 0 ? -30 - (k % 2) * 34 : 46 + (k % 2) * 34;
+      return (
+        <g key={`${lens}-${f.p}`} opacity={fadeIn(frame, arrive(side, k), 6)}>
+          <circle cx={map(v)} cy={y} r={10} fill={color} />
+          {showLabel ? (
+            <text
+              x={map(v)}
+              y={y + dy}
+              fill={color}
+              fontSize={30}
+              textAnchor="middle"
+              fontFamily={fonts.math}
+            >
+              {f.p}/{f.q}
+            </text>
+          ) : null}
+        </g>
+      );
+    });
 
   return (
     <SceneShell id="armies">
@@ -98,6 +146,7 @@ export const Armies: React.FC = () => {
           volume={0.24}
         />
       ))}
+      <Sfx name="whoosh" at={c1 + 40} volume={0.12} />
       {ABOVE.slice(1).map((_, k) => (
         <Sfx
           key={`d${k}`}
@@ -112,115 +161,151 @@ export const Armies: React.FC = () => {
 
       <AbsoluteFill>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
-          <line
-            x1={0}
-            y1={Y}
-            x2={1920}
-            y2={Y}
-            stroke={colors.muted}
-            strokeWidth={3}
-            opacity={fadeIn(frame, c0 + 2)}
-          />
-          {[1.3, 1.4, 1.5].map((v) => (
-            <text
-              key={v}
-              x={px(v)}
-              y={Y + 90}
-              fill={colors.muted}
-              fontSize={30}
-              textAnchor="middle"
-              fontFamily={fonts.mono}
-              opacity={fadeIn(frame, c0 + 4) * (1 - zoom)}
-            >
-              {v.toFixed(1)}
-            </text>
-          ))}
-          {/* the two sides */}
-          {OTHERS_BELOW.map((v, i) => (
-            <circle
-              key={`ob${i}`}
-              cx={px(v)}
-              cy={Y}
-              r={9 * Math.min(1, springIn(frame, c0 + 8 + i * 5, fps, 12))}
-              fill={colors.primary}
+          {/* main line */}
+          <g opacity={fadeOut(frame, c3, 12)}>
+            <line
+              x1={X0 - 80}
+              y1={Y}
+              x2={X1 + 80}
+              y2={Y}
+              stroke={colors.muted}
+              strokeWidth={3}
+              opacity={fadeIn(frame, c0 + 2)}
             />
-          ))}
-          {OTHERS_ABOVE.map((v, i) => (
+            {[1.3, 1.4, 1.5].map((v) => (
+              <text
+                key={v}
+                x={px(v)}
+                y={Y + 120}
+                fill={colors.muted}
+                fontSize={28}
+                textAnchor="middle"
+                fontFamily={fonts.mono}
+                opacity={fadeIn(frame, c0 + 4)}
+              >
+                {v.toFixed(1)}
+              </text>
+            ))}
+            {OTHERS_BELOW.map((v, i) => (
+              <circle
+                key={`ob${i}`}
+                cx={px(v)}
+                cy={Y}
+                r={9 * Math.min(1, springIn(frame, c0 + 8 + i * 5, fps, 12))}
+                fill={colors.primary}
+              />
+            ))}
+            {OTHERS_ABOVE.map((v, i) => (
+              <circle
+                key={`oa${i}`}
+                cx={px(v)}
+                cy={Y}
+                r={9 * Math.min(1, springIn(frame, c0 + 40 + i * 5, fps, 12))}
+                fill={colors.orange}
+              />
+            ))}
+            {points(BELOW, 0, px, Y, false)}
+            {points(ABOVE, 1, px, Y, false)}
             <circle
-              key={`oa${i}`}
-              cx={px(v)}
-              cy={Y}
-              r={9 * Math.min(1, springIn(frame, c0 + 40 + i * 5, fps, 12))}
-              fill={colors.orange}
+              cx={mB.x}
+              cy={mB.y}
+              r={13}
+              fill={colors.green}
+              opacity={fadeIn(frame, c1 + 24)}
             />
-          ))}
-          {BELOW.map((f, k) => {
-            const at = k === 0 ? c0 + 26 : stepAt(0, k - 1) + 14;
-            return (
-              <g key={`${f.p}/${f.q}`} opacity={fadeIn(frame, at, 6)}>
-                <circle cx={px(val(f))} cy={Y} r={10} fill={colors.primary} />
-                <text
-                  x={px(val(f))}
-                  y={Y - 30 - (k % 2) * 36}
-                  fill={colors.primary}
-                  fontSize={30}
-                  textAnchor="middle"
-                  fontFamily={fonts.math}
-                >
-                  {f.p}/{f.q}
-                </text>
-              </g>
-            );
-          })}
-          {ABOVE.map((f, k) => {
-            const at = k === 0 ? c0 + 40 : stepAt(1, k - 1) + 14;
-            return (
-              <g key={`${f.p}/${f.q}`} opacity={fadeIn(frame, at, 6)}>
-                <circle cx={px(val(f))} cy={Y} r={10} fill={colors.orange} />
-                <text
-                  x={px(val(f))}
-                  y={Y + 46 + (k % 2) * 36}
-                  fill={colors.orange}
-                  fontSize={30}
-                  textAnchor="middle"
-                  fontFamily={fonts.math}
-                >
-                  {f.p}/{f.q}
-                </text>
-              </g>
-            );
-          })}
-          {/* hopping markers */}
-          <circle
-            cx={mB.x}
-            cy={mB.y}
-            r={14}
-            fill={colors.green}
-            opacity={fadeIn(frame, c1 + 24) * fadeOut(frame, c3, 8)}
-          />
-          <circle
-            cx={mA.x}
-            cy={mA.y}
-            r={14}
-            fill={colors.red}
-            opacity={fadeIn(frame, c2 + 4) * fadeOut(frame, c3, 8)}
-          />
-          {/* the slot where √2 would be */}
-          <rect
-            x={px(SQRT2) - 14}
-            y={Y - 40}
-            width={28}
-            height={80}
-            rx={8}
-            fill="none"
-            stroke={colors.highlight}
-            strokeWidth={4}
-            strokeDasharray="8 6"
-            opacity={fadeIn(frame, c3 + 40)}
-          />
+            <circle
+              cx={mA.x}
+              cy={mA.y}
+              r={13}
+              fill={colors.red}
+              opacity={fadeIn(frame, c2 + 4)}
+            />
+            {/* the part the lens magnifies */}
+            <g opacity={lensIn}>
+              <rect
+                x={px(LO2)}
+                y={Y - 22}
+                width={px(HI2) - px(LO2)}
+                height={44}
+                fill="none"
+                stroke={colors.highlight}
+                strokeWidth={3}
+              />
+              <line
+                x1={px(LO2)}
+                y1={Y + 22}
+                x2={X0 - 40}
+                y2={Y2 - 90}
+                stroke={alpha(colors.highlight, 0.5)}
+                strokeWidth={2}
+              />
+              <line
+                x1={px(HI2)}
+                y1={Y + 22}
+                x2={X1 + 40}
+                y2={Y2 - 90}
+                stroke={alpha(colors.highlight, 0.5)}
+                strokeWidth={2}
+              />
+            </g>
+          </g>
+          {/* the magnifier */}
+          <g opacity={lensIn}>
+            <rect
+              x={X0 - 40}
+              y={Y2 - 90}
+              width={X1 - X0 + 80}
+              height={200}
+              rx={20}
+              fill={alpha(colors.ink, 0.6)}
+              stroke={alpha(colors.highlight, 0.6)}
+              strokeWidth={3}
+            />
+            <line
+              x1={X0 - 20}
+              y1={Y2}
+              x2={X1 + 20}
+              y2={Y2}
+              stroke={colors.muted}
+              strokeWidth={3}
+            />
+            {points(BELOW, 0, px2, Y2, true)}
+            {points(ABOVE, 1, px2, Y2, true)}
+            <circle
+              cx={mB2.x}
+              cy={mB2.y}
+              r={13}
+              fill={colors.green}
+              opacity={
+                ramp(frame, stepAt(0, 0) + 10, 4) * fadeOut(frame, c3, 8)
+              }
+            />
+            <circle
+              cx={mA2.x}
+              cy={mA2.y}
+              r={13}
+              fill={colors.red}
+              opacity={
+                ramp(frame, stepAt(1, 1) + 10, 4) * fadeOut(frame, c3, 8)
+              }
+            />
+            {/* the slot where √2 would be */}
+            <rect
+              x={px2(SQRT2) - 12}
+              y={Y2 - 34}
+              width={24}
+              height={68}
+              rx={8}
+              fill="none"
+              stroke={colors.highlight}
+              strokeWidth={4}
+              strokeDasharray="8 6"
+              opacity={fadeIn(frame, c3 + 40)}
+            />
+          </g>
           <text
-            x={px(SQRT2)}
-            y={Y - 150}
+            x={960}
+            y={Y2 - 130}
             fill={colors.highlight}
             fontSize={40}
             textAnchor="middle"
@@ -230,12 +315,11 @@ export const Armies: React.FC = () => {
           </text>
         </svg>
 
-        {/* labels and the rule */}
         <div
           style={{
             position: "absolute",
             left: 260,
-            top: 200,
+            top: 160,
             fontFamily: fonts.math,
             fontSize: 44,
             color: colors.primary,
@@ -248,7 +332,7 @@ export const Armies: React.FC = () => {
           style={{
             position: "absolute",
             right: 260,
-            top: 200,
+            top: 160,
             fontSize: 40,
             color: colors.orange,
             opacity: fadeIn(frame, c0 + 44) * fadeOut(frame, c3, 10),
@@ -260,11 +344,11 @@ export const Armies: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 680,
+            top: 740,
             width: "100%",
             textAlign: "center",
             fontFamily: fonts.math,
-            fontSize: 48,
+            fontSize: 46,
             opacity: fadeIn(frame, c1 + 8) * fadeOut(frame, c3, 10),
             translate: riseIn(frame, c1 + 8, 20),
           }}
@@ -274,13 +358,12 @@ export const Armies: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 680,
+            top: 740,
             width: "100%",
             textAlign: "center",
             fontFamily: fonts.title,
-            fontSize: 52,
+            fontSize: 50,
             color: colors.highlight,
-            backgroundColor: alpha(colors.bg, 0),
             opacity: fadeIn(frame, c3 + 54),
             translate: riseIn(frame, c3 + 54, 20),
           }}

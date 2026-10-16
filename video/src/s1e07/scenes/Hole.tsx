@@ -64,8 +64,8 @@ export const Hole: React.FC = () => {
   };
   // x-ray: dots shrink to dust on the second line
   const dust =
-    interpolate(frame, [c1 + 4, c1 + 24], [1, 0.45], clamp) *
-    interpolate(frame, [c2 + 6, c2 + 30], [1, 1 / 0.45], clamp);
+    interpolate(frame, [c1 + 4, c1 + 24], [1, 0.6], clamp) *
+    interpolate(frame, [c2 + 6, c2 + 30], [1, 1 / 0.6], clamp);
   const gap = springIn(frame, c1 + 28, fps, 10);
   const holeAt = (i: number) => c2 + 50 + i * 6;
   const decimals = Math.max(1, Math.ceil(z) + 2);

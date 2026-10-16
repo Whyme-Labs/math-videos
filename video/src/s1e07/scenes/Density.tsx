@@ -2,7 +2,7 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, riseIn } from "../../shared/components/anim";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
-import { ramp, springIn } from "../../shared/components/motion";
+import { lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { colors, fonts } from "../../shared/theme";
@@ -69,6 +69,45 @@ export const Density: React.FC = () => {
           >
             {tx.average}
           </text>
+          {/* any x and y: their average follows along between them */}
+          {(() => {
+            const t = ramp(frame, c0 + 46, 100);
+            const show = fadeIn(frame, c0 + 44) * (1 - ramp(frame, c1, 10));
+            const x = lerp(0.12, 0.62, t);
+            const y = lerp(0.42, 0.94, Math.sin(t * Math.PI * 0.5));
+            return (
+              <g opacity={show}>
+                {[
+                  { v: x, l: "x", c: colors.highlight },
+                  { v: y, l: "y", c: colors.highlight },
+                  { v: (x + y) / 2, l: "", c: colors.green },
+                ].map((m) => (
+                  <g key={m.l || "avg"}>
+                    <circle cx={px(m.v)} cy={Y + 90} r={12} fill={m.c} />
+                    <text
+                      x={px(m.v)}
+                      y={Y + 140}
+                      fill={m.c}
+                      fontSize={32}
+                      textAnchor="middle"
+                      fontFamily={fonts.math}
+                    >
+                      {m.l || "(x + y)/2"}
+                    </text>
+                  </g>
+                ))}
+                <line
+                  x1={px(x)}
+                  y1={Y + 90}
+                  x2={px(y)}
+                  y2={Y + 90}
+                  stroke={colors.highlight}
+                  strokeWidth={3}
+                  opacity={0.5}
+                />
+              </g>
+            );
+          })()}
           {/* level k: the odd multiples of 1/2^k */}
           {Array.from({ length: LEVELS + 1 }).map((_, k) => {
             const n = 2 ** k;

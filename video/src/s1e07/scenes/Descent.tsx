@@ -112,6 +112,10 @@ export const Descent: React.FC = () => {
       ))}
       <Sfx name="thud" at={failAt} />
       <Sfx name="sparkle" at={c3 + 10} />
+      <Sfx name="pop" at={c0 + 40} volume={0.25} />
+      <Sfx name="pop" at={c0 + 54} volume={0.22} />
+      <Sfx name="scratch" at={c1 + 40} volume={0.2} />
+      <Sfx name="scratch" at={c3 + 26} volume={0.2} />
       <QuestionTray />
 
       <AbsoluteFill>
@@ -178,6 +182,89 @@ export const Descent: React.FC = () => {
             label="b"
             split={glide(frame, c2 + 6, fps, 12)}
           />
+          {/* a² = 2b² as areas: one big square equals two smaller ones */}
+          <g opacity={fadeIn(frame, c0 + 40) * fadeOut(frame, c2 + 10, 10)}>
+            {(() => {
+              const SA = 200;
+              const SB = SA / Math.SQRT2;
+              const y0 = 420;
+              const grid = glide(frame, c1 + 40, fps, 14);
+              return (
+                <>
+                  <rect
+                    x={BAR_X}
+                    y={y0}
+                    width={SA * Math.min(1, springIn(frame, c0 + 40, fps, 14))}
+                    height={SA * Math.min(1, springIn(frame, c0 + 40, fps, 14))}
+                    fill={alpha(colors.primary, 0.2)}
+                    stroke={colors.primary}
+                    strokeWidth={3}
+                  />
+                  {[0, 1].map((k) => (
+                    <line
+                      key={k}
+                      x1={k === 0 ? BAR_X + SA / 2 : BAR_X}
+                      y1={k === 0 ? y0 : y0 + SA / 2}
+                      x2={k === 0 ? BAR_X + SA / 2 : BAR_X + SA * grid}
+                      y2={k === 0 ? y0 + SA * grid : y0 + SA / 2}
+                      stroke={colors.text}
+                      strokeWidth={3}
+                    />
+                  ))}
+                  <text
+                    x={BAR_X + SA / 2}
+                    y={y0 + SA + 40}
+                    fill={colors.primary}
+                    fontSize={32}
+                    textAnchor="middle"
+                    fontFamily={fonts.math}
+                  >
+                    {frame >= c1 + 40 ? "a² = 4c²" : "a²"}
+                  </text>
+                  <text
+                    x={BAR_X + SA + 34}
+                    y={y0 + SA / 2 + 14}
+                    fill={colors.text}
+                    fontSize={44}
+                    textAnchor="middle"
+                    fontFamily={fonts.math}
+                  >
+                    =
+                  </text>
+                  {[0, 1].map((k) => {
+                    const sb = Math.min(
+                      1,
+                      springIn(frame, c0 + 50 + k * 8, fps, 14),
+                    );
+                    const x = BAR_X + SA + 68 + k * (SB + 20);
+                    return (
+                      <g key={k}>
+                        <rect
+                          x={x}
+                          y={y0 + SA - SB}
+                          width={SB * sb}
+                          height={SB * sb}
+                          fill={alpha(colors.orange, 0.2)}
+                          stroke={colors.orange}
+                          strokeWidth={3}
+                        />
+                        <text
+                          x={x + SB / 2}
+                          y={y0 + SA + 40}
+                          fill={colors.orange}
+                          fontSize={32}
+                          textAnchor="middle"
+                          fontFamily={fonts.math}
+                        >
+                          b²
+                        </text>
+                      </g>
+                    );
+                  })}
+                </>
+              );
+            })()}
+          </g>
           {/* the same fraction, smaller: c and d */}
           <Bar
             y={440}
@@ -253,10 +340,43 @@ export const Descent: React.FC = () => {
           </text>
         </svg>
 
+        <svg width={1920} height={890} style={{ position: "absolute" }}>
+          <g opacity={fadeIn(frame, c3 + 20)}>
+            <rect
+              x={300}
+              y={300}
+              width={240}
+              height={240}
+              fill="none"
+              stroke={colors.primary}
+              strokeWidth={5}
+            />
+            <line
+              x1={300}
+              y1={540}
+              x2={lerp(300, 540, ramp(frame, c3 + 26, 16))}
+              y2={lerp(540, 300, ramp(frame, c3 + 26, 16))}
+              stroke={colors.highlight}
+              strokeWidth={7}
+              strokeLinecap="round"
+            />
+            <text
+              x={420}
+              y={600}
+              fill={colors.highlight}
+              fontSize={40}
+              textAnchor="middle"
+              fontFamily={fonts.math}
+            >
+              ?
+            </text>
+          </g>
+        </svg>
         <div
           style={{
             position: "absolute",
             top: 340,
+            left: 300,
             width: "100%",
             textAlign: "center",
             fontFamily: fonts.title,

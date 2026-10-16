@@ -40,6 +40,8 @@ export const LiuHui: React.FC = () => {
       {[0, 1, 2].map((k) => (
         <Sfx key={`s${k}`} name={PLUCKS[k]} at={stepAt(k)} volume={0.22} />
       ))}
+      <Sfx name="pop" at={c0 + 64} volume={0.24} />
+      <Sfx name="pop" at={c0 + 90} volume={0.24} />
       <Sfx name="chime" at={c1 + 64} />
       <Sfx name="sparkle" at={c2 + 14} />
 
@@ -56,6 +58,39 @@ export const LiuHui: React.FC = () => {
             strokeWidth={4}
             opacity={fadeIn(frame, c0 + 6)}
           />
+          {/* side 1.4 is a little short, side 1.5 a little long */}
+          {[
+            { k: 1.4, c: colors.primary, at: c0 + 64 },
+            { k: 1.5, c: colors.orange, at: c0 + 90 },
+          ].map((t) => {
+            const side = (SQ.s * t.k) / Math.SQRT2;
+            return (
+              <g
+                key={t.k}
+                opacity={fadeIn(frame, t.at) * (1 - fadeIn(frame, c1, 12))}
+              >
+                <rect
+                  x={SQ.x}
+                  y={SQ.y + SQ.s - side}
+                  width={side}
+                  height={side}
+                  fill="none"
+                  stroke={t.c}
+                  strokeWidth={3}
+                  strokeDasharray="10 8"
+                />
+                <text
+                  x={SQ.x + side + 12}
+                  y={SQ.y + SQ.s - side + (t.k === 1.4 ? 30 : -6)}
+                  fill={t.c}
+                  fontSize={30}
+                  fontFamily={fonts.mono}
+                >
+                  {t.k}² = {(t.k * t.k).toFixed(2)}
+                </text>
+              </g>
+            );
+          })}
           <line
             x1={SQ.x}
             y1={SQ.y + SQ.s}

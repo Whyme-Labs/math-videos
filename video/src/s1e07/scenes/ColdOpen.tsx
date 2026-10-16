@@ -23,7 +23,6 @@ const LEVELS = [
   { step: 0.1, lo: 1.15, hi: 1.65 },
   { step: 0.01, lo: 1.39, hi: 1.44 },
 ];
-const PREVIEW: Window = { lo: 1, hi: 2, x0: 260, x1: 1660, y: 460 };
 
 export const ColdOpen: React.FC = () => {
   const frame = useCurrentFrame();
@@ -43,6 +42,15 @@ export const ColdOpen: React.FC = () => {
   const sea = fadeIn(frame, c2 + 6) * fadeOut(frame, c3, 12);
   const ship = ramp(frame, c2 + 6, 150);
   const squareOut = fadeOut(frame, c3, 12);
+  // the preview line zooms in on √2 a little
+  const pz = glide(frame, c3 + 50, fps, 50);
+  const PREVIEW: Window = {
+    lo: lerp(1, Math.SQRT2 - 0.12, pz),
+    hi: lerp(2, Math.SQRT2 + 0.12, pz),
+    x0: 260,
+    x1: 1660,
+    y: 460,
+  };
   // The diagonal's end, swinging from the top-right corner down to the ruler.
   const ang = lerp(Math.PI / 4, 0, swing);
   const L = SIDE * Math.SQRT2;
@@ -61,6 +69,8 @@ export const ColdOpen: React.FC = () => {
       ))}
       <Sfx name="thud" at={levelAt(2) + 20} volume={0.3} />
       <Sfx name="whoosh" at={c2 + 6} volume={0.12} />
+      <Sfx name="thud" at={c2 + 20} volume={0.3} />
+      <Sfx name="whoosh" at={c3 + 50} volume={0.12} />
       <Sfx name="pop" at={c3 + 6} />
       <Sfx name="ding" at={c3 + 40} />
       <QuestionTray />
@@ -247,6 +257,18 @@ export const ColdOpen: React.FC = () => {
               </text>
             </g>
           ) : null}
+          {/* no common unit */}
+          <text
+            x={O.x + SIDE}
+            y={O.y - SIDE - 40}
+            fill={colors.red}
+            fontSize={40}
+            textAnchor="middle"
+            fontFamily={fonts.math}
+            opacity={fadeIn(frame, c2 + 20) * squareOut}
+          >
+            ✗ 1 : √2 ≠ m : n
+          </text>
           {/* the legend: sea and a ship */}
           <g opacity={sea}>
             {[0, 1, 2].map((k) => (
@@ -296,6 +318,7 @@ export const ColdOpen: React.FC = () => {
               x={toX(PREVIEW, Math.SQRT2)}
               y={PREVIEW.y}
               s={springIn(frame, c3 + 36, fps, 10)}
+              r={18}
             />
             <text
               x={toX(PREVIEW, Math.SQRT2)}

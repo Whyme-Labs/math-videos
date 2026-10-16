@@ -12,7 +12,7 @@ import {
 } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
-import { colors, fonts } from "../../shared/theme";
+import { alpha, colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
 // The Babylonian sequence x → (x + 2/x)/2: 1, 3/2, 17/12, 577/408. The
@@ -73,6 +73,10 @@ export const Babylon: React.FC = () => {
         <Sfx key={`e${k}`} name="tick" at={c1 + 30 + k * 10} volume={0.18} />
       ))}
       <Sfx name="pop" at={c2 + 10} />
+      <Sfx name="clink" at={c0 + 64} volume={0.2} />
+      {[0, 1, 2, 3, 4].map((k) => (
+        <Sfx key={`f${k}`} name="tick" at={c2 + 82 + k * 12} volume={0.12} />
+      ))}
       <Sfx name="thud" at={c2 + 62} />
       <QuestionTray />
 
@@ -128,6 +132,25 @@ export const Babylon: React.FC = () => {
             fill={colors.highlight}
             opacity={fadeIn(frame, termAt(0)) * fadeOut(frame, c1, 8)}
           />
+          {/* after the pad falls, more terms keep arriving and drop through */}
+          {Array.from({ length: 5 }).map((_, k) => {
+            const st = c2 + 72 + k * 12;
+            const t = ramp(frame, st, 16);
+            if (t <= 0 || t >= 1) return null;
+            const side = k % 2 === 0 ? -1 : 1;
+            const x = px(SQRT2) + side * 300 * (1 - Math.min(1, t * 1.6));
+            const y = Y + (t > 0.62 ? 300 * (t - 0.62) ** 2 * 6 : 0);
+            return (
+              <circle
+                key={k}
+                cx={x}
+                cy={y}
+                r={9}
+                fill={colors.primary}
+                opacity={1 - t * 0.6}
+              />
+            );
+          })}
           {/* a landing pad where the terms gather; it falls through */}
           <g
             opacity={Math.min(1, padIn) * (1 - fall)}
@@ -190,6 +213,47 @@ export const Babylon: React.FC = () => {
             </div>
           ))}
         </div>
+        <svg width={1920} height={890} style={{ position: "absolute" }}>
+          <g
+            opacity={fadeIn(frame, c0 + 64) * fadeOut(frame, c1, 10)}
+            transform={`translate(1560 280) rotate(-6)`}
+          >
+            <ellipse
+              cx={0}
+              cy={0}
+              rx={110}
+              ry={96}
+              fill={alpha(colors.wood, 0.55)}
+              stroke={colors.wood}
+              strokeWidth={3}
+            />
+            <rect
+              x={-50}
+              y={-50}
+              width={100}
+              height={100}
+              fill="none"
+              stroke={colors.ink}
+              strokeWidth={4}
+            />
+            <line
+              x1={-50}
+              y1={50}
+              x2={50}
+              y2={-50}
+              stroke={colors.ink}
+              strokeWidth={4}
+            />
+            <line
+              x1={-50}
+              y1={-50}
+              x2={50}
+              y2={50}
+              stroke={colors.ink}
+              strokeWidth={4}
+            />
+          </g>
+        </svg>
         <div
           style={{
             position: "absolute",
