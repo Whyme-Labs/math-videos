@@ -140,7 +140,7 @@ export const Hole: React.FC = () => {
                 {h.name ? (
                   <text
                     x={toX(w, h.v)}
-                    y={Y - 40}
+                    y={Y - 40 - (i % 2) * 34}
                     fill={colors.highlight}
                     fontSize={34}
                     textAnchor="middle"
