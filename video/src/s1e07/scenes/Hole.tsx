@@ -12,7 +12,12 @@ import { lerp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { colors, fonts } from "../../shared/theme";
-import { Gap, RationalDots, toX, type Window } from "../components/line";
+import {
+  Gap,
+  RationalDots,
+  toX,
+  type Window,
+} from "../../shared/components/rationals";
 import { useStrings } from "../i18n";
 
 // The key visual: zoom into the rational line near 1.414. It looks equally

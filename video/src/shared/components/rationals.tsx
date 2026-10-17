@@ -1,5 +1,5 @@
 import type React from "react";
-import { alpha, colors } from "../../shared/theme";
+import { alpha, colors } from "../theme";
 
 // The rational number line, drawn as dots. Inside any window [lo, hi] we
 // draw the fractions p/q (lowest terms) with q up to a cap chosen so that

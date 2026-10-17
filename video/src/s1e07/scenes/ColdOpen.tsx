@@ -6,7 +6,12 @@ import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Gap, RationalDots, toX, type Window } from "../components/line";
+import {
+  Gap,
+  RationalDots,
+  toX,
+  type Window,
+} from "../../shared/components/rationals";
 import { useStrings } from "../i18n";
 
 // A unit square and its diagonal. The diagonal swings down onto a ruler;

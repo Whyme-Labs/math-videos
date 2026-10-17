@@ -6,7 +6,12 @@ import { Sfx } from "../../shared/components/Sfx";
 import { springIn } from "../../shared/components/motion";
 import { SceneShell } from "../../shared/components/SceneShell";
 import { colors, fonts } from "../../shared/theme";
-import { Gap, RationalDots, toX, type Window } from "../components/line";
+import {
+  Gap,
+  RationalDots,
+  toX,
+  type Window,
+} from "../../shared/components/rationals";
 import { useStrings } from "../i18n";
 
 // Behind the title: the rationals between 1 and 2, with a gap at √2.
