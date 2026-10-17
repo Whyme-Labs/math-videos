@@ -296,6 +296,7 @@ export const Cut: React.FC = () => {
             }}
           >
             {tx.isRoot2}
+            <span style={{ fontFamily: fonts.math }}>√2</span>
           </div>
         </div>
         <div

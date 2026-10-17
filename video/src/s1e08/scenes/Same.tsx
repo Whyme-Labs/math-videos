@@ -190,7 +190,7 @@ export const Same: React.FC = () => {
             opacity: fadeIn(frame, c0 + 10) * (1 - merge),
           }}
         >
-          {tx.cutsLine}: √2 ={" "}
+          {tx.cutsLine}: <span style={{ fontFamily: fonts.math }}>√2 =</span>{" "}
           <span style={{ fontFamily: fonts.math }}>
             {"{ q : q < 0 or q² < 2 }"}
           </span>{" "}
@@ -206,7 +206,7 @@ export const Same: React.FC = () => {
             opacity: fadeIn(frame, c0 + 20) * (1 - merge),
           }}
         >
-          {tx.cauchyLine}: √2 ={" "}
+          {tx.cauchyLine}: <span style={{ fontFamily: fonts.math }}>√2 =</span>{" "}
           <span style={{ fontFamily: fonts.math }}>[(1, 1.4, 1.41, …)]</span>{" "}
           <span style={{ color: colors.muted }}>({tx.classOfSequences})</span>
         </div>
@@ -256,7 +256,7 @@ export const Same: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: lerp(700, 560, merge),
+            top: lerp(780, 560, merge),
             width: "100%",
             textAlign: "center",
             fontSize: 34,

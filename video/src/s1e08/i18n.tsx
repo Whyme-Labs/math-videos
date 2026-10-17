@@ -14,7 +14,7 @@ const EN = {
   // Cut
   noMax: "no largest member",
   noEdge: "no fraction at the edge",
-  isRoot2: "this set is √2",
+  isRoot2: "this set is ",
   rationalCut: "every fraction below r",
   // Sup
   inside: "inside",
@@ -65,7 +65,7 @@ const ZH: Strings = {
   swarm: "点群",
   noMax: "没有最大的成员",
   noEdge: "边上没有分数",
-  isRoot2: "这个集合就是 √2",
+  isRoot2: "这个集合就是 ",
   rationalCut: "所有比 r 小的分数",
   inside: "包含于",
   union: "并集 = 最小上界",
