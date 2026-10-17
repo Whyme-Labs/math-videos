@@ -22,6 +22,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E06-ZH` | 减法与除法：整数和有理数（中文版） | [`src/s1e06`](src/s1e06) | [`s1e06-narration-zh.md`](s1e06-narration-zh.md) |
 | `S1E07` | The Holes in ℚ | [`src/s1e07`](src/s1e07) | [`s1e07-narration.md`](s1e07-narration.md) |
 | `S1E07-ZH` | ℚ 里的洞（中文版） | [`src/s1e07`](src/s1e07) | [`s1e07-narration-zh.md`](s1e07-narration-zh.md) |
+| `S1E08` | Building ℝ, Twice | [`src/s1e08`](src/s1e08) | [`s1e08-narration.md`](s1e08-narration.md) |
+| `S1E08-ZH` | 两次造出 ℝ（中文版） | [`src/s1e08`](src/s1e08) | [`s1e08-narration-zh.md`](s1e08-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
