@@ -113,6 +113,13 @@ export const NARRATION: Record<Locale, Record<SceneId, string[]>> = {
 // (scene id → line index → seconds). Values come from the scenes' frame offsets.
 const MIN_SECONDS: Partial<Record<SceneId, Record<number, number>>> = {
   title: { 0: 2.8 },
+  cut: { 0: 4.4, 1: 4.2 },
+  sup: { 1: 5.0, 2: 3.6 },
+  swarm: { 2: 4.0, 3: 3.6 },
+  liuHui: { 2: 4.4 },
+  same: { 2: 4.0 },
+  tower: { 1: 3.6 },
+  endCard: { 0: 3.0, 1: 5.0 },
 };
 
 // Scenes without narration (the brand sting) have a fixed length.

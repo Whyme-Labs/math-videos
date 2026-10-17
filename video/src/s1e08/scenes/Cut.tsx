@@ -40,16 +40,21 @@ export const Cut: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("cut");
   const [c0, c1, c2, c3] = cues;
-  // zoom towards the knife on the third line, back out on the fourth
-  const z = glide(frame, c2 + 6, fps, 30) - glide(frame, c3 + 2, fps, 24);
-  const scale = lerp(1, 40, z);
+  // Zoom towards the knife: ×12 while the marker climbs, ×48 on the third
+  // line, back out on the fourth.
+  const zClimb = glide(frame, c1 + 44, fps, 40);
+  const zEdge = glide(frame, c2 + 6, fps, 30);
+  const zOut = glide(frame, c3 + 2, fps, 24);
+  const scale = lerp(lerp(1, 12, zClimb) * lerp(1, 4, zEdge), 1, zOut);
+  const z = Math.min(1, (scale - 1) / 2);
   const px = (v: number) => {
     const base = X0 + ((v - LO) / (HI - LO)) * (X1 - X0);
     const pivot = X0 + ((SQRT2 - LO) / (HI - LO)) * (X1 - X0);
-    return lerp(base, 960 + (base - pivot) * scale, z);
+    return 960 + (base - pivot) * scale + (pivot - 960) * (1 - z);
   };
   const half = (HI - LO) / 2 / scale;
   const center = lerp((LO + HI) / 2, SQRT2, z);
+  const checkAt = (k: number) => c0 + 70 + k * 20;
   const { dots } = rationalsIn(center - half * 1.1, center + half * 1.1, 200);
   const knife = springIn(frame, c0 + 20, fps, 12);
   const light = ramp(frame, c0 + 40, 24);
@@ -73,6 +78,10 @@ export const Cut: React.FC = () => {
     <SceneShell id="cut">
       <Sfx name="scratch" at={c0 + 20} />
       <Sfx name="whoosh" at={c0 + 40} volume={0.12} />
+      <Sfx name="ding" at={c0 + 70} volume={0.2} />
+      <Sfx name="ding" at={c0 + 90} volume={0.2} />
+      <Sfx name="thud" at={c0 + 110} volume={0.25} />
+      <Sfx name="whoosh" at={c1 + 44} volume={0.12} />
       {CLIMB.slice(1).map((_, k) => (
         <Sfx key={k} name={PLUCKS[k]} at={climbAt(k) + 14} volume={0.26} />
       ))}
@@ -138,6 +147,34 @@ export const Cut: React.FC = () => {
             >
               {v}
             </text>
+          ))}
+          {/* checking a few fractions: is q² < 2? */}
+          {[
+            { v: 1.2, t: "1.2² = 1.44", ok: true },
+            { v: 1.4, t: "1.4² = 1.96", ok: true },
+            { v: 1.5, t: "1.5² = 2.25", ok: false },
+          ].map((c, k) => (
+            <g
+              key={c.v}
+              opacity={fadeIn(frame, checkAt(k)) * fadeOut(frame, c1, 8)}
+            >
+              <circle
+                cx={px(c.v)}
+                cy={Y}
+                r={12}
+                fill={c.ok ? colors.green : colors.red}
+              />
+              <text
+                x={px(c.v)}
+                y={Y + 70 + k * 40}
+                fill={c.ok ? colors.green : colors.red}
+                fontSize={30}
+                textAnchor="middle"
+                fontFamily={fonts.math}
+              >
+                {c.t} {c.ok ? "✓" : "✗"}
+              </text>
+            </g>
           ))}
           {/* the knife at √2 */}
           <g opacity={Math.min(1, knife) * fadeOut(frame, c3 + 20, 10)}>

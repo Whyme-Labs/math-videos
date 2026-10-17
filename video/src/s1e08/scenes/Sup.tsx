@@ -67,8 +67,10 @@ export const Sup: React.FC = () => {
       ))}
       <Sfx name="chime" at={c1 + 70} />
       <Sfx name="sparkle" at={c2 + 6} />
+      <Sfx name="whoosh" at={c1 + 100} volume={0.12} />
+      <Sfx name="ding" at={c1 + 130} volume={0.2} />
       {SIGNS.map((_, k) => (
-        <Sfx key={`s${k}`} name="tick" at={c2 + 30 + k * 8} volume={0.18} />
+        <Sfx key={`s${k}`} name="tick" at={c2 + 30 + k * 18} volume={0.18} />
       ))}
       <QuestionTray />
 
@@ -161,6 +163,33 @@ export const Sup: React.FC = () => {
               />
             ))}
             <Ray v={SQRT2} y={520} t={union} color={colors.highlight} />
+            {/* any upper bound slides down, and stops at √2 */}
+            {(() => {
+              const t = glide(frame, c1 + 100, fps, 30);
+              const v = lerp(2.0, SQRT2 + 0.02, t);
+              return (
+                <g
+                  opacity={fadeIn(frame, c1 + 96) * fadeOut(frame, c2 + 20, 10)}
+                >
+                  <line
+                    x1={px(v)}
+                    y1={560}
+                    x2={px(v)}
+                    y2={640}
+                    stroke={colors.orange}
+                    strokeWidth={5}
+                  />
+                  <text
+                    x={px(v) + 14}
+                    y={600}
+                    fill={colors.orange}
+                    fontSize={30}
+                  >
+                    {"≥ ⋃"}
+                  </text>
+                </g>
+              );
+            })()}
             <line
               x1={px(SQRT2)}
               y1={480}
@@ -233,7 +262,7 @@ export const Sup: React.FC = () => {
                 borderRadius: 12,
                 border: `2px solid ${colors.orange}`,
                 color: colors.orange,
-                opacity: fadeIn(frame, c2 + 30 + k * 8),
+                opacity: fadeIn(frame, c2 + 30 + k * 18),
               }}
             >
               {s}

@@ -36,7 +36,14 @@ export const LiuHui: React.FC = () => {
   const cues = useCues("liuHui");
   const [c0, c1, c2] = cues;
   const stepAt = (k: number) => c0 + 30 + k * 22;
-  const level = NS.reduce((acc, _, k) => (frame >= stepAt(k) ? k : acc), 0);
+  // the doubling runs once while it's explained, and again on the last line
+  const replayAt = (k: number) => c2 + 50 + k * 10;
+  const level =
+    frame >= replayAt(0)
+      ? NS.reduce((acc, _, k) => (frame >= replayAt(k) ? k : acc), 0)
+      : NS.reduce((acc, _, k) => (frame >= stepAt(k) ? k : acc), 0);
+  const shownAt = (k: number) =>
+    frame >= replayAt(0) ? replayAt(k) : stepAt(k);
   const slipAt = (i: number) => c1 + 4 + i * 8;
   const pi = springIn(frame, c2 + 30, fps, 10);
   const halfPerim = (n: number) => n * Math.sin(Math.PI / n);
@@ -51,6 +58,9 @@ export const LiuHui: React.FC = () => {
         <Sfx key={`q${i}`} name="page" at={slipAt(i)} volume={0.16} />
       ))}
       <Sfx name="chime" at={c2 + 30} />
+      {NS.map((_, k) => (
+        <Sfx key={`r${k}`} name="tick" at={c2 + 50 + k * 10} volume={0.14} />
+      ))}
 
       <AbsoluteFill>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
@@ -71,10 +81,10 @@ export const LiuHui: React.FC = () => {
               stroke={colors.primary}
               strokeWidth={k === level ? 4 : 2}
               opacity={
-                frame < stepAt(k)
+                frame < shownAt(k)
                   ? 0
                   : k === level
-                    ? Math.min(1, springIn(frame, stepAt(k), fps, 14))
+                    ? Math.min(1, springIn(frame, shownAt(k), fps, 14))
                     : 0.18
               }
             />

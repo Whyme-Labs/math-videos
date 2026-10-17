@@ -33,7 +33,10 @@ export const Swarm: React.FC = () => {
   const cues = useCues("swarm");
   const [c0, c1, c2, c3] = cues;
   // zoom in around √2 as the swarms tighten
-  const z = glide(frame, c1 + 60, fps, 40);
+  const z = Math.min(
+    1,
+    glide(frame, c0 + 40, fps, 50) * 0.5 + glide(frame, c1 + 60, fps, 40) * 0.5,
+  );
   const scale = lerp(1, 10, z);
   const px = (v: number) => {
     const base = X0 + ((v - LO) / (HI - LO)) * (X1 - X0);
@@ -104,12 +107,12 @@ export const Swarm: React.FC = () => {
                   <circle cx={px(v)} cy={Y} r={10 * s} fill={colors.primary} />
                   <text
                     x={px(v)}
-                    y={Y - 30 - (k % 2) * 34}
+                    y={Y - 30}
                     fill={colors.primary}
-                    fontSize={28}
+                    fontSize={30}
                     textAnchor="middle"
                     fontFamily={fonts.mono}
-                    opacity={s * (1 - blob)}
+                    opacity={s * (1 - blob) * (k === nDec - 1 ? 1 : 0)}
                   >
                     {v}
                   </text>
@@ -126,12 +129,12 @@ export const Swarm: React.FC = () => {
                   <circle cx={px(b.v)} cy={Y} r={10 * s} fill={colors.orange} />
                   <text
                     x={px(b.v)}
-                    y={Y + 46 + (k % 2) * 34}
+                    y={Y + 50}
                     fill={colors.orange}
-                    fontSize={28}
+                    fontSize={30}
                     textAnchor="middle"
                     fontFamily={fonts.math}
-                    opacity={s * (1 - blob)}
+                    opacity={s * (1 - blob) * (k === nBab - 1 ? 1 : 0)}
                   >
                     {b.l}
                   </text>

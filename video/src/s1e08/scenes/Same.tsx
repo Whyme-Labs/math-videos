@@ -51,6 +51,10 @@ export const Same: React.FC = () => {
       ))}
       <Sfx name="whoosh" at={c2 + 6} volume={0.16} />
       <Sfx name="sparkle" at={c2 + 32} />
+      <Sfx name="scratch" at={c0 + 30} volume={0.2} />
+      {["a", "b", "c"].map((k, i) => (
+        <Sfx key={k} name="tick" at={c2 + 60 + i * 12} volume={0.18} />
+      ))}
       <QuestionTray />
 
       <AbsoluteFill>
@@ -119,6 +123,35 @@ export const Same: React.FC = () => {
                 <circle cx={px(m.v)} cy={botY} r={10} fill={colors.orange} />
               </g>
             ))}
+          </g>
+          {/* line 0: √2 on each line, drawn the way that line builds it */}
+          <g opacity={fadeIn(frame, c0 + 30) * fadeOut(frame, c1, 10)}>
+            <rect
+              x={X0 - 60}
+              y={TOP - 46}
+              width={
+                (px(Math.SQRT2) - X0 + 60) *
+                Math.min(1, springIn(frame, c0 + 30, fps, 16))
+              }
+              height={14}
+              rx={6}
+              fill={colors.highlight}
+            />
+            {Array.from({ length: 8 }).map((_, j) => {
+              const side = j % 2 === 0 ? -1 : 1;
+              const d =
+                (260 / (1 + Math.floor(j / 2))) *
+                (1 - 0.95 * ramp(frame, c0 + 40, 80));
+              return (
+                <circle
+                  key={j}
+                  cx={px(Math.SQRT2) + side * d}
+                  cy={BOT + 44}
+                  r={7}
+                  fill={colors.highlight}
+                />
+              );
+            })}
           </g>
           {/* labels under the merged line */}
           {MARKS.map((m) => (
@@ -223,15 +256,15 @@ export const Same: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 700,
+            top: lerp(700, 560, merge),
             width: "100%",
             textAlign: "center",
             fontSize: 34,
-            color: colors.muted,
+            color: merge > 0.5 ? colors.green : colors.muted,
             display: "flex",
             justifyContent: "center",
             gap: 40,
-            opacity: fadeIn(frame, c1 + 6) * fadeOut(frame, c2, 10),
+            opacity: fadeIn(frame, c1 + 6),
           }}
         >
           {["+ − × ÷", "<", "sup"].map((t, k) => (
@@ -239,10 +272,9 @@ export const Same: React.FC = () => {
               key={t}
               style={{
                 fontFamily: fonts.math,
-                opacity: Math.min(
-                  1,
-                  springIn(frame, c1 + 10 + k * 10, fps, 11),
-                ),
+                opacity:
+                  Math.min(1, springIn(frame, c1 + 10 + k * 10, fps, 11)) *
+                  (frame >= c2 + 50 && frame < c2 + 60 + k * 12 ? 0.3 : 1),
               }}
             >
               ✓ {t}
