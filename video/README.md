@@ -140,5 +140,6 @@ English and Chinese) is in [`s1e01-social.md`](s1e01-social.md), and for
 S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s1e03-social.md`](s1e03-social.md), for S1E04 in
 [`s1e04-social.md`](s1e04-social.md), for S1E05 in
-[`s1e05-social.md`](s1e05-social.md), and for S1E06 in
-[`s1e06-social.md`](s1e06-social.md).
+[`s1e05-social.md`](s1e05-social.md), for S1E06 in
+[`s1e06-social.md`](s1e06-social.md), and for S1E07 in
+[`s1e07-social.md`](s1e07-social.md).
