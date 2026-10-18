@@ -97,7 +97,8 @@ export const Stairs: React.FC<{
                 x={x + stepW / 2}
                 y={top - 18}
                 fill={colors.text}
-                fontSize={slot <= 3.5 ? 34 : 28}
+                // shrink long labels to fit the step
+                fontSize={Math.min(34, 233 / (n + 2))}
                 textAnchor="middle"
                 fontFamily={fonts.mono}
                 opacity={Math.min(1, r)}
