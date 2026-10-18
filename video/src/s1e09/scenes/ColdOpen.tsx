@@ -13,7 +13,7 @@ import { useStrings } from "../i18n";
 // line of nines that never stops being typed: what does it name?
 
 const BUBBLES = Array.from({ length: 14 }).map((_, k) => ({
-  x: k % 2 === 0 ? 120 + ((k * 97) % 300) : 1500 + ((k * 131) % 280),
+  x: k % 2 === 0 ? 120 + ((k * 97) % 300) : 1480 + ((k * 173) % 300),
   t: k * 9,
   yes: k % 3 !== 1,
 }));

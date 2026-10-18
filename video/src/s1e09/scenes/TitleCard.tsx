@@ -21,7 +21,7 @@ export const TitleCard: React.FC = () => {
       <Sfx name="chime" at={15} />
       <Sfx name="whoosh" at={10} volume={0.14} />
 
-      <AbsoluteFill style={{ zIndex: -1, top: 330, opacity: 0.32 }}>
+      <AbsoluteFill style={{ zIndex: -1, top: 560, opacity: 0.32 }}>
         <svg width={1920} height={1080}>
           <Stairs
             zoom={1}
