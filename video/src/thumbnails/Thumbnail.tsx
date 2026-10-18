@@ -286,6 +286,59 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 9) {
+    // the staircase 0.9, 0.99, … pressing up against the line at 1
+    const base = 880;
+    const top = 330;
+    const gaps = [0.32, 0.14, 0.06, 0.025, 0.01, 0.004];
+    const w = 118;
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1020}
+          y1={top}
+          x2={1820}
+          y2={top}
+          stroke={colors.highlight}
+          strokeWidth={8}
+          strokeDasharray="22 16"
+        />
+        <text
+          x={1850}
+          y={top + 24}
+          fill={colors.highlight}
+          fontSize={80}
+          fontFamily={fonts.math}
+        >
+          1
+        </text>
+        {gaps.map((g, k) => {
+          const y = top + g * (base - top);
+          return (
+            <rect
+              key={g}
+              x={1060 + k * (w + 10)}
+              y={y}
+              width={w}
+              height={base - y}
+              rx={14}
+              fill={k % 2 === 0 ? colors.primary : colors.orange}
+            />
+          );
+        })}
+        <text
+          x={1420}
+          y={top - 60}
+          fill={colors.text}
+          fontSize={96}
+          textAnchor="middle"
+          fontFamily={fonts.math}
+        >
+          0.999…
+        </text>
+      </svg>
+    );
+  }
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (

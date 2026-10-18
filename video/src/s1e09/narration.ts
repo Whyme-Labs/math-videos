@@ -20,7 +20,9 @@ export type SceneId =
 
 const EN: Record<SceneId, string[]> = {
   brand: [],
-  title: ["Season one, episode nine. 0.999 repeating equals one, and what decimals really are."],
+  title: [
+    "Season one, episode nine. 0.999 repeating equals one, and what decimals really are.",
+  ],
   coldOpen: [
     "0.999 repeating equals one. It may be the most argued-about equation on the internet.",
     "One side says it gets closer and closer but never arrives. The other side has tricks: three thirds, or ten x minus x.",
@@ -36,7 +38,7 @@ const EN: Record<SceneId, string[]> = {
     "So lower a ceiling onto the staircase and stop at the lowest spot that's still above every step. It stops at one.",
   ],
   noRoom: [
-    "Could the ceiling stop a little lower, at some c below one? Then some step would have to stay under c.",
+    "Could the ceiling stop a little lower, at some c below one? Then every step would have to stay under c.",
     "Pick c close to one. The steps march past it. Pick c even closer, and they march past again.",
     "If 0.999 repeating were less than one, the gap would be smaller than every ten to the minus n. That's an infinitesimal.",
   ],
@@ -78,7 +80,7 @@ const ZH: Record<SceneId, string[]> = {
     "把一块天花板压到台阶上，停在仍然高过每一级的最低处。它停在一。",
   ],
   noRoom: [
-    "天花板能不能停得再低一点，停在某个小于一的 c？那就得有一级台阶一直在 c 下面。",
+    "天花板能不能停得再低一点，停在某个小于一的 c？那每一级台阶都得在 c 下面。",
     "把 c 取得离一很近，台阶照样走过去。再近一点，台阶还是走过去。",
     "要是 0.999… 小于一，差距就得比每个 10⁻ⁿ 都小。那是一个无穷小。",
   ],
