@@ -38,11 +38,11 @@ export const NoRoom: React.FC = () => {
   const t = TRIES[k];
   const drop = glide(frame, dropAt(k), fps, 18);
   const ceilY = lerp(ST.top - 200, yOfGap(t.gap, zoom), drop);
-  const dim = lerp(1, 0.2, glide(frame, c2 + 4, fps, 16));
+  const dim = lerp(1, 0.12, glide(frame, c2 + 4, fps, 16));
   // every step from t.poke on gets above c, one after another
   const poked = (n: number) =>
     n >= t.poke && frame >= pokeAt(k) + (n - t.poke) * 5;
-  const expN = Math.min(9, 1 + Math.floor(Math.max(0, frame - (c2 + 30)) / 12));
+  const expN = 1 + Math.floor(Math.max(0, frame - (c2 + 30)) / 9);
 
   return (
     <SceneShell id="noRoom">
