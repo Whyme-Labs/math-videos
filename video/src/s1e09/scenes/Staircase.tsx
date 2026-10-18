@@ -19,14 +19,14 @@ export const Staircase: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("staircase");
   const [c0, c1, c2] = cues;
-  const stepAt = (n: number) => c0 + 10 + (n - 1) * 16;
+  const stepAt = (n: number) => c0 + 10 + (n - 1) * 22;
   const zoomAt = (k: number) => c1 + 10 + k * 34;
   const zoom =
     10 **
     [0, 1, 2].reduce((acc, k) => acc + glide(frame, zoomAt(k), fps, 22), 0);
-  const current = [3, 2, 1].find((n) => frame >= stepAt(n)) ?? 1;
+  const current = [6, 5, 4, 3, 2, 1].find((n) => frame >= stepAt(n)) ?? 1;
   const dim = lerp(1, 0.22, glide(frame, c2 + 4, fps, 16));
-  const z = Math.round(zoom);
+  const z = 10 ** Math.round(Math.log10(zoom));
 
   return (
     <SceneShell id="staircase">
@@ -128,7 +128,22 @@ export const Staircase: React.FC = () => {
         >
           {[
             {
-              t: "0.9 → 0.99 → 0.999 → …",
+              // the process keeps stepping: one term lit at a time
+              t: ["0.9", "0.99", "0.999", "…"].map((term, i, all) => (
+                <span key={term}>
+                  <span
+                    style={{
+                      opacity:
+                        Math.floor(Math.max(0, frame - c2 - 20) / 14) % 4 === i
+                          ? 1
+                          : 0.45,
+                    }}
+                  >
+                    {term}
+                  </span>
+                  {i < all.length - 1 ? " → " : ""}
+                </span>
+              )),
               l: tx.process,
               at: c2 + 14,
               c: colors.primary,

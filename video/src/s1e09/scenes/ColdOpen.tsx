@@ -13,7 +13,7 @@ import { useStrings } from "../i18n";
 // line of nines that never stops being typed: what does it name?
 
 const BUBBLES = Array.from({ length: 14 }).map((_, k) => ({
-  x: k % 2 === 0 ? 140 + ((k * 97) % 360) : 1380 + ((k * 131) % 380),
+  x: k % 2 === 0 ? 120 + ((k * 97) % 300) : 1500 + ((k * 131) % 280),
   t: k * 9,
   yes: k % 3 !== 1,
 }));
@@ -130,6 +130,16 @@ export const ColdOpen: React.FC = () => {
               1
             </text>
             <circle cx={ballX} cy={534} r={26} fill={colors.primary} />
+            <text
+              x={ballX + 26}
+              y={480}
+              fill={colors.primary}
+              fontSize={34}
+              textAnchor="end"
+              fontFamily={fonts.mono}
+            >
+              0.{"9".repeat(Math.min(9, 1 + Math.floor(tBall)))}
+            </text>
           </svg>
           <div
             style={{

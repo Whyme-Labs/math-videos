@@ -43,6 +43,8 @@ export const Zhuangzi: React.FC = () => {
   );
   const whole = springIn(frame, sumAt(4), fps, 11);
   const leftStart = X0 + (1 - 2 ** -day) * L;
+  // at the end the halves taken close up into one whole stick
+  const merge = glide(frame, sumAt(4) + 30, fps, 20);
 
   return (
     <SceneShell id="zhuangzi">
@@ -78,12 +80,18 @@ export const Zhuangzi: React.FC = () => {
             return (
               <rect
                 key={k}
-                x={a + 3}
+                x={a + 3 * (1 - merge)}
                 y={lerp(TOP, LOW, t)}
-                width={Math.max(1, b - a - 6)}
+                width={Math.max(1, b - a - 6 * (1 - merge))}
                 height={H}
                 rx={Math.min(10, (b - a - 6) / 2)}
-                fill={k % 2 === 0 ? colors.primary : colors.orange}
+                fill={
+                  merge > 0.5
+                    ? colors.primary
+                    : k % 2 === 0
+                      ? colors.primary
+                      : colors.orange
+                }
               />
             );
           })}
@@ -182,6 +190,22 @@ export const Zhuangzi: React.FC = () => {
             = 1
           </span>
         </div>
+        <div
+          style={{
+            position: "absolute",
+            left: X0,
+            width: L,
+            top: LOW + H + 110,
+            textAlign: "center",
+            fontFamily: fonts.math,
+            fontSize: 60,
+            color: colors.text,
+            opacity: fadeIn(frame, sumAt(4) + 40),
+            translate: riseIn(frame, sumAt(4) + 40, 18),
+          }}
+        >
+          1/2 + 1/4 + 1/8 + … = 1
+        </div>
         {/* the quote on bamboo slips */}
         {tx.quote.map((t, i) => (
           <div
@@ -211,7 +235,19 @@ export const Zhuangzi: React.FC = () => {
                 color: colors.paper,
               }}
             >
-              {t}
+              {[...t].map((ch, j) => (
+                <span
+                  key={j}
+                  style={{
+                    color:
+                      Math.floor((frame - (c0 + 34)) / 7) === i * 4 + j
+                        ? colors.primary
+                        : colors.paper,
+                  }}
+                >
+                  {ch}
+                </span>
+              ))}
             </span>
           </div>
         ))}

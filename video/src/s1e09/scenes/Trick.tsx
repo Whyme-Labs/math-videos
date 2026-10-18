@@ -33,7 +33,8 @@ export const Trick: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("trick");
   const [c0, c1, c2] = cues;
-  const leftAt = (k: number) => c0 + 30 + k * 16;
+  const leftAt = (k: number) => c0 + 16 + k * 30;
+  const okAt = leftAt(3) + 34;
   const rightAt = (k: number) => c1 + 6 + k * 14;
   const wrongAt = rightAt(3) + 10;
   const sumAt = (k: number) => wrongAt + 20 + k * 9;
@@ -48,7 +49,7 @@ export const Trick: React.FC = () => {
 
   return (
     <SceneShell id="trick">
-      <Sfx name="ding" at={c0 + 8} volume={0.22} />
+      <Sfx name="ding" at={okAt} volume={0.22} />
       {LEFT.map((_, k) => (
         <Sfx key={`l${k}`} name={PLUCKS[k]} at={leftAt(k)} volume={0.2} />
       ))}
@@ -75,8 +76,8 @@ export const Trick: React.FC = () => {
             borderRadius: 999,
             border: `2px solid ${colors.green}`,
             backgroundColor: alpha(colors.green, 0.1),
-            opacity: fadeIn(frame, c0 + 8),
-            scale: lerp(0.8, 1, Math.min(1, springIn(frame, c0 + 8, fps, 12))),
+            opacity: fadeIn(frame, okAt),
+            scale: lerp(0.8, 1, Math.min(1, springIn(frame, okAt, fps, 12))),
           }}
         >
           ✓ {tx.realFirst}
@@ -185,7 +186,10 @@ export const Trick: React.FC = () => {
             display: "flex",
             gap: 60,
             fontFamily: fonts.math,
-            fontSize: 46,
+            fontSize: 50,
+            padding: "18px 44px",
+            borderRadius: 24,
+            backgroundColor: alpha(colors.bg, 0.85),
             opacity: fadeIn(frame, c2 + 50),
             translate: riseIn(frame, c2 + 50, 16),
           }}

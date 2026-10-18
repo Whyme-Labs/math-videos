@@ -6,7 +6,7 @@ import { glide, lerp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Stairs, ST } from "../components/stairs";
+import { stepCenter, Stairs, STEPS, ST } from "../components/stairs";
 import { useStrings } from "../i18n";
 
 // The definition: a decimal names the least upper bound (sup) of its
@@ -23,6 +23,7 @@ export const Ceiling: React.FC = () => {
   const drop = glide(frame, c1 + 10, fps, 28);
   const landed = frame >= c1 + 34;
   const ceilY = lerp(-40, ST.top - 10, drop);
+  const checkAt = (k: number) => c1 + 60 + k * 9;
 
   return (
     <SceneShell id="ceiling">
@@ -34,6 +35,9 @@ export const Ceiling: React.FC = () => {
       <Sfx name="whoosh" at={c1 + 10} volume={0.16} />
       <Sfx name="thud" at={c1 + 34} />
       <Sfx name="sparkle" at={c1 + 50} />
+      {Array.from({ length: STEPS }).map((_, k) => (
+        <Sfx key={`c${k}`} name="tick" at={c1 + 60 + k * 9} volume={0.16} />
+      ))}
       <QuestionTray />
 
       <AbsoluteFill>
@@ -41,8 +45,24 @@ export const Ceiling: React.FC = () => {
           <Stairs
             zoom={1}
             opacity={lerp(0.25, 1, glide(frame, c1, fps, 14))}
-            rise={() => 1}
+            labels={1}
+            rise={(n) => springIn(frame, c0 + 40 + n * 12, fps, 14)}
           />
+          {/* every step checked: below the ceiling */}
+          {Array.from({ length: STEPS }).map((_, k) => (
+            <text
+              key={k}
+              x={stepCenter(k + 1)}
+              y={ST.top + 110}
+              fill={colors.ink}
+              fontSize={44}
+              fontWeight={700}
+              textAnchor="middle"
+              opacity={fadeIn(frame, checkAt(k), 6)}
+            >
+              ✓
+            </text>
+          ))}
           {/* the ceiling */}
           <g opacity={fadeIn(frame, c1 + 8, 6)}>
             <rect

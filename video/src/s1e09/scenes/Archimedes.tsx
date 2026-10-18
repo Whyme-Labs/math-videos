@@ -13,12 +13,12 @@ import { useStrings } from "../i18n";
 // and the ceiling breaks. The whole numbers march on. Then the bars 1/n
 // dip under any height ε > 0.
 
-const Y = 300;
+const Y = 360;
 const X0 = 180;
 const UNIT = 190;
 const B = 5.4;
 const N = 5;
-const BARS = { x0: 420, x1: 1500, base: 760, h: 240, count: 16 };
+const BARS = { x0: 420, x1: 1500, base: 830, h: 300, count: 16 };
 const EPS = 0.09;
 
 export const Archimedes: React.FC = () => {
@@ -65,7 +65,12 @@ export const Archimedes: React.FC = () => {
               <circle
                 cx={px(v)}
                 cy={Y}
-                r={14}
+                r={
+                  18 *
+                  (v === N
+                    ? 1 + 0.15 * Math.max(0, Math.sin((frame - c0 - 60) / 5))
+                    : 1)
+                }
                 fill={
                   v === N && frame >= c0 + 60 && frame < c1 + 6
                     ? colors.green
@@ -112,6 +117,13 @@ export const Archimedes: React.FC = () => {
             >
               b
             </text>
+            <rect
+              x={px(B - 1)}
+              y={Y - 30}
+              width={UNIT}
+              height={60}
+              fill={alpha(colors.green, 0.12 * fadeIn(frame, c0 + 70))}
+            />
           </g>
           <g opacity={fadeIn(frame, c0 + 60) * fadeOut(frame, c1 + 30, 10)}>
             <line
@@ -235,7 +247,7 @@ export const Archimedes: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 440,
+            top: 470,
             width: "100%",
             textAlign: "center",
             fontSize: 38,

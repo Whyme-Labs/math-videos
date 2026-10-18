@@ -3,8 +3,8 @@ import { alpha, colors, fonts } from "../../shared/theme";
 
 // The staircase of truncations 0.9, 0.99, 0.999, … drawn as bars rising
 // towards a dashed line at 1. `zoom` magnifies the strip just below 1:
-// at zoom Z the bottom of the chart is 1 − 1/Z, so every ×10 brings the
-// next step into view and the picture looks the same again.
+// at zoom Z the bottom of the chart is 1 − 1/Z, and every ×10 slides the
+// steps one place left, so the picture looks the same again.
 
 export const ST = { x0: 420, x1: 1500, top: 220, h: 500 } as const;
 export const STEPS = 7;
@@ -16,8 +16,10 @@ export const yOfGap = (gap: number, zoom: number) =>
 export const stepX = (n: number) => ST.x0 + (n - 1) * stepW;
 export const stepCenter = (n: number) => stepX(n) + stepW / 2;
 export const nines = (n: number) => `0.${"9".repeat(n)}`;
-const bottomLabel = (zoom: number) =>
-  zoom <= 1 ? "0" : (1 - 1 / zoom).toFixed(Math.round(Math.log10(zoom)));
+const bottomLabel = (zoom: number) => {
+  const k = Math.round(Math.log10(Math.max(1, zoom)));
+  return k === 0 ? "0" : (1 - 10 ** -k).toFixed(k);
+};
 
 export const Stairs: React.FC<{
   readonly zoom: number;
@@ -28,6 +30,8 @@ export const Stairs: React.FC<{
   readonly opacity?: number;
 }> = ({ zoom, rise, fill = () => colors.primary, labels = 4, opacity = 1 }) => {
   const base = ST.top + ST.h;
+  // each ×10 slides the steps one place left, so the picture repeats
+  const shift = Math.log10(Math.max(1, zoom));
   return (
     <g opacity={opacity}>
       <line
@@ -67,28 +71,33 @@ export const Stairs: React.FC<{
       >
         {bottomLabel(zoom)}
       </text>
-      {Array.from({ length: STEPS }).map((_, k) => {
+      {Array.from({ length: STEPS + 4 }).map((_, k) => {
         const n = k + 1;
+        // slot: where step n sits once the zoom has shifted the view
+        const slot = n - shift;
+        if (slot < 0.5 || slot > STEPS + 0.5) return null;
+        const edge = Math.min(1, slot - 0.5, STEPS + 0.5 - slot) * 2;
         const r = Math.max(0, rise(n));
         const y = yOfGap(10 ** -n, zoom);
         const top = base - (base - y) * Math.min(1, r);
         const visible = base - y > 6;
+        const x = stepX(slot);
         return (
-          <g key={n} opacity={r > 0 ? 1 : 0}>
+          <g key={n} opacity={r > 0 ? Math.min(1, edge) : 0}>
             <rect
-              x={stepX(n) + 6}
+              x={x + 6}
               y={top}
               width={stepW - 12}
               height={base - top}
               rx={8}
               fill={alpha(fill(n), 0.85)}
             />
-            {n <= labels && visible ? (
+            {slot <= labels + 0.5 && visible ? (
               <text
-                x={stepCenter(n)}
+                x={x + stepW / 2}
                 y={top - 18}
                 fill={colors.text}
-                fontSize={n <= 3 ? 34 : 28}
+                fontSize={slot <= 3.5 ? 34 : 28}
                 textAnchor="middle"
                 fontFamily={fonts.mono}
                 opacity={Math.min(1, r)}

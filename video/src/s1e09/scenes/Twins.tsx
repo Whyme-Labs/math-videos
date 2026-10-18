@@ -16,8 +16,8 @@ const X0 = 260;
 const X1 = 1660;
 const px = (v: number) => X0 + (v / 1.2) * (X1 - X0);
 const POINTS = [
-  { v: 0.2, up: "0.2", down: "0.1999…" },
   { v: 1, up: "1", down: "0.999…" },
+  { v: 0.2, up: "0.2", down: "0.1999…" },
 ];
 const MORE = [
   { a: "0.5", b: "0.4999…" },
@@ -79,6 +79,24 @@ export const Twins: React.FC = () => {
             const d = glide(frame, pointAt(k) + 16, fps, 16);
             return (
               <g key={p.v}>
+                {/* the nines name's truncations, streaming into the point */}
+                {Array.from({ length: 6 }).map((_, j) => {
+                  const phase = (Math.max(0, frame - pointAt(k) - 16) / 24) % 1;
+                  const d = 220 * 0.45 ** (j + phase);
+                  return (
+                    <circle
+                      key={j}
+                      cx={px(p.v) - d}
+                      cy={Y}
+                      r={7}
+                      fill={colors.primary}
+                      opacity={0.2 + (0.8 * d) / 220}
+                      visibility={
+                        frame >= pointAt(k) + 16 ? "visible" : "hidden"
+                      }
+                    />
+                  );
+                })}
                 <circle
                   cx={px(p.v)}
                   cy={Y}

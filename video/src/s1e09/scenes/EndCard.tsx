@@ -48,10 +48,26 @@ export const EndCard: React.FC = () => {
               stroke={colors.muted}
               strokeWidth={4}
             />
+            {/* zoom pulses: however far in you look, still one point */}
+            {[0, 1, 2, 3].map((k) => {
+              const t = ((frame - c0 - 50 - k * 12) % 48) / 48;
+              return frame >= c0 + 50 + k * 12 ? (
+                <circle
+                  key={k}
+                  cx={C.x}
+                  cy={C.y}
+                  r={20 + 160 * t}
+                  fill="none"
+                  stroke={colors.highlight}
+                  strokeWidth={3}
+                  opacity={0.6 * (1 - t)}
+                />
+              ) : null;
+            })}
             <circle cx={C.x} cy={C.y} r={18} fill={colors.highlight} />
             {[
-              { l: "0.999…", w: 170, dx: -200, c: colors.primary },
-              { l: "1", w: 70, dx: 40, c: colors.highlight },
+              { l: "0.999…", w: 210, dx: -250, c: colors.primary },
+              { l: "1", w: 84, dx: 50, c: colors.highlight },
             ].map((m, k) => {
               const t = tag(k);
               const x = C.x + m.dx;
@@ -59,7 +75,7 @@ export const EndCard: React.FC = () => {
                 <g key={m.l} opacity={t}>
                   <line
                     x1={x + m.w / 2}
-                    y1={C.y - 96 + 54}
+                    y1={C.y - 96 + 64}
                     x2={C.x}
                     y2={C.y - 18}
                     stroke={m.c}
@@ -69,17 +85,17 @@ export const EndCard: React.FC = () => {
                     x={x}
                     y={lerp(C.y - 220, C.y - 96, t)}
                     width={m.w}
-                    height={54}
-                    rx={12}
+                    height={64}
+                    rx={14}
                     fill={alpha(m.c, 0.18)}
                     stroke={m.c}
                     strokeWidth={3}
                   />
                   <text
                     x={x + m.w / 2}
-                    y={lerp(C.y - 220, C.y - 96, t) + 40}
+                    y={lerp(C.y - 220, C.y - 96, t) + 47}
                     fill={colors.text}
-                    fontSize={36}
+                    fontSize={44}
                     textAnchor="middle"
                     fontFamily={fonts.math}
                   >

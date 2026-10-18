@@ -25,18 +25,24 @@ export const NoRoom: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("noRoom");
   const [c0, c1, c2] = cues;
-  const tryAt = [c0 + 10, c1 + 10, c1 + 70];
+  const tryAt = [c0 + 14, c1 + 10, c1 + 70];
   const dropAt = (k: number) => tryAt[k] + (k === 0 ? 0 : 24);
   const pokeAt = (k: number) => dropAt(k) + 24;
+  // start at ×10 so c sits halfway up the chart; each new c zooms ×10 more
   const zoom =
-    10 ** (glide(frame, tryAt[1], fps, 22) + glide(frame, tryAt[2], fps, 22));
+    10 **
+    (glide(frame, c0, fps, 12) +
+      glide(frame, tryAt[1], fps, 22) +
+      glide(frame, tryAt[2], fps, 22));
   const k = [2, 1, 0].find((i) => frame >= tryAt[i]) ?? 0;
   const t = TRIES[k];
   const drop = glide(frame, dropAt(k), fps, 18);
   const ceilY = lerp(ST.top - 200, yOfGap(t.gap, zoom), drop);
   const dim = lerp(1, 0.2, glide(frame, c2 + 4, fps, 16));
+  // every step from t.poke on gets above c, one after another
   const poked = (n: number) =>
-    TRIES.some((tr, i) => i <= k && tr.poke === n && frame >= pokeAt(i));
+    n >= t.poke && frame >= pokeAt(k) + (n - t.poke) * 5;
+  const expN = Math.min(9, 1 + Math.floor(Math.max(0, frame - (c2 + 30)) / 12));
 
   return (
     <SceneShell id="noRoom">
@@ -105,7 +111,7 @@ export const NoRoom: React.FC = () => {
             opacity: fadeIn(frame, tryAt[1]) * dim,
           }}
         >
-          {tx.zoom(Math.round(zoom))}
+          {tx.zoom(10 ** Math.round(Math.log10(zoom)))}
         </div>
         {/* the only way out */}
         <div
@@ -128,7 +134,7 @@ export const NoRoom: React.FC = () => {
             }}
           >
             0 {"<"} 1 − 0.999… {"<"} 10
-            <sup style={{ fontSize: 40 }}>−n</sup>
+            <sup style={{ fontSize: 40 }}>−{frame >= c2 + 30 ? expN : "n"}</sup>
             <span
               style={{
                 fontFamily: fonts.body,
