@@ -10,6 +10,7 @@ import {
   ramp,
   shake,
   springIn,
+  typed,
 } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
@@ -166,7 +167,7 @@ export const ColdOpen: React.FC = () => {
   const burst = frame >= c4 + 44;
   const burstT = Math.min(1, (frame - c4 - 44) / 18);
   const fourDrop = ramp(frame, c4 + 56, 14);
-  const fourPos = hop(fourDrop, 960, 600, panL.x, panL.y - 270, 120);
+  const fourPos = hop(fourDrop, 960, 600, panL.x, panL.y + 130, 120);
 
   // marsh reeds
   const reeds = Array.from({ length: 34 }).map((_, k) => ({
@@ -300,7 +301,7 @@ export const ColdOpen: React.FC = () => {
                 textAnchor="middle"
                 fontFamily={fonts.math}
               >
-                x³ = 15x + 4
+                {typed("x³ = 15x + 4", frame, c0 + 96, fps, 8)}
               </text>
             </g>
           </g>
