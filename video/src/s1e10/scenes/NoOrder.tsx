@@ -4,6 +4,7 @@ import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import {
   glide,
+  hop,
   lerp,
   ramp,
   shake,
