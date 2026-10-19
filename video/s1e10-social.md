@@ -4,8 +4,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s1e10-numbers-as-rotations.mp4` (2:08, 16:9)
-- Chinese edition: `out/s1e10-zh-fu-shu-jiu-shi-xuan-zhuan.mp4` (2:12, 16:9).
+- English edition: `out/s1e10-numbers-as-rotations.mp4` (2:25, 16:9)
+- Chinese edition: `out/s1e10-zh-fu-shu-jiu-shi-xuan-zhuan.mp4` (2:25, 16:9).
   It has a scene the English edition doesn't: 《周髀算经》's 商高 on the
   3-4-5 triangle, "故折矩，以为句广三，股修四，径隅五", and 赵爽's 弦图, where
   four right triangles, each a quarter turn of the last, surround the yellow
@@ -15,10 +15,9 @@ The rules behind them are in
 - Before posting anywhere: confirm the background-music licence covers that
   platform. Fill in `<YouTube link>`, `<S1E09 link>` and `<bilibili link>`
   once the uploads are live.
-- Chapters: any scene under 10 s is merged into its neighbour. In English
-  the tower scene goes in with the end card. In Chinese the no-order scene
-  goes in with the tower. The brand sting and title belong to the first
-  chapter.
+- Chapters: any scene under 10 s is merged into its neighbour, so the title
+  card belongs to the next chapter and the no-order scene goes in with the
+  tower. The brand sting belongs to the first chapter.
 
 ---
 
@@ -33,17 +32,17 @@ The rules behind them are in
 **Description**
 
 ```
-In 1572, Rafael Bombelli solved x³ = 15x + 4. The answer is a plain 4, but Cardano's formula for cubics asked for the square root of −121 on the way. Bombelli computed with it anyway, and the impossible parts cancelled.
+Italy, around 1560. The engineer Rafael Bombelli, stuck while a marsh-draining project is on hold, writes a book of algebra. One puzzle in it balances a cube of blocks against fifteen rods and four loose blocks. The answer is a plain 4, but Cardano's famous recipe for the puzzle asks for the square root of −121 on the way. Bombelli follows it anyway, and the impossible parts cancel.
 
 Episode 10 of "What Is a Number?". We build ℂ the way we built ℤ and ℚ: from pairs, this time pairs of reals, with one odd-looking multiplication rule. That rule turns out to mean "stretch by the length, turn by the angle". Multiplying by i is a quarter turn, so i² = −1 just says two quarter turns make a half turn. ℂ then gives every polynomial a root (the Fundamental Theorem of Algebra), and costs us order: no ordering of ℂ fits its arithmetic.
 
-0:00 Bombelli's impossible calculation
-0:23 ℂ as pairs of reals
-0:43 × i is a quarter turn
-0:59 Lengths multiply, angles add
-1:17 The Fundamental Theorem of Algebra
-1:35 Why ℂ has no order
-1:46 The last floor, and what's next
+0:00 Bombelli's impossible balance
+0:35 ℂ as pairs: walks in a town
+0:58 × i turns the whole town
+1:15 Lengths multiply, angles add
+1:33 The Fundamental Theorem of Algebra
+1:52 No order, and the last floor
+2:12 What's next
 
 Previous episode: 0.999… = 1, and What Decimals Really Are <S1E09 link>
 Next: Hilbert's Hotel.
@@ -71,18 +70,18 @@ Fonts: Fraunces, Inter, JetBrains Mono, STIX Two, Noto Sans SC (SIL Open Font Li
 **简介**
 
 ```
-1572 年，邦贝利解 x³ = 15x + 4。答案就是普普通通的 4，可卡尔达诺的公式偏要先开负一百二十一的平方根。邦贝利照算下去，虚的部分正好抵消。
+约 1560 年的意大利，工程师邦贝利的排沼工程停了，他坐下来写一本代数书。书里一道题：一个积木立方体，和十五根木条加四块积木一样重。答案就是普普通通的 4，可卡尔达诺的著名公式偏要先开负一百二十一的平方根。邦贝利照算下去，“不可能”的部分正好抵消。
 
 《数是什么？》第一季第 10 集。像造整数、有理数那样，用实数对来造 ℂ，乘法只有一条看起来很怪的规则。这条规则其实就是：按长度拉伸，按角度旋转。乘以 i 就是转四分之一圈，所以 i² = −1 只是在说：转两次四分之一圈就是半圈。ℂ 让每个多项式都有根（代数基本定理），代价是失去顺序。中文版还加了《周髀算经》的“句广三，股修四，径隅五”和赵爽弦图：四个直角三角形依次转四分之一圈，转四次回到原处，正是 i⁴ = 1。
 
-0:00 邦贝利的“不可能”计算
-0:21 用实数对造 ℂ
-0:39 乘以 i，转四分之一圈
-0:53 长度相乘，角度相加
-1:08 勾三股四弦五与赵爽弦图
-1:27 代数基本定理
-1:43 ℂ 没有顺序，数塔最后一层
-2:01 下一集
+0:00 邦贝利的天平
+0:31 用实数对造 ℂ：小镇里走路
+0:52 乘以 i，小镇转四分之一圈
+1:05 长度相乘，角度相加
+1:20 勾三股四弦五与赵爽弦图
+1:39 代数基本定理
+1:56 ℂ 没有顺序，数塔最后一层
+2:14 下一集
 
 上一集：0.999… = 1：小数到底是什么 <S1E09 链接>
 下一集：希尔伯特旅馆。
@@ -125,7 +124,7 @@ Episode 10: <YouTube link>
 ```
 Episode 10 of our math series: the complex numbers, as rotations.
 
-The story starts in 1572, when Rafael Bombelli used the square root of −121 to reach a perfectly ordinary answer to a cubic equation. Complex numbers then stayed suspect for two centuries.
+The story starts around 1560, when the engineer Rafael Bombelli, writing his Algebra (published 1572), used the square root of −121 to reach a perfectly ordinary answer to a cubic equation. Complex numbers then stayed suspect for two centuries.
 
 This episode builds them without any mystery: pairs of real numbers, with one multiplication rule. Seen in the plane, that rule says "stretch by the length, turn by the angle", so multiplying by i is a quarter turn and i² = −1 is two quarter turns making a half turn. We also show what ℂ gains (every polynomial equation has a root) and what it costs (no ordering fits its arithmetic).
 
@@ -149,7 +148,7 @@ Why i² = −1: two quarter turns make a half turn. Part 10 of What Is a Number?
 #math #mathtok #complexnumbers #learnontiktok
 ```
 
-**Alternative hook:** `In 1572 someone used √−121 to get the answer 4.`
+**Alternative hook:** `Around 1560 an engineer used √−121 to get the answer 4.`
 
 ---
 
@@ -166,17 +165,17 @@ Why i² = −1: two quarter turns make a half turn. Part 10 of What Is a Number?
 ```
 i 不是什么“虚”的东西，它就是转四分之一圈。
 
-《数是什么？》第一季第 10 集。1572 年，邦贝利用负一百二十一的平方根，算出了三次方程的普通答案 4。这一集用实数对把复数正正经经地造出来：加法逐项相加，乘法 (a, b)(c, d) = (ac − bd, ad + bc)。放到平面上一看，这条怪规则就是“按长度拉伸，按角度旋转”：乘以 i 转 90°，转两次就是乘以 −1。再看 (3 + 4i)(1 + 2i)：长度 5 和 √5 相乘，角度 53° 和 63° 相加。ℂ 让每个多项式都有根，代价是不能再排大小。
+《数是什么？》第一季第 10 集。约 1560 年，工程师邦贝利写《代数学》（1572 年出版）时，用负一百二十一的平方根，算出了三次方程的普通答案 4。这一集用实数对把复数正正经经地造出来：加法逐项相加，乘法 (a, b)(c, d) = (ac − bd, ad + bc)。放到平面上一看，这条怪规则就是“按长度拉伸，按角度旋转”：乘以 i 转 90°，转两次就是乘以 −1。再看 (3 + 4i)(1 + 2i)：长度 5 和 √5 相乘，角度 53° 和 63° 相加。ℂ 让每个多项式都有根，代价是不能再排大小。
 中文版另加《周髀算经》商高“故折矩，以为句广三，股修四，径隅五”和赵爽弦图：四个朱色三角形，一个转四分之一圈就是下一个，朱实四加中黄实一，正好是弦的平方 25；转四次回到原处，i⁴ = 1。
 
-00:00 邦贝利的“不可能”计算
-00:21 用实数对造 ℂ
-00:39 乘以 i，转四分之一圈
-00:53 长度相乘，角度相加
-01:08 勾三股四弦五与赵爽弦图
-01:27 代数基本定理
-01:43 ℂ 没有顺序，数塔最后一层
-02:01 下一集
+00:00 邦贝利的天平
+00:31 用实数对造 ℂ：小镇里走路
+00:52 乘以 i，小镇转四分之一圈
+01:05 长度相乘，角度相加
+01:20 勾三股四弦五与赵爽弦图
+01:39 代数基本定理
+01:56 ℂ 没有顺序，数塔最后一层
+02:14 下一集
 
 上一集：0.999… = 1：小数到底是什么 <B 站 S1E09 链接>
 下一集：希尔伯特旅馆。
@@ -207,7 +206,7 @@ Whyme Labs 出品，自制
 **标题 / 文案**（任选其一）
 
 1. `为什么 i² = −1？转两次四分之一圈就懂了 #数学 #涨知识 #复数`
-2. `1572 年，有人用负数的平方根算出了 4 #数学 #科普 #虚数`
+2. `四百多年前，有个工程师用负数的平方根算出了 4 #数学 #科普 #虚数`
 3. `赵爽弦图里藏着复数乘法 #数学 #勾股定理 #知识科普`
 
 **合集：** 数是什么？第一季

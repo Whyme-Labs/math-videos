@@ -4,38 +4,41 @@ Voiceover script for *ℂ: Numbers as Rotations*, generated from
 `src/s1e10/narration.ts`, which is the source of truth. Each line is one
 caption. Condensed from `lessons/s1/e10-complex-numbers-as-rotations.md`.
 
+
+## Cold open: Bombelli's balance
+
+1. Italy, around 1560. The engineer Rafael Bombelli is draining a marsh. The work stops, so he sits down to write a book of algebra.
+2. One puzzle in it: a cube of blocks weighs as much as fifteen rods plus four loose blocks. How big is the cube?
+3. The answer is plain. A cube of side 4 has 64 blocks, and fifteen rods of 4, plus 4, is 64 too.
+4. But Cardano's famous recipe for this puzzle asks for the square root of minus 121. No number squares to a negative.
+5. Bombelli follows the recipe anyway. The impossible parts cancel each other out, and the scale settles on 4.
+
 ## Title
 
-1. Season one, episode ten. The complex numbers, as rotations.
+1. Season one, episode ten. That impossible number was a turn all along.
 
-## Cold open: Bombelli's cubic
+## ℂ as pairs: walks in a town
 
-1. In 1572, Rafael Bombelli looked at x cubed equals 15x plus 4. The answer is plain: x equals 4.
-2. But Cardano's formula for cubics asked for the square root of minus 121, a number whose square is negative.
-3. Bombelli played along. He cubed 2 plus i and got 2 plus 11i. The imaginary parts cancelled, and out came 4.
+1. We won't just declare a new number. We build it from pairs of reals, the way we built the integers in episode six.
+2. A pair is a walk: three steps east, two steps north. Adding pairs means doing one walk and then the other.
+3. Multiplying uses one odd rule, (ac minus bd, ad plus bc). Call one step north i. Then i times i is one step west: minus one.
 
-## ℂ as pairs of reals
+## × i turns the town a quarter turn
 
-1. Declaring a new symbol isn't enough. As with the integers in episode six, we build it from pairs, this time pairs of reals.
-2. Add pairs piece by piece. Multiply with one odd rule: (a, b) times (c, d) is (ac minus bd, ad plus bc).
-3. The reals sit inside as the pairs (a, 0). Call (0, 1) i. Then i times i is (minus 1, 0), which is minus one.
-
-## × i is a quarter turn
-
-1. Pairs are points in the plane. Multiplying by i sends (a, b) to (minus b, a): a quarter turn about zero.
-2. Do it twice and that's a half turn, which sends every point to minus itself. So i squared is minus one.
+1. Multiplying by i turns the whole map a quarter turn about zero: every house, every road, every point.
+2. Turn twice and that's a half turn, which sends every point to minus itself. So i squared is minus one.
 3. Multiplying by minus one was always a half turn. Multiplying by i goes halfway.
 
 ## Lengths multiply, angles add
 
-1. Every complex number has a length and an angle. Multiplying by it stretches by the length and turns by the angle.
+1. Every complex number has a length and a direction. Multiplying by it stretches by the length and turns by the angle.
 2. Take 3 plus 4i times 1 plus 2i. The lengths, 5 and root 5, multiply. The angles, 53 and 63 degrees, add.
 3. The product is minus 5 plus 10i: length 5 root 5, angle 117 degrees. The odd rule was rotation all along.
 
 ## The Fundamental Theorem of Algebra
 
-1. We built ℂ to solve x squared plus 1 equals 0. We got every polynomial equation for free.
-2. Send a circle through a polynomial. A small circle lands near the constant term; a big one winds around zero n times.
+1. We built ℂ to open one locked door, x squared plus 1 equals 0. It opens every door of that kind.
+2. Here's why. Send a circle through a polynomial. A small circle lands near the constant; a big one winds around zero.
 3. As the circle grows, its image has to sweep across zero, and there is a root. Gauss gave a proof in 1799.
 
 ## No order on ℂ
@@ -50,5 +53,5 @@ caption. Condensed from `lessons/s1/e10-complex-numbers-as-rotations.md`.
 
 ## End card
 
-1. A complex number is a stretch and a turn, and i, the imaginary one, is a quarter turn.
+1. Bombelli's impossible number was a quarter turn. A complex number is a stretch and a turn.
 2. Next episode: Hilbert's Hotel. Every room is full, and there's still room for one more guest.
