@@ -40,8 +40,8 @@ export const NoOrder: React.FC = () => {
   const tilt = 9 * crack;
   // two squares hop to the positive side
   const SQ = [
-    { x: -0.6, at: c0 + 60, l: "(−0.6)² = 0.36" },
-    { x: 0.8, at: c0 + 96, l: "0.8² = 0.64" },
+    { x: -0.6, at: c0 + 60, l: "(−0.6)² = 0.36", dy: -50 },
+    { x: 0.8, at: c0 + 96, l: "0.8² = 0.64", dy: 110 },
   ];
 
   return (
@@ -145,7 +145,7 @@ export const NoOrder: React.FC = () => {
                 <circle cx={p.x} cy={p.y} r={11} fill={colors.green} />
                 <text
                   x={X0 + q.x * q.x * U}
-                  y={Y - 50}
+                  y={Y + q.dy}
                   fill={colors.green}
                   fontSize={34}
                   textAnchor="middle"
