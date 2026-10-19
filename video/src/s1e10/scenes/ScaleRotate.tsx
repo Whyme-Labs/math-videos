@@ -48,6 +48,9 @@ export const ScaleRotate: React.FC = () => {
   const moving = mul(Z, polar(abs(W) ** t, argW * t));
   const done = frame >= c2 + 48;
   const badgeAt = (k: number) => c1 + 40 + k * 22;
+  // a sample multiplier stretches and turns the whole grid, then lets go
+  const demo = glide(frame, c0 + 70, fps, 30) - glide(frame, c0 + 140, fps, 24);
+  const demoMap = (q: C) => mul(q, polar(1.35 ** demo, 0.6 * demo));
 
   return (
     <SceneShell id="scaleRotate">
@@ -59,11 +62,18 @@ export const ScaleRotate: React.FC = () => {
       ))}
       <Sfx name="whoosh" at={c2 + 8} volume={0.18} />
       <Sfx name="chime" at={c2 + 48} />
+      <Sfx name="whoosh" at={c0 + 70} volume={0.12} />
+      <Sfx name="ding" at={c2 + 80} volume={0.2} />
       <QuestionTray />
 
       <AbsoluteFill>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
-          <Grid view={V} n={9} opacity={fadeIn(frame, c0 + 2) * 0.8} />
+          <Grid
+            view={V}
+            n={9}
+            map={demoMap}
+            opacity={fadeIn(frame, c0 + 2) * 0.8}
+          />
           {/* angle of z, then w's angle stacked on top of it */}
           <path
             d={arcPath(1.6, 0, argZ * angIn)}
@@ -89,7 +99,7 @@ export const ScaleRotate: React.FC = () => {
             view={V}
             z={mul(Z, { re: Math.min(1, zIn), im: 0 })}
             color={colors.primary}
-            label="3 + 4i"
+            label={zIn > 0.6 ? "3 + 4i" : undefined}
             opacity={t > 0 ? 0.35 : 1}
           />
           <Arrow
@@ -185,6 +195,15 @@ export const ScaleRotate: React.FC = () => {
           }}
         >
           (3 + 4i)(1 + 2i) = −5 + 10i
+          <div
+            style={{
+              fontSize: 36,
+              color: colors.green,
+              opacity: fadeIn(frame, c2 + 80),
+            }}
+          >
+            |−5 + 10i| = √125 = 5√5 ✓
+          </div>
         </div>
       </AbsoluteFill>
     </SceneShell>
