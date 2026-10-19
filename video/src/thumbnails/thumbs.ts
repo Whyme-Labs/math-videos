@@ -90,26 +90,65 @@ export const LAYOUT = {
   stroke: 14, // dark outline around the hook text
 };
 
-// Square cover (1080×1080) for TikTok and 抖音. Their profile grids crop
-// covers to 3:4, so everything sits in the middle 810 px (x 135–945) and is
-// centred. The art is the wide picture, scaled down and moved under the
-// hook; the hook keeps the wide text at `hookScale` of its size.
-export const SQUARE = {
-  width: 1080,
-  height: 1080,
-  cx: 540,
-  safeX0: 135,
-  safeX1: 945,
-  badgeY: 56,
-  badgeH: 68,
-  badgeFont: 46,
-  seriesY: 180, // baseline of the series name
-  seriesFont: 34,
-  firstBaseline: 312,
-  lineGap: 1.1,
-  hookScale: 0.78,
-  art: { x: 540, y: 740, scale: 0.56 }, // where the wide art's centre lands
-  brandY: 1000,
-  brandH: 46,
-  stroke: 12,
+// Covers for 抖音 and TikTok, stacked and centred: badge and series name,
+// the hook, then the wide art scaled down under it, then the brand.
+// "4x3" (1440×1080) is the cover a landscape video gets in the 抖音 editor;
+// "3x4" (1080×1440) is its 竖版 cover and the TikTok profile grid.
+// `hookScale` scales the wide hook's font size; `art` says where the wide
+// art's centre lands and how much it shrinks.
+export type CoverShape = "4x3" | "3x4";
+export const COVERS: Record<
+  CoverShape,
+  {
+    width: number;
+    height: number;
+    cx: number;
+    badgeY: number;
+    badgeH: number;
+    badgeFont: number;
+    seriesY: number; // baseline of the series name
+    seriesFont: number;
+    firstBaseline: number;
+    lineGap: number;
+    hookScale: number;
+    art: { x: number; y: number; scale: number };
+    brandY: number;
+    brandH: number;
+    stroke: number;
+  }
+> = {
+  "4x3": {
+    width: 1440,
+    height: 1080,
+    cx: 720,
+    badgeY: 56,
+    badgeH: 68,
+    badgeFont: 46,
+    seriesY: 180,
+    seriesFont: 34,
+    firstBaseline: 312,
+    lineGap: 1.1,
+    hookScale: 0.8,
+    art: { x: 720, y: 740, scale: 0.56 },
+    brandY: 1000,
+    brandH: 46,
+    stroke: 12,
+  },
+  "3x4": {
+    width: 1080,
+    height: 1440,
+    cx: 540,
+    badgeY: 100,
+    badgeH: 72,
+    badgeFont: 48,
+    seriesY: 232,
+    seriesFont: 36,
+    firstBaseline: 392,
+    lineGap: 1.1,
+    hookScale: 0.8,
+    art: { x: 540, y: 950, scale: 0.62 },
+    brandY: 1336,
+    brandH: 52,
+    stroke: 12,
+  },
 };

@@ -3,7 +3,7 @@ import {
   badge,
   LAYOUT,
   SERIES_NAME,
-  SQUARE,
+  COVERS,
   THUMBS,
 } from "../src/thumbnails/thumbs";
 import { MATH_CHARS } from "../src/thumbnails/math-chars";
@@ -11,7 +11,7 @@ import { MATH_CHARS } from "../src/thumbnails/math-chars";
 console.log(
   JSON.stringify({
     layout: LAYOUT,
-    square: SQUARE,
+    covers: COVERS,
     series: SERIES_NAME,
     mathChars: MATH_CHARS,
     thumbs: THUMBS.map((t) => ({

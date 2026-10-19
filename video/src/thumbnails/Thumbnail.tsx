@@ -15,7 +15,14 @@ import { LocaleProvider, type Locale } from "../shared/locale";
 import { alpha, colors, fonts } from "../shared/theme";
 import { SetBox } from "../s1e04/components/sets";
 import { splitMath } from "./math-chars";
-import { badge, LAYOUT, SERIES_NAME, SQUARE, THUMBS } from "./thumbs";
+import {
+  badge,
+  COVERS,
+  type CoverShape,
+  LAYOUT,
+  SERIES_NAME,
+  THUMBS,
+} from "./thumbs";
 
 // YouTube / bilibili thumbnail for one episode. One big hook on the left,
 // one strong picture on the right, the episode badge top-left and the brand
@@ -28,9 +35,9 @@ export type ThumbProps = {
   readonly ep: number;
   readonly locale: Locale;
   readonly layer: "full" | "art";
-  // "wide" is 1920×1080 (YouTube, bilibili); "square" is 1080×1080
-  // (TikTok, 抖音), see SquareThumbnail below
-  readonly shape?: "wide" | "square";
+  // "wide" is 1920×1080 (YouTube, bilibili); "4x3" and "3x4" are the
+  // 抖音 / TikTok covers, see CoverThumbnail below
+  readonly shape?: "wide" | CoverShape;
 };
 
 const ART = { x: 1400, y: 540 };
@@ -409,8 +416,10 @@ export const Thumbnail: React.FC<ThumbProps> = ({
   layer,
   shape = "wide",
 }) => {
-  if (shape === "square")
-    return <SquareThumbnail ep={ep} locale={locale} layer={layer} />;
+  if (shape !== "wide")
+    return (
+      <CoverThumbnail ep={ep} locale={locale} layer={layer} shape={shape} />
+    );
   const t = THUMBS.find((x) => x.ep === ep)!;
   const tx = t[locale];
   const L = LAYOUT;
@@ -538,17 +547,18 @@ const HookLine: React.FC<{ readonly line: string }> = ({ line }) => (
   </>
 );
 
-// Square cover: badge and series name on top, the hook under them, the wide
-// art scaled into the lower half, the brand at the bottom. All centred and
-// inside the middle 3:4 strip, which is what TikTok and 抖音 grids show.
-const SquareThumbnail: React.FC<{
+// 抖音 / TikTok cover: badge and series name on top, the hook under them,
+// the wide art scaled into the lower part, the brand at the bottom, all
+// centred (layouts in COVERS).
+const CoverThumbnail: React.FC<{
   readonly ep: number;
   readonly locale: Locale;
   readonly layer: "full" | "art";
-}> = ({ ep, locale, layer }) => {
+  readonly shape: CoverShape;
+}> = ({ ep, locale, layer, shape }) => {
   const t = THUMBS.find((x) => x.ep === ep)!;
   const tx = t[locale];
-  const Q = SQUARE;
+  const Q = COVERS[shape];
   const zh = locale === "zh";
   const size = tx.size * Q.hookScale;
   const bw = zh ? 200 : 160;
@@ -559,7 +569,7 @@ const SquareThumbnail: React.FC<{
           backgroundColor: colors.bg,
           backgroundImage: [
             `radial-gradient(circle at ${Q.art.x}px ${Q.art.y}px, ${alpha(colors.primary, 0.22)} 0%, transparent 34%)`,
-            `radial-gradient(ellipse 80% 70% at 50% 65%, ${colors.bgGlow} 0%, ${colors.bgMid} 50%, ${colors.bg} 100%)`,
+            `radial-gradient(ellipse 80% 70% at 50% 62%, ${colors.bgGlow} 0%, ${colors.bgMid} 50%, ${colors.bg} 100%)`,
           ].join(", "),
           color: colors.text,
           fontFamily: fonts.body,

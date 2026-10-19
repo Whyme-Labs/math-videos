@@ -1,9 +1,9 @@
 import { Folder, Still } from "remotion";
 import { Thumbnail, type ThumbProps } from "./Thumbnail";
-import { THUMBS } from "./thumbs";
+import { COVERS, type CoverShape, THUMBS } from "./thumbs";
 
-// Two stills per episode and language: Thumb-E05-EN (wide) and
-// Thumb-E05-EN-SQ (square), and the same for ZH.
+// Three stills per episode and language: Thumb-E05-EN (wide, 16:9) and the
+// covers Thumb-E05-EN-4x3 and Thumb-E05-EN-3x4, and the same for ZH.
 // Render with scripts/thumbnails.sh (PNG for upload, art-only PNG and an
 // editable SVG for changing the text).
 export const ThumbnailStills: React.FC = () => (
@@ -22,21 +22,18 @@ export const ThumbnailStills: React.FC = () => (
               { ep: t.ep, locale, layer: "full" } satisfies ThumbProps
             }
           />,
-          <Still
-            key={`${id}-SQ`}
-            id={`${id}-SQ`}
-            component={Thumbnail}
-            width={1080}
-            height={1080}
-            defaultProps={
-              {
-                ep: t.ep,
-                locale,
-                layer: "full",
-                shape: "square",
-              } satisfies ThumbProps
-            }
-          />,
+          ...(Object.keys(COVERS) as CoverShape[]).map((shape) => (
+            <Still
+              key={`${id}-${shape}`}
+              id={`${id}-${shape}`}
+              component={Thumbnail}
+              width={COVERS[shape].width}
+              height={COVERS[shape].height}
+              defaultProps={
+                { ep: t.ep, locale, layer: "full", shape } satisfies ThumbProps
+              }
+            />
+          )),
         ];
       }),
     )}
