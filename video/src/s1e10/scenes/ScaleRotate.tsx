@@ -3,7 +3,7 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Camera } from "../../shared/components/Camera";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
-import { glide, lerp, springIn } from "../../shared/components/motion";
+import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
@@ -141,9 +141,10 @@ export const ScaleRotate: React.FC = () => {
   const moving = mul(Z, polar(abs(W) ** t, argW * t));
   const done = frame >= c2 + 56;
   // camera: close on the first arrow, out for the product
-  const zoom = lerp(1.25, 1, glide(frame, c2, fps, 40));
-  const camX = lerp(150, 0, glide(frame, c2, fps, 40));
-  const camY = lerp(90, 0, glide(frame, c2, fps, 40));
+  const out = glide(frame, c2, fps, 40);
+  const zoom = lerp(1.7, 0.9, out);
+  const camX = lerp(184, 0, out);
+  const camY = lerp(108, -20, out);
 
   return (
     <SceneShell id="scaleRotate">
@@ -224,6 +225,27 @@ export const ScaleRotate: React.FC = () => {
             );
           })}
           {/* rulers */}
+          {(() => {
+            const m = ramp(frame, c0 + 60, 70) * (1 - fadeIn(frame, c1, 10));
+            const tip = px(V, mul(Z, { re: m, im: 0 }));
+            const n = Math.min(5, Math.floor(m * 5 + 0.001));
+            return m > 0 ? (
+              <g>
+                <circle cx={tip.x} cy={tip.y} r={14} fill={colors.green} />
+                <text
+                  x={tip.x - 40}
+                  y={tip.y - 20}
+                  fill={colors.green}
+                  fontSize={44}
+                  textAnchor="middle"
+                  fontFamily={fonts.math}
+                  fontWeight={700}
+                >
+                  {n}
+                </text>
+              </g>
+            ) : null;
+          })()}
           <Ruler
             z={Z}
             label="5"
