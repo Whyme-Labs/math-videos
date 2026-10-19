@@ -15,7 +15,7 @@ import { useStrings } from "../i18n";
 
 const LEFT = 180;
 const TOP = 150;
-const PLANE = { cx: 1290, cy: 420, half: 300 };
+const PLANE = { cx: 1290, cy: 450, half: 290 };
 const LEDGER_X = 900;
 
 export const TowerScene: React.FC = () => {
@@ -85,6 +85,28 @@ export const TowerScene: React.FC = () => {
               </g>
             );
           })}
+          {/* a number turning on the new plane */}
+          {(() => {
+            const a = Math.max(0, frame - (c0 + 70)) / 40;
+            const tip = {
+              x: PLANE.cx + 200 * Math.cos(a),
+              y: PLANE.cy - 200 * Math.sin(a),
+            };
+            return (
+              <g opacity={fadeIn(frame, c0 + 70)}>
+                <line
+                  x1={PLANE.cx}
+                  y1={PLANE.cy}
+                  x2={tip.x}
+                  y2={tip.y}
+                  stroke={colors.orange}
+                  strokeWidth={6}
+                  strokeLinecap="round"
+                />
+                <circle cx={tip.x} cy={tip.y} r={12} fill={colors.orange} />
+              </g>
+            );
+          })()}
           <text
             x={PLANE.cx + PLANE.half + 20}
             y={PLANE.cy + 14}
