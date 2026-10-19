@@ -14,7 +14,7 @@ import { useStrings } from "../i18n";
 // the one before, around a yellow square of side 4 − 3 = 1. Red 4 × 6 plus
 // yellow 1 makes the hypotenuse square 25. Four quarter turns return: i⁴ = 1.
 
-const V: View = { cx: 560, cy: 470, unit: 72 };
+const V: View = { cx: 560, cy: 450, unit: 90 };
 // One triangle: hypotenuse along the bottom of the 5 × 5 square, right angle
 // inside, legs 4 (from the left corner) and 3.
 const T0: C[] = [
@@ -114,14 +114,15 @@ export const XianTu: React.FC = () => {
               { t: "股 4", z: { re: -1.6, im: -1.0 } },
               { t: "句 3", z: { re: 1.9, im: -1.2 } },
               { t: "弦 5", z: { re: 0, im: -3.0 } },
-            ].map((l) => (
+            ].map((l, k) => (
               <text
                 key={l.t}
                 x={px(V, l.z).x}
                 y={px(V, l.z).y}
                 fill={colors.text}
-                fontSize={36}
+                fontSize={40}
                 textAnchor="middle"
+                opacity={fadeIn(frame, c0 + 50 + k * 16)}
               >
                 {l.t}
               </text>
@@ -136,8 +137,8 @@ export const XianTu: React.FC = () => {
             fontFamily: fonts.math,
             fontSize: 48,
             color: colors.primary,
-            opacity: fadeIn(frame, c0 + 70),
-            translate: riseIn(frame, c0 + 70, 16),
+            opacity: fadeIn(frame, c0 + 100),
+            translate: riseIn(frame, c0 + 100, 16),
           }}
         >
           |3 + 4i| = 5
@@ -216,7 +217,19 @@ export const XianTu: React.FC = () => {
                 color: colors.paper,
               }}
             >
-              {t}
+              {[...t].map((ch, j) => (
+                <span
+                  key={j}
+                  style={{
+                    color:
+                      Math.floor((frame - (c0 + 40)) / 7) === i * 3 + j
+                        ? colors.primary
+                        : colors.paper,
+                  }}
+                >
+                  {ch}
+                </span>
+              ))}
             </span>
           </div>
         ))}
