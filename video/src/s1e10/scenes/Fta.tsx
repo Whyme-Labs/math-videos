@@ -41,8 +41,8 @@ const DOOR_W = 300;
 const DOOR_H = 470;
 const DOOR_X = (k: number) => 110 + k * 350;
 const DOOR_Y = 330;
-const VL: View = { cx: 500, cy: 560, unit: 170 };
-const VR: View = { cx: 1400, cy: 560, unit: 74 };
+const VL: View = { cx: 500, cy: 500, unit: 150 };
+const VR: View = { cx: 1400, cy: 500, unit: 64 };
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const p = (z: C): C => {
   const z3 = mul(mul(z, z), z);
