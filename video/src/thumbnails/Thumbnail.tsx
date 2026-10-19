@@ -349,6 +349,88 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 10) {
+    // the arrow to 1 turns a quarter turn and lands on i
+    const O = { x: 1300, y: 760 };
+    const R = 420;
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={O.x - 260}
+          y1={O.y}
+          x2={O.x + R + 140}
+          y2={O.y}
+          stroke={colors.muted}
+          strokeWidth={5}
+        />
+        <line
+          x1={O.x}
+          y1={O.y + 200}
+          x2={O.x}
+          y2={O.y - R - 120}
+          stroke={colors.muted}
+          strokeWidth={5}
+        />
+        <line
+          x1={O.x}
+          y1={O.y}
+          x2={O.x + R}
+          y2={O.y}
+          stroke={alpha(colors.primary, 0.45)}
+          strokeWidth={16}
+          strokeLinecap="round"
+        />
+        <path
+          d={`M ${O.x + R * 0.62} ${O.y} A ${R * 0.62} ${R * 0.62} 0 0 0 ${O.x} ${O.y - R * 0.62}`}
+          fill="none"
+          stroke={colors.orange}
+          strokeWidth={10}
+          strokeDasharray="22 16"
+        />
+        <line
+          x1={O.x}
+          y1={O.y}
+          x2={O.x}
+          y2={O.y - R}
+          stroke={colors.primary}
+          strokeWidth={18}
+          strokeLinecap="round"
+        />
+        <polygon
+          points={`${O.x - 34},${O.y - R + 40} ${O.x + 34},${O.y - R + 40} ${O.x},${O.y - R - 30}`}
+          fill={colors.primary}
+        />
+        <text
+          x={O.x + R}
+          y={O.y + 90}
+          fill={colors.text}
+          fontSize={84}
+          textAnchor="middle"
+          fontFamily={fonts.math}
+        >
+          1
+        </text>
+        <text
+          x={O.x + 50}
+          y={O.y - R - 10}
+          fill={colors.highlight}
+          fontSize={110}
+          fontFamily={fonts.math}
+        >
+          i
+        </text>
+        <text
+          x={O.x + R * 0.55}
+          y={O.y - R * 0.55}
+          fill={colors.orange}
+          fontSize={84}
+          fontFamily={fonts.math}
+        >
+          × i
+        </text>
+      </svg>
+    );
+  }
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (
