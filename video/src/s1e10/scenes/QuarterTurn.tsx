@@ -3,12 +3,12 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Camera } from "../../shared/components/Camera";
 import { Sfx } from "../../shared/components/Sfx";
-import { glide, lerp } from "../../shared/components/motion";
+import { glide, lerp, ramp } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { mul, polar, px, type C, type View } from "../components/plane";
-import { HOME, Town } from "../components/town";
+import { HOME, Town, Walker } from "../components/town";
 import { useStrings } from "../i18n";
 
 // × i turns the whole town a quarter turn about 0: houses, roads, pond and
@@ -65,9 +65,11 @@ export const QuarterTurn: React.FC = () => {
   const rot = polar(1, (Math.PI / 2) * turns);
   const map = (z: C) => mul(z, rot);
   // the camera pulls out while the town turns, then settles
+  // the camera pulls out while the town turns, and creeps in on the holds
   const zoom =
-    lerp(1.15, 0.95, glide(frame, c0 + 20, fps, 40)) +
-    0.05 * glide(frame, c2, fps, 20);
+    lerp(1.15, 0.95, glide(frame, c0 + 30, fps, 40)) +
+    0.08 * ramp(frame, c0 + 80, c1 - c0) +
+    0.08 * ramp(frame, c1 + 64, c2 - c1);
   const town = 1 - glide(frame, c2 + 4, fps, 20) * 0.85;
   const home = px(V, map(HOME));
   const r = Math.hypot(HOME.re, HOME.im) * V.unit;
@@ -98,6 +100,27 @@ export const QuarterTurn: React.FC = () => {
         <svg width={1920} height={1080} style={{ position: "absolute" }}>
           <g opacity={town}>
             <Town view={V} map={map} highlight={0} />
+            {/* a resident strolls round the pond the whole time */}
+            {(() => {
+              const th = frame / 40;
+              const w = px(
+                V,
+                map({
+                  re: -1.7 + 1.25 * Math.cos(th),
+                  im: 0.9 + 0.95 * Math.sin(th),
+                }),
+              );
+              return (
+                <Walker
+                  x={w.x}
+                  y={w.y}
+                  bob={frame / 2.2}
+                  dir={Math.PI}
+                  color={colors.paper}
+                  size={1.1}
+                />
+              );
+            })()}
             {/* the path the yellow house travels */}
             <path
               d={`M ${start.x} ${start.y} A ${r} ${r} 0 ${large} 0 ${home.x} ${home.y}`}
