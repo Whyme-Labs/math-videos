@@ -59,6 +59,9 @@ export const Fta: React.FC = () => {
     <SceneShell id="fta">
       <Sfx name="pop" at={c0 + 6} />
       <Sfx name="ding" at={c0 + 40} volume={0.24} />
+      {[0, 1, 2].map((k) => (
+        <Sfx key={k} name="tick" at={c0 + 76 + k * 14} volume={0.2} />
+      ))}
       <Sfx name="whoosh" at={c1 + 4} volume={0.14} />
       <Sfx name="whoosh" at={c1 + 64} volume={0.16} />
       <Sfx name="riser" at={c2 + 10} volume={0.18} />
@@ -118,6 +121,31 @@ export const Fta: React.FC = () => {
           }}
         >
           {tx.fta}
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: 520,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            gap: 70,
+            fontFamily: fonts.math,
+            fontSize: 42,
+            opacity: fadeOut(frame, c1, 10),
+          }}
+        >
+          {["x³ = 15x + 4", "x⁵ − x − 1 = 0", "z⁷ + 2iz = 3"].map((t, k) => (
+            <div
+              key={t}
+              style={{
+                opacity: fadeIn(frame, c0 + 76 + k * 14),
+                translate: riseIn(frame, c0 + 76 + k * 14, 14),
+              }}
+            >
+              {t} <span style={{ color: colors.green }}>✓</span>
+            </div>
+          ))}
         </div>
 
         <svg
@@ -209,7 +237,10 @@ export const Fta: React.FC = () => {
             textAlign: "center",
             fontSize: 38,
             color: R < 1 ? colors.muted : colors.orange,
-            opacity: planes * (hit && frame < c2 + 80 ? 0 : 1),
+            opacity:
+              planes *
+              (hit && frame < c2 + 80 ? 0 : 1) *
+              fadeOut(frame, c2 + 84, 8),
           }}
         >
           {R < 1 ? tx.noWind : tx.winds(3)}
