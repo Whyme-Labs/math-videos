@@ -12,7 +12,7 @@ import { useStrings } from "../i18n";
 
 // Behind the title: the complex plane, and an arrow from 1 turning a quarter
 // turn to i.
-const V: View = { cx: 960, cy: 820, unit: 150 };
+const V: View = { cx: 230, cy: 960, unit: 170 };
 
 export const TitleCard: React.FC = () => {
   const frame = useCurrentFrame();
