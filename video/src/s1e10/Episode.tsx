@@ -21,13 +21,13 @@ const SCENES: SceneEntry<SceneId>[] = [
     name: "Whyme Labs intro",
     component: BrandIntro,
   },
-  { id: "title", key: "Title", name: "Title", component: TitleCard },
   {
     id: "coldOpen",
     key: "ColdOpen",
-    name: "Cold open: Bombelli's cubic",
+    name: "Cold open: Bombelli's balance",
     component: ColdOpen,
   },
+  { id: "title", key: "Title", name: "Title", component: TitleCard },
   { id: "pairs", key: "Pairs", name: "ℂ as pairs of reals", component: Pairs },
   {
     id: "quarterTurn",

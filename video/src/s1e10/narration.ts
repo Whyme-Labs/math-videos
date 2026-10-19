@@ -8,8 +8,8 @@ import { makeEpisodeTiming } from "../shared/timeline";
 
 export type SceneId =
   | "brand"
-  | "title"
   | "coldOpen"
+  | "title"
   | "pairs"
   | "quarterTurn"
   | "scaleRotate"
@@ -21,31 +21,35 @@ export type SceneId =
 
 const EN: Record<SceneId, string[]> = {
   brand: [],
-  title: ["Season one, episode ten. The complex numbers, as rotations."],
   coldOpen: [
-    "In 1572, Rafael Bombelli looked at x cubed equals 15x plus 4. The answer is plain: x equals 4.",
-    "But Cardano's formula for cubics asked for the square root of minus 121, a number whose square is negative.",
-    "Bombelli played along. He cubed 2 plus i and got 2 plus 11i. The imaginary parts cancelled, and out came 4.",
+    "Italy, around 1560. The engineer Rafael Bombelli is draining a marsh. The work stops, so he sits down to write a book of algebra.",
+    "One puzzle in it: a cube of blocks weighs as much as fifteen rods plus four loose blocks. How big is the cube?",
+    "The answer is plain. A cube of side 4 has 64 blocks, and fifteen rods of 4, plus 4, is 64 too.",
+    "But Cardano's famous recipe for this puzzle asks for the square root of minus 121. No number squares to a negative.",
+    "Bombelli follows the recipe anyway. The impossible parts cancel each other out, and the scale settles on 4.",
+  ],
+  title: [
+    "Season one, episode ten. That impossible number was a turn all along.",
   ],
   pairs: [
-    "Declaring a new symbol isn't enough. As with the integers in episode six, we build it from pairs, this time pairs of reals.",
-    "Add pairs piece by piece. Multiply with one odd rule: (a, b) times (c, d) is (ac minus bd, ad plus bc).",
-    "The reals sit inside as the pairs (a, 0). Call (0, 1) i. Then i times i is (minus 1, 0), which is minus one.",
+    "We won't just declare a new number. We build it from pairs of reals, the way we built the integers in episode six.",
+    "A pair is a walk: three steps east, two steps north. Adding pairs means doing one walk and then the other.",
+    "Multiplying uses one odd rule, (ac minus bd, ad plus bc). Call one step north i. Then i times i is one step west: minus one.",
   ],
   quarterTurn: [
-    "Pairs are points in the plane. Multiplying by i sends (a, b) to (minus b, a): a quarter turn about zero.",
-    "Do it twice and that's a half turn, which sends every point to minus itself. So i squared is minus one.",
+    "Multiplying by i turns the whole map a quarter turn about zero: every house, every road, every point.",
+    "Turn twice and that's a half turn, which sends every point to minus itself. So i squared is minus one.",
     "Multiplying by minus one was always a half turn. Multiplying by i goes halfway.",
   ],
   scaleRotate: [
-    "Every complex number has a length and an angle. Multiplying by it stretches by the length and turns by the angle.",
+    "Every complex number has a length and a direction. Multiplying by it stretches by the length and turns by the angle.",
     "Take 3 plus 4i times 1 plus 2i. The lengths, 5 and root 5, multiply. The angles, 53 and 63 degrees, add.",
     "The product is minus 5 plus 10i: length 5 root 5, angle 117 degrees. The odd rule was rotation all along.",
   ],
   xianTu: [], // Chinese edition only
   fta: [
-    "We built ℂ to solve x squared plus 1 equals 0. We got every polynomial equation for free.",
-    "Send a circle through a polynomial. A small circle lands near the constant term; a big one winds around zero n times.",
+    "We built ℂ to open one locked door, x squared plus 1 equals 0. It opens every door of that kind.",
+    "Here's why. Send a circle through a polynomial. A small circle lands near the constant; a big one winds around zero.",
     "As the circle grows, its image has to sweep across zero, and there is a root. Gauss gave a proof in 1799.",
   ],
   noOrder: [
@@ -57,26 +61,28 @@ const EN: Record<SceneId, string[]> = {
     "The algebra is finished. Over ℂ, every polynomial equation already has its roots.",
   ],
   endCard: [
-    "A complex number is a stretch and a turn, and i, the imaginary one, is a quarter turn.",
+    "Bombelli's impossible number was a quarter turn. A complex number is a stretch and a turn.",
     "Next episode: Hilbert's Hotel. Every room is full, and there's still room for one more guest.",
   ],
 };
 
 const ZH: Record<SceneId, string[]> = {
   brand: [],
-  title: ["第一季，第十集。复数，就是旋转。"],
   coldOpen: [
-    "1572 年，邦贝利看着一个三次方程：x³ = 15x + 4。答案很普通：x = 4。",
-    "可卡尔达诺的三次方程公式，偏要开负一百二十一的平方根，一个平方为负的数。",
-    "邦贝利照算下去：2 + i 的立方是 2 + 11i。虚的部分正好抵消，剩下 4。",
+    "约 1560 年的意大利。工程师邦贝利正在排干一片沼泽。工程停了，他坐下来写一本代数书。",
+    "书里有一道题：一个积木立方体，和十五根木条再加四块积木一样重。立方体有多大？",
+    "答案很普通：边长 4 的立方体有 64 块；十五根 4 块长的木条加 4 块，也是 64。",
+    "可卡尔达诺的著名公式算这道题，偏要开负一百二十一的平方根。没有哪个数的平方是负的。",
+    "邦贝利照着公式算下去。“不可能”的部分互相抵消，天平停在了 4。",
   ],
+  title: ["第一季，第十集。那个“不可能”的数，其实是一次旋转。"],
   pairs: [
-    "光宣布一个新符号还不够。像第六集造整数那样，我们用数对来造，这次是实数对。",
-    "加法逐项相加。乘法有一条怪规则：(a, b) 乘 (c, d) 等于 (ac − bd, ad + bc)。",
-    "实数就是 (a, 0) 这样的对。把 (0, 1) 叫作 i，那么 i 乘 i 等于 (−1, 0)，也就是负一。",
+    "我们不只是宣布一个新数，而是用实数对来造它，就像第六集造整数那样。",
+    "一个数对就是一段路：向东三步，向北两步。数对相加，就是走完一段再走另一段。",
+    "乘法有一条怪规则：(ac − bd, ad + bc)。把向北一步叫作 i，那么 i 乘 i 就是向西一步：负一。",
   ],
   quarterTurn: [
-    "数对就是平面上的点。乘以 i，把 (a, b) 送到 (−b, a)：绕原点转四分之一圈。",
+    "乘以 i，整张地图绕原点转四分之一圈：每座房子、每条路、每个点。",
     "转两次就是半圈，每个点都到了自己的相反数。所以 i 的平方是负一。",
     "乘以负一，本来就是转半圈。乘以 i，只转一半。",
   ],
@@ -92,8 +98,8 @@ const ZH: Record<SceneId, string[]> = {
     "四个三角形加中黄实：4 × 6 + 1 = 25，正是弦的平方。转四次回到原处：i 的四次方等于 1。",
   ],
   fta: [
-    "我们造 ℂ，只为解 x² + 1 = 0。结果每一个多项式方程，都白送了解。",
-    "把一个圆送进多项式。小圆的像停在常数项附近；大圆的像绕原点转 n 圈。",
+    "我们造 ℂ，只为打开一扇锁着的门：x² + 1 = 0。结果这一类门，全都打开了。",
+    "原因是这样的：把一个圆送进多项式。小圆的像停在常数项附近；大圆的像绕着原点转圈。",
     "圆从小变大，它的像一定会扫过原点，那里就是根。高斯在 1799 年给出了证明。",
   ],
   noOrder: [
@@ -105,7 +111,7 @@ const ZH: Record<SceneId, string[]> = {
     "代数上的修补到此为止：在 ℂ 里，每个多项式方程都已经有根。",
   ],
   endCard: [
-    "复数就是一次拉伸加一次旋转。那个“虚”的 i，就是转四分之一圈。",
+    "邦贝利那个“不可能”的数，就是转四分之一圈。复数就是一次拉伸加一次旋转。",
     "下一集：希尔伯特旅馆。每个房间都住满了，还能再住进一位客人。",
   ],
 };
@@ -126,8 +132,8 @@ const FIXED_SECONDS: Partial<Record<SceneId, number>> = { brand: 3.5 };
 
 export const sceneOrder: SceneId[] = [
   "brand",
-  "title",
   "coldOpen",
+  "title",
   "pairs",
   "quarterTurn",
   "scaleRotate",
