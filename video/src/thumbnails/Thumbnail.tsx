@@ -15,7 +15,7 @@ import { LocaleProvider, type Locale } from "../shared/locale";
 import { alpha, colors, fonts } from "../shared/theme";
 import { SetBox } from "../s1e04/components/sets";
 import { splitMath } from "./math-chars";
-import { badge, LAYOUT, SERIES_NAME, THUMBS } from "./thumbs";
+import { badge, LAYOUT, SERIES_NAME, SQUARE, THUMBS } from "./thumbs";
 
 // YouTube / bilibili thumbnail for one episode. One big hook on the left,
 // one strong picture on the right, the episode badge top-left and the brand
@@ -28,6 +28,9 @@ export type ThumbProps = {
   readonly ep: number;
   readonly locale: Locale;
   readonly layer: "full" | "art";
+  // "wide" is 1920×1080 (YouTube, bilibili); "square" is 1080×1080
+  // (TikTok, 抖音), see SquareThumbnail below
+  readonly shape?: "wide" | "square";
 };
 
 const ART = { x: 1400, y: 540 };
@@ -400,7 +403,14 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
   );
 };
 
-export const Thumbnail: React.FC<ThumbProps> = ({ ep, locale, layer }) => {
+export const Thumbnail: React.FC<ThumbProps> = ({
+  ep,
+  locale,
+  layer,
+  shape = "wide",
+}) => {
+  if (shape === "square")
+    return <SquareThumbnail ep={ep} locale={locale} layer={layer} />;
   const t = THUMBS.find((x) => x.ep === ep)!;
   const tx = t[locale];
   const L = LAYOUT;
@@ -504,6 +514,146 @@ export const Thumbnail: React.FC<ThumbProps> = ({ ep, locale, layer }) => {
               style={{
                 height: L.brandH * 0.42,
                 width: L.brandH * 0.42 * (2000 / 252),
+              }}
+            />
+          </div>
+        ) : null}
+      </AbsoluteFill>
+    </LocaleProvider>
+  );
+};
+
+// The hook's lines, with math characters set in the math font.
+const HookLine: React.FC<{ readonly line: string }> = ({ line }) => (
+  <>
+    {splitMath(line).map((part, k) =>
+      part.math ? (
+        <tspan key={k} fontFamily={fonts.math} fontWeight={700}>
+          {part.text}
+        </tspan>
+      ) : (
+        <tspan key={k}>{part.text}</tspan>
+      ),
+    )}
+  </>
+);
+
+// Square cover: badge and series name on top, the hook under them, the wide
+// art scaled into the lower half, the brand at the bottom. All centred and
+// inside the middle 3:4 strip, which is what TikTok and 抖音 grids show.
+const SquareThumbnail: React.FC<{
+  readonly ep: number;
+  readonly locale: Locale;
+  readonly layer: "full" | "art";
+}> = ({ ep, locale, layer }) => {
+  const t = THUMBS.find((x) => x.ep === ep)!;
+  const tx = t[locale];
+  const Q = SQUARE;
+  const zh = locale === "zh";
+  const size = tx.size * Q.hookScale;
+  const bw = zh ? 200 : 160;
+  return (
+    <LocaleProvider locale={locale}>
+      <AbsoluteFill
+        style={{
+          backgroundColor: colors.bg,
+          backgroundImage: [
+            `radial-gradient(circle at ${Q.art.x}px ${Q.art.y}px, ${alpha(colors.primary, 0.22)} 0%, transparent 34%)`,
+            `radial-gradient(ellipse 80% 70% at 50% 65%, ${colors.bgGlow} 0%, ${colors.bgMid} 50%, ${colors.bg} 100%)`,
+          ].join(", "),
+          color: colors.text,
+          fontFamily: fonts.body,
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            width: 1920,
+            height: 1080,
+            transformOrigin: "0 0",
+            transform: `translate(${Q.art.x - ART.x * Q.art.scale}px, ${Q.art.y - ART.y * Q.art.scale}px) scale(${Q.art.scale})`,
+          }}
+        >
+          <Art ep={ep} />
+        </div>
+        {layer === "full" ? (
+          <svg
+            width={Q.width}
+            height={Q.height}
+            style={{ position: "absolute" }}
+          >
+            <rect
+              x={Q.cx - bw / 2}
+              y={Q.badgeY}
+              width={bw}
+              height={Q.badgeH}
+              rx={18}
+              fill={colors.primary}
+            />
+            <text
+              x={Q.cx}
+              y={Q.badgeY + Q.badgeH * 0.72}
+              fill={colors.ink}
+              fontSize={Q.badgeFont}
+              fontWeight={800}
+              textAnchor="middle"
+              fontFamily={zh ? fonts.body : fonts.title}
+            >
+              {badge(ep, locale)}
+            </text>
+            <text
+              x={Q.cx}
+              y={Q.seriesY}
+              fill={colors.muted}
+              fontSize={Q.seriesFont}
+              fontWeight={700}
+              letterSpacing={zh ? 2 : 5}
+              textAnchor="middle"
+              fontFamily={fonts.body}
+            >
+              {SERIES_NAME[locale]}
+            </text>
+            {tx.lines.map((line, i) => (
+              <text
+                key={i}
+                x={Q.cx}
+                y={Q.firstBaseline + i * size * Q.lineGap}
+                fill={i === tx.accent ? colors.primary : colors.text}
+                fontSize={size}
+                fontWeight={zh ? 900 : 800}
+                textAnchor="middle"
+                fontFamily={zh ? fonts.body : fonts.title}
+                stroke={colors.bg}
+                strokeWidth={Q.stroke}
+                strokeLinejoin="round"
+                paintOrder="stroke"
+              >
+                <HookLine line={line} />
+              </text>
+            ))}
+          </svg>
+        ) : null}
+        {layer === "full" ? (
+          <div
+            style={{
+              position: "absolute",
+              top: Q.brandY,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 14,
+            }}
+          >
+            <Img
+              src={BRAND.mark}
+              style={{ height: Q.brandH, width: Q.brandH * (2000 / 1801) }}
+            />
+            <Img
+              src={BRAND.wordmarkWhite}
+              style={{
+                height: Q.brandH * 0.42,
+                width: Q.brandH * 0.42 * (2000 / 252),
               }}
             />
           </div>

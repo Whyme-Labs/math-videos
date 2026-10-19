@@ -89,3 +89,27 @@ export const LAYOUT = {
   brandH: 70,
   stroke: 14, // dark outline around the hook text
 };
+
+// Square cover (1080×1080) for TikTok and 抖音. Their profile grids crop
+// covers to 3:4, so everything sits in the middle 810 px (x 135–945) and is
+// centred. The art is the wide picture, scaled down and moved under the
+// hook; the hook keeps the wide text at `hookScale` of its size.
+export const SQUARE = {
+  width: 1080,
+  height: 1080,
+  cx: 540,
+  safeX0: 135,
+  safeX1: 945,
+  badgeY: 56,
+  badgeH: 68,
+  badgeFont: 46,
+  seriesY: 180, // baseline of the series name
+  seriesFont: 34,
+  firstBaseline: 312,
+  lineGap: 1.1,
+  hookScale: 0.78,
+  art: { x: 540, y: 740, scale: 0.56 }, // where the wide art's centre lands
+  brandY: 1000,
+  brandH: 46,
+  stroke: 12,
+};

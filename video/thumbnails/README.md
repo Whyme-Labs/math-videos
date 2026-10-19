@@ -8,6 +8,13 @@ One thumbnail per episode, in English and Chinese. Everything here is made by
 | `png/E05-EN.png` | 1280×720, finished | Upload as is (YouTube, bilibili) |
 | `svg/E05-EN.svg` | 1920×1080, layered: `art`, `badge`, `hook`, `brand` | Edit in Figma, Illustrator or Inkscape. The text is live text |
 | `art/E05-EN.jpg` | 1920×1080, picture and background only, no text | Start your own layout, e.g. in Canva or Photoshop |
+| `square/png/E05-EN.png` | 1080×1080, finished | Cover for TikTok and 抖音 |
+| `square/svg/E05-EN.svg` | 1080×1080, the same layers, centred | Edit the square cover |
+| `square/art/E05-EN.jpg` | 1080×1080, picture only | Start your own square layout |
+
+The square covers keep everything inside the middle 810 px (x 135–945). The
+TikTok and 抖音 profile grids crop covers to 3:4, so if you edit a square
+SVG, keep the text inside that strip too.
 
 ## Fonts for editing the SVGs
 

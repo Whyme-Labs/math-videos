@@ -90,3 +90,47 @@ for t in data["thumbs"]:
 """
         (OUT / "svg" / f"{name}.svg").write_text(svg)
         print("svg", name)
+
+# Square covers (TikTok, 抖音): the same layers, centred.
+Q = data["square"]
+for t in data["thumbs"]:
+    for loc in ("en", "zh"):
+        name = f"E{t['ep']:02d}-{loc.upper()}"
+        art = OUT / "square" / "art" / f"{name}.jpg"
+        if not art.exists():
+            continue
+        tx = t[loc]
+        zh = loc == "zh"
+        bw = 200 if zh else 160
+        size = tx["size"] * Q["hookScale"]
+        hook = "\n".join(
+            f'    <text x="{Q["cx"]}" y="{Q["firstBaseline"] + i * size * Q["lineGap"]:.1f}" text-anchor="middle" '
+            f'font-family="{BODY if zh else TITLE}" font-size="{size:.1f}" font-weight="{900 if zh else 800}" '
+            f'fill="{COLORS["primary"] if i == tx["accent"] else COLORS["text"]}" stroke="{COLORS["bg"]}" '
+            f'stroke-width="{Q["stroke"]}" stroke-linejoin="round" paint-order="stroke">{spans(line)}</text>'
+            for i, line in enumerate(tx["lines"])
+        )
+        mark_w = Q["brandH"] * 2000 / 1801
+        word_h = Q["brandH"] * 0.42
+        word_w = word_h * 2000 / 252
+        brand_x = Q["cx"] - (mark_w + 14 + word_w) / 2
+        svg = f"""<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{Q['width']}" height="{Q['height']}" viewBox="0 0 {Q['width']} {Q['height']}">
+  <g id="art">
+    <image width="{Q['width']}" height="{Q['height']}" xlink:href="{b64(art)}"/>
+  </g>
+  <g id="badge">
+    <rect x="{Q['cx'] - bw / 2}" y="{Q['badgeY']}" width="{bw}" height="{Q['badgeH']}" rx="18" fill="{COLORS['primary']}"/>
+    <text x="{Q['cx']}" y="{Q['badgeY'] + Q['badgeH'] * 0.72:.1f}" font-family="{BODY if zh else TITLE}" font-size="{Q['badgeFont']}" font-weight="800" fill="{COLORS['ink']}" text-anchor="middle">{escape(t['badge'][loc])}</text>
+    <text x="{Q['cx']}" y="{Q['seriesY']}" font-family="{BODY}" font-size="{Q['seriesFont']}" font-weight="700" letter-spacing="{2 if zh else 5}" fill="{COLORS['muted']}" text-anchor="middle">{escape(data['series'][loc])}</text>
+  </g>
+  <g id="hook">
+{hook}
+  </g>
+  <g id="brand">
+    <image x="{brand_x:.1f}" y="{Q['brandY']}" width="{mark_w:.1f}" height="{Q['brandH']}" xlink:href="{MARK}"/>
+    <image x="{brand_x + mark_w + 14:.1f}" y="{Q['brandY'] + (Q['brandH'] - word_h) / 2:.1f}" width="{word_w:.1f}" height="{word_h:.1f}" xlink:href="{WORD}"/>
+  </g>
+</svg>
+"""
+        (OUT / "square" / "svg" / f"{name}.svg").write_text(svg)
+        print("svg", "square", name)
