@@ -2,7 +2,7 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
-import { glide, ramp } from "../../shared/components/motion";
+import { glide, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { Tower } from "../../shared/components/Tower";
@@ -10,13 +10,13 @@ import { alpha, colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
 // The ℂ floor is built: the last floor. Beside it the real line swings out
-// into a plane (wider, not taller). Then the ledger of the whole tower, one
-// row per floor, gained and lost; the last row is ℝ → ℂ: every root, order.
+// into a plane (wider, not taller). Then the ledger, on the tower itself:
+// each floor gets what it gained, and what it lost falls off; the top floor
+// gains every root and loses order.
 
 const LEFT = 180;
 const TOP = 150;
 const PLANE = { cx: 1290, cy: 450, half: 290 };
-const LEDGER_X = 900;
 
 export const TowerScene: React.FC = () => {
   const frame = useCurrentFrame();
@@ -26,7 +26,7 @@ export const TowerScene: React.FC = () => {
   const [c0, c1] = cues;
   const built = ramp(frame, c0 + 8, 16);
   const swing = glide(frame, c0 + 30, fps, 40);
-  const rowAt = (k: number) => c1 + 4 + k * 10;
+  const rowAt = (k: number) => c1 + 4 + k * 16;
   const lines = 13;
 
   return (
@@ -128,78 +128,55 @@ export const TowerScene: React.FC = () => {
             ℂ
           </text>
         </svg>
-        {/* the ledger */}
-        <div
-          style={{
-            position: "absolute",
-            left: LEDGER_X,
-            top: 170,
-            display: "grid",
-            gridTemplateColumns: "190px 330px 330px",
-            rowGap: 18,
-            fontSize: 38,
-            alignItems: "baseline",
-          }}
-        >
-          {[tx.gained, tx.lost].map((h, k) => (
-            <div
-              key={h}
-              style={{
-                gridColumn: k + 2,
-                gridRow: 1,
-                fontFamily: fonts.title,
-                fontSize: 40,
-                color: k === 0 ? colors.green : colors.highlight,
-                opacity: fadeIn(frame, c1 + 2),
-              }}
-            >
-              {h}
-            </div>
-          ))}
-          {tx.ledger.flatMap((r, k) => {
-            const last = k === tx.ledger.length - 1;
-            const style = {
-              gridRow: k + 2,
-              opacity: fadeIn(frame, rowAt(k)),
-              translate: riseIn(frame, rowAt(k), 14),
-              color: last ? colors.text : colors.muted,
-            };
-            return [
+        {/* the ledger, on the tower itself: each floor's gain sticks, its
+            loss falls off */}
+        {tx.ledger.map((r, k) => {
+          const floorY = TOP + (3 - k) * 126 + 56;
+          const at = rowAt(k);
+          const fall = ramp(frame, at + 22, 26);
+          return (
+            <div key={r.step}>
               <div
-                key={`s${k}`}
-                style={{ ...style, fontFamily: fonts.math, gridColumn: 1 }}
-              >
-                {r.step}
-              </div>,
-              <div
-                key={`g${k}`}
                 style={{
-                  ...style,
-                  gridColumn: 2,
-                  color: last ? colors.green : style.color,
+                  position: "absolute",
+                  left: LEFT + 560,
+                  top: floorY - 30,
+                  padding: "8px 22px",
+                  borderRadius: 999,
+                  fontSize: 34,
+                  color: colors.bg,
+                  backgroundColor: colors.green,
+                  opacity: fadeIn(frame, at),
+                  translate: `${(1 - Math.min(1, springIn(frame, at, fps, 12))) * 200}px 0px`,
                 }}
               >
-                {r.gain}
-              </div>,
+                + {r.gain}
+              </div>
               <div
-                key={`l${k}`}
                 style={{
-                  ...style,
-                  gridColumn: 3,
-                  color: last ? colors.highlight : style.color,
+                  position: "absolute",
+                  left: LEFT + 900,
+                  top: floorY - 30 + fall * fall * 700,
+                  padding: "8px 22px",
+                  borderRadius: 999,
+                  fontSize: 34,
+                  color: colors.text,
+                  backgroundColor: alpha(colors.red, 0.85),
                   textDecoration: "line-through",
+                  opacity: fadeIn(frame, at + 8) * (1 - fall * 0.6),
+                  rotate: `${fall * 40}deg`,
                 }}
               >
-                {r.loss}
-              </div>,
-            ];
-          })}
-        </div>
+                − {r.loss}
+              </div>
+            </div>
+          );
+        })}
         <div
           style={{
             position: "absolute",
-            left: LEDGER_X,
-            top: 600,
+            left: LEFT,
+            top: 830,
             fontFamily: fonts.title,
             fontSize: 46,
             color: colors.primary,

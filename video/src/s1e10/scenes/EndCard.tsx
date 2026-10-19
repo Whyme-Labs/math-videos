@@ -46,6 +46,25 @@ export const EndCard: React.FC = () => {
 
       <AbsoluteFill>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
+          {/* Bombelli's impossible number turns into the quarter turn */}
+          <g opacity={fadeIn(frame, c0, 6) * fadeOut(frame, c0 + 92, 12)}>
+            <circle
+              cx={V.cx}
+              cy={V.cy - 1.5 * V.unit * quarter}
+              r={70 * (1 - 0.5 * quarter)}
+              fill={alpha(colors.red, 0.75)}
+            />
+            <text
+              x={V.cx}
+              y={V.cy - 1.5 * V.unit * quarter + 16}
+              fill={colors.text}
+              fontSize={44 * (1 - 0.4 * quarter)}
+              textAnchor="middle"
+              fontFamily={fonts.math}
+            >
+              √−121
+            </text>
+          </g>
           <g opacity={part1}>
             <Grid view={V} n={2} opacity={fadeIn(frame, c0 + 2) * 0.7} />
             <Arrow

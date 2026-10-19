@@ -1,26 +1,74 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
+import { Camera } from "../../shared/components/Camera";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Arrow, Grid, px, type View } from "../components/plane";
+import { polar, px, type C, type View } from "../components/plane";
+import { Town, Walker } from "../components/town";
 import { useStrings } from "../i18n";
 
-// ℂ as pairs of reals. Lattice points light up as pairs (a, b); the two
-// rules arrive, the multiplication rule marked as the odd one. Then the real
-// axis lights up as the pairs (a, 0), the point (0, 1) is named i, and
-// i · i is computed and lands on (−1, 0).
+// ℂ as pairs, acted out in a town on the plane. Every spot is a pair (a, b).
+// A walker walks the pair (3, 2): three steps east, two north. Adding is
+// walking one pair and then the other. Then the multiplication rule, and
+// i = one step north: i · i swings the walker a quarter turn to (−1, 0).
 
-const V: View = { cx: 560, cy: 470, unit: 120 };
-const SAMPLES = [
-  { re: 2, im: 1 },
-  { re: -1, im: 2 },
-  { re: 1.5, im: -1.5 },
-  { re: -2, im: -1 },
-];
+const V: View = { cx: 960, cy: 560, unit: 120 };
+
+type Leg = { from: C; to: C; start: number; len: number };
+const along = (frame: number, legs: Leg[], rest: C) => {
+  for (let k = legs.length - 1; k >= 0; k--) {
+    const l = legs[k];
+    if (frame >= l.start) {
+      const t = ramp(frame, l.start, l.len);
+      return {
+        z: { re: lerp(l.from.re, l.to.re, t), im: lerp(l.from.im, l.to.im, t) },
+        moving: t > 0 && t < 1,
+        dir: Math.atan2(-(l.to.im - l.from.im), l.to.re - l.from.re),
+      };
+    }
+  }
+  return { z: rest, moving: false, dir: 0 };
+};
+
+const Formula: React.FC<{
+  readonly text: string;
+  readonly at: number;
+  readonly out: number;
+  readonly color?: string;
+}> = ({ text, at, out, color = colors.text }) => {
+  const frame = useCurrentFrame();
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 110,
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        opacity: fadeIn(frame, at) * fadeOut(frame, out, 8),
+        translate: riseIn(frame, at, 18),
+      }}
+    >
+      <div
+        style={{
+          fontFamily: fonts.math,
+          fontSize: 60,
+          color,
+          padding: "12px 34px",
+          borderRadius: 22,
+          backgroundColor: alpha(colors.bg, 0.85),
+          border: `2px solid ${alpha(color, 0.5)}`,
+        }}
+      >
+        {text}
+      </div>
+    </div>
+  );
+};
 
 export const Pairs: React.FC = () => {
   const frame = useCurrentFrame();
@@ -28,102 +76,87 @@ export const Pairs: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("pairs");
   const [c0, c1, c2] = cues;
-  const sampleAt = (k: number) => c0 + 30 + k * 10;
-  const realAxis = ramp(frame, c2 + 6, 20);
-  const iPop = springIn(frame, c2 + 34, fps, 10);
-  const calcAt = c2 + 50;
-  const travel = glide(frame, calcAt + 40, fps, 26);
-  const theta = (Math.PI / 2) * (1 + travel);
-  const dot = px(V, { re: Math.cos(theta), im: Math.sin(theta) });
-  const o = px(V, { re: 0, im: 0 });
-  // every lattice point is a pair too: they fill in outwards from 0
-  const lattice = Array.from({ length: 49 }).map((_, k) => ({
-    re: (k % 7) - 3,
-    im: Math.floor(k / 7) - 3,
-  }));
-  const addAt = c1 + 56;
-  const addOut = fadeOut(frame, c2, 10);
-  const A = { re: 2, im: 1 };
-  const B = { re: -1, im: 2 };
-  const S = { re: 1, im: 3 };
+  const pull = glide(frame, c0, fps, 50);
+  const zoom = lerp(1.9, 1, pull);
+  const tagAt = (k: number) => c0 + 30 + k * 12;
+  const TAGS: C[] = [
+    { re: 2, im: 1 },
+    { re: -2, im: 2 },
+    { re: 1.2, im: -2 },
+    { re: -2.6, im: -1.4 },
+  ];
+  const O = { re: 0, im: 0 };
+  const P = { re: 3, im: 2 };
+  const Q = { re: 2, im: 3 };
+  const I = { re: 0, im: 1 };
+  const legs: Leg[] = [
+    { from: O, to: { re: 3, im: 0 }, start: c1 + 6, len: 36 },
+    { from: { re: 3, im: 0 }, to: P, start: c1 + 44, len: 26 },
+    { from: P, to: { re: 2, im: 2 }, start: c1 + 80, len: 16 },
+    { from: { re: 2, im: 2 }, to: Q, start: c1 + 98, len: 16 },
+    { from: Q, to: O, start: c2 + 20, len: 24 },
+    { from: O, to: I, start: c2 + 48, len: 16 },
+  ];
+  const turnAt = c2 + 84;
+  const turn = glide(frame, turnAt, fps, 30);
+  let w = along(frame, legs, O);
+  if (frame >= turnAt) {
+    const a = Math.PI / 2 + (Math.PI / 2) * turn;
+    w = { z: polar(1, a), moving: turn > 0 && turn < 1, dir: Math.PI };
+  }
+  const wp = px(V, w.z);
+  const p3 = px(V, { re: 3, im: 0 });
+  const pP = px(V, P);
+  const pQ = px(V, Q);
+  const o = px(V, O);
+  const firstWalk = fadeIn(frame, c1 + 6) * fadeOut(frame, c2 + 14, 10);
+  const secondWalk = fadeIn(frame, c1 + 80) * fadeOut(frame, c2 + 14, 10);
 
   return (
     <SceneShell id="pairs">
-      <Sfx name="whoosh" at={c0 + 10} volume={0.12} />
-      {SAMPLES.map((_, k) => (
-        <Sfx key={k} name="pop" at={sampleAt(k)} volume={0.2} />
+      <Sfx name="whoosh" at={c0 + 2} volume={0.14} />
+      {TAGS.map((_, k) => (
+        <Sfx key={k} name="pop" at={tagAt(k)} volume={0.2} />
       ))}
-      <Sfx name="page" at={c1 + 6} />
-      <Sfx name="ding" at={c1 + 40} volume={0.22} />
-      <Sfx name="pluck2" at={addAt + 24} volume={0.22} />
-      <Sfx name="scratch" at={c2 + 6} volume={0.2} />
-      <Sfx name="pop" at={c2 + 34} />
-      <Sfx name={PLUCKS[2]} at={calcAt} volume={0.24} />
-      <Sfx name="whoosh" at={calcAt + 40} volume={0.14} />
-      <Sfx name="chime" at={calcAt + 66} />
+      {[0, 1, 2, 3, 4].map((k) => (
+        <Sfx key={`s${k}`} name="tick" at={c1 + 10 + k * 8} volume={0.14} />
+      ))}
+      <Sfx name={PLUCKS[2]} at={c1 + 70} volume={0.24} />
+      <Sfx name={PLUCKS[4]} at={c1 + 114} volume={0.24} />
+      <Sfx name="ding" at={c1 + 120} volume={0.2} />
+      <Sfx name="page" at={c2 + 4} />
+      <Sfx name="pop" at={c2 + 64} />
+      <Sfx name="whoosh" at={turnAt} volume={0.16} />
+      <Sfx name="chime" at={turnAt + 30} />
       <QuestionTray />
 
-      <AbsoluteFill>
-        <svg width={1920} height={890} style={{ position: "absolute" }}>
-          <Grid view={V} n={3} opacity={fadeIn(frame, c0 + 10)} />
-          {lattice.map((z, k) => {
+      <Camera zoom={zoom} x={0} y={0}>
+        <svg width={1920} height={1080} style={{ position: "absolute" }}>
+          <Town view={V} opacity={fadeIn(frame, 0, 20)} />
+          {/* signposts: every spot is a pair */}
+          {TAGS.map((z, k) => {
             const p = px(V, z);
-            const d = Math.hypot(z.re, z.im);
+            const s = Math.min(1, springIn(frame, tagAt(k), fps, 11));
             return (
-              <circle
-                key={`l${k}`}
-                cx={p.x}
-                cy={p.y}
-                r={5 * Math.min(1, springIn(frame, c0 + 70 + d * 16, fps, 12))}
-                fill={colors.muted}
-                opacity={0.7 * lerp(1, 0.4, realAxis)}
-              />
-            );
-          })}
-          {/* adding is piece by piece: the parallelogram */}
-          <g opacity={fadeIn(frame, addAt) * addOut}>
-            <line
-              x1={px(V, A).x}
-              y1={px(V, A).y}
-              x2={px(V, S).x}
-              y2={px(V, S).y}
-              stroke={colors.muted}
-              strokeWidth={2}
-              strokeDasharray="8 6"
-              opacity={fadeIn(frame, addAt + 16)}
-            />
-            <line
-              x1={px(V, B).x}
-              y1={px(V, B).y}
-              x2={px(V, S).x}
-              y2={px(V, S).y}
-              stroke={colors.muted}
-              strokeWidth={2}
-              strokeDasharray="8 6"
-              opacity={fadeIn(frame, addAt + 16)}
-            />
-            <Arrow view={V} z={A} color={colors.text} width={4} />
-            <Arrow view={V} z={B} color={colors.text} width={4} />
-            <Arrow
-              view={V}
-              z={S}
-              color={colors.green}
-              width={5}
-              label="(1, 3)"
-              opacity={fadeIn(frame, addAt + 24)}
-            />
-          </g>
-          {SAMPLES.map((z, k) => {
-            const p = px(V, z);
-            const s = Math.min(1, springIn(frame, sampleAt(k), fps, 12));
-            return (
-              <g key={k} opacity={s * lerp(1, 0.35, realAxis)}>
-                <circle cx={p.x} cy={p.y} r={10} fill={colors.text} />
+              <g
+                key={k}
+                opacity={s * fadeOut(frame, c1, 10)}
+                transform={`translate(${p.x} ${p.y - 70}) scale(${s})`}
+              >
+                <rect
+                  x={-80}
+                  y={-30}
+                  width={160}
+                  height={52}
+                  rx={12}
+                  fill={colors.paper}
+                />
                 <text
-                  x={p.x + 16}
-                  y={p.y - 14}
-                  fill={colors.text}
-                  fontSize={30}
+                  x={0}
+                  y={8}
+                  fill={colors.ink}
+                  fontSize={32}
+                  textAnchor="middle"
                   fontFamily={fonts.math}
                 >
                   ({z.re}, {z.im})
@@ -131,179 +164,142 @@ export const Pairs: React.FC = () => {
               </g>
             );
           })}
-          {/* the reals: the pairs (a, 0) */}
-          <line
-            x1={px(V, { re: -3, im: 0 }).x}
-            y1={o.y}
-            x2={lerp(
-              px(V, { re: -3, im: 0 }).x,
-              px(V, { re: 3, im: 0 }).x,
-              realAxis,
-            )}
-            y2={o.y}
-            stroke={colors.primary}
-            strokeWidth={8}
-            strokeLinecap="round"
-            opacity={realAxis > 0 ? 1 : 0}
-          />
-          {/* i, and i · i landing on −1 */}
-          <g opacity={Math.min(1, iPop)}>
-            <path
-              d={`M ${px(V, { re: 0, im: 1 }).x} ${px(V, { re: 0, im: 1 }).y} A ${V.unit} ${V.unit} 0 0 0 ${dot.x} ${dot.y}`}
+          {/* the walk (3, 2), and then (−1, 1) */}
+          <g opacity={firstWalk}>
+            <polyline
+              points={`${o.x},${o.y} ${lerp(o.x, p3.x, ramp(frame, c1 + 6, 36))},${o.y}`}
               fill="none"
-              stroke={colors.highlight}
-              strokeWidth={4}
-              strokeDasharray="10 8"
-              opacity={travel > 0 ? 1 : 0}
+              stroke={colors.primary}
+              strokeWidth={10}
+              strokeDasharray="4 18"
+              strokeLinecap="round"
             />
-            <circle
-              cx={px(V, { re: 0, im: 1 }).x}
-              cy={px(V, { re: 0, im: 1 }).y}
-              r={14}
-              fill={colors.highlight}
-            />
-            <text
-              x={px(V, { re: 0, im: 1 }).x + 22}
-              y={px(V, { re: 0, im: 1 }).y - 18}
-              fill={colors.highlight}
-              fontSize={44}
-              fontFamily={fonts.math}
-            >
-              i = (0, 1)
-            </text>
-            <circle
-              cx={dot.x}
-              cy={dot.y}
-              r={12}
-              fill={colors.orange}
-              opacity={travel > 0 ? 1 : 0}
+            <line
+              x1={p3.x}
+              y1={p3.y}
+              x2={p3.x}
+              y2={lerp(p3.y, pP.y, ramp(frame, c1 + 44, 26))}
+              stroke={colors.primary}
+              strokeWidth={10}
+              strokeDasharray="4 18"
+              strokeLinecap="round"
+              opacity={frame >= c1 + 44 ? 1 : 0}
             />
             <text
-              x={px(V, { re: -1, im: 0 }).x}
-              y={o.y + 56}
-              fill={colors.orange}
-              fontSize={40}
+              x={lerp(o.x, p3.x, 0.5)}
+              y={o.y + 70}
+              fill={colors.primary}
+              fontSize={38}
               textAnchor="middle"
               fontFamily={fonts.math}
-              opacity={fadeIn(frame, calcAt + 62)}
+              opacity={fadeIn(frame, c1 + 30)}
+            >
+              3 → east
+            </text>
+            <text
+              x={p3.x + 30}
+              y={lerp(p3.y, pP.y, 0.5)}
+              fill={colors.primary}
+              fontSize={38}
+              fontFamily={fonts.math}
+              opacity={fadeIn(frame, c1 + 60)}
+            >
+              2 ↑ north
+            </text>
+          </g>
+          <g opacity={secondWalk}>
+            <polyline
+              points={`${pP.x},${pP.y} ${px(V, { re: 2, im: 2 }).x},${pP.y} ${pQ.x},${pQ.y}`}
+              fill="none"
+              stroke={colors.green}
+              strokeWidth={10}
+              strokeDasharray="4 18"
+              strokeLinecap="round"
+              opacity={fadeIn(frame, c1 + 80, 6)}
+            />
+            <circle
+              cx={pQ.x}
+              cy={pQ.y}
+              r={16 * Math.min(1, springIn(frame, c1 + 114, fps, 10))}
+              fill={colors.green}
+            />
+          </g>
+          {/* i, and i · i */}
+          <g opacity={fadeIn(frame, c2 + 64)}>
+            <path
+              d={`M ${px(V, I).x} ${px(V, I).y} A ${V.unit} ${V.unit} 0 0 0 ${wp.x} ${wp.y}`}
+              fill="none"
+              stroke={colors.highlight}
+              strokeWidth={6}
+              strokeDasharray="12 10"
+              opacity={frame >= turnAt ? 1 : 0}
+            />
+            <text
+              x={px(V, I).x + 40}
+              y={px(V, I).y - 40}
+              fill={colors.highlight}
+              fontSize={64}
+              fontFamily={fonts.math}
+            >
+              i
+            </text>
+            <text
+              x={px(V, { re: -1, im: 0 }).x}
+              y={o.y + 80}
+              fill={colors.orange}
+              fontSize={56}
+              textAnchor="middle"
+              fontFamily={fonts.math}
+              opacity={fadeIn(frame, turnAt + 28)}
             >
               −1
             </text>
           </g>
+          <g opacity={fadeIn(frame, c1 + 2)}>
+            <Walker
+              x={wp.x}
+              y={wp.y}
+              dir={w.dir}
+              bob={w.moving ? frame / 2.2 : 0}
+              color={frame >= c2 + 64 ? colors.highlight : colors.primary}
+            />
+          </g>
         </svg>
+      </Camera>
+
+      <AbsoluteFill>
+        <Formula text="(a, b)" at={c0 + 20} out={c1} />
         <div
           style={{
             position: "absolute",
-            left: 1040,
-            top: 130,
-            fontSize: 40,
+            top: 190,
+            width: "100%",
+            textAlign: "center",
+            fontSize: 34,
             color: colors.muted,
-            opacity: fadeIn(frame, c0 + 10),
+            opacity: fadeIn(frame, c0 + 26) * fadeOut(frame, c1, 8),
           }}
         >
-          {tx.pairsOfReals}{" "}
-          <span style={{ fontFamily: fonts.math, color: colors.text }}>
-            (a, b)
-          </span>
+          {tx.pairsOfReals}
         </div>
-        {/* the two rules */}
-        <div
-          style={{
-            position: "absolute",
-            left: 1040,
-            top: 220,
-            display: "flex",
-            flexDirection: "column",
-            gap: 22,
-            fontFamily: fonts.math,
-            fontSize: 44,
-          }}
-        >
-          {[
-            {
-              l: tx.add,
-              t: "(a, b) + (c, d) = (a + c, b + d)",
-              c: colors.text,
-              at: c1 + 6,
-            },
-            {
-              l: tx.multiply,
-              t: "(a, b) · (c, d) = (ac − bd, ad + bc)",
-              c: colors.orange,
-              at: c1 + 30,
-            },
-          ].map((r) => (
-            <div
-              key={r.l}
-              style={{
-                opacity: fadeIn(frame, r.at),
-                translate: riseIn(frame, r.at, 16),
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: fonts.body,
-                  fontSize: 30,
-                  color: colors.muted,
-                }}
-              >
-                {r.l}
-              </div>
-              <div
-                style={{
-                  color: r.c,
-                  padding: "8px 18px",
-                  borderRadius: 14,
-                  backgroundColor:
-                    r.c === colors.orange
-                      ? alpha(colors.orange, 0.12)
-                      : "transparent",
-                  border:
-                    r.c === colors.orange
-                      ? `2px solid ${alpha(colors.orange, 0.6)}`
-                      : "none",
-                }}
-              >
-                {r.t}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            left: 1040,
-            top: 520,
-            fontSize: 38,
-            color: colors.primary,
-            opacity: fadeIn(frame, c2 + 10),
-          }}
-        >
-          {tx.realsInside}
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            left: 1040,
-            top: 600,
-            fontFamily: fonts.math,
-            fontSize: 42,
-            lineHeight: 1.45,
-            opacity: fadeIn(frame, calcAt),
-            translate: riseIn(frame, calcAt, 16),
-          }}
-        >
-          <div>(0, 1) · (0, 1)</div>
-          <div style={{ color: colors.muted }}>= (0·0 − 1·1, 0·1 + 1·0)</div>
-          <div
-            style={{
-              color: colors.orange,
-              opacity: fadeIn(frame, calcAt + 62),
-            }}
-          >
-            = (−1, 0) = −1
-          </div>
-        </div>
+        <Formula
+          text="(3, 2) + (−1, 1) = (2, 3)"
+          at={c1 + 116}
+          out={c2}
+          color={colors.green}
+        />
+        <Formula
+          text="(a, b) · (c, d) = (ac − bd, ad + bc)"
+          at={c2 + 4}
+          out={turnAt - 4}
+          color={colors.orange}
+        />
+        <Formula
+          text="(0, 1) · (0, 1) = (−1, 0)"
+          at={turnAt}
+          out={1e9}
+          color={colors.highlight}
+        />
       </AbsoluteFill>
     </SceneShell>
   );

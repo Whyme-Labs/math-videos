@@ -66,7 +66,7 @@ export const NoOrder: React.FC = () => {
             width: "100%",
             textAlign: "center",
             fontSize: 40,
-            opacity: fadeIn(frame, c0 + 6),
+            opacity: fadeIn(frame, c0 + 6) * fadeOut(frame, c1, 10),
             translate: riseIn(frame, c0 + 6, 16),
           }}
         >
