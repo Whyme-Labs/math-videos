@@ -26,6 +26,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E08-ZH` | 两次造出 ℝ（中文版） | [`src/s1e08`](src/s1e08) | [`s1e08-narration-zh.md`](s1e08-narration-zh.md) |
 | `S1E09` | 0.999… = 1, and What Decimals Really Are | [`src/s1e09`](src/s1e09) | [`s1e09-narration.md`](s1e09-narration.md) |
 | `S1E09-ZH` | 0.999… = 1：小数到底是什么（中文版） | [`src/s1e09`](src/s1e09) | [`s1e09-narration-zh.md`](s1e09-narration-zh.md) |
+| `S1E10` | ℂ: Numbers as Rotations | [`src/s1e10`](src/s1e10) | [`s1e10-narration.md`](s1e10-narration.md) |
+| `S1E10-ZH` | ℂ：复数就是旋转（中文版） | [`src/s1e10`](src/s1e10) | [`s1e10-narration-zh.md`](s1e10-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -147,8 +149,9 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s1e05-social.md`](s1e05-social.md), for S1E06 in
 [`s1e06-social.md`](s1e06-social.md), for S1E07 in
 [`s1e07-social.md`](s1e07-social.md), for S1E08 in
-[`s1e08-social.md`](s1e08-social.md), and for S1E09 in
-[`s1e09-social.md`](s1e09-social.md).
+[`s1e08-social.md`](s1e08-social.md), for S1E09 in
+[`s1e09-social.md`](s1e09-social.md), and for S1E10 in
+[`s1e10-social.md`](s1e10-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
