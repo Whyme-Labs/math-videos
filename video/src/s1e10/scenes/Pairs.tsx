@@ -196,7 +196,7 @@ export const Pairs: React.FC = () => {
               fontFamily={fonts.math}
               opacity={fadeIn(frame, c1 + 30)}
             >
-              3 → east
+              {tx.east}
             </text>
             <text
               x={p3.x + 30}
@@ -206,7 +206,7 @@ export const Pairs: React.FC = () => {
               fontFamily={fonts.math}
               opacity={fadeIn(frame, c1 + 60)}
             >
-              2 ↑ north
+              {tx.north}
             </text>
           </g>
           <g opacity={secondWalk}>

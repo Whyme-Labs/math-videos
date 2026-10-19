@@ -17,6 +17,8 @@ const EN = {
   add: "add",
   multiply: "multiply",
   realsInside: "the reals: (a, 0)",
+  east: "3 → east",
+  north: "2 ↑ north",
   // Quarter turn
   quarter: "× i: a quarter turn",
   half: "× i × i: a half turn",
@@ -74,6 +76,8 @@ const ZH: Strings = {
   add: "加法",
   multiply: "乘法",
   realsInside: "实数：(a, 0)",
+  east: "向东 3 →",
+  north: "向北 2 ↑",
   quarter: "× i：转四分之一圈",
   half: "× i × i：转半圈",
   halfway: "× i 只转一半",
