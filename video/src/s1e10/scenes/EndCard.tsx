@@ -99,7 +99,7 @@ export const EndCard: React.FC = () => {
               </g>
             ))}
             <text
-              x={ROOM_X(ROOMS) + 20}
+              x={ROOM_X(ROOMS) + 70}
               y={ROOM_Y + 100}
               fill={colors.muted}
               fontSize={44}
