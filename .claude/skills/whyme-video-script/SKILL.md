@@ -22,10 +22,37 @@ description: Writing rules for Whyme Labs math videos in English and Simplified 
 ## Structure
 
 Follow the episode template in `storyline/04-production-notes.md`: cold
-open (a puzzle, never a definition), naive attempt, crisis, construction,
+open (a story with a puzzle in it, never a definition; see "The hook"
+below), naive attempt, crisis, construction,
 payoff, zoom out, teaser. S1E01 runs about 4 minutes in English and 3.5
 minutes in Chinese, and that is the target length. Cut whatever doesn't
 serve the cold-open question.
+
+## The hook: open with a story
+
+User feedback after S1E10: "Start with a more interesting hook, like a
+story, instead of going right into the topic."
+
+- **The first 20–30 seconds are a story, not the topic.** It has a person or
+  a character, a place, a moment and something at stake: a clerk at a full
+  hotel at midnight, Bombelli stuck on a cubic, a student who lost a bet
+  about 0.999…. The math question comes out of the story. The viewer should
+  want to know how it ends before they hear the topic's name.
+- **No definitions, formulas or the episode's subject in the first lines.**
+  The first line sets a scene ("It's midnight, and every room in the hotel
+  is taken."), not a fact ("Today we look at infinite sets.").
+- **The story drives the first image.** Write it so it can be animated as a
+  scene with motion, a character and a place (see `whyme-video-motion`, "Not
+  a textbook"). Quotes and dates belong after the hook.
+- **Come back to the story.** The payoff scene resolves the cold-open story
+  (the guest gets a room, Bombelli's 4 appears), and the end card can echo
+  it.
+- **Put the title after the hook.** Run the scenes in the order brand sting,
+  cold open, then title, so the story starts within 4 seconds. The title
+  card then answers "what is this about?" once the viewer cares.
+- Real history is the best story when there is one: use real names, dates
+  and places, checked against a source. When there isn't one, invent a
+  small everyday scene (and don't present it as history).
 
 ## Lines and captions
 

@@ -12,8 +12,57 @@ Two pieces of user feedback shaped these rules:
 2. "I don't want it to be just like ppts, it should have more dynamics to
    show the knowledge instead of relying on the words."
 
+3. After S1E10: "Our videos look like flipping textbooks, still not
+   interesting and dynamic enough. Add more movement and visuals. Show
+   instead of tell."
+
 So the picture has to carry the idea, and the clock has to follow the
-reader.
+reader. Feedback 3 came after every scene already had motion on every
+line, so "something moves" is not enough. The rules under "Not a textbook"
+say what was still textbook-like and what to do instead.
+
+## Not a textbook
+
+These were the textbook habits in S1E05–S1E10. Don't use them.
+
+- **Diagram on the left, a column of text or formulas on the right.** This
+  is a textbook page. Instead, let the picture take the whole frame, and put
+  the few words it needs on the objects themselves.
+- **Stacks of formula lines** (a derivation building up line by line, as in
+  the S1E10 cold open and pairs scene). Show at most one formula at a time,
+  and build it from objects that were already on screen: the guests' room
+  numbers become `n → n + 1`. If a derivation matters, act it out step by
+  step, and let each step replace the one before.
+- **Abstract diagrams with nothing in them.** Axes, dots and labelled
+  arrows explain, but they don't hold attention. Put a concrete thing in
+  the world first (a hotel, a stick, a cubic carved on a page, a knight on
+  a board), and let the abstract diagram grow out of it.
+- **Small pictures in the middle of a big empty frame.** The subject should
+  fill most of the frame. If a diagram looks small on the contact sheet,
+  scale it up or push the camera in.
+- **A new layout for every line.** Fading one arrangement out and the next
+  one in is a slide change. Keep one world for the whole scene and move
+  through it.
+
+What to do instead:
+
+- **One world, a moving camera.** Build each scene, or the whole episode, as
+  one large canvas, and travel through it with `Camera`: track along a
+  corridor, push in on the detail, pull back to the whole. The camera
+  should move on most lines.
+- **Things with a life of their own.** Characters or objects that walk,
+  wait, react and interact (guests carrying bags, a knife coming down, a
+  stick being cut). A viewer follows a thing that does something much more
+  easily than a label.
+- **Let the viewer see it before anyone says it.** Play the event first
+  (every guest steps one room up, and room 1 is empty), then name it. The
+  narration explains something the viewer has just watched.
+- **Depth and scale.** Use foreground and background layers and parallax.
+  Big things move slowly and small things move fast. Make the frame look
+  like a place rather than a sheet of paper.
+- **Payoffs are events.** The key moment of a scene gets its biggest motion:
+  a door slams, the line cracks, the plane swings open, the camera pulls
+  out to show infinitely many rooms. Never a box of text that fades in.
 
 ## Show, don't tell
 
@@ -108,6 +157,13 @@ the series one feel.
   Don't add a different transition for one scene.
 
 ## Checks before you call a scene done
+
+- **The textbook test.** Pause on any frame. If it could be printed in a
+  textbook as a figure with a caption, the scene is too static. There should
+  be something you can only show in video: motion mid-way, a camera in
+  flight, a character in the middle of doing something.
+- **Count the formulas.** On any frame there is at most one formula or
+  equation, apart from small labels on objects.
 
 - Make a contact sheet (`whyme-video` skill). Each row of 6 frames should
   look different from the row above.

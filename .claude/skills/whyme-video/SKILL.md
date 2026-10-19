@@ -123,6 +123,11 @@ An episode or scene change is finished when all of these hold:
 - [ ] You looked at a contact sheet of every scene in both languages: no
       overlaps, nothing outside the safe area, nothing cut off, no tofu (□)
       glyphs.
+- [ ] The cold open is a story (a character, a place, something at stake)
+      and comes before the title card. See `whyme-video-script`, "The hook".
+- [ ] No scene is a textbook page: the picture fills the frame, the camera or
+      the objects move on most lines, and no frame has more than one
+      formula. See `whyme-video-motion`, "Not a textbook".
 - [ ] The episode has a thumbnail: an entry in
       `video/src/thumbnails/thumbs.ts` (a hook of at most two short lines in
       each language) and a picture in `Thumbnail.tsx`. Then run
