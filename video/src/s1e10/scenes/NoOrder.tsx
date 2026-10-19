@@ -37,12 +37,19 @@ export const NoOrder: React.FC = () => {
       : lerp(1, -1, glide(frame, tryL, fps, 18));
   const crack = ramp(frame, crackAt, 16);
   const tilt = 9 * crack;
+  // two squares hop to the positive side
+  const SQ = [
+    { x: -0.6, at: c0 + 60, l: "(−0.6)² = 0.36" },
+    { x: 0.8, at: c0 + 96, l: "0.8² = 0.64" },
+  ];
 
   return (
     <SceneShell id="noOrder">
       <Sfx name="pop" at={c0 + 10} />
       <Sfx name="pop" at={c0 + 24} volume={0.3} />
       <Sfx name="ding" at={c0 + 50} volume={0.22} />
+      <Sfx name="pluck2" at={c0 + 88} volume={0.2} />
+      <Sfx name="pluck4" at={c0 + 124} volume={0.2} />
       <Sfx name="whoosh" at={tryR} volume={0.14} />
       <Sfx name="thud" at={tryR + 30} volume={0.32} />
       <Sfx name="whoosh" at={tryL} volume={0.14} />
@@ -126,6 +133,29 @@ export const NoOrder: React.FC = () => {
           >
             0
           </text>
+          {SQ.map((q) => {
+            const t = ramp(frame, q.at + 10, 18);
+            const p = hop(t, X0 + q.x * U, Y, X0 + q.x * q.x * U, Y, 120);
+            return (
+              <g
+                key={q.l}
+                opacity={fadeIn(frame, q.at) * fadeOut(frame, c1, 8)}
+              >
+                <circle cx={p.x} cy={p.y} r={11} fill={colors.green} />
+                <text
+                  x={X0 + q.x * q.x * U}
+                  y={Y - 50}
+                  fill={colors.green}
+                  fontSize={34}
+                  textAnchor="middle"
+                  fontFamily={fonts.math}
+                  opacity={fadeIn(frame, q.at + 28)}
+                >
+                  {q.l}
+                </text>
+              </g>
+            );
+          })}
           {/* i looking for a side */}
           <g opacity={fadeIn(frame, c1 + 2) * fadeOut(frame, crackAt, 10)}>
             <circle
