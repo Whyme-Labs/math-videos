@@ -103,12 +103,13 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     swapped example inside a shared scene is a string in `i18n.tsx` (empty
     in English) or a flag such as `rods: true`. Shared scenes must keep the
     same line count in both languages.
-  - Good candidates for later episodes: 《庄子·天下》"一尺之棰，日取其半，万世不竭"
-    (0.999…, limits), 勾股/弦图 (√2), and 杨辉三角 (combinatorics).
+  - Good candidates for later episodes: 勾股/弦图 (√2) and 杨辉三角
+    (combinatorics).
     Already used: 结绳记事 and 干支 (S1E02), 里耶秦简九九表 (S1E03),
     “有生于无” and 《墨经》 (S1E04), 《孙子算经》's 物不知数 (S1E05),
     《九章算术》正负术 and 刘徽's red and black rods (S1E06), 《九章算术》少广章
-    开方不尽 and 刘徽's 微少/微多 (S1E07), 刘徽割圆术 (S1E08).
+    开方不尽 and 刘徽's 微少/微多 (S1E07), 刘徽割圆术 (S1E08), 《庄子·天下》
+    "一尺之棰，日取其半，万世不竭" (S1E09).
 
 ## Titles and posts for each platform
 
