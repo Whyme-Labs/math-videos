@@ -1,12 +1,12 @@
 import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { fadeIn, riseIn } from "../../shared/components/anim";
+import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import { glide, lerp, ramp, springIn } from "../../shared/components/motion";
 import { QuestionTray } from "../../shared/components/QuestionTray";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Grid, px, type View } from "../components/plane";
+import { Arrow, Grid, px, type View } from "../components/plane";
 import { useStrings } from "../i18n";
 
 // ℂ as pairs of reals. Lattice points light up as pairs (a, b); the two
@@ -36,6 +36,16 @@ export const Pairs: React.FC = () => {
   const theta = (Math.PI / 2) * (1 + travel);
   const dot = px(V, { re: Math.cos(theta), im: Math.sin(theta) });
   const o = px(V, { re: 0, im: 0 });
+  // every lattice point is a pair too: they fill in outwards from 0
+  const lattice = Array.from({ length: 49 }).map((_, k) => ({
+    re: (k % 7) - 3,
+    im: Math.floor(k / 7) - 3,
+  }));
+  const addAt = c1 + 56;
+  const addOut = fadeOut(frame, c2, 10);
+  const A = { re: 2, im: 1 };
+  const B = { re: -1, im: 2 };
+  const S = { re: 1, im: 3 };
 
   return (
     <SceneShell id="pairs">
@@ -45,6 +55,7 @@ export const Pairs: React.FC = () => {
       ))}
       <Sfx name="page" at={c1 + 6} />
       <Sfx name="ding" at={c1 + 40} volume={0.22} />
+      <Sfx name="pluck2" at={addAt + 24} volume={0.22} />
       <Sfx name="scratch" at={c2 + 6} volume={0.2} />
       <Sfx name="pop" at={c2 + 34} />
       <Sfx name={PLUCKS[2]} at={calcAt} volume={0.24} />
@@ -55,6 +66,53 @@ export const Pairs: React.FC = () => {
       <AbsoluteFill>
         <svg width={1920} height={890} style={{ position: "absolute" }}>
           <Grid view={V} n={3} opacity={fadeIn(frame, c0 + 10)} />
+          {lattice.map((z, k) => {
+            const p = px(V, z);
+            const d = Math.hypot(z.re, z.im);
+            return (
+              <circle
+                key={`l${k}`}
+                cx={p.x}
+                cy={p.y}
+                r={5 * Math.min(1, springIn(frame, c0 + 70 + d * 16, fps, 12))}
+                fill={colors.muted}
+                opacity={0.7 * lerp(1, 0.4, realAxis)}
+              />
+            );
+          })}
+          {/* adding is piece by piece: the parallelogram */}
+          <g opacity={fadeIn(frame, addAt) * addOut}>
+            <line
+              x1={px(V, A).x}
+              y1={px(V, A).y}
+              x2={px(V, S).x}
+              y2={px(V, S).y}
+              stroke={colors.muted}
+              strokeWidth={2}
+              strokeDasharray="8 6"
+              opacity={fadeIn(frame, addAt + 16)}
+            />
+            <line
+              x1={px(V, B).x}
+              y1={px(V, B).y}
+              x2={px(V, S).x}
+              y2={px(V, S).y}
+              stroke={colors.muted}
+              strokeWidth={2}
+              strokeDasharray="8 6"
+              opacity={fadeIn(frame, addAt + 16)}
+            />
+            <Arrow view={V} z={A} color={colors.text} width={4} />
+            <Arrow view={V} z={B} color={colors.text} width={4} />
+            <Arrow
+              view={V}
+              z={S}
+              color={colors.green}
+              width={5}
+              label="(1, 3)"
+              opacity={fadeIn(frame, addAt + 24)}
+            />
+          </g>
           {SAMPLES.map((z, k) => {
             const p = px(V, z);
             const s = Math.min(1, springIn(frame, sampleAt(k), fps, 12));
