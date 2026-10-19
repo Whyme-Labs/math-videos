@@ -22,7 +22,7 @@ import { useStrings } from "../i18n";
 // turn, and every point goes to minus itself. Then, on the real line, × (−1)
 // is a half-turn arc from 1 to −1 and × i is the quarter-turn arc to i.
 
-const V: View = { cx: 760, cy: 450, unit: 110 };
+const V: View = { cx: 780, cy: 470, unit: 128 };
 const F: C[] = [
   { re: 0.5, im: 0.3 },
   { re: 0.9, im: 0.3 },
@@ -43,7 +43,7 @@ export const QuarterTurn: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("quarterTurn");
   const [c0, c1, c2] = cues;
-  const turns = glide(frame, c0 + 40, fps, 30) + glide(frame, c1 + 14, fps, 30);
+  const turns = glide(frame, c0 + 56, fps, 44) + glide(frame, c1 + 20, fps, 44);
   const rot = polar(1, (Math.PI / 2) * turns);
   const map = (z: C) => mul(z, rot);
   const plane = lerp(1, 0.25, glide(frame, c2 + 4, fps, 16));
@@ -64,10 +64,10 @@ export const QuarterTurn: React.FC = () => {
   return (
     <SceneShell id="quarterTurn">
       <Sfx name="pop" at={c0 + 10} />
-      <Sfx name="whoosh" at={c0 + 40} volume={0.18} />
-      <Sfx name="ding" at={c0 + 70} volume={0.22} />
-      <Sfx name="whoosh" at={c1 + 14} volume={0.18} />
-      <Sfx name="chime" at={c1 + 44} volume={0.24} />
+      <Sfx name="whoosh" at={c0 + 56} volume={0.18} />
+      <Sfx name="ding" at={c0 + 100} volume={0.22} />
+      <Sfx name="whoosh" at={c1 + 20} volume={0.18} />
+      <Sfx name="chime" at={c1 + 64} volume={0.24} />
       <Sfx name="whoosh" at={c2 + 20} volume={0.14} />
       <Sfx name="pluck3" at={c2 + 50} volume={0.24} />
       <Sfx name="whoosh" at={c2 + 60} volume={0.14} />
@@ -78,6 +78,25 @@ export const QuarterTurn: React.FC = () => {
         <svg width={1920} height={890} style={{ position: "absolute" }}>
           <g opacity={plane}>
             <Grid view={V} n={4} map={map} opacity={fadeIn(frame, c0 + 2)} />
+            {/* where the F started, and the path of the arrow's tip */}
+            <polygon
+              points={F.map((z) => px(V, z))
+                .map((p) => `${p.x},${p.y}`)
+                .join(" ")}
+              fill="none"
+              stroke={alpha(colors.primary, 0.5)}
+              strokeWidth={2}
+              strokeDasharray="6 6"
+              opacity={turns > 0.02 ? 1 : 0}
+            />
+            <path
+              d={`M ${px(V, Z).x} ${px(V, Z).y} A ${Math.hypot(Z.re, Z.im) * V.unit} ${Math.hypot(Z.re, Z.im) * V.unit} 0 ${turns > 1 ? 1 : 0} 0 ${px(V, zNow).x} ${px(V, zNow).y}`}
+              fill="none"
+              stroke={alpha(colors.highlight, 0.7)}
+              strokeWidth={3}
+              strokeDasharray="8 8"
+              opacity={turns > 0.02 ? 1 : 0}
+            />
             <polygon
               points={fPts}
               fill={alpha(colors.primary, 0.75)}
@@ -199,12 +218,12 @@ export const QuarterTurn: React.FC = () => {
           }}
         >
           <div style={{ color: colors.highlight }}>(2, 1)</div>
-          <div style={{ opacity: fadeIn(frame, c0 + 66) }}>→ (−1, 2)</div>
-          <div style={{ opacity: fadeIn(frame, c1 + 40) }}>→ (−2, −1)</div>
+          <div style={{ opacity: fadeIn(frame, c0 + 96) }}>→ (−1, 2)</div>
+          <div style={{ opacity: fadeIn(frame, c1 + 60) }}>→ (−2, −1)</div>
         </div>
         {[
-          { t: tx.quarter, at: c0 + 70, out: c1 + 10 },
-          { t: tx.half, at: c1 + 44, out: c2 },
+          { t: tx.quarter, at: c0 + 100, out: c1 + 16 },
+          { t: tx.half, at: c1 + 64, out: c2 },
           { t: tx.halfway, at: c2 + 90, out: 1e9 },
         ].map((l) => (
           <div
