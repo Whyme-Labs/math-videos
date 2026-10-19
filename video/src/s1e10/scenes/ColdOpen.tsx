@@ -39,11 +39,15 @@ export const ColdOpen: React.FC = () => {
   const visible = xs.filter((_, k) => k / 120 <= draw);
   const path = visible
     .map((x, k) => {
-      const y = Math.max(G.ylo - 5, Math.min(G.yhi + 5, cubic(x)));
+      const y = Math.max(G.ylo, Math.min(G.yhi, cubic(x)));
       return `${k === 0 ? "M" : "L"} ${gx(x)} ${gy(y)}`;
     })
     .join(" ");
   const rootPop = springIn(frame, c0 + 64, fps, 10);
+  // a point rides the curve and settles on the root
+  const tracerX = lerp(-4.6, 4, ramp(frame, c0 + 70, 70));
+  const tracerY = Math.max(G.ylo, Math.min(G.yhi, cubic(tracerX)));
+  const tryAt = (k: number) => c1 + 50 + k * 30;
   const stepAt = (k: number) => c2 + 8 + k * 18;
   const sumAt = stepAt(STEPS.length) + 6;
   const cancel = ramp(frame, sumAt + 24, 14);
@@ -57,6 +61,8 @@ export const ColdOpen: React.FC = () => {
       <Sfx name="ding" at={c0 + 64} volume={0.24} />
       <Sfx name="pop" at={c1 + 6} />
       <Sfx name="thud" at={c1 + 34} volume={0.3} />
+      <Sfx name="tick" at={c1 + 50} volume={0.2} />
+      <Sfx name="tick" at={c1 + 80} volume={0.2} />
       {STEPS.map((_, k) => (
         <Sfx key={k} name={PLUCKS[k]} at={stepAt(k)} volume={0.24} />
       ))}
@@ -129,6 +135,13 @@ export const ColdOpen: React.FC = () => {
           />
           <path d={path} fill="none" stroke={colors.primary} strokeWidth={5} />
           <circle
+            cx={gx(tracerX)}
+            cy={gy(tracerY)}
+            r={10}
+            fill={colors.text}
+            opacity={fadeIn(frame, c0 + 70) * fadeOut(frame, c0 + 140, 10)}
+          />
+          <circle
             cx={gx(4)}
             cy={gy(0)}
             r={14 * Math.min(1, rootPop)}
@@ -195,6 +208,30 @@ export const ColdOpen: React.FC = () => {
           >
             {tx.impossible}
           </div>
+        </div>
+        {/* nothing real squares to −121 */}
+        <div
+          style={{
+            position: "absolute",
+            left: 180,
+            top: 500,
+            fontFamily: fonts.math,
+            fontSize: 44,
+            lineHeight: 1.5,
+            opacity: fadeOut(frame, c2, 8),
+          }}
+        >
+          {["11² = 121", "(−11)² = 121"].map((t, k) => (
+            <div
+              key={t}
+              style={{
+                opacity: fadeIn(frame, tryAt(k)),
+                translate: riseIn(frame, tryAt(k), 14),
+              }}
+            >
+              {t} <span style={{ color: colors.red }}>≠ −121 ✗</span>
+            </div>
+          ))}
         </div>
         {/* Bombelli plays along */}
         <div
