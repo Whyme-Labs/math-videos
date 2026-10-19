@@ -77,7 +77,9 @@ export const Pairs: React.FC = () => {
   const cues = useCues("pairs");
   const [c0, c1, c2] = cues;
   const pull = glide(frame, c0, fps, 50);
-  const zoom = lerp(1.9, 1, pull);
+  const zoom = lerp(1.9, 1.18, pull);
+  // a slow drift across the town while the signposts go up
+  const drift = lerp(-70, 40, ramp(frame, c0, c1 - c0)) * (1 - glide(frame, c1, fps, 20));
   const tagAt = (k: number) => c0 + 30 + k * 12;
   const TAGS: C[] = [
     { re: 2, im: 1 },
@@ -130,7 +132,7 @@ export const Pairs: React.FC = () => {
       <Sfx name="chime" at={turnAt + 30} />
       <QuestionTray />
 
-      <Camera zoom={zoom} x={0} y={0}>
+      <Camera zoom={zoom} x={drift} y={-20}>
         <svg width={1920} height={1080} style={{ position: "absolute" }}>
           <Town view={V} opacity={fadeIn(frame, 0, 20)} />
           {/* signposts: every spot is a pair */}
@@ -262,6 +264,7 @@ export const Pairs: React.FC = () => {
               dir={w.dir}
               bob={w.moving ? frame / 2.2 : 0}
               color={frame >= c2 + 64 ? colors.highlight : colors.primary}
+              size={1.4}
             />
           </g>
         </svg>
