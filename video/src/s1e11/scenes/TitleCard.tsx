@@ -22,7 +22,7 @@ export const TitleCard: React.FC = () => {
       <Sfx name="whoosh" at={10} volume={0.14} />
 
       <AbsoluteFill style={{ zIndex: -1, opacity: 0.3 }}>
-        <Camera zoom={0.6} x={x} y={-120}>
+        <Camera zoom={0.6} x={x} y={-560}>
           <svg
             width={1920}
             height={1080}
