@@ -29,7 +29,9 @@ export const Liezi: React.FC = () => {
   const [c0, c1, c2] = cues;
   const slipAt = (i: number) => c1 + 4 + i * 10;
   // endless pull-back: the zoom halves every ~3 seconds
-  const z = 0.9 * 0.5 ** (Math.max(0, frame - c0) / 90);
+  const z =
+    Math.max(0.22, 0.9 * 0.5 ** (Math.max(0, frame - c0) / 90)) +
+    0.38 * glide(frame, c2, fps, 30);
   const arrivals = Math.floor(Math.max(0, frame - c2) / 20);
   const shift = Math.min(1, ((frame - c2) % 20) / 14);
 
@@ -43,8 +45,8 @@ export const Liezi: React.FC = () => {
         <Sfx key={`a${k}`} name="pop" at={c2 + 14 + k * 20} volume={0.16} />
       ))}
 
-      <AbsoluteFill style={{ right: 520, overflow: "hidden" }}>
-        <Camera zoom={z} x={doorCenter(0) - 700 + 400 / z} y={-80}>
+      <AbsoluteFill>
+        <Camera zoom={z} x={doorCenter(0) - 960 + 600 / z} y={-80}>
           <svg
             width={1920}
             height={1080}
@@ -96,6 +98,18 @@ export const Liezi: React.FC = () => {
         >
           上下八方有极尽乎？
         </div>
+        <div
+          style={{
+            position: "absolute",
+            left: SLIP_X(3) - 40,
+            top: SLIP_Y - 30,
+            width: SLIP_X(0) + SLIP_W - SLIP_X(3) + 80,
+            height: SLIP_H + 110,
+            borderRadius: 24,
+            backgroundColor: alpha(colors.bg, 0.85),
+            opacity: fadeIn(frame, slipAt(0)),
+          }}
+        />
         {tx.quote.map((t, i) => (
           <div
             key={t}
