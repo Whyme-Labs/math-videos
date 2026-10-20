@@ -260,8 +260,8 @@ export const Matching: React.FC = () => {
               );
             })}
             <text
-              x={1100}
-              y={400}
+              x={1150}
+              y={460}
               fill={alpha(colors.ink, 0.7)}
               fontSize={36}
               textAnchor="end"
@@ -303,8 +303,8 @@ export const Matching: React.FC = () => {
             const by = 360 + Math.floor(k / 3) * 110 + ((k * 23) % 40);
             const t = ramp(frame, pairAt(k), 12);
             const tk = glide(frame, pairAt(k) + 10, fps, 14);
-            const ta = { x: 760 + (k % 3) * 0 - 60, y: 280 + k * 62 };
-            const tb = { x: 1160, y: 280 + k * 62 };
+            const ta = { x: 700, y: 200 + k * 58 };
+            const tb = { x: 1220, y: 200 + k * 58 };
             const a = hop(tk, ax, ay, ta.x, ta.y, 40);
             const b = hop(tk, bx, by, tb.x, tb.y, 40);
             return (
@@ -341,7 +341,7 @@ export const Matching: React.FC = () => {
           })}
           <text
             x={960}
-            y={900}
+            y={780}
             fill={colors.green}
             fontSize={60}
             textAnchor="middle"
