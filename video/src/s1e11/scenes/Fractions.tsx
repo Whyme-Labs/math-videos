@@ -35,9 +35,9 @@ for (let r = 1; r < ROWS; r++)
 const BFS = TREE.flat();
 const nodePos = (r: number, i: number) => ({
   x: 210 + ((i + 0.5) * 1500) / 2 ** r,
-  y: 190 + r * 140,
+  y: 200 + r * 130,
 });
-const ROOM = (k: number) => ({ x: 150 + k * 108, y: 860 });
+const ROOM = (k: number) => ({ x: 170 + k * 112, y: 800 });
 
 // mediants between 1/2 and 1/1, deeper each time
 const LINE = { x0: 160, x1: 1760, y: 520 };
@@ -179,6 +179,31 @@ export const Fractions: React.FC = () => {
                 );
               }),
             )}
+            {/* the rooms */}
+            <g opacity={fadeIn(frame, c2)}>
+              {BFS.map((_, k) => (
+                <g key={`room${k}`}>
+                  <rect
+                    x={ROOM(k).x - 44}
+                    y={ROOM(k).y - 76}
+                    width={88}
+                    height={110}
+                    rx={8}
+                    fill={colors.wood}
+                    stroke={colors.ink}
+                    strokeWidth={3}
+                  />
+                  <text
+                    x={ROOM(k).x}
+                    y={ROOM(k).y + 70}
+                    fill={colors.muted}
+                    fontSize={28}
+                    textAnchor="middle"
+                    fontFamily={fonts.math}
+                  >
+                    {k}
+                  </text>
+                </g>
             {BFS.map((f, k) => {
               const r = rowOf(k);
               const i = idxOf(k);
@@ -186,7 +211,7 @@ export const Fractions: React.FC = () => {
               const g = grow(r);
               const fly = ramp(frame, readAt(k) + 4, 14);
               const room = ROOM(k);
-              const p = hop(fly, home.x, home.y, room.x, room.y - 40, 120);
+              const p = hop(fly, home.x, home.y, room.x, room.y - 22, 120);
               const sway = 4 * Math.sin(frame / 16 + k);
               return (
                 <g
@@ -226,31 +251,6 @@ export const Fractions: React.FC = () => {
                 strokeWidth={6}
               />
             ) : null}
-            {/* the rooms */}
-            <g opacity={fadeIn(frame, c2)}>
-              {BFS.map((_, k) => (
-                <g key={`room${k}`}>
-                  <rect
-                    x={ROOM(k).x - 44}
-                    y={ROOM(k).y - 76}
-                    width={88}
-                    height={110}
-                    rx={8}
-                    fill={colors.wood}
-                    stroke={colors.ink}
-                    strokeWidth={3}
-                  />
-                  <text
-                    x={ROOM(k).x}
-                    y={ROOM(k).y + 70}
-                    fill={colors.muted}
-                    fontSize={28}
-                    textAnchor="middle"
-                    fontFamily={fonts.math}
-                  >
-                    {k}
-                  </text>
-                </g>
               ))}
             </g>
           </svg>
