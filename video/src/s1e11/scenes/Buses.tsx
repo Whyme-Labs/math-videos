@@ -59,7 +59,7 @@ export const Buses: React.FC = () => {
     )
     .join(" ");
   const zoom =
-    lerp(1.15, 0.92, glide(frame, c0, fps, 60)) + 0.06 * ramp(frame, c2, 120);
+    lerp(0.95, 0.8, glide(frame, c0, fps, 60)) + 0.05 * ramp(frame, c2, 120);
 
   return (
     <SceneShell id="buses">
@@ -77,7 +77,7 @@ export const Buses: React.FC = () => {
       <Sfx name="chime" at={stepAt(24) + 4} />
       <QuestionTray />
 
-      <Camera zoom={zoom} x={40} y={30}>
+      <Camera zoom={zoom} x={60} y={40}>
         <svg
           width={1920}
           height={1080}
@@ -140,7 +140,7 @@ export const Buses: React.FC = () => {
                           x={cell(b, s).x}
                           y={y + 40 - 6}
                           fill={colors.ink}
-                          fontSize={30}
+                          fontSize={42}
                           textAnchor="middle"
                           fontFamily={fonts.math}
                           fontWeight={700}
