@@ -72,18 +72,22 @@ export const Bus: React.FC = () => {
   const busX = lerp(3600, doorCenter(0) - 60, drive);
   const seatX = (k: number) => busX + 120 + k * SEAT_W;
   // guests hop n → 2n
-  const hopAt = (n: number) => c1 + 14 + n * 3;
-  const hopT = (n: number) => ramp(frame, hopAt(n), 22);
+  const hopAt = (n: number) => c1 + 14 + n * 6;
+  const hopT = (n: number) => ramp(frame, hopAt(n), 34);
   // passengers hop off: seat k → room 2k + 1
-  const offAt = (k: number) => c2 + 10 + k * 4;
-  const offT = (k: number) => ramp(frame, offAt(k), 26);
+  const offAt = (k: number) => c2 + 10 + k * 7;
+  const offT = (k: number) => ramp(frame, offAt(k), 36);
   // camera: a wide view of rooms and bus, drifting right as things move
-  const zoom = lerp(0.62, 0.5, glide(frame, c1, fps, 40));
+  const zoom = 0.85 - 0.08 * glide(frame, c2, fps, 40);
   const camX =
-    lerp(doorCenter(5.5), doorCenter(8), ramp(frame, c1, c2 + 120 - c1)) - 960;
-  const camY = lerp(1080, 1180, glide(frame, c1, fps, 40)) - 540;
-  const freed = (n: number) => n % 2 === 1 && frame >= hopAt((n - 1) / 2) + 12;
-  const filled = (n: number) => n % 2 === 1 && frame >= offAt((n - 1) / 2) + 26;
+    lerp(
+      doorCenter(4),
+      doorCenter(8.5),
+      ramp(frame, c1 + 30, c2 + 150 - c1 - 30),
+    ) - 960;
+  const camY = 1000 - 540;
+  const freed = (n: number) => n % 2 === 1 && frame >= hopAt((n - 1) / 2) + 20;
+  const filled = (n: number) => n % 2 === 1 && frame >= offAt((n - 1) / 2) + 36;
 
   return (
     <SceneShell id="bus">
@@ -91,10 +95,10 @@ export const Bus: React.FC = () => {
       <Sfx name="thud" at={c0 + 60} volume={0.25} />
       <Sfx name="page" at={c1 + 4} />
       {Array.from({ length: 8 }).map((_, n) => (
-        <Sfx key={n} name={PLUCKS[n % 6]} at={hopAt(n) + 22} volume={0.14} />
+        <Sfx key={n} name={PLUCKS[n % 6]} at={hopAt(n) + 34} volume={0.14} />
       ))}
       {Array.from({ length: 8 }).map((_, k) => (
-        <Sfx key={`o${k}`} name="pop" at={offAt(k) + 26} volume={0.14} />
+        <Sfx key={`o${k}`} name="pop" at={offAt(k) + 36} volume={0.14} />
       ))}
       <Sfx name="chime" at={offAt(8) + 30} />
       <QuestionTray />
