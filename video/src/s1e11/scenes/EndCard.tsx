@@ -22,9 +22,9 @@ export const EndCard: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("endCard");
   const [c0, c1] = cues;
-  const pull = glide(frame, c0 + 4, fps, 70);
-  const zoom = lerp(0.7, 0.22, pull);
-  const camX = lerp(doorCenter(3), doorCenter(18), pull) - 960;
+  const pull = glide(frame, c0 + 4, fps, 120);
+  const zoom = lerp(0.7, 0.38, pull);
+  const camX = lerp(doorCenter(3), doorCenter(12), pull) - 960;
   const part1 = fadeOut(frame, c1, 10);
   const bus = glide(frame, c1 + 6, fps, 40);
   const frown = glide(frame, c1 + 50, fps, 14);
@@ -108,7 +108,7 @@ export const EndCard: React.FC = () => {
             </g>
           ))}
           {/* the clerk with the passenger list */}
-          <g transform="translate(360 560)">
+          <g transform="translate(380 640) scale(1.3)">
             <Guest x={0} y={0} color={colors.green} size={1.6} />
             <line
               x1={-36}
