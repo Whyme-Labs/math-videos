@@ -431,6 +431,139 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 11) {
+    // a corridor of lit doors running off to the right; everyone steps one
+    // door along and the traveler takes room 0
+    const doors = Array.from({ length: 9 }).map((_, k) => {
+      const s = 0.84 ** k;
+      return { x: 1180 + 760 * (1 - s), s, k };
+    });
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {doors.map((d) => (
+          <g
+            key={d.k}
+            transform={`translate(${d.x} ${560 - 120 * (1 - d.s)}) scale(${d.s})`}
+          >
+            <rect
+              x={0}
+              y={0}
+              width={150}
+              height={270}
+              rx={10}
+              fill={d.k === 0 ? colors.ink : colors.wood}
+              stroke={colors.ink}
+              strokeWidth={5}
+            />
+            <rect
+              x={20}
+              y={-40}
+              width={110}
+              height={24}
+              rx={8}
+              fill={colors.primary}
+            />
+            <rect
+              x={31}
+              y={-100}
+              width={88}
+              height={50}
+              rx={10}
+              fill={colors.paper}
+            />
+            <text
+              x={75}
+              y={-62}
+              fill={colors.ink}
+              fontSize={36}
+              textAnchor="middle"
+              fontFamily={fonts.math}
+              fontWeight={700}
+            >
+              {d.k}
+            </text>
+            {d.k > 0 ? (
+              <g transform="translate(75 250)">
+                <rect
+                  x={-26}
+                  y={-92}
+                  width={52}
+                  height={70}
+                  rx={24}
+                  fill={
+                    [
+                      colors.primary,
+                      colors.orange,
+                      colors.green,
+                      colors.paper,
+                      colors.red,
+                    ][d.k % 5]
+                  }
+                  stroke={colors.ink}
+                  strokeWidth={4}
+                />
+                <circle
+                  cx={0}
+                  cy={-118}
+                  r={30}
+                  fill={
+                    [
+                      colors.primary,
+                      colors.orange,
+                      colors.green,
+                      colors.paper,
+                      colors.red,
+                    ][d.k % 5]
+                  }
+                  stroke={colors.ink}
+                  strokeWidth={4}
+                />
+              </g>
+            ) : null}
+            {d.k < 6 ? (
+              <path
+                d="M 95 -130 Q 190 -200 285 -130"
+                fill="none"
+                stroke={colors.highlight}
+                strokeWidth={8}
+                strokeDasharray="16 12"
+              />
+            ) : null}
+          </g>
+        ))}
+        <g transform="translate(1255 810) scale(1.5)">
+          <rect
+            x={-26}
+            y={-92}
+            width={52}
+            height={70}
+            rx={24}
+            fill={colors.highlight}
+            stroke={colors.ink}
+            strokeWidth={4}
+          />
+          <circle
+            cx={0}
+            cy={-118}
+            r={30}
+            fill={colors.highlight}
+            stroke={colors.ink}
+            strokeWidth={4}
+          />
+          <rect
+            x={30}
+            y={-54}
+            width={44}
+            height={36}
+            rx={6}
+            fill={colors.wood}
+            stroke={colors.ink}
+            strokeWidth={4}
+          />
+        </g>
+      </svg>
+    );
+  }
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (
