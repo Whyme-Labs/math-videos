@@ -204,6 +204,8 @@ export const Fractions: React.FC = () => {
                     {k}
                   </text>
                 </g>
+              ))}
+            </g>
             {BFS.map((f, k) => {
               const r = rowOf(k);
               const i = idxOf(k);
@@ -221,7 +223,7 @@ export const Fractions: React.FC = () => {
                   <circle
                     cx={0}
                     cy={0}
-                    r={48}
+                    r={54}
                     fill={guestColor(k)}
                     stroke={colors.ink}
                     strokeWidth={4}
@@ -251,8 +253,6 @@ export const Fractions: React.FC = () => {
                 strokeWidth={6}
               />
             ) : null}
-              ))}
-            </g>
           </svg>
         </Camera>
         <div
