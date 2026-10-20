@@ -171,9 +171,12 @@ export const Liezi: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: 1300,
-            width: 560,
-            top: 700,
+            left: 1220,
+            width: 640,
+            top: 660,
+            padding: "10px 0",
+            borderRadius: 20,
+            backgroundColor: alpha(colors.bg, 0.85),
             textAlign: "center",
             fontFamily: fonts.math,
             fontSize: 72,
