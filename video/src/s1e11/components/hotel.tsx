@@ -167,9 +167,9 @@ export const Corridor: React.FC<{
       {/* wall, wainscot and carpet */}
       <rect
         x={left}
-        y={0}
+        y={-1500}
         width={right - left}
-        height={FLOOR_Y}
+        height={FLOOR_Y + 1500}
         fill={alpha(colors.violet, 0.28)}
       />
       <rect
@@ -183,7 +183,7 @@ export const Corridor: React.FC<{
         x={left}
         y={FLOOR_Y}
         width={right - left}
-        height={300}
+        height={1500}
         fill={alpha(colors.red, 0.35)}
       />
       <rect

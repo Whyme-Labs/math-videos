@@ -40,11 +40,11 @@ export const ColdOpen: React.FC = () => {
 
   // --- outside ---
   const outside = 1 - ramp(frame, c2 - 6, 12);
-  const traveler = walk(frame, c0 + 4, c0 + 90, -120, 250);
+  const traveler = walk(frame, c0 + 4, c0 + 110, -160, 420);
   const pan = glide(frame, c1 + 4, fps, 70);
   const outZoom = lerp(1, 1.25, pan);
   const outX = lerp(0, 520, pan);
-  const sign = springIn(frame, c1 + 60, fps, 11);
+  const sign = springIn(frame, c0 + 50, fps, 11);
 
   // --- the desk ---
   const desk = ramp(frame, c2 - 6, 12) * (1 - ramp(frame, c3 - 6, 12));
@@ -65,7 +65,7 @@ export const ColdOpen: React.FC = () => {
   const door0 = glide(frame, c3 + 40, fps, 14);
   const noFall = ramp(frame, enterAt + 40, 22);
   const pull = glide(frame, c4 + 4, fps, 80);
-  const inZoom = lerp(0.82, 0.3, pull);
+  const inZoom = lerp(0.82, 0.36, pull);
   const inX = lerp(doorCenter(2.6) - 960, doorCenter(14) - 960, pull);
   const inY = lerp(-60, -40, pull);
 
@@ -76,7 +76,7 @@ export const ColdOpen: React.FC = () => {
         <Sfx key={k} name="tick" at={c0 + 14 + k * 18} volume={0.1} />
       ))}
       <Sfx name="whoosh" at={c1 + 4} volume={0.14} />
-      <Sfx name="thud" at={c1 + 60} volume={0.25} />
+      <Sfx name="thud" at={c0 + 50} volume={0.25} />
       <Sfx name="page" at={c2 + 10} />
       <Sfx name="chime" at={c2 + 26} />
       {Array.from({ length: 8 }).map((_, n) => (
@@ -186,6 +186,7 @@ export const ColdOpen: React.FC = () => {
             <Guest
               x={traveler.x}
               y={900}
+              size={1.6}
               color={colors.highlight}
               bob={traveler.moving ? frame / 2.4 : 0}
               suitcase
