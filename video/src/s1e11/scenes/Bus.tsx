@@ -22,7 +22,7 @@ import { useStrings } from "../i18n";
 
 const ROOMS = 22;
 const SEATS = 14;
-const BUS_Y = 1500;
+const BUS_Y = 1330;
 const SEAT_W = 150;
 
 const Formula: React.FC<{
@@ -118,7 +118,7 @@ export const Bus: React.FC = () => {
           {/* the street */}
           <rect
             x={-2000}
-            y={1180}
+            y={1040}
             width={14000}
             height={900}
             fill={alpha(colors.ink, 0.9)}
@@ -127,7 +127,7 @@ export const Bus: React.FC = () => {
             <rect
               key={k}
               x={-2000 + k * 320}
-              y={1780}
+              y={1560}
               width={160}
               height={14}
               rx={7}
