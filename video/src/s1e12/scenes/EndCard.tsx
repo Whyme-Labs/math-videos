@@ -16,7 +16,7 @@ import { useStrings } from "../i18n";
 // to the right, and past all of them one more lands: ω.
 
 const STEPS = ["|ℕ|", "|ℝ|", "|P(ℝ)|", "|P(P(ℝ))|", "…"];
-const step = (k: number) => ({ x: 420 + k * 300, y: 860 - k * 190 });
+const step = (k: number) => ({ x: 420 + k * 300, y: 720 - k * 170 });
 
 export const EndCard: React.FC = () => {
   const frame = useCurrentFrame();

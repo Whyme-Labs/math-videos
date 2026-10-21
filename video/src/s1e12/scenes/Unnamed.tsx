@@ -44,7 +44,7 @@ export const Unnamed: React.FC = () => {
   const dim = ramp(frame, c2, 20);
   const dart = ramp(frame, c2 + 16, 16);
   const dive = glide(frame, c2 + 36, fps, 40);
-  const zoom = lerp(1, 6, dive);
+  const zoom = lerp(1, 3, dive);
   const camX = lerp(0, lx(DART) - 960, dive);
   const camY = lerp(0, LINE.y - 540, dive);
   const dartP = hop(dart, 2100, 160, lx(DART), LINE.y - 6, -120);
@@ -208,7 +208,7 @@ export const Unnamed: React.FC = () => {
               x={lx(DART)}
               y={LINE.y + 26}
               fill={colors.highlight}
-              fontSize={7}
+              fontSize={16}
               textAnchor="middle"
               fontFamily={fonts.mono}
               opacity={fadeIn(frame, c2 + 70)}

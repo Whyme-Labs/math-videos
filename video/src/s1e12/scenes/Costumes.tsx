@@ -16,9 +16,9 @@ import { useStrings } from "../i18n";
 // it, sparks and jams.
 
 const N = 5;
-const CELL = 128;
-const GX = 560;
-const GY = 220;
+const CELL = 100;
+const GX = 620;
+const GY = 180;
 const grid = [
   [1, 0, 1, 1, 0],
   [0, 1, 0, 1, 1],
