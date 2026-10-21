@@ -316,11 +316,12 @@ export const Costumes: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 90,
-          left: 0,
-          width: "100%",
+          top: 400,
+          left: 150,
+          width: 300,
           textAlign: "center",
-          fontSize: 40,
+          fontFamily: fonts.title,
+          fontSize: 52,
           color: colors.muted,
           opacity: fadeIn(frame, skinAt[skin] + 4),
         }}
