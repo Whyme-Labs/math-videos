@@ -138,7 +138,8 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     开方不尽 and 刘徽's 微少/微多 (S1E07), 刘徽割圆术 (S1E08), 《庄子·天下》
     "一尺之棰，日取其半，万世不竭" (S1E09), 《周髀算经》商高
     "句广三，股修四，径隅五" and 赵爽弦图 (S1E10), 《列子·汤问》
-    "无极之外复无无极，无尽之中复无无尽" (S1E11).
+    "无极之外复无无极，无尽之中复无无尽" (S1E11), 《韩非子·难一》自相矛盾
+    (S1E12).
 
 ## Titles and posts for each platform
 

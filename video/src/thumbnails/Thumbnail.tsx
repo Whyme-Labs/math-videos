@@ -564,6 +564,80 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 12) {
+    // a grid of digits with its diagonal lit, and the flipped name below
+    const D = [
+      [9, 1, 2, 1, 0, 4],
+      [0, 5, 0, 7, 9, 7],
+      [0, 4, 3, 2, 1, 2],
+      [1, 5, 3, 7, 7, 1],
+      [5, 6, 7, 8, 5, 3],
+      [1, 0, 5, 2, 0, 0],
+    ];
+    const C = 108;
+    const X = 1040;
+    const Y = 150;
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <rect
+          x={X - 30}
+          y={Y - 30}
+          width={6 * C + 60}
+          height={6 * C + 60}
+          rx={24}
+          fill={colors.paper}
+        />
+        {D.map((row, r) =>
+          row.map((d, c) => (
+            <g key={`${r}-${c}`}>
+              {r === c ? (
+                <rect
+                  x={X + c * C + 6}
+                  y={Y + r * C + 6}
+                  width={C - 12}
+                  height={C - 12}
+                  rx={14}
+                  fill={colors.primary}
+                />
+              ) : null}
+              <text
+                x={X + (c + 0.5) * C}
+                y={Y + (r + 0.68) * C}
+                fill={colors.ink}
+                fontSize={58}
+                textAnchor="middle"
+                fontFamily={fonts.mono}
+                fontWeight={r === c ? 800 : 400}
+              >
+                {d}
+              </text>
+            </g>
+          )),
+        )}
+        <rect
+          x={X - 30}
+          y={Y + 6 * C + 60}
+          width={6 * C + 60}
+          height={130}
+          rx={24}
+          fill={colors.highlight}
+          stroke={colors.ink}
+          strokeWidth={6}
+        />
+        <text
+          x={X + 3 * C}
+          y={Y + 6 * C + 148}
+          fill={colors.ink}
+          fontSize={72}
+          textAnchor="middle"
+          fontFamily={fonts.mono}
+          fontWeight={800}
+        >
+          0.545545…
+        </text>
+      </svg>
+    );
+  }
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (

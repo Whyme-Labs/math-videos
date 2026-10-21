@@ -76,6 +76,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Full hotel.", "Room for one more."], accent: 1, size: 100 },
     zh: { lines: ["客满了", "还能再住一位"], accent: 1, size: 140 },
   },
+  {
+    ep: 12,
+    en: { lines: ["The number", "on no list"], accent: 1, size: 128 },
+    zh: { lines: ["永远排不进", "名单的数"], accent: 0, size: 136 },
+  },
 ];
 
 export const SERIES_NAME: Record<Locale, string> = {
