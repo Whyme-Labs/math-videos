@@ -24,9 +24,9 @@ import { useStrings } from "../i18n";
 // own envelope it disagrees, the host shakes their head. Nobody's party.
 
 const N = 6;
-const CELL = 112;
-const GX = 640;
-const GY = 210;
+const CELL = 96;
+const GX = 700;
+const GY = 170;
 const invited = (host: number, guest: number) =>
   [
     [1, 1, 0, 0, 1, 0],
@@ -114,12 +114,16 @@ export const Parties: React.FC = () => {
   // the new list slides up past each host
   const visitAt = (h: number) => c2 + 10 + (N - 1 - h) * 16;
   const visiting = Array.from({ length: N }).reduce<number>(
-    (acc, _, h) => (frame >= visitAt(h) ? h : acc),
+    (acc, _, h) => (frame >= visitAt(h) ? Math.min(acc, h) : acc),
     N,
   );
   const listY =
     visiting < N
-      ? lerp(NEW_Y, cy(visiting), glide(frame, visitAt(visiting), fps, 10))
+      ? lerp(
+          visiting === N - 1 ? NEW_Y : cy(visiting + 1),
+          cy(visiting),
+          glide(frame, visitAt(visiting), fps, 10),
+        )
       : NEW_Y;
   const nobody = springIn(frame, visitAt(0) + 22, fps, 9);
   const zoom =

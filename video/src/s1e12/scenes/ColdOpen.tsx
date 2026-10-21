@@ -33,7 +33,7 @@ import { useStrings } from "../i18n";
 // she lands on flips and flies onto her own name tag. She has no room. The
 // clerk reshuffles the rows; she hops the new diagonal and does it again.
 
-const L: Layout = { x: 640, y: 210, cw: 104, rh: 76 };
+const L: Layout = { x: 540, y: 130, cw: 104, rh: 72 };
 const SHUFFLE = [3, 0, 6, 1, 7, 2, 5, 4];
 
 export const ColdOpen: React.FC = () => {
@@ -257,33 +257,33 @@ export const ColdOpen: React.FC = () => {
             {/* her name tag, built from the flipped diagonal */}
             <g transform={`translate(${shake(frame, c4 + 6, 10)} 0)`}>
               <Badge
-                x={1500}
-                y={930}
+                x={1680}
+                y={560}
                 digits={badgeDigits}
                 shown={Math.max(0, badgeShown)}
-                scale={1.15}
+                scale={1}
               />
             </g>
             <g opacity={Math.min(1, noRoom) * fadeOut(frame, c4 + 28, 8)}>
               <rect
-                x={1300}
-                y={780}
+                x={1480}
+                y={410}
                 width={400}
                 height={80}
                 rx={14}
                 fill="none"
                 stroke={colors.red}
                 strokeWidth={7}
-                transform="rotate(-6 1500 820)"
+                transform="rotate(-6 1680 450)"
               />
               <text
-                x={1500}
-                y={836}
+                x={1680}
+                y={466}
                 fill={colors.red}
                 fontSize={48}
                 textAnchor="middle"
                 fontWeight={800}
-                transform="rotate(-6 1500 820)"
+                transform="rotate(-6 1680 450)"
               >
                 {tx.noRoom}
               </text>
@@ -299,7 +299,7 @@ export const ColdOpen: React.FC = () => {
             return (
               <circle
                 key={id}
-                cx={L.x - 200}
+                cx={L.x - 270}
                 cy={L.y + (slot + 0.5) * L.rh}
                 r={16}
                 fill={guestColor(id)}

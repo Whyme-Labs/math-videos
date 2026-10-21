@@ -33,9 +33,9 @@ import { useStrings } from "../i18n";
 // 0.1999…, which sits on the same point as 0.2 already on the list. Last,
 // the rows shuffle, the diagonal relights, and a new name drops out.
 
-const L: Layout = { x: 520, y: 150, cw: 118, rh: 82 };
+const L: Layout = { x: 420, y: 150, cw: 112, rh: 82 };
 const SHUFFLE = [5, 2, 7, 0, 3, 6, 1, 4];
-const BADGE = { x: 1060, y: 910 };
+const BADGE = { x: 1680, y: 600 };
 
 export const Diagonal: React.FC = () => {
   const frame = useCurrentFrame();
@@ -179,15 +179,15 @@ export const Diagonal: React.FC = () => {
               y={BADGE.y}
               digits={shuffled ? secondDigits : firstDigits}
               shown={shuffled ? shownSecond : shownFirst}
-              scale={1.3}
+              scale={1}
             />
           </g>
           {/* the rule, small and once */}
           <text
             x={1680}
-            y={140}
+            y={420}
             fill={colors.highlight}
-            fontSize={40}
+            fontSize={28}
             textAnchor="middle"
             fontFamily={fonts.mono}
             opacity={fadeIn(frame, c1 + 4) * fadeOut(frame, c2, 8)}
@@ -196,7 +196,7 @@ export const Diagonal: React.FC = () => {
           </text>
           <text
             x={1680}
-            y={200}
+            y={720}
             fill={colors.green}
             fontSize={40}
             textAnchor="middle"
