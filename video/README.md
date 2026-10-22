@@ -32,6 +32,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E11-ZH` | 希尔伯特旅馆：不用数数的计数（中文版） | [`src/s1e11`](src/s1e11) | [`s1e11-narration-zh.md`](s1e11-narration-zh.md) |
 | `S1E12` | The Diagonal Argument | [`src/s1e12`](src/s1e12) | [`s1e12-narration.md`](s1e12-narration.md) |
 | `S1E12-ZH` | 对角线论证（中文版） | [`src/s1e12`](src/s1e12) | [`s1e12-narration-zh.md`](s1e12-narration-zh.md) |
+| `S1E13` | Counting Past Infinity | [`src/s1e13`](src/s1e13) | [`s1e13-narration.md`](s1e13-narration.md) |
+| `S1E13-ZH` | 数过无穷（中文版） | [`src/s1e13`](src/s1e13) | [`s1e13-narration-zh.md`](s1e13-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -156,8 +158,9 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s1e08-social.md`](s1e08-social.md), for S1E09 in
 [`s1e09-social.md`](s1e09-social.md), for S1E10 in
 [`s1e10-social.md`](s1e10-social.md), for S1E11 in
-[`s1e11-social.md`](s1e11-social.md), and for S1E12 in
-[`s1e12-social.md`](s1e12-social.md).
+[`s1e11-social.md`](s1e11-social.md), for S1E12 in
+[`s1e12-social.md`](s1e12-social.md), and for S1E13 in
+[`s1e13-social.md`](s1e13-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).

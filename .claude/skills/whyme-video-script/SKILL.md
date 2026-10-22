@@ -139,7 +139,7 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     "一尺之棰，日取其半，万世不竭" (S1E09), 《周髀算经》商高
     "句广三，股修四，径隅五" and 赵爽弦图 (S1E10), 《列子·汤问》
     "无极之外复无无极，无尽之中复无无尽" (S1E11), 《韩非子·难一》自相矛盾
-    (S1E12).
+    (S1E12), 《庄子·齐物论》"有始也者，有未始有始也者" (S1E13).
 
 ## Titles and posts for each platform
 
