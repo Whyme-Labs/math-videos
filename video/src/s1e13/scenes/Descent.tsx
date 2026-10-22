@@ -38,8 +38,8 @@ const POS = STOPS.reduce<{ x: number; y: number }[]>((acc, _, k) => {
     k === 0
       ? prev
       : {
-          x: prev.x + (BIG.has(k) ? 320 : 170),
-          y: prev.y + (BIG.has(k) ? 190 : 56),
+          x: prev.x + (BIG.has(k) ? 380 : 170),
+          y: prev.y + (BIG.has(k) ? 280 : 56),
         },
   );
   return acc;
@@ -85,7 +85,7 @@ export const Descent: React.FC = () => {
       <Sfx name="chime" at={landAt + 8} />
 
       <Camera
-        zoom={lerp(1.1, 0.9, follow)}
+        zoom={lerp(1.1, 1.25, follow)}
         x={lerp(-200, camX, follow)}
         y={lerp(-120, camY, follow)}
       >
@@ -119,7 +119,7 @@ export const Descent: React.FC = () => {
                   x={p.x + 5}
                   y={p.y + 64}
                   fill={ground ? colors.ink : colors.primary}
-                  fontSize={s.length > 3 ? 36 : 48}
+                  fontSize={s.length > 3 ? 44 : 60}
                   textAnchor="middle"
                   fontFamily={fonts.math}
                   fontWeight={700}
@@ -129,10 +129,10 @@ export const Descent: React.FC = () => {
                 {/* infinitely many steps skipped on a long drop */}
                 {BIG.has(i) ? (
                   <text
-                    x={p.x - 170}
-                    y={p.y - 80}
-                    fill={alpha(colors.muted, 0.8)}
-                    fontSize={44}
+                    x={p.x - 210}
+                    y={p.y - 140}
+                    fill={colors.muted}
+                    fontSize={56}
                     textAnchor="middle"
                     fontFamily={fonts.math}
                   >
@@ -146,7 +146,7 @@ export const Descent: React.FC = () => {
             x={g.x}
             y={g.y}
             color={colors.highlight}
-            size={0.9}
+            size={1.1}
             phase={moving ? frame / 2.2 : undefined}
           />
         </svg>

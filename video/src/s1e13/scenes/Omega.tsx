@@ -201,10 +201,10 @@ export const Omega: React.FC = () => {
           {[0, 1, 2, 3].map((n) => (
             <Crate
               key={n}
-              x={[260, 520, 860, 1340][n]}
-              y={560}
+              x={[220, 470, 820, 1380][n]}
+              y={640}
               n={n}
-              s={Math.min(1, springIn(frame, crateAt(n), fps, 12))}
+              s={1.7 * Math.min(1, springIn(frame, crateAt(n), fps, 12))}
             />
           ))}
         </svg>
@@ -226,8 +226,8 @@ export const Omega: React.FC = () => {
               stroke={colors.muted}
               strokeWidth={3}
             />
-            {pull < 0.02 ? (
-              <g>
+            {frame < c2 + 16 ? (
+              <g opacity={fadeOut(frame, c2 + 4, 12)}>
                 <Pattern x0={X0} w={W1} h={300} depth={1} shown={draw} labels />
                 {/* ω */}
                 <g opacity={Math.min(1, omega)}>
@@ -275,8 +275,9 @@ export const Omega: React.FC = () => {
                   </text>
                 ))}
               </g>
-            ) : (
-              <g>
+            ) : null}
+            {frame >= c2 + 4 ? (
+              <g opacity={fadeIn(frame, c2 + 4, 12)}>
                 <Pattern
                   x0={X0}
                   w={W2}
@@ -318,32 +319,57 @@ export const Omega: React.FC = () => {
                   </text>
                 ))}
               </g>
-            )}
+            ) : null}
           </svg>
         </Camera>
-        {/* still further: ω^ω and ε₀ climb off to the right */}
+        {/* still further: ω^ω and ε₀, above the row */}
         <div
           style={{
             position: "absolute",
-            right: 140,
-            top: 230,
+            top: 150,
+            width: "100%",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-            gap: 26,
+            justifyContent: "center",
+            alignItems: "baseline",
+            gap: 120,
             fontFamily: fonts.math,
             fontWeight: 700,
+            color: colors.green,
+            opacity: fadeOut(frame, c3, 10),
           }}
         >
           {[
-            { l: "ω^ω", at: labelAt(1), s: 60 },
-            { l: "ε₀ = ω^ω^ω^…", at: labelAt(2), s: 72 },
+            {
+              k: "ww",
+              l: (
+                <>
+                  ω<sup>ω</sup>
+                </>
+              ),
+              at: labelAt(1),
+              s: 72,
+            },
+            {
+              k: "e0",
+              l: (
+                <>
+                  ε₀ = ω
+                  <sup>
+                    ω
+                    <sup>
+                      ω<sup>…</sup>
+                    </sup>
+                  </sup>
+                </>
+              ),
+              at: labelAt(2),
+              s: 80,
+            },
           ].map((m) => (
             <div
-              key={m.l}
+              key={m.k}
               style={{
                 fontSize: m.s,
-                color: colors.green,
                 opacity: fadeIn(frame, m.at),
                 translate: riseIn(frame, m.at, 18),
               }}
@@ -365,7 +391,7 @@ export const Omega: React.FC = () => {
               x={X0 + W2 / 2}
               y={BASE_Y - 545}
               fill={colors.green}
-              fontSize={48}
+              fontSize={58}
               textAnchor="middle"
               fontFamily={fonts.math}
               opacity={fadeIn(frame, c3 + 24)}

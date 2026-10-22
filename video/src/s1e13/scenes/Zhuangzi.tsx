@@ -145,6 +145,7 @@ export const Zhuangzi: React.FC = () => {
                   strokeWidth={Math.max(2, 10 * s)}
                 />
                 <text
+                  opacity={s < 0.9 ? 1 : 0}
                   x={960 - w / 2 + 30 * s}
                   y={470 - h / 2 + 80 * s}
                   fill={d % 2 ? colors.primary : colors.orange}

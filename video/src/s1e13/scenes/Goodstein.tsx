@@ -26,8 +26,8 @@ import { useStrings } from "../i18n";
 const NUMS = [4, 26, 41, 60, 83, 109];
 const ORDS = ["ω^ω", "2ω²+2ω+2", "2ω²+2ω+1", "2ω²+2ω", "2ω²+ω+5", "2ω²+ω+4"];
 const BASE_Y = 800;
-const barX = (k: number) => 260 + k * 220;
-const barH = (n: number) => 50 + n * 4;
+const barX = (k: number) => 320 + k * 256;
+const barH = (n: number) => 60 + n * 4.6;
 // 4^(4^4) + 3 = 2^512 + 3, the third number of the game from 19
 const BIG =
   "13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084099";
@@ -88,7 +88,7 @@ export const Goodstein: React.FC = () => {
   const walk = Math.min(6, Math.max(0, (frame - c2 - 66) / 14));
   const kk = Math.min(5, Math.floor(walk));
   const stair = (k: number) =>
-    k < 6 ? { x: 960 + k * 150, y: 300 + k * 70 } : { x: 1840, y: 760 };
+    k < 6 ? { x: 760 + k * 175, y: 300 + k * 70 } : { x: 1840, y: 760 };
   const sa = stair(kk);
   const sb = stair(kk + 1);
   const g = hop(walk - kk, sa.x, sa.y, sb.x, sb.y, kk === 5 ? 120 : 40);
@@ -161,9 +161,9 @@ export const Goodstein: React.FC = () => {
             return (
               <g key={n} opacity={fadeIn(frame, barAt(k), 6)}>
                 <rect
-                  x={barX(k) - 70}
+                  x={barX(k) - 90}
                   y={BASE_Y - h}
-                  width={140}
+                  width={180}
                   height={h}
                   rx={10}
                   fill={alpha(colors.violet, 0.75)}
@@ -255,9 +255,9 @@ export const Goodstein: React.FC = () => {
         <Camera zoom={1} x={shake(frame, c1 + 30, 16)} y={0}>
           <svg width={1920} height={1080} style={{ position: "absolute" }}>
             <rect
-              x={barX(0) - 70}
+              x={barX(0) - 90}
               y={BASE_Y - barH(19)}
-              width={140}
+              width={180}
               height={barH(19)}
               rx={10}
               fill={alpha(colors.violet, 0.75)}
@@ -279,9 +279,9 @@ export const Goodstein: React.FC = () => {
             </text>
             {/* the second tower leaves the frame */}
             <rect
-              x={barX(1) - 70}
+              x={barX(1) - 90}
               y={BASE_Y - 2400 * shoot}
-              width={140}
+              width={180}
               height={2400 * shoot}
               fill={alpha(colors.orange, 0.8)}
               stroke={colors.highlight}
@@ -298,7 +298,7 @@ export const Goodstein: React.FC = () => {
             right: 160,
             top: 210,
             fontFamily: fonts.mono,
-            fontSize: 46,
+            fontSize: 60,
             lineHeight: 1.25,
             color: colors.highlight,
             wordBreak: "break-all",
@@ -367,9 +367,9 @@ export const Goodstein: React.FC = () => {
             return (
               <g key={n} opacity={k < shownBars ? 1 : 0.15}>
                 <rect
-                  x={140 + k * 130 - 50}
+                  x={110 + k * 100 - 38}
                   y={BASE_Y - h}
-                  width={100}
+                  width={76}
                   height={h}
                   rx={8}
                   fill={alpha(colors.violet, 0.75)}
@@ -377,10 +377,10 @@ export const Goodstein: React.FC = () => {
                   strokeWidth={4}
                 />
                 <text
-                  x={140 + k * 130}
+                  x={110 + k * 100}
                   y={BASE_Y - h - 16}
                   fill={colors.primary}
-                  fontSize={34}
+                  fontSize={30}
                   textAnchor="middle"
                   fontFamily={fonts.math}
                   fontWeight={700}
@@ -396,9 +396,9 @@ export const Goodstein: React.FC = () => {
             return (
               <g key={o} opacity={k < shownBars ? 1 : 0.15}>
                 <rect
-                  x={p.x - 75}
+                  x={p.x - 87}
                   y={p.y}
-                  width={150}
+                  width={175}
                   height={1000}
                   fill={alpha(colors.green, 0.25 + k * 0.05)}
                   stroke={colors.green}
@@ -408,7 +408,7 @@ export const Goodstein: React.FC = () => {
                   x={p.x}
                   y={p.y + 46}
                   fill={colors.text}
-                  fontSize={28}
+                  fontSize={32}
                   textAnchor="middle"
                   fontFamily={fonts.math}
                   fontWeight={700}

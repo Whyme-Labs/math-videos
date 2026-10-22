@@ -51,7 +51,7 @@ export const EndCard: React.FC = () => {
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <Camera
-          zoom={lerp(1, 0.8, glide(frame, c0, fps, 80))}
+          zoom={lerp(1.15, 0.95, glide(frame, c0, fps, 80))}
           x={lerp(-100, 380, glide(frame, c0, fps, 110))}
           y={lerp(0, -260, glide(frame, c0, fps, 110))}
         >
@@ -80,7 +80,7 @@ export const EndCard: React.FC = () => {
                     x={p.x}
                     y={p.y + 64}
                     fill={k >= 3 ? colors.green : colors.primary}
-                    fontSize={46}
+                    fontSize={60}
                     textAnchor="middle"
                     fontFamily={fonts.math}
                     fontWeight={700}
@@ -117,7 +117,7 @@ export const EndCard: React.FC = () => {
               x={g.x}
               y={g.y}
               color={colors.highlight}
-              size={0.9}
+              size={1.15}
               phase={climb < STEPS.length - 1 ? frame / 2.2 : undefined}
             />
           </svg>
@@ -136,7 +136,7 @@ export const EndCard: React.FC = () => {
           />
           {/* the window and the desk */}
           <rect
-            x={1340}
+            x={1500}
             y={90}
             width={360}
             height={300}
@@ -146,62 +146,64 @@ export const EndCard: React.FC = () => {
             strokeWidth={14}
           />
           <line
-            x1={1520}
+            x1={1680}
             y1={90}
-            x2={1520}
+            x2={1680}
             y2={390}
             stroke={colors.wood}
             strokeWidth={10}
           />
-          <rect
-            x={360}
-            y={520}
-            width={1200}
-            height={44}
-            rx={8}
-            fill={colors.wood}
-            stroke={colors.ink}
-            strokeWidth={5}
-          />
-          <rect x={420} y={564} width={30} height={260} fill={colors.wood} />
-          <rect x={1470} y={564} width={30} height={260} fill={colors.wood} />
-          {/* twenty years of manuscript */}
-          <g transform={`rotate(${totter} 800 520)`}>
-            {Array.from({ length: 14 }).map((_, k) => (
-              <rect
-                key={k}
-                x={640 + ((k * 37) % 23) - 10}
-                y={498 - k * 22}
-                width={320}
-                height={22}
-                rx={3}
-                fill={k % 3 ? colors.paper : alpha(colors.paper, 0.85)}
-                stroke={colors.ink}
-                strokeWidth={2}
-              />
-            ))}
-          </g>
-          {/* the letter */}
-          <g
-            transform={`translate(${lerp(-300, 1180, fly)} ${lerp(200, 470, fly) + (frame >= land ? shake(frame, land, 3) : 0)}) rotate(${lerp(-30, -6, fly)})`}
-          >
+          <g transform="translate(340 0)">
             <rect
-              x={-110}
-              y={-70}
-              width={220}
-              height={140}
+              x={360}
+              y={520}
+              width={1200}
+              height={44}
               rx={8}
-              fill={colors.paper}
+              fill={colors.wood}
               stroke={colors.ink}
-              strokeWidth={4}
+              strokeWidth={5}
             />
-            <path
-              d="M -110 -70 L 0 10 L 110 -70"
-              fill="none"
-              stroke={colors.ink}
-              strokeWidth={4}
-            />
-            <circle cx={0} cy={14} r={16} fill={colors.red} />
+            <rect x={420} y={564} width={30} height={260} fill={colors.wood} />
+            <rect x={1470} y={564} width={30} height={260} fill={colors.wood} />
+            {/* twenty years of manuscript */}
+            <g transform={`rotate(${totter} 800 520)`}>
+              {Array.from({ length: 14 }).map((_, k) => (
+                <rect
+                  key={k}
+                  x={640 + ((k * 37) % 23) - 10}
+                  y={498 - k * 22}
+                  width={320}
+                  height={22}
+                  rx={3}
+                  fill={k % 3 ? colors.paper : alpha(colors.paper, 0.85)}
+                  stroke={colors.ink}
+                  strokeWidth={2}
+                />
+              ))}
+            </g>
+            {/* the letter */}
+            <g
+              transform={`translate(${lerp(-300, 1180, fly)} ${lerp(200, 470, fly) + (frame >= land ? shake(frame, land, 3) : 0)}) rotate(${lerp(-30, -6, fly)})`}
+            >
+              <rect
+                x={-110}
+                y={-70}
+                width={220}
+                height={140}
+                rx={8}
+                fill={colors.paper}
+                stroke={colors.ink}
+                strokeWidth={4}
+              />
+              <path
+                d="M -110 -70 L 0 10 L 110 -70"
+                fill="none"
+                stroke={colors.ink}
+                strokeWidth={4}
+              />
+              <circle cx={0} cy={14} r={16} fill={colors.red} />
+            </g>
           </g>
           <text
             x={160}
@@ -215,10 +217,12 @@ export const EndCard: React.FC = () => {
             {tx.jena}
           </text>
         </svg>
-        <AbsoluteFill style={{ top: 640, alignItems: "center", gap: 10 }}>
+        <AbsoluteFill
+          style={{ top: 250, left: 160, alignItems: "flex-start", gap: 16 }}
+        >
           <div
             style={{
-              fontSize: 44,
+              fontSize: 52,
               color: colors.muted,
               opacity: fadeIn(frame, c1 + 70),
               translate: riseIn(frame, c1 + 70),

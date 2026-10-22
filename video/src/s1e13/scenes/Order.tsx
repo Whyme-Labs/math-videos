@@ -24,9 +24,9 @@ import { useStrings } from "../i18n";
 
 const N = 30;
 const pos = (n: number, x0: number) => x0 + 1000 * (1 - 0.84 ** n);
-const size = (n: number) => 0.82 * 0.93 ** n;
-const TOP = 470;
-const BOT = 900;
+const size = (n: number) => 1.1 * 0.93 ** n;
+const TOP = 400;
+const BOT = 770;
 
 export const Order: React.FC = () => {
   const frame = useCurrentFrame();
@@ -40,7 +40,7 @@ export const Order: React.FC = () => {
   const shift = (n: number) => glide(frame, rippleAt(n), fps, 12);
   // bottom: she runs to the end
   const run = ramp(frame, c1 + 6, 50);
-  const herX = lerp(240, 1500, run);
+  const herX = lerp(240, 1400, run);
   const flag = springIn(frame, c1 + 58, fps, 10);
 
   return (
@@ -91,7 +91,7 @@ export const Order: React.FC = () => {
               y={p.y}
               color={colors.highlight}
               bib={join >= 1 ? "0" : "?"}
-              size={0.82}
+              size={1.1}
               phase={join < 1 ? frame / 2.4 : undefined}
               opacity={fadeIn(frame, c0 + 4)}
             />
@@ -104,7 +104,7 @@ export const Order: React.FC = () => {
           fontSize={52}
           fontFamily={fonts.math}
           fontWeight={700}
-          opacity={fadeIn(frame, c0 + 70)}
+          opacity={fadeIn(frame, c0 + 70) * lerp(1, 0.3, fadeIn(frame, c1, 12))}
         >
           1 + ω = ω
         </text>
@@ -113,7 +113,7 @@ export const Order: React.FC = () => {
           y={TOP - 110}
           fill={colors.muted}
           fontSize={34}
-          opacity={fadeIn(frame, c0 + 70)}
+          opacity={fadeIn(frame, c0 + 70) * lerp(1, 0.3, fadeIn(frame, c1, 12))}
         >
           {tx.noLast}
         </text>
@@ -135,13 +135,13 @@ export const Order: React.FC = () => {
             y={BOT}
             color={colors.highlight}
             bib={run >= 1 ? "ω" : "?"}
-            size={0.95}
+            size={1.25}
             phase={run < 1 ? frame / 2.2 : undefined}
           />
         ) : null}
         <g
           opacity={Math.min(1, flag)}
-          transform={`translate(1580 ${BOT - 260})`}
+          transform={`translate(1480 ${BOT - 280})`}
         >
           <line
             x1={0}
@@ -167,7 +167,7 @@ export const Order: React.FC = () => {
           </text>
         </g>
         <text
-          x={1660}
+          x={1560}
           y={BOT - 110}
           fill={colors.text}
           fontSize={52}
