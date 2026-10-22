@@ -81,6 +81,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["The number", "on no list"], accent: 1, size: 128 },
     zh: { lines: ["永远排不进", "名单的数"], accent: 0, size: 136 },
   },
+  {
+    ep: 13,
+    en: { lines: ["What comes", "after infinity?"], accent: 1, size: 124 },
+    zh: { lines: ["无穷之后", "排第几？"], accent: 1, size: 140 },
+  },
 ];
 
 export const SERIES_NAME: Record<Locale, string> = {

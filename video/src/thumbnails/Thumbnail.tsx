@@ -14,6 +14,8 @@ import { Tower } from "../shared/components/Tower";
 import { LocaleProvider, type Locale } from "../shared/locale";
 import { alpha, colors, fonts } from "../shared/theme";
 import { SetBox } from "../s1e04/components/sets";
+import { guestColor } from "../s1e11/components/hotel";
+import { Runner } from "../s1e13/components/race";
 import { splitMath } from "./math-chars";
 import {
   badge,
@@ -634,6 +636,52 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
           fontWeight={800}
         >
           0.545545…
+        </text>
+      </svg>
+    );
+  }
+  if (ep === 13) {
+    // runners 0, 1, 2, … bunching to a point; past all of them, she stands
+    // alone under the ω flag
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <rect
+          x={900}
+          y={700}
+          width={1100}
+          height={200}
+          fill={alpha(colors.red, 0.45)}
+        />
+        {Array.from({ length: 26 }).map((_, n) => (
+          <Runner
+            key={n}
+            x={980 + 620 * (1 - 0.8 ** n)}
+            y={800}
+            color={guestColor(n)}
+            bib={n < 4 ? String(n) : undefined}
+            size={1.3 * 0.9 ** n}
+          />
+        ))}
+        <line
+          x1={1740}
+          y1={420}
+          x2={1740}
+          y2={800}
+          stroke={colors.paper}
+          strokeWidth={8}
+        />
+        <path d="M 1740 420 L 1880 450 L 1740 490 Z" fill={colors.highlight} />
+        <Runner x={1740} y={800} color={colors.highlight} bib="ω" size={1.6} />
+        <text
+          x={1290}
+          y={300}
+          fill={colors.primary}
+          fontSize={96}
+          textAnchor="middle"
+          fontFamily={fonts.math}
+          fontWeight={700}
+        >
+          0, 1, 2, … ω
         </text>
       </svg>
     );
