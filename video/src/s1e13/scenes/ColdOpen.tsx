@@ -57,7 +57,9 @@ export const ColdOpen: React.FC = () => {
   // pull back to the line-up
   const pull = glide(frame, c4 + 4, fps, 50);
   const lineup = fadeIn(frame, c4 + 4, 12);
-  const zoom = lerp(1, 0.75, pull);
+  // push in on her while the bibs are tried, then pull back to the line-up
+  const push = glide(frame, c3, fps, 20);
+  const zoom = lerp(lerp(1, 1.7, push), 0.85, pull);
 
   return (
     <SceneShell id="coldOpen">
@@ -81,7 +83,11 @@ export const ColdOpen: React.FC = () => {
       <Sfx name="whoosh" at={c4 + 4} volume={0.16} />
       <Sfx name="chime" at={c4 + 44} />
 
-      <Camera zoom={zoom} x={lerp(0, 200, pull)} y={lerp(0, -40, pull)}>
+      <Camera
+        zoom={zoom}
+        x={lerp(lerp(0, 600, push), 1000, pull)}
+        y={lerp(lerp(0, 60, push), 150, pull)}
+      >
         <svg
           width={1920}
           height={1080}
@@ -140,7 +146,7 @@ export const ColdOpen: React.FC = () => {
           {tryK >= 0 && frame < c4 ? (
             <g opacity={fadeIn(frame, tryAt(tryK), 6)}>
               <rect
-                x={FINISH_X + 300}
+                x={FINISH_X + 200}
                 y={TRACK_Y - 330}
                 width={260}
                 height={74}
@@ -148,16 +154,16 @@ export const ColdOpen: React.FC = () => {
                 fill="none"
                 stroke={colors.red}
                 strokeWidth={6}
-                transform={`rotate(-6 ${FINISH_X + 430} ${TRACK_Y - 293})`}
+                transform={`rotate(-6 ${FINISH_X + 330} ${TRACK_Y - 293})`}
               />
               <text
-                x={FINISH_X + 430}
+                x={FINISH_X + 330}
                 y={TRACK_Y - 278}
                 fill={colors.red}
                 fontSize={42}
                 textAnchor="middle"
                 fontWeight={800}
-                transform={`rotate(-6 ${FINISH_X + 430} ${TRACK_Y - 293})`}
+                transform={`rotate(-6 ${FINISH_X + 330} ${TRACK_Y - 293})`}
               >
                 {tx.taken}
               </text>
