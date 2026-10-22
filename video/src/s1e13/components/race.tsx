@@ -103,15 +103,15 @@ export const Track: React.FC<{ readonly opacity?: number }> = ({
     <rect
       x={-400}
       y={180}
-      width={2800}
+      width={3800}
       height={360}
       fill={alpha(colors.ink, 0.55)}
     />
-    {Array.from({ length: 160 }).map((_, k) => (
+    {Array.from({ length: 220 }).map((_, k) => (
       <circle
         key={k}
-        cx={-380 + (k % 40) * 70 + (Math.floor(k / 40) % 2) * 35}
-        cy={230 + Math.floor(k / 40) * 80}
+        cx={-380 + (k % 55) * 70 + (Math.floor(k / 55) % 2) * 35}
+        cy={230 + Math.floor(k / 55) * 80}
         r={20}
         fill={alpha(
           [
@@ -129,7 +129,7 @@ export const Track: React.FC<{ readonly opacity?: number }> = ({
     <rect
       x={-400}
       y={TRACK_Y - 160}
-      width={2800}
+      width={3800}
       height={320}
       fill={alpha(colors.red, 0.45)}
     />
@@ -138,7 +138,7 @@ export const Track: React.FC<{ readonly opacity?: number }> = ({
         key={k}
         x1={-400}
         y1={TRACK_Y - 160 + k * 106}
-        x2={2400}
+        x2={3400}
         y2={TRACK_Y - 160 + k * 106}
         stroke={alpha(colors.paper, 0.6)}
         strokeWidth={4}
