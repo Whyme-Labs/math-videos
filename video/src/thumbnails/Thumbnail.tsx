@@ -646,7 +646,7 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     return (
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <rect
-          x={900}
+          x={1020}
           y={700}
           width={1100}
           height={200}
@@ -655,7 +655,7 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
         {Array.from({ length: 26 }).map((_, n) => (
           <Runner
             key={n}
-            x={980 + 620 * (1 - 0.8 ** n)}
+            x={1120 + 540 * (1 - 0.8 ** n)}
             y={800}
             color={guestColor(n)}
             bib={n < 4 ? String(n) : undefined}
@@ -663,17 +663,17 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
           />
         ))}
         <line
-          x1={1740}
+          x1={1790}
           y1={420}
-          x2={1740}
+          x2={1790}
           y2={800}
           stroke={colors.paper}
           strokeWidth={8}
         />
-        <path d="M 1740 420 L 1880 450 L 1740 490 Z" fill={colors.highlight} />
-        <Runner x={1740} y={800} color={colors.highlight} bib="ω" size={1.6} />
+        <path d="M 1790 420 L 1910 450 L 1790 490 Z" fill={colors.highlight} />
+        <Runner x={1790} y={800} color={colors.highlight} bib="ω" size={1.6} />
         <text
-          x={1290}
+          x={1440}
           y={300}
           fill={colors.primary}
           fontSize={96}
