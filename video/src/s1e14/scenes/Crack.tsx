@@ -74,9 +74,9 @@ export const Crack: React.FC = () => {
       <Sfx name="thud" at={tearAt + 4} volume={0.45} />
 
       <Camera
-        zoom={lerp(1, 1.25, push)}
+        zoom={lerp(1, 1.1, push)}
         x={lerp(0, 300, push)}
-        y={lerp(0, 80, push)}
+        y={lerp(0, 40, push)}
       >
         <svg
           width={1920}
@@ -133,8 +133,8 @@ export const Crack: React.FC = () => {
                 <g key={p}>
                   {/* the card drops into the funnel */}
                   <g
-                    opacity={1 - out}
-                    transform={`translate(${lerp(300 + k * 120, MACHINE.x, t)} ${lerp(200, MACHINE.y - 160, t)})`}
+                    opacity={fadeIn(frame, cardAt(k) - 10, 6) * (1 - out)}
+                    transform={`translate(${lerp(420, MACHINE.x, t)} ${lerp(200, MACHINE.y - 160, t)})`}
                   >
                     <rect
                       x={-120}
@@ -160,6 +160,41 @@ export const Crack: React.FC = () => {
                 </g>
               );
             })}
+          </g>
+          {/* the big bag R */}
+          <g opacity={fadeIn(frame, c1 + 10, 12)}>
+            {/* the two halves once it tears */}
+            <g
+              transform={`translate(${-torn * 260} ${torn * 40}) rotate(${-torn * 18} 1380 ${FLOOR})`}
+              clipPath="url(#leftHalf)"
+            >
+              <Bag x={1380} y={FLOOR} w={560} h={420} color={colors.violet} />
+            </g>
+            <g
+              transform={`translate(${torn * 260} ${torn * 40}) rotate(${torn * 18} 1380 ${FLOOR})`}
+              clipPath="url(#rightHalf)"
+            >
+              <Bag
+                x={1380}
+                y={FLOOR}
+                w={560}
+                h={420}
+                label="R"
+                color={colors.violet}
+              />
+            </g>
+            <defs>
+              <clipPath id="leftHalf">
+                <path
+                  d={`M 0 -200 L 1380 -200 L 1350 400 L 1400 560 L 1360 700 L 1380 1200 L 0 1200 Z`}
+                />
+              </clipPath>
+              <clipPath id="rightHalf">
+                <path
+                  d={`M 1380 -200 L 2400 -200 L 2400 1200 L 1380 1200 L 1360 700 L 1400 560 L 1350 400 Z`}
+                />
+              </clipPath>
+            </defs>
           </g>
           {/* the bags it makes: they drop out, then line up */}
           {[0, 1, 2].map((k) => {
@@ -200,45 +235,10 @@ export const Crack: React.FC = () => {
               </g>
             );
           })}
-          {/* the big bag R */}
-          <g opacity={fadeIn(frame, c1 + 10, 12)}>
-            {/* the two halves once it tears */}
-            <g
-              transform={`translate(${-torn * 260} ${torn * 40}) rotate(${-torn * 18} 1380 ${FLOOR})`}
-              clipPath="url(#leftHalf)"
-            >
-              <Bag
-                x={1380}
-                y={FLOOR}
-                w={560}
-                h={420}
-                label="R"
-                color={colors.violet}
-              />
-            </g>
-            <g
-              transform={`translate(${torn * 260} ${torn * 40}) rotate(${torn * 18} 1380 ${FLOOR})`}
-              clipPath="url(#rightHalf)"
-            >
-              <Bag x={1380} y={FLOOR} w={560} h={420} color={colors.violet} />
-            </g>
-            <defs>
-              <clipPath id="leftHalf">
-                <path
-                  d={`M 0 -200 L 1380 -200 L 1350 400 L 1400 560 L 1360 700 L 1380 1200 L 0 1200 Z`}
-                />
-              </clipPath>
-              <clipPath id="rightHalf">
-                <path
-                  d={`M 1380 -200 L 2400 -200 L 2400 1200 L 1380 1200 L 1360 700 L 1400 560 L 1350 400 Z`}
-                />
-              </clipPath>
-            </defs>
-          </g>
           {/* R, small, trying to get into itself */}
           {frame >= c2 + 6 && frame < tearAt + 4
             ? (() => {
-                const p = hop(rIn, 1380, FLOOR - 470, 1380, FLOOR - 60, 120);
+                const p = hop(rIn, 1380, FLOOR - 440, 1380, FLOOR - 60, 120);
                 return (
                   <Bag
                     x={

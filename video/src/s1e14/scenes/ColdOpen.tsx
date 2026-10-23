@@ -137,7 +137,7 @@ export const ColdOpen: React.FC = () => {
             stroke={colors.wood}
             strokeWidth={10}
           />
-          <g transform="translate(560 180)">
+          <g transform="translate(660 170)">
             <rect
               x={-90}
               y={0}
@@ -193,17 +193,18 @@ export const ColdOpen: React.FC = () => {
             {tx.fromRussell}
           </text>
           <Person
-            x={lerp(300, 980, walk)}
+            x={lerp(250, 1000, walk)}
             color={colors.orange}
             beard
-            size={1.5}
+            y={850}
+            size={2.3}
             bob={frame < c1 ? write : walk > 0 && walk < 1 ? frame / 3 : 0}
             facing={1}
           />
           {/* his reply */}
           <g
             opacity={fadeIn(frame, c4 + 20)}
-            transform={`translate(1240 ${DESK_Y - 240}) rotate(4)`}
+            transform={`translate(330 ${DESK_Y - 290}) rotate(-4)`}
           >
             <rect
               x={-220}
@@ -249,7 +250,7 @@ export const ColdOpen: React.FC = () => {
               x={0}
               y={-300}
               fill={colors.paper}
-              fontSize={36}
+              fontSize={48}
               textAnchor="middle"
               opacity={0.85}
             >

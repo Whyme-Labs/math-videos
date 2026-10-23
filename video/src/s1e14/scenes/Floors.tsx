@@ -16,7 +16,7 @@ import { useStrings } from "../i18n";
 // the camera rides up, and every floor has its own bag marked 2; back down
 // on floor 0, the things run off to the right without end.
 
-const floorY = (k: number) => 900 - k * 250;
+const floorY = (k: number) => 780 - k * 230;
 const THINGS = [
   { x: 520, el: (x: number, y: number) => <Cup x={x} y={y} s={0.8} /> },
   { x: 620, el: (x: number, y: number) => <Cup x={x} y={y} s={0.8} /> },
@@ -42,12 +42,12 @@ export const Floors: React.FC = () => {
   const bounced = frame >= c1 + 34;
   const fallBack = glide(frame, c1 + 34, fps, 12);
   const rY = bounced
-    ? lerp(floorY(2) - 180, floorY(2), fallBack)
-    : lerp(floorY(2), floorY(2) - 180, jump);
+    ? lerp(floorY(2) - 100, floorY(2), fallBack)
+    : lerp(floorY(2), floorY(2) - 100, jump);
   // the price: ride up past a 2 on every floor, then back down to floor 0
   const up = glide(frame, c2 + 4, fps, 50);
   const down = glide(frame, c2 + 70, fps, 30);
-  const camY = lerp(0, -1050, up) * (1 - down) + 80 * down;
+  const camY = lerp(0, -1000, up) * (1 - down) + 60 * down;
   const camX = lerp(0, 600, down);
   const many = glide(frame, c2 + 86, fps, 40);
 
@@ -113,6 +113,18 @@ export const Floors: React.FC = () => {
               ) : null}
             </g>
           ))}
+          <text
+            x={1900}
+            y={floorY(0) - 110}
+            fill={colors.highlight}
+            fontSize={52}
+            textAnchor="middle"
+            fontFamily={fonts.title}
+            fontWeight={800}
+            opacity={fadeIn(frame, c2 + 96)}
+          >
+            {tx.infinitelyMany}
+          </text>
           {/* floor 0: things */}
           {THINGS.map((t, k) => (
             <g key={k} opacity={fadeIn(frame, thingAt(k), 6)}>
@@ -236,20 +248,6 @@ export const Floors: React.FC = () => {
         >
           {tx.cantAsk}
         </span>
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: 80,
-          left: 120,
-          fontFamily: fonts.title,
-          fontSize: 52,
-          fontWeight: 800,
-          color: colors.highlight,
-          opacity: fadeIn(frame, c2 + 96),
-        }}
-      >
-        {tx.infinitelyMany}
       </div>
     </SceneShell>
   );

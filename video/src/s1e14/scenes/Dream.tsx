@@ -35,34 +35,34 @@ type Pair = {
 };
 const PAIRS: Pair[] = [
   {
-    el: (x, y) => <Cup x={x} y={y} s={0.8} />,
+    el: (x, y) => <Cup x={x} y={y} s={1.2} />,
     from: [-200, 300],
-    to: [820, 760],
+    to: [780, 620],
   },
   {
-    el: (x, y) => <Shoe x={x} y={y} s={0.8} />,
+    el: (x, y) => <Shoe x={x} y={y} s={1.2} />,
     from: [2100, 260],
-    to: [1120, 760],
+    to: [1140, 620],
   },
   {
-    el: (x, y) => <Star x={x} y={y} s={0.9} />,
+    el: (x, y) => <Star x={x} y={y} s={1.3} />,
     from: [960, -200],
-    to: [960, 620],
+    to: [960, 540],
   },
   {
-    el: (x, y) => <Person x={x} y={y} color={colors.green} size={0.5} />,
+    el: (x, y) => <Person x={x} y={y} color={colors.green} size={0.75} />,
     from: [-200, 900],
-    to: [760, 600],
+    to: [790, 850],
   },
   {
-    el: (x, y) => <Letter x={x} y={y - 30} scale={0.35} />,
+    el: (x, y) => <Letter x={x} y={y - 30} scale={0.5} />,
     from: [2100, 900],
-    to: [1180, 600],
+    to: [1140, 830],
   },
   {
-    el: (x, y) => <Saucer x={x} y={y} s={0.8} />,
+    el: (x, y) => <Saucer x={x} y={y} s={1} />,
     from: [2100, -100],
-    to: [960, 820],
+    to: [960, 720],
   },
 ];
 
@@ -105,10 +105,11 @@ export const Dream: React.FC = () => {
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
           <Person
-            x={420}
+            x={320}
+            y={850}
             color={colors.orange}
             beard
-            size={1.5}
+            size={2.3}
             bob={toss > 0 && toss < 1 ? frame / 3 : 0}
           />
           <g transform={`translate(${book.x} ${book.y}) rotate(${toss * 540})`}>
@@ -181,9 +182,9 @@ export const Dream: React.FC = () => {
       {/* parts 2 and 3: the table, then the bag of all pairs */}
       <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 2, 10) }}>
         <Camera
-          zoom={lerp(1.15, 0.62, pull)}
+          zoom={lerp(1.15, 0.85, pull)}
           x={lerp(0, 0, pull)}
-          y={lerp(-40, 160, pull)}
+          y={lerp(-40, 120, pull)}
         >
           <svg
             width={1920}
@@ -199,8 +200,8 @@ export const Dream: React.FC = () => {
                 const t = glide(frame, cupAt(k), fps, 12);
                 const p = hop(
                   t,
-                  240 + k * 40,
-                  900,
+                  140 + k * 70,
+                  560,
                   SAUCER_X(k),
                   DESK_Y - 6,
                   220,
@@ -248,9 +249,9 @@ export const Dream: React.FC = () => {
             <g opacity={fadeIn(frame, c2 + 6, 12)}>
               <Bag
                 x={960}
-                y={1020}
-                w={900 * swell}
-                h={620 * swell}
+                y={920}
+                w={760 * swell}
+                h={520 * swell}
                 label="2"
                 color={colors.violet}
               />
@@ -261,8 +262,8 @@ export const Dream: React.FC = () => {
               const y = lerp(p.from[1], p.to[1], t);
               return (
                 <g key={k} opacity={fadeIn(frame, pairAt(k), 4)}>
-                  {p.el(x - 50, y)}
-                  {p.el(x + 50, y)}
+                  {p.el(x - 65, y)}
+                  {p.el(x + 65, y)}
                 </g>
               );
             })}

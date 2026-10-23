@@ -60,11 +60,18 @@ export const Principia: React.FC = () => {
           style={{ position: "absolute", overflow: "visible" }}
         >
           <Desk />
-          <Person x={300} color={colors.green} size={1.5} bob={frame / 30} />
+          <Person
+            x={230}
+            y={850}
+            color={colors.green}
+            size={2.2}
+            bob={frame / 30}
+          />
           <Person
             x={1700}
+            y={850}
             color={colors.highlight}
-            size={1.4}
+            size={2.1}
             facing={-1}
             bob={frame / 30 + 1}
           />
