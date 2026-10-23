@@ -16,6 +16,7 @@ import { alpha, colors, fonts } from "../shared/theme";
 import { SetBox } from "../s1e04/components/sets";
 import { guestColor } from "../s1e11/components/hotel";
 import { Runner } from "../s1e13/components/race";
+import { Bag } from "../s1e14/components/study";
 import { splitMath } from "./math-chars";
 import {
   badge,
@@ -682,6 +683,82 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
           fontWeight={700}
         >
           0, 1, 2, … ω
+        </text>
+      </svg>
+    );
+  }
+  if (ep === 14) {
+    // the manuscript stack tipping over, the letter on top, and the bag R
+    // with its arrow curling back into itself
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <rect
+          x={1000}
+          y={820}
+          width={900}
+          height={36}
+          rx={8}
+          fill={colors.wood}
+          stroke={colors.ink}
+          strokeWidth={5}
+        />
+        <g transform="rotate(9 1260 820)">
+          {Array.from({ length: 16 }).map((_, k) => (
+            <rect
+              key={k}
+              x={1120 + ((k * 37) % 21) - 10 + Math.max(0, k - 10) * 14}
+              y={800 - k * 22}
+              width={280}
+              height={22}
+              rx={3}
+              fill={colors.paper}
+              stroke={colors.ink}
+              strokeWidth={2}
+            />
+          ))}
+          <g transform="translate(1270 420) rotate(-10)">
+            <rect
+              x={-120}
+              y={-76}
+              width={240}
+              height={152}
+              rx={8}
+              fill={colors.paper}
+              stroke={colors.ink}
+              strokeWidth={5}
+            />
+            <path
+              d="M -120 -76 L 0 10 L 120 -76"
+              fill="none"
+              stroke={colors.ink}
+              strokeWidth={5}
+            />
+            <circle cx={0} cy={14} r={18} fill={colors.red} />
+          </g>
+        </g>
+        <Bag x={1660} y={700} w={280} h={230} label="R" color={colors.violet} />
+        <path
+          d="M 1760 470 C 1900 380 1940 640 1790 650"
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={12}
+          strokeLinecap="round"
+        />
+        <polygon
+          points="0,-22 34,0 0,22"
+          fill={colors.primary}
+          transform="translate(1790 650) rotate(170)"
+        />
+        <text
+          x={1500}
+          y={230}
+          fill={colors.highlight}
+          fontSize={110}
+          textAnchor="middle"
+          fontFamily={fonts.math}
+          fontWeight={700}
+        >
+          R ∈ R ?
         </text>
       </svg>
     );
