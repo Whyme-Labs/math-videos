@@ -126,6 +126,31 @@ export const EndCard: React.FC = () => {
               ✗ {tx.typeError}
             </span>
           </div>
+          {/* the types: a number and a word live on different floors */}
+          <div style={{ position: "relative", height: 0 }}>
+            {[
+              { t: "ℕ", x: 0, at: c0 + 26, c: colors.primary },
+              { t: "String", x: 150, at: c0 + 32, c: colors.orange },
+            ].map((b) => (
+              <div
+                key={b.t}
+                style={{
+                  position: "absolute",
+                  left: b.x,
+                  top: 18,
+                  padding: "2px 14px",
+                  borderRadius: 10,
+                  border: `3px solid ${b.c}`,
+                  color: b.c,
+                  fontSize: 30,
+                  opacity: fadeIn(frame, b.at, 6),
+                  translate: `0 ${lerp(-14, 0, Math.min(1, springIn(frame, b.at, fps, 10)))}px`,
+                }}
+              >
+                {b.t}
+              </div>
+            ))}
+          </div>
           <div
             style={{
               marginTop: 90,
@@ -159,7 +184,7 @@ export const EndCard: React.FC = () => {
       <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4) }}>
         <Camera
           zoom={lerp(1, 1.12, glide(frame, c1 + 30, fps, 40))}
-          x={lerp(0, 180, glide(frame, c1 + 30, fps, 40))}
+          x={0}
           y={0}
         >
           <svg
@@ -169,9 +194,9 @@ export const EndCard: React.FC = () => {
           >
             {/* the blackboard */}
             <rect
-              x={1080}
+              x={1240}
               y={120}
-              width={700}
+              width={560}
               height={300}
               rx={10}
               fill={alpha(colors.green, 0.25)}
@@ -181,9 +206,9 @@ export const EndCard: React.FC = () => {
             {[0, 1, 2].map((r) => (
               <line
                 key={r}
-                x1={1130}
+                x1={1290}
                 y1={190 + r * 80}
-                x2={1600 - r * 90}
+                x2={1700 - r * 90}
                 y2={190 + r * 80}
                 stroke={alpha(colors.paper, 0.5)}
                 strokeWidth={5}
@@ -202,7 +227,7 @@ export const EndCard: React.FC = () => {
                         x={x}
                         y={y - 80 * stand}
                         color={colors.highlight}
-                        size={0.95}
+                        size={1.1}
                         glasses
                         facing={1}
                       />

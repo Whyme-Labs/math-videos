@@ -218,7 +218,7 @@ export const Floors: React.FC = () => {
         style={{
           position: "absolute",
           top: 70,
-          right: 140,
+          left: 120,
           display: "flex",
           alignItems: "baseline",
           gap: 30,

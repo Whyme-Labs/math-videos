@@ -137,7 +137,7 @@ export const ColdOpen: React.FC = () => {
             stroke={colors.wood}
             strokeWidth={10}
           />
-          <g transform="translate(660 170)">
+          <g transform="translate(1200 170)">
             <rect
               x={-90}
               y={0}

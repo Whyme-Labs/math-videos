@@ -129,7 +129,7 @@ export const Mojing: React.FC = () => {
                 x={390}
                 y={780}
                 color={colors.orange}
-                size={1.5}
+                size={2.2}
                 bob={frame < c1 + 30 ? frame / 4 : 0}
               />
               {/* the sign */}
@@ -229,7 +229,19 @@ export const Mojing: React.FC = () => {
                 h={400}
                 label="R"
                 color={colors.violet}
-              />
+              >
+                <text
+                  x={0}
+                  y={-140}
+                  fill={colors.highlight}
+                  fontSize={180}
+                  textAnchor="middle"
+                  fontFamily={fonts.math}
+                  fontWeight={800}
+                >
+                  R
+                </text>
+              </Bag>
               <path
                 d="M 1150 460 C 1450 400 1500 760 1180 760"
                 fill="none"
