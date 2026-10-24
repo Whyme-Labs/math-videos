@@ -11,12 +11,13 @@ import {
   type Window,
 } from "../shared/components/rationals";
 import { Tower } from "../shared/components/Tower";
-import { LocaleProvider, type Locale } from "../shared/locale";
+import { LocaleProvider, useLocale, type Locale } from "../shared/locale";
 import { alpha, colors, fonts } from "../shared/theme";
 import { SetBox } from "../s1e04/components/sets";
 import { guestColor } from "../s1e11/components/hotel";
 import { Runner } from "../s1e13/components/race";
 import { Bag } from "../s1e14/components/study";
+import { Card, Robot } from "../s1e15/components/world";
 import { splitMath } from "./math-chars";
 import {
   badge,
@@ -44,6 +45,18 @@ export type ThumbProps = {
 };
 
 const ART = { x: 1400, y: 540 };
+
+// the Gödel sentence on its card, in the thumbnail's language
+const NotProvable: React.FC = () => (
+  <Card
+    x={1520}
+    y={260}
+    text={useLocale() === "zh" ? "我不能被证明" : "I am not provable"}
+    w={440}
+    glow={1}
+    color={colors.highlight}
+  />
+);
 
 const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
   if (ep === 1)
@@ -767,6 +780,46 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
             fontWeight={700}
           >
             R ∈ R ?
+          </text>
+        </g>
+      </svg>
+    );
+  }
+  if (ep === 15) {
+    // the proving robot on its pile of theorems, reaching for the one card
+    // it can never print
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <g transform="translate(60 0)">
+          {Array.from({ length: 9 }).map((_, k) => (
+            <Card
+              key={k}
+              x={1180 + (k % 3) * 100}
+              y={860 - Math.floor(k / 3) * 64}
+              text="✓"
+              w={84}
+              s={0.8}
+              color={alpha(colors.green, 0.6)}
+            />
+          ))}
+          <Robot x={1280} y={700} s={1.2} look={1} />
+          <NotProvable />
+          <path
+            d="M 1400 420 Q 1440 360 1470 320"
+            fill="none"
+            stroke={colors.primary}
+            strokeWidth={8}
+            strokeDasharray="14 12"
+          />
+          <text
+            x={1690}
+            y={420}
+            fill={colors.red}
+            fontSize={120}
+            fontFamily={fonts.math}
+            fontWeight={800}
+          >
+            ⊬
           </text>
         </g>
       </svg>

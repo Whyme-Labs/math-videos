@@ -95,6 +95,11 @@ export const THUMBS: Thumb[] = [
     },
     zh: { lines: ["一封信", "让算术摇晃"], accent: 1, size: 140 },
   },
+  {
+    ep: 15,
+    en: { lines: ["True, but", "unprovable"], accent: 1, size: 136 },
+    zh: { lines: ["是真的", "却证明不了"], accent: 1, size: 140 },
+  },
 ];
 
 export const SERIES_NAME: Record<Locale, string> = {
