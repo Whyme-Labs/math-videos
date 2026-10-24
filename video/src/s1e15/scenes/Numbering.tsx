@@ -31,11 +31,11 @@ export const Numbering: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("numbering");
   const [c0, c1] = cues;
-  const tileAt = (k: number) => c0 + 6 + k * 8;
-  const codeAt = (k: number) => c0 + 36 + k * 8;
-  const climbAt = (k: number) => c0 + 70 + k * 10;
-  const squeeze = glide(frame, c0 + 130, fps, 16);
-  const drop = glide(frame, c0 + 150, fps, 16);
+  const tileAt = (k: number) => c0 + 8 + k * 12;
+  const codeAt = (k: number) => c0 + 50 + k * 12;
+  const climbAt = (k: number) => c0 + 100 + k * 14;
+  const squeeze = glide(frame, c0 + 196, fps, 16);
+  const drop = glide(frame, c0 + 214, fps, 16);
   const part1 = fadeOut(frame, c1, 10);
   // the proof scroll
   const lineAt = (k: number) => c1 + 20 + k * 14;
@@ -54,8 +54,8 @@ export const Numbering: React.FC = () => {
       {TILES.map((_, k) => (
         <Sfx key={`u${k}`} name="pop" at={climbAt(k) + 10} volume={0.14} />
       ))}
-      <Sfx name="whoosh" at={c0 + 130} volume={0.16} />
-      <Sfx name="thud" at={c0 + 166} volume={0.3} />
+      <Sfx name="whoosh" at={c0 + 196} volume={0.16} />
+      <Sfx name="thud" at={c0 + 230} volume={0.3} />
       {SCROLL.map((_, k) => (
         <Sfx key={`l${k}`} name="tick" at={lineAt(k) + 10} volume={0.14} />
       ))}
@@ -205,13 +205,14 @@ export const Numbering: React.FC = () => {
               );
             })}
             <text
-              x={1500}
-              y={560}
+              x={960}
+              textAnchor="middle"
+              y={670}
               fill={colors.text}
               fontSize={80}
               fontFamily={fonts.math}
               fontWeight={700}
-              opacity={fadeIn(frame, c0 + 108) * (1 - squeeze)}
+              opacity={fadeIn(frame, c0 + 150) * (1 - squeeze)}
             >
               = 2 × 27 × 5
             </text>
@@ -270,7 +271,7 @@ export const Numbering: React.FC = () => {
           {/* part 2: a proof is a number too */}
           <g opacity={fadeIn(frame, c1 + 4, 10)}>
             <g
-              transform={`translate(${lerp(500, 2900, roll)} ${lerp(330, LINE_Y - 90, roll)}) scale(${lerp(1, 0.5, roll)})`}
+              transform={`translate(${lerp(500, 2200, roll)} ${lerp(330, LINE_Y - 90, roll)}) scale(${lerp(1, 0.5, roll)})`}
             >
               <rect
                 x={-220}
@@ -361,7 +362,7 @@ export const Numbering: React.FC = () => {
             </g>
             {/* and arithmetic points back at it */}
             <path
-              d={`M 1110 ${LINE_Y - 130} C 1300 200, 2600 200, 2880 ${LINE_Y - 160}`}
+              d={`M 1110 ${LINE_Y - 130} C 1300 250, 2000 250, 2180 ${LINE_Y - 160}`}
               fill="none"
               stroke={colors.primary}
               strokeWidth={8}

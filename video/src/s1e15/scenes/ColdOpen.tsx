@@ -63,8 +63,8 @@ export const ColdOpen: React.FC = () => {
       {/* day one: the round table */}
       <AbsoluteFill style={{ opacity: day1 }}>
         <Camera
-          zoom={lerp(1, 1.12, glide(frame, c0, fps, 90))}
-          x={lerp(0, 120, glide(frame, c0, fps, 90))}
+          zoom={lerp(1, 1.18, glide(frame, c0, fps, 90))}
+          x={lerp(0, 160, glide(frame, c0, fps, 90))}
           y={0}
         >
           <svg
@@ -134,7 +134,7 @@ export const ColdOpen: React.FC = () => {
             {/* the thought: axioms reach many statements, but not this one */}
             <g
               opacity={bubble}
-              transform={`translate(860 300) scale(${bubble})`}
+              transform={`translate(1000 300) scale(${bubble})`}
             >
               <ellipse
                 cx={0}
@@ -187,7 +187,10 @@ export const ColdOpen: React.FC = () => {
                   />
                 </g>
               ))}
-              <g opacity={fadeIn(frame, c1 + 64)}>
+              <g
+                opacity={fadeIn(frame, c1 + 64)}
+                transform="translate(360 0) scale(1.5) translate(-360 0)"
+              >
                 <Card
                   x={360}
                   y={-40}
@@ -231,7 +234,7 @@ export const ColdOpen: React.FC = () => {
               x={420}
               y={760}
               color={colors.orange}
-              size={2}
+              size={2.6}
               beard
               glasses
               facing={1}
@@ -276,7 +279,7 @@ export const ColdOpen: React.FC = () => {
             {/* the unreachable statement comes back */}
             <g
               opacity={star}
-              transform={`translate(${lerp(2100, 1500, star)} 700)`}
+              transform={`translate(${lerp(2100, 1500, star)} 700) scale(1.6)`}
             >
               <Card
                 x={0}
@@ -303,10 +306,10 @@ export const ColdOpen: React.FC = () => {
           style={{
             position: "absolute",
             top: 330,
-            left: 700,
-            right: 100,
+            left: 720,
+            right: 140,
             fontFamily: fonts.title,
-            fontSize: 70,
+            fontSize: 84,
             fontWeight: 800,
             color: colors.text,
             translate: `${frame >= c4 + 10 ? shake(frame, c4 + 10, 12) : 0}px 0`,
@@ -326,7 +329,7 @@ export const ColdOpen: React.FC = () => {
           </div>
           {/* a crack runs through it */}
           <svg
-            width={1120}
+            width={1000}
             height={200}
             style={{
               position: "absolute",
@@ -336,7 +339,7 @@ export const ColdOpen: React.FC = () => {
             }}
           >
             <path
-              d="M 0 90 L 160 60 L 260 120 L 420 70 L 560 130 L 700 60 L 860 110 L 1000 70 L 1120 100"
+              d="M 0 30 L 140 70 L 230 40 L 380 110 L 500 80 L 640 150 L 760 120 L 900 190 L 1000 170"
               fill="none"
               stroke={colors.red}
               strokeWidth={8}
