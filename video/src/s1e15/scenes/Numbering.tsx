@@ -271,7 +271,7 @@ export const Numbering: React.FC = () => {
           {/* part 2: a proof is a number too */}
           <g opacity={fadeIn(frame, c1 + 4, 10)}>
             <g
-              transform={`translate(${lerp(500, 2200, roll)} ${lerp(330, LINE_Y - 90, roll)}) scale(${lerp(1, 0.5, roll)})`}
+              transform={`translate(${lerp(500, 2200, roll)} ${lerp(330, LINE_Y - 90, roll)}) scale(${lerp(1, 0.9, roll)})`}
             >
               <rect
                 x={-220}

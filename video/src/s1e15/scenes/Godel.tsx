@@ -238,7 +238,7 @@ export const Godel: React.FC = () => {
           <g opacity={g3}>
             <Card
               x={1340}
-              y={-60}
+              y={40}
               text={`G₃: ${tx.notProvable}`}
               w={520}
               glow={1}
