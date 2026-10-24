@@ -49,10 +49,11 @@ const ART = { x: 1400, y: 540 };
 // the Gödel sentence on its card, in the thumbnail's language
 const NotProvable: React.FC = () => (
   <Card
-    x={1520}
-    y={260}
+    x={1440}
+    y={230}
+    s={1.5}
     text={useLocale() === "zh" ? "我不能被证明" : "I am not provable"}
-    w={440}
+    w={380}
     glow={1}
     color={colors.highlight}
   />
@@ -812,8 +813,8 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
             strokeDasharray="14 12"
           />
           <text
-            x={1690}
-            y={420}
+            x={1700}
+            y={470}
             fill={colors.red}
             fontSize={120}
             fontFamily={fonts.math}
