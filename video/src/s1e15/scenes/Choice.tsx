@@ -17,8 +17,8 @@ import { useStrings } from "../i18n";
 
 const PAIRS = 7;
 const pairX = (k: number) => 260 + k * 230;
-const SHOE_Y = 380;
-const SOCK_Y = 700;
+const SHOE_Y = 400;
+const SOCK_Y = 770;
 
 const Sock: React.FC<{
   readonly x: number;
@@ -67,8 +67,8 @@ export const Choice: React.FC = () => {
   const cues = useCues("choice");
   const [c0, c1] = cues;
   const left = glide(frame, c0 + 24, fps, 12);
-  const stamp = Math.min(1, springIn(frame, c0 + 100, fps, 9));
-  const lift = glide(frame, c0 + 112, fps, 14);
+  const stamp = Math.min(1, springIn(frame, c0 + 150, fps, 9));
+  const lift = glide(frame, c0 + 162, fps, 14);
   const part1 = fadeOut(frame, c1, 10);
   // the ball
   const burst = glide(frame, c1 + 16, fps, 20);
@@ -80,10 +80,10 @@ export const Choice: React.FC = () => {
       <Sfx name="whoosh" at={c0 + 24} volume={0.14} />
       <Sfx name="ding" at={c0 + 36} volume={0.2} />
       {[0, 1, 2].map((k) => (
-        <Sfx key={k} name="tick" at={c0 + 60 + k * 10} volume={0.12} />
+        <Sfx key={k} name="tick" at={c0 + 80 + k * 10} volume={0.12} />
       ))}
-      <Sfx name="thud" at={c0 + 100} volume={0.4} />
-      <Sfx name="sparkle" at={c0 + 112} volume={0.3} />
+      <Sfx name="thud" at={c0 + 150} volume={0.4} />
+      <Sfx name="sparkle" at={c0 + 162} volume={0.3} />
       <Sfx name="scratch" at={c1 + 16} volume={0.3} />
       <Sfx name="whoosh" at={c1 + 60} volume={0.16} />
       <Sfx name="thud" at={c1 + 90} volume={0.35} />
@@ -96,9 +96,9 @@ export const Choice: React.FC = () => {
             <g key={k}>
               <g transform={`translate(0 ${-50 * left})`}>
                 <g
-                  transform={`translate(${pairX(k) - 40} ${SHOE_Y}) scale(-1 1)`}
+                  transform={`translate(${pairX(k) - 45} ${SHOE_Y}) scale(-1 1)`}
                 >
-                  <Shoe x={0} y={0} s={1} />
+                  <Shoe x={0} y={0} s={1.4} />
                 </g>
                 <circle
                   cx={pairX(k) - 40}
@@ -108,7 +108,7 @@ export const Choice: React.FC = () => {
                   opacity={left}
                 />
               </g>
-              <Shoe x={pairX(k) + 40} y={SHOE_Y} s={1} />
+              <Shoe x={pairX(k) + 45} y={SHOE_Y} s={1.4} />
             </g>
           ))}
           {/* socks: no rule */}
@@ -121,7 +121,7 @@ export const Choice: React.FC = () => {
                     key={j}
                     transform={`translate(0 ${j === which ? -50 * lift : 0})`}
                   >
-                    <Sock x={pairX(k) + (j ? 34 : -34)} y={SOCK_Y} />
+                    <Sock x={pairX(k) + (j ? 40 : -40)} y={SOCK_Y} s={1.4} />
                   </g>
                 ))}
                 <text
@@ -132,7 +132,7 @@ export const Choice: React.FC = () => {
                   textAnchor="middle"
                   fontWeight={800}
                   opacity={
-                    fadeIn(frame, c0 + 60 + Math.min(k, 2) * 10) * (1 - lift)
+                    fadeIn(frame, c0 + 80 + Math.min(k, 2) * 10) * (1 - lift)
                   }
                 >
                   ?
@@ -225,18 +225,35 @@ export const Choice: React.FC = () => {
             );
           })}
           {/* the two balls they become */}
-          {[560, 1360].map((x) => (
-            <circle
-              key={x}
-              cx={x}
-              cy={480}
-              r={R}
-              fill={colors.primary}
-              stroke={colors.ink}
-              strokeWidth={6}
-              opacity={fadeIn(frame, c1 + 86, 8)}
-            />
-          ))}
+          {[560, 1360].map((x, k) => {
+            const bounce =
+              Math.abs(Math.sin((frame - c1 - 86) / 7 + k)) *
+              30 *
+              Math.max(0, 1 - (frame - c1 - 86) / 60);
+            return (
+              <g
+                key={x}
+                opacity={fadeIn(frame, c1 + 86, 8)}
+                transform={`translate(0 ${-bounce})`}
+              >
+                <circle
+                  cx={x}
+                  cy={480}
+                  r={R}
+                  fill={colors.primary}
+                  stroke={colors.ink}
+                  strokeWidth={6}
+                />
+                <circle
+                  cx={x - 60}
+                  cy={420}
+                  r={40}
+                  fill={colors.paper}
+                  opacity={0.5}
+                />
+              </g>
+            );
+          })}
         </svg>
         <div
           style={{

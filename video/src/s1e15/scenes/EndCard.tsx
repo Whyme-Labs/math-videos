@@ -74,7 +74,7 @@ export const EndCard: React.FC = () => {
                 y={p.y}
                 pages={3 + k}
                 title={b}
-                s={chosen ? lerp(1, 1.3, take) : 1}
+                s={chosen ? lerp(1.3, 1.7, take) : 1.3}
                 color={chosen ? colors.green : colors.violet}
               />
             );

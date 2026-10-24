@@ -74,11 +74,7 @@ export const Godel: React.FC = () => {
       <Sfx name="pop" at={c3 + 6} volume={0.2} />
       <Sfx name="thud" at={c3 + 24} volume={0.35} />
 
-      <Camera
-        zoom={lerp(1, 0.9, rise)}
-        x={0}
-        y={lerp(0, -220, rise) * (1 - glide(frame, c3, fps, 24))}
-      >
+      <Camera zoom={lerp(1, 0.85, rise)} x={0} y={0}>
         <svg
           width={1920}
           height={1080}
@@ -157,7 +153,7 @@ export const Godel: React.FC = () => {
               );
             })}
           </g>
-          <g opacity={toG}>
+          <g opacity={toG * (1 - intoBook)}>
             <Card
               x={G.x}
               y={G.y}
@@ -165,7 +161,7 @@ export const Godel: React.FC = () => {
               w={520}
               glow={stampTrue}
               color={stampTrue > 0.5 ? colors.highlight : colors.paper}
-              s={lerp(0.4, 1, toG) * (1 - intoBook * 0.6)}
+              s={lerp(0.4, 1.3, toG)}
             />
           </g>
           {/* the robot's attempt: a copy that turns false and burns */}
@@ -195,13 +191,14 @@ export const Godel: React.FC = () => {
               })()
             : null}
           <text
-            x={G.x + 300}
-            y={G.y - 60}
+            x={G.x}
+            textAnchor="middle"
+            y={G.y - 90}
             fill={colors.green}
             fontSize={60}
             fontWeight={800}
             opacity={stampTrue * (1 - intoBook)}
-            transform={`rotate(12 ${G.x + 300} ${G.y - 60})`}
+            transform={`rotate(-4 ${G.x} ${G.y - 90})`}
           >
             {tx.trueLabel} ✓
           </text>
@@ -230,12 +227,12 @@ export const Godel: React.FC = () => {
           <g opacity={g2}>
             <Card
               x={1380}
-              y={160}
+              y={170}
               text={`G₂: ${tx.notProvable}`}
               w={520}
               glow={1}
               color={colors.highlight}
-              s={g2}
+              s={1.3 * g2}
             />
           </g>
           <g opacity={g3}>
@@ -246,7 +243,7 @@ export const Godel: React.FC = () => {
               w={520}
               glow={1}
               color={colors.highlight}
-              s={g3}
+              s={1.3 * g3}
             />
           </g>
           {/* the rulebook's own consistency */}
@@ -259,7 +256,7 @@ export const Godel: React.FC = () => {
               y={0}
               text={tx.con}
               w={560}
-              s={con}
+              s={1.3 * con}
               color={colors.paper}
             />
           </g>

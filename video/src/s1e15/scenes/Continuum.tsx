@@ -166,7 +166,11 @@ export const Continuum: React.FC = () => {
       <Sfx name="pop" at={c2 + 6} volume={0.2} />
       <Sfx name="chime" at={c2 + 30} />
 
-      <Camera zoom={1} x={0} y={0}>
+      <Camera
+        zoom={lerp(lerp(1, 1.1, glide(frame, c0, fps, 120)), 1, split)}
+        x={0}
+        y={lerp(lerp(0, -40, glide(frame, c0, fps, 120)), 0, split)}
+      >
         <svg
           width={1920}
           height={1080}
@@ -188,18 +192,18 @@ export const Continuum: React.FC = () => {
             </g>
             <g opacity={split}>
               <Stairs
-                x={120}
-                y={820}
-                s={0.62}
+                x={90}
+                y={800}
+                s={0.7}
                 close={close}
                 fill={0}
                 q={1 - close}
                 frame={frame}
               />
               <Stairs
-                x={1180}
-                y={820}
-                s={0.62}
+                x={1140}
+                y={800}
+                s={0.7}
                 close={0}
                 fill={fill}
                 q={1 - fill}
@@ -221,8 +225,8 @@ export const Continuum: React.FC = () => {
             opacity={book}
             transform={`translate(960 ${lerp(1000, 560, book)})`}
           >
-            <Rulebook x={0} y={0} pages={4} title="ZFC" />
-            <g transform="translate(110 -170)">
+            <Rulebook x={0} y={0} pages={4} title="ZFC" s={1.6} />
+            <g transform="translate(180 -270)">
               <rect
                 x={0}
                 y={-50}
