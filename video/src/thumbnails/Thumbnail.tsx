@@ -18,6 +18,7 @@ import { guestColor } from "../s1e11/components/hotel";
 import { Runner } from "../s1e13/components/race";
 import { Bag } from "../s1e14/components/study";
 import { Card, Robot } from "../s1e15/components/world";
+import { Clock, CubeFace, Tile } from "../s1e16/components/props";
 import { splitMath } from "./math-chars";
 import {
   badge,
@@ -823,6 +824,38 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
             ⊬
           </text>
         </g>
+      </svg>
+    );
+  }
+  if (ep === 16) {
+    // the tile turning a quarter with a curved arrow, the flip line through
+    // it, and the clock and the cube behind: three worlds, one set of rules
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <Clock x={1700} y={300} r={130} pos={7} />
+        <CubeFace x={1720} y={780} s={0.9} twist={0.4} />
+        <Tile x={1300} y={540} size={380} rot={20} outline />
+        <path
+          d="M 1080 280 A 330 330 0 0 1 1520 280"
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={14}
+          strokeLinecap="round"
+        />
+        <polygon
+          points="0,-26 40,0 0,26"
+          fill={colors.primary}
+          transform="translate(1520 280) rotate(40)"
+        />
+        <line
+          x1={1060}
+          y1={800}
+          x2={1540}
+          y2={300}
+          stroke={colors.highlight}
+          strokeWidth={8}
+          strokeDasharray="22 16"
+        />
       </svg>
     );
   }

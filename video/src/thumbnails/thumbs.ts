@@ -100,6 +100,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["True, but", "unprovable"], accent: 1, size: 136 },
     zh: { lines: ["是真的", "却证明不了"], accent: 1, size: 140 },
   },
+  {
+    ep: 16,
+    en: { lines: ["Eight moves.", "One set of rules."], accent: 1, size: 120 },
+    zh: { lines: ["八个动作", "同一套规则"], accent: 1, size: 140 },
+  },
 ];
 
 export const SERIES_NAME: Record<Locale, string> = {
