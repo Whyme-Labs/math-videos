@@ -38,6 +38,8 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E14-ZH` | 罗素的梦（中文版） | [`src/s1e14`](src/s1e14) | [`s1e14-narration-zh.md`](s1e14-narration-zh.md) |
 | `S1E15` | The Limits of the Axioms | [`src/s1e15`](src/s1e15) | [`s1e15-narration.md`](s1e15-narration.md) |
 | `S1E15-ZH` | 公理的尽头（中文版） | [`src/s1e15`](src/s1e15) | [`s1e15-narration-zh.md`](s1e15-narration-zh.md) |
+| `S1E16` | Groups | [`src/s1e16`](src/s1e16) | [`s1e16-narration.md`](s1e16-narration.md) |
+| `S1E16-ZH` | 群（中文版） | [`src/s1e16`](src/s1e16) | [`s1e16-narration-zh.md`](s1e16-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -165,8 +167,9 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s1e11-social.md`](s1e11-social.md), for S1E12 in
 [`s1e12-social.md`](s1e12-social.md), for S1E13 in
 [`s1e13-social.md`](s1e13-social.md), for S1E14 in
-[`s1e14-social.md`](s1e14-social.md), and for S1E15 in
-[`s1e15-social.md`](s1e15-social.md).
+[`s1e14-social.md`](s1e14-social.md), for S1E15 in
+[`s1e15-social.md`](s1e15-social.md), and for S1E16 in
+[`s1e16-social.md`](s1e16-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).

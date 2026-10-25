@@ -24,7 +24,7 @@ Two seasons are planned, plus a third that connects them:
 ## Video
 
 [`video/`](video/README.md) is the Remotion project that renders the
-episodes. S1E01 to S1E15 are done, each in English and Chinese; their
+episodes. S1E01 to S1E16 are done, each in English and Chinese; their
 narration scripts are in `video/s1e0N-narration*.md`. The official
 Remotion agent skills are installed in `.claude/skills`, along with two
 writing skills, `unslop` (from poteto's pstack) and `humanizer` (blader),
