@@ -44,12 +44,13 @@ export const ColdOpen: React.FC = () => {
   const cues = useCues("coldOpen");
   const [c0, c1, c2, c3, c4] = cues;
   // eyes close, the friend acts, eyes open
-  const lids = glide(frame, c0 + 26, fps, 10) * (1 - glide(frame, c1, fps, 10));
+  const lids =
+    0.88 * glide(frame, c0 + 26, fps, 10) * (1 - glide(frame, c1, fps, 10));
   const reach =
-    glide(frame, c0 + 30, fps, 14) * (1 - glide(frame, c0 + 80, fps, 14));
+    glide(frame, c0 + 40, fps, 16) * (1 - glide(frame, c0 + 140, fps, 16));
   const lift =
-    glide(frame, c0 + 44, fps, 10) * (1 - glide(frame, c0 + 74, fps, 8));
-  const turn = glide(frame, c0 + 54, fps, 16);
+    glide(frame, c0 + 64, fps, 12) * (1 - glide(frame, c0 + 120, fps, 10));
+  const turn = glide(frame, c0 + 80, fps, 24);
   // ghosts: rotations from c1, flips from c2; each loops its move
   const ghostAt = (k: number) =>
     k < 4 ? c1 + 20 + k * 8 : c2 + 10 + (k - 4) * 8;
@@ -73,8 +74,8 @@ export const ColdOpen: React.FC = () => {
   return (
     <SceneShell id="coldOpen">
       <Sfx name="whoosh" at={c0 + 26} volume={0.14} />
-      <Sfx name="pluck2" at={c0 + 54} volume={0.12} />
-      <Sfx name="thud" at={c0 + 76} volume={0.25} />
+      <Sfx name="pluck2" at={c0 + 80} volume={0.12} />
+      <Sfx name="thud" at={c0 + 122} volume={0.25} />
       <Sfx name="whoosh" at={c1} volume={0.12} />
       {MOVES.map((_, k) => (
         <Sfx key={k} name={PLUCKS[k % 6]} at={ghostAt(k)} volume={0.12} />
@@ -137,6 +138,7 @@ export const ColdOpen: React.FC = () => {
                   90 * Math.min(1, Math.max(0, (frame - c3 - 30) / 12))
                 }
                 labels={false}
+                plain={frame < c3}
                 outline={aside < 0.5}
               />
             );
@@ -239,7 +241,7 @@ export const ColdOpen: React.FC = () => {
             right: 0,
             top: 0,
             height: 560 * lids,
-            backgroundColor: colors.ink,
+            backgroundColor: alpha(colors.ink, 0.85),
           }}
         />
         <div
@@ -249,7 +251,7 @@ export const ColdOpen: React.FC = () => {
             right: 0,
             bottom: 0,
             height: 560 * lids,
-            backgroundColor: colors.ink,
+            backgroundColor: alpha(colors.ink, 0.85),
           }}
         />
       </AbsoluteFill>

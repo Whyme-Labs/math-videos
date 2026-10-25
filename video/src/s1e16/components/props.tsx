@@ -24,6 +24,7 @@ export const Tile: React.FC<{
   readonly mark?: number; // corner index to ring (tracking a corner)
   readonly opacity?: number;
   readonly outline?: boolean; // draw the fixed outline under it
+  readonly plain?: boolean; // no corner markings: every move looks the same
 }> = ({
   x,
   y,
@@ -35,6 +36,7 @@ export const Tile: React.FC<{
   mark,
   opacity = 1,
   outline = false,
+  plain = false,
 }) => {
   const h = size / 2;
   const corners = [
@@ -72,7 +74,7 @@ export const Tile: React.FC<{
           stroke={colors.ink}
           strokeWidth={6}
         />
-        {corners.map(([cx, cy], k) => (
+        {(plain ? [] : corners).map(([cx, cy], k) => (
           <g key={k}>
             <circle
               cx={cx * 0.72}

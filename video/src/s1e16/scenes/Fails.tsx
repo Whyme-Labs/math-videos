@@ -158,7 +158,7 @@ export const Fails: React.FC = () => {
             x={pos.x}
             y={pos.y + fallY}
             color={colors.highlight}
-            size={1.1}
+            size={1.6}
             bob={frame / 3}
           />
         </svg>

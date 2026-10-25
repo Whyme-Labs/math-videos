@@ -23,9 +23,9 @@ export const Order: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("order");
   const [c0, c1] = cues;
-  const a = glide(frame, c0 + 14, fps, 16); // first move
-  const b = glide(frame, c0 + 44, fps, 16); // second move
-  const result = Math.min(1, springIn(frame, c0 + 70, fps, 10));
+  const a = glide(frame, c0 + 20, fps, 22); // first move
+  const b = glide(frame, c0 + 80, fps, 22); // second move
+  const result = Math.min(1, springIn(frame, c0 + 130, fps, 10));
   const part1 = fadeOut(frame, c1, 10);
   // socks and shoes
   const sockOn = glide(frame, c1 + 10, fps, 12);
@@ -35,9 +35,9 @@ export const Order: React.FC = () => {
 
   return (
     <SceneShell id="order">
-      <Sfx name="pluck2" at={c0 + 14} volume={0.14} />
-      <Sfx name="pluck4" at={c0 + 44} volume={0.14} />
-      <Sfx name="ding" at={c0 + 70} volume={0.2} />
+      <Sfx name="pluck2" at={c0 + 20} volume={0.14} />
+      <Sfx name="pluck4" at={c0 + 80} volume={0.14} />
+      <Sfx name="ding" at={c0 + 130} volume={0.2} />
       <Sfx name="pop" at={c1 + 10} volume={0.14} />
       <Sfx name="thud" at={c1 + 30} volume={0.2} />
       <Sfx name="whoosh" at={c1 + 66} volume={0.14} />
@@ -163,7 +163,7 @@ export const Order: React.FC = () => {
               transform={`translate(${lerp(140, 8, shoeOn) + lerp(0, 140, shoeOff)} 10)`}
               opacity={shoeOn * (1 - shoeOff)}
             >
-              <Shoe x={0} y={0} s={0.9} />
+              <Shoe x={0} y={0} s={1.2} />
             </g>
           </g>
           {/* the order, on and off */}

@@ -15,7 +15,8 @@ import { useStrings } from "../i18n";
 // with brackets, give the same tile. Then the badges merge into one word,
 // "group", and the clock and the cube step up beside the tile wearing it.
 
-const badgeX = (k: number) => 300 + k * 440;
+const badgeX = (k: number) => (k % 2 ? 1400 : 520);
+const badgeY = (k: number) => (k < 2 ? 100 : 196);
 const BADGE_Y = 130;
 const CARD_Y = 790;
 
@@ -57,13 +58,13 @@ export const Rules: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("rules");
   const [c0, c1, c2] = cues;
-  const badgeAt = [c0 + 10, c0 + 70, c1 + 6, c1 + 66];
+  const badgeAt = [c0 + 10, c0 + 100, c1 + 6, c1 + 66];
   // demo 1: turn, then flip, is one move
-  const d1turn = glide(frame, c0 + 14, fps, 14);
-  const d1flip = glide(frame, c0 + 32, fps, 14);
-  const d1merge = glide(frame, c0 + 50, fps, 12);
+  const d1turn = glide(frame, c0 + 16, fps, 14);
+  const d1flip = glide(frame, c0 + 44, fps, 14);
+  const d1merge = glide(frame, c0 + 72, fps, 12);
   // demo 2: do nothing
-  const d2 = frame >= c0 + 70 && frame < c1;
+  const d2 = frame >= c0 + 100 && frame < c1;
   // demo 3: turn and undo
   const d3 = glide(frame, c1 + 10, fps, 14) - glide(frame, c1 + 30, fps, 14);
   // demo 4: regroup
@@ -85,9 +86,9 @@ export const Rules: React.FC = () => {
       {badgeAt.map((t, k) => (
         <Sfx key={k} name="pop" at={t} volume={0.18} />
       ))}
-      <Sfx name={PLUCKS[0]} at={c0 + 14} volume={0.14} />
-      <Sfx name={PLUCKS[2]} at={c0 + 32} volume={0.14} />
-      <Sfx name="ding" at={c0 + 52} volume={0.18} />
+      <Sfx name={PLUCKS[0]} at={c0 + 16} volume={0.14} />
+      <Sfx name={PLUCKS[2]} at={c0 + 44} volume={0.14} />
+      <Sfx name="ding" at={c0 + 74} volume={0.18} />
       <Sfx name={PLUCKS[1]} at={c1 + 10} volume={0.14} />
       <Sfx name={PLUCKS[4]} at={c1 + 30} volume={0.14} />
       {[0, 1, 2, 3].map((k) => (
@@ -104,24 +105,24 @@ export const Rules: React.FC = () => {
             <g
               key={r}
               opacity={s * (1 - merge)}
-              transform={`translate(${lerp(badgeX(k), 960, merge)} ${BADGE_Y}) scale(${s * lerp(1, 0.6, merge)})`}
+              transform={`translate(${lerp(badgeX(k), 960, merge)} ${lerp(badgeY(k), BADGE_Y, merge)}) scale(${s * lerp(1, 0.6, merge)})`}
             >
               <rect
-                x={-205}
+                x={-380}
                 y={-44}
-                width={410}
+                width={760}
                 height={88}
                 rx={20}
                 fill={colors.violet}
                 stroke={colors.primary}
                 strokeWidth={4}
               />
-              <circle cx={-170} cy={0} r={22} fill={colors.primary} />
+              <circle cx={-340} cy={0} r={22} fill={colors.primary} />
               <text
-                x={-170}
+                x={-340}
                 y={10}
                 fill={colors.ink}
-                fontSize={28}
+                fontSize={30}
                 textAnchor="middle"
                 fontWeight={800}
               >
@@ -131,7 +132,7 @@ export const Rules: React.FC = () => {
                 x={20}
                 y={10}
                 fill={colors.text}
-                fontSize={28}
+                fontSize={36}
                 textAnchor="middle"
                 fontWeight={700}
               >
@@ -193,7 +194,7 @@ export const Rules: React.FC = () => {
         ) : null}
 
         {/* the move cards underneath */}
-        <g opacity={fadeIn(frame, c0 + 12, 6) * fadeOut(frame, c0 + 66, 6)}>
+        <g opacity={fadeIn(frame, c0 + 12, 6) * fadeOut(frame, c0 + 96, 6)}>
           <MoveCard
             x={lerp(800, 960, d1merge)}
             y={CARD_Y}
@@ -223,10 +224,10 @@ export const Rules: React.FC = () => {
             y={CARD_Y}
             label="⤡"
             lit
-            s={Math.max(d1merge, fadeIn(frame, c0 + 48, 6))}
+            s={Math.max(d1merge, fadeIn(frame, c0 + 64, 6))}
           />
         </g>
-        <g opacity={d2 ? fadeIn(frame, c0 + 72, 6) : 0}>
+        <g opacity={d2 ? fadeIn(frame, c0 + 102, 6) : 0}>
           <MoveCard x={960} y={CARD_Y} label="·" lit />
         </g>
         <g opacity={fadeIn(frame, c1 + 8, 6) * fadeOut(frame, c1 + 60, 6)}>

@@ -4,7 +4,7 @@ import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import { glide, hop } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
-import { alpha, colors, fonts } from "../../shared/theme";
+import { colors, fonts } from "../../shared/theme";
 import { Person } from "../../s1e14/components/study";
 import { Clock } from "../components/props";
 import { useStrings } from "../i18n";
@@ -169,7 +169,8 @@ export const Counting: React.FC = () => {
                 stroke={colors.primary}
                 strokeWidth={5}
               />
-              {Array.from({ length: 40 }).map((_, k) => {
+              {Array.from({ length: 18 }).map((_, i) => {
+                const k = Math.max(0, Math.floor(pan / 90) - 2) + i;
                 const x = 900 + k * 90 - pan;
                 if (x < 700 || x > 2000) return null;
                 return (
@@ -201,13 +202,6 @@ export const Counting: React.FC = () => {
                 color={colors.highlight}
                 size={1}
                 bob={frame / 3}
-              />
-              <rect
-                x={760}
-                y={200}
-                width={80}
-                height={700}
-                fill={alpha(colors.bg, 0.6)}
               />
             </g>
           </g>

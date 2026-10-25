@@ -254,16 +254,16 @@ export const Luoshu: React.FC = () => {
             return (
               <g key={k} opacity={s}>
                 <Square
-                  x={960 + 600 * Math.cos(a) * s}
-                  y={480 + 300 * Math.sin(a) * s}
-                  cell={34}
+                  x={960 + 660 * Math.cos(a) * s}
+                  y={480 + 320 * Math.sin(a) * s}
+                  cell={50}
                   rot={m.rot}
                   flip={m.flip}
                   axis={m.axis}
                 />
                 <text
-                  x={960 + 600 * Math.cos(a) * s + 70}
-                  y={480 + 300 * Math.sin(a) * s - 40}
+                  x={960 + 660 * Math.cos(a) * s + 90}
+                  y={480 + 320 * Math.sin(a) * s - 60}
                   fill={colors.green}
                   fontSize={36}
                   fontWeight={800}
