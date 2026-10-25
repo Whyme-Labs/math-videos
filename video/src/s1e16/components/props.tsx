@@ -25,6 +25,7 @@ export const Tile: React.FC<{
   readonly opacity?: number;
   readonly outline?: boolean; // draw the fixed outline under it
   readonly plain?: boolean; // no corner markings: every move looks the same
+  readonly postFlip?: number; // a second flip, across the table's 1–3 diagonal, after the turn
 }> = ({
   x,
   y,
@@ -37,6 +38,7 @@ export const Tile: React.FC<{
   opacity = 1,
   outline = false,
   plain = false,
+  postFlip = 0,
 }) => {
   const h = size / 2;
   const corners = [
@@ -46,6 +48,7 @@ export const Tile: React.FC<{
     [-h, -h],
   ]; // 1 bottom-left, then counterclockwise on screen
   const squash = Math.cos(Math.PI * flip);
+  const post = Math.cos(Math.PI * postFlip);
   return (
     <g transform={`translate(${x} ${y})`} opacity={opacity}>
       {outline ? (
@@ -61,56 +64,61 @@ export const Tile: React.FC<{
           strokeDasharray="14 10"
         />
       ) : null}
-      <g
-        transform={`rotate(${-rot}) rotate(${-axis}) scale(1 ${squash}) rotate(${axis})`}
-      >
-        <rect
-          x={-h}
-          y={-h}
-          width={size}
-          height={size}
-          rx={12}
-          fill={squash < 0 ? alpha(colors.paper, 0.85) : colors.paper}
-          stroke={colors.ink}
-          strokeWidth={6}
-        />
-        {(plain ? [] : corners).map(([cx, cy], k) => (
-          <g key={k}>
-            <circle
-              cx={cx * 0.72}
-              cy={cy * 0.72}
-              r={size * 0.08}
-              fill={CORNER_COLORS[k]}
-              stroke={colors.ink}
-              strokeWidth={3}
-            />
-            {mark === k ? (
+      <g transform={`rotate(-45) scale(1 ${post}) rotate(45)`}>
+        <g
+          transform={`rotate(${-rot}) rotate(${-axis}) scale(1 ${squash}) rotate(${axis})`}
+        >
+          <rect
+            x={-h}
+            y={-h}
+            width={size}
+            height={size}
+            rx={12}
+            fill={squash < 0 ? alpha(colors.paper, 0.85) : colors.paper}
+            stroke={colors.ink}
+            strokeWidth={6}
+          />
+          {(plain ? [] : corners).map(([cx, cy], k) => (
+            <g key={k}>
               <circle
                 cx={cx * 0.72}
                 cy={cy * 0.72}
-                r={size * 0.14}
-                fill="none"
-                stroke={colors.red}
-                strokeWidth={6}
+                r={size * 0.08}
+                fill={CORNER_COLORS[k]}
+                stroke={colors.ink}
+                strokeWidth={3}
               />
-            ) : null}
-            {labels ? (
-              <text
-                x={cx * 0.72}
-                y={cy * 0.72 + size * 0.035}
-                fill={colors.ink}
-                fontSize={size * 0.1}
-                textAnchor="middle"
-                fontFamily={fonts.math}
-                fontWeight={800}
-                transform={`scale(1 ${squash < 0 ? -1 : 1})`}
-                style={{ transformBox: "fill-box", transformOrigin: "center" }}
-              >
-                {k + 1}
-              </text>
-            ) : null}
-          </g>
-        ))}
+              {mark === k ? (
+                <circle
+                  cx={cx * 0.72}
+                  cy={cy * 0.72}
+                  r={size * 0.14}
+                  fill="none"
+                  stroke={colors.red}
+                  strokeWidth={6}
+                />
+              ) : null}
+              {labels ? (
+                // undo the tile's own turn and mirror so the number stays upright
+                <g
+                  transform={`translate(${cx * 0.72} ${cy * 0.72}) rotate(${-axis}) scale(1 ${squash < 0 ? -1 : 1}) rotate(${axis}) rotate(${rot}) rotate(-45) scale(1 ${post < 0 ? -1 : 1}) rotate(45)`}
+                >
+                  <text
+                    x={0}
+                    y={size * 0.035}
+                    fill={colors.ink}
+                    fontSize={size * 0.1}
+                    textAnchor="middle"
+                    fontFamily={fonts.math}
+                    fontWeight={800}
+                  >
+                    {k + 1}
+                  </text>
+                </g>
+              ) : null}
+            </g>
+          ))}
+        </g>
       </g>
     </g>
   );

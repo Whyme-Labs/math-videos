@@ -58,13 +58,15 @@ export const Order: React.FC = () => {
           />
           {/* right: turn, then flip. The flip axis is fixed in space, so after
               the turn it is applied in the frame of the table, not the tile. */}
-          <g transform="translate(1360 500)">
-            <g
-              transform={`rotate(-45) scale(1 ${Math.cos(Math.PI * b)}) rotate(45)`}
-            >
-              <Tile x={0} y={0} size={340} rot={90 * a} mark={0} outline />
-            </g>
-          </g>
+          <Tile
+            x={1360}
+            y={500}
+            size={340}
+            rot={90 * a}
+            postFlip={b}
+            mark={0}
+            outline
+          />
           <text
             x={960}
             y={540}
