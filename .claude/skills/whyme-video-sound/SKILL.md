@@ -29,9 +29,12 @@ video.
   whole background, so it is only for small accents.
 
 **Splice plan** (`musicPlan(endBar)`): intro and body play once (bars 0–72).
-For a longer video, the body (bars 8–72) loops whole, then a partial body
-fills the gap, and the song's real ending (bars 72–80) always closes the
-video. `Music.tsx` places each segment with 2-frame fades at the seams so
+A video shorter than the song (under bar 80, about 2:30) cuts the body short
+and goes straight into the ending. For a longer video, the body (bars 8–72)
+loops whole, then a partial body fills the gap, and the song's real ending
+(bars 72–80) always closes the video. Check the last 15 s of every render for
+music: before October 2026 a bug placed the ending after the video's end on
+short videos, so the music stopped 8 bars early. `Music.tsx` places each segment with 2-frame fades at the seams so
 splices don't click, and adds a 3 s fade at the very end.
 
 **New track:** run `scripts/analyze-beats.py` (librosa, in a venv), then

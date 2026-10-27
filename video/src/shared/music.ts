@@ -45,8 +45,10 @@ export const musicPlan = (endBar: number): MusicSegment[] => {
     songStart: 0,
     seconds: barTime(firstPlayBars),
   });
-  let filler = outroStartBar - BODY_END_BAR;
-  let bar = BODY_END_BAR;
+  // Short videos stop the first play early, so the loops (if any) and the
+  // ending pick up from wherever it stopped, not from the end of the body.
+  let bar = firstPlayBars;
+  let filler = outroStartBar - bar;
   while (filler >= BODY_BARS) {
     segments.push({
       videoStart: barTime(bar),
