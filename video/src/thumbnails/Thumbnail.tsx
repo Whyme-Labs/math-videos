@@ -867,26 +867,26 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     return (
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <path
-          d="M 1260 330 Q 1420 250 1560 330"
+          d="M 1370 300 Q 1500 230 1560 320"
           fill="none"
           stroke={colors.primary}
           strokeWidth={8}
         />
         <path
-          d="M 1300 690 Q 1450 780 1580 690"
+          d="M 1690 480 Q 1680 600 1630 650"
           fill="none"
           stroke={colors.primary}
           strokeWidth={8}
         />
         <path
-          d="M 1180 420 Q 1150 520 1220 620"
+          d="M 1250 440 Q 1250 600 1330 680"
           fill="none"
           stroke={colors.primary}
           strokeWidth={8}
         />
-        <Tile x={1160} y={300} size={240} rot={15} labels={false} />
-        <Clock x={1680} y={330} r={150} n={4} pos={1} />
-        <IDial x={1420} y={700} r={150} pos={1} />
+        <Tile x={1250} y={320} size={220} rot={15} labels={false} />
+        <Clock x={1700} y={330} r={140} n={4} pos={1} />
+        <IDial x={1480} y={760} r={130} pos={1} />
       </svg>
     );
   }
