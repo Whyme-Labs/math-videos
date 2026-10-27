@@ -27,7 +27,7 @@ export const Lanes: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("lanes");
   const [c0, c1] = cues;
-  const sortAt = (r: number) => c0 + 30 + r * 16;
+  const sortAt = (r: number) => c0 + 30 + r * 30;
   const part1 = fadeOut(frame, c1, 10);
   // the 12-hour clock and its cosets
   const pileAt = (r: number) => c1 + 40 + r * 10;

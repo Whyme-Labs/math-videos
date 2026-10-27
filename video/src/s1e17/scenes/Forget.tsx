@@ -51,24 +51,24 @@ export const Forget: React.FC = () => {
   const cues = useCues("forget");
   const [c0, c1] = cues;
   // left route
-  const lMerge = glide(frame, c0 + 20, fps, 16);
-  const lDrop = glide(frame, c0 + 44, fps, 16);
+  const lMerge = glide(frame, c0 + 30, fps, 20);
+  const lDrop = glide(frame, c0 + 80, fps, 20);
   // right route
-  const r5 = glide(frame, c0 + 70, fps, 14);
-  const r7 = glide(frame, c0 + 90, fps, 14);
+  const r5 = glide(frame, c0 + 130, fps, 16);
+  const r7 = glide(frame, c0 + 160, fps, 16);
   const rClock = 1 * r5 + 3 * r7;
-  const same = Math.min(1, springIn(frame, c0 + 112, fps, 10));
+  const same = Math.min(1, springIn(frame, c0 + 190, fps, 10));
   const part1 = fadeOut(frame, c1, 10);
   // the kernel pours into 0
-  const pourAt = (k: number) => c1 + 40 + k * 6;
+  const pourAt = (k: number) => c1 + 40 + k * 14;
 
   return (
     <SceneShell id="forget">
-      <Sfx name="clink" at={c0 + 30} volume={0.16} />
-      <Sfx name="thud" at={c0 + 60} volume={0.25} />
-      <Sfx name="pluck2" at={c0 + 76} volume={0.14} />
-      <Sfx name="pluck4" at={c0 + 96} volume={0.14} />
-      <Sfx name="ding" at={c0 + 112} />
+      <Sfx name="clink" at={c0 + 40} volume={0.16} />
+      <Sfx name="thud" at={c0 + 100} volume={0.25} />
+      <Sfx name="pluck2" at={c0 + 140} volume={0.14} />
+      <Sfx name="pluck4" at={c0 + 170} volume={0.14} />
+      <Sfx name="ding" at={c0 + 190} />
       {[0, 1, 2, 3, 4].map((k) => (
         <Sfx key={k} name="pop" at={pourAt(k) + 10} volume={0.12} />
       ))}
@@ -88,7 +88,7 @@ export const Forget: React.FC = () => {
           <Clock x={520} y={640} r={150} n={4} pos={0} />
           <Clock x={1400} y={640} r={150} n={4} pos={rClock} />
           {/* left: add on the integers, then convert */}
-          {frame < c0 + 44 ? (
+          {frame < c0 + 80 ? (
             <>
               <Token
                 x={lerp(380, 520, lMerge)}
@@ -141,7 +141,7 @@ export const Forget: React.FC = () => {
             fontSize={40}
             textAnchor="middle"
             fontWeight={700}
-            opacity={fadeIn(frame, c0 + 20)}
+            opacity={fadeIn(frame, c0 + 30)}
           >
             {tx.addThenMap}
           </text>
@@ -152,7 +152,7 @@ export const Forget: React.FC = () => {
             fontSize={40}
             textAnchor="middle"
             fontWeight={700}
-            opacity={fadeIn(frame, c0 + 70)}
+            opacity={fadeIn(frame, c0 + 130)}
           >
             {tx.mapThenAdd}
           </text>

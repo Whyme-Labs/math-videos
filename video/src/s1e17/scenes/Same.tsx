@@ -93,7 +93,7 @@ export const Same: React.FC = () => {
                 {[0, 1].map((j) => (
                   <path
                     key={j}
-                    d={`M ${COL[j] + 90} ${y} Q ${(COL[j] + COL[j + 1]) / 2} ${y + 30 * Math.sin(frame / 12 + k + j)} ${lerp(COL[j] + 90, COL[j + 1] - 90, thread(k))} ${y}`}
+                    d={`M ${COL[j] + 110} ${y} Q ${(COL[j] + COL[j + 1]) / 2} ${y + 30 * Math.sin(frame / 12 + k + j)} ${lerp(COL[j] + 110, COL[j + 1] - 110, thread(k))} ${y}`}
                     fill="none"
                     stroke={on ? colors.highlight : alpha(colors.primary, 0.8)}
                     strokeWidth={on ? 7 : 4}
@@ -103,19 +103,19 @@ export const Same: React.FC = () => {
                   <Tile
                     x={COL[0]}
                     y={y}
-                    size={110 * s}
+                    size={140 * s}
                     rot={90 * k}
                     labels={false}
                   />
-                  <Clock x={COL[1]} y={y} r={62 * s} n={4} pos={k} />
-                  <IDial x={COL[2]} y={y} r={46 * s} pos={k} labels={false} />
+                  <Clock x={COL[1]} y={y} r={80 * s} n={4} pos={k} />
+                  <IDial x={COL[2]} y={y} r={60 * s} pos={k} labels={false} />
                 </g>
                 {on ? (
                   <rect
                     x={COL[0] - 100}
-                    y={y - 74}
+                    y={y - 90}
                     width={COL[2] - COL[0] + 200}
-                    height={148}
+                    height={180}
                     rx={30}
                     fill="none"
                     stroke={colors.highlight}

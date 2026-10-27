@@ -101,7 +101,7 @@ export const Sunzi: React.FC = () => {
             return (
               <g
                 key={c.n}
-                opacity={1 - merge * 0.85}
+                opacity={1 - merge}
                 transform={`translate(${p.x - c.x} 0)`}
               >
                 <Clock x={c.x} y={460} r={170} n={c.n} pos={c.rem * sweep(k)} />
@@ -152,17 +152,20 @@ export const Sunzi: React.FC = () => {
               {tx.answer}
             </text>
           </g>
-          <text
-            x={960}
-            y={760}
-            fill={colors.text}
-            fontSize={44}
-            textAnchor="middle"
-            fontFamily={fonts.math}
-            opacity={fadeIn(frame, c2 + 50)}
-          >
-            {"23 ÷ 3 … 2    23 ÷ 5 … 3    23 ÷ 7 … 2"}
-          </text>
+          {["23 ÷ 3 … 2", "23 ÷ 5 … 3", "23 ÷ 7 … 2"].map((t, n) => (
+            <text
+              key={t}
+              x={560 + n * 400}
+              y={760}
+              fill={colors.text}
+              fontSize={44}
+              textAnchor="middle"
+              fontFamily={fonts.math}
+              opacity={fadeIn(frame, c2 + 50 + n * 8)}
+            >
+              {t}
+            </text>
+          ))}
         </svg>
       </AbsoluteFill>
     </SceneShell>

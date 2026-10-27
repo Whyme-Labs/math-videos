@@ -35,7 +35,8 @@ export const ColdOpen: React.FC = () => {
   const together = [c1 + 34, c1 + 64, c2 + 14, c3 + 20, c3 + 50, c3 + 80]
     .map(step)
     .reduce((a, b) => a + b, 0);
-  const tc = step(c0 + 50) + together; // tile and clock
+  const tile = step(c0 + 50) + together; // the tile moves as it is named,
+  const tc = step(c0 + 130) + together; // then the clock
   const dial = step(c1 + 10) + together;
   const home = frame >= c2 + 26 && frame < c3 + 10;
   const hide = glide(frame, c3 + 4, fps, 14);
@@ -49,6 +50,7 @@ export const ColdOpen: React.FC = () => {
         <Sfx key={k} name="pop" at={c0 + 6 + k * 8} volume={0.14} />
       ))}
       <Sfx name={PLUCKS[0]} at={c0 + 50} volume={0.14} />
+      <Sfx name={PLUCKS[3]} at={c0 + 130} volume={0.14} />
       <Sfx name={PLUCKS[1]} at={c1 + 10} volume={0.14} />
       {[c1 + 34, c1 + 64, c2 + 14, c3 + 20, c3 + 50, c3 + 80].map((t, k) => (
         <Sfx key={`t${k}`} name={PLUCKS[(k + 2) % 6]} at={t} volume={0.14} />
@@ -93,7 +95,7 @@ export const ColdOpen: React.FC = () => {
                   x={0}
                   y={250}
                   size={220}
-                  rot={90 * tc}
+                  rot={90 * tile}
                   labels={false}
                   plain={hide > 0.5}
                 />

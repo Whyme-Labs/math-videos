@@ -19,6 +19,7 @@ import { Runner } from "../s1e13/components/race";
 import { Bag } from "../s1e14/components/study";
 import { Card, Robot } from "../s1e15/components/world";
 import { Clock, CubeFace, Tile } from "../s1e16/components/props";
+import { IDial } from "../s1e17/components/dial";
 import { splitMath } from "./math-chars";
 import {
   badge,
@@ -858,6 +859,34 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
             strokeDasharray="22 16"
           />
         </g>
+      </svg>
+    );
+  }
+  if (ep === 17) {
+    // the tile, the four-hour clock and the i-dial, tied together by threads
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <path
+          d="M 1260 330 Q 1420 250 1560 330"
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={8}
+        />
+        <path
+          d="M 1300 690 Q 1450 780 1580 690"
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={8}
+        />
+        <path
+          d="M 1180 420 Q 1150 520 1220 620"
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={8}
+        />
+        <Tile x={1160} y={300} size={240} rot={15} labels={false} />
+        <Clock x={1680} y={330} r={150} n={4} pos={1} />
+        <IDial x={1420} y={700} r={150} pos={1} />
       </svg>
     );
   }
