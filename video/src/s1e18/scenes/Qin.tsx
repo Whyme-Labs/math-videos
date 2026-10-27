@@ -25,7 +25,6 @@ export const Qin: React.FC = () => {
     0,
   );
   const found = Math.min(1, springIn(frame, c1 + 96, fps, 10));
-  const glow = fadeIn(frame, c2 + 10);
 
   return (
     <SceneShell id="qin">
@@ -35,6 +34,8 @@ export const Qin: React.FC = () => {
       ))}
       <Sfx name="ding" at={c1 + 96} />
       <Sfx name="chime" at={c2 + 10} />
+      <Sfx name="pop" at={c2 + 50} volume={0.16} />
+      <Sfx name="pop" at={c2 + 62} volume={0.16} />
 
       <AbsoluteFill style={{ opacity: fadeOut(frame, c1, 10) }}>
         <svg width={1920} height={1080}>
@@ -79,7 +80,14 @@ export const Qin: React.FC = () => {
 
       <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
         <svg width={1920} height={1080}>
-          <Clock x={700} y={480} r={260} n={7} pos={(5 * strides) % 7} />
+          <Clock
+            x={700}
+            y={480}
+            r={260}
+            n={7}
+            pos={(5 * strides) % 7}
+            zeroTop
+          />
           {[0, 1, 2].map((k) => (
             <text
               key={k}
@@ -117,15 +125,26 @@ export const Qin: React.FC = () => {
               余一
             </text>
           </g>
-          <circle
-            cx={700}
-            cy={480 - 260 * 0.7}
-            r={56}
-            fill="none"
-            stroke={colors.green}
-            strokeWidth={10}
-            opacity={glow}
-          />
+          {/* the remainder one, then the partners 5 and 3 */}
+          {[
+            { n: 1, at: c2 + 10 },
+            { n: 5, at: c2 + 50 },
+            { n: 3, at: c2 + 62 },
+          ].map(({ n, at }) => {
+            const a = (n / 7) * Math.PI * 2 - Math.PI / 2;
+            return (
+              <circle
+                key={n}
+                cx={700 + 260 * 0.7 * Math.cos(a)}
+                cy={480 + 260 * 0.7 * Math.sin(a)}
+                r={52}
+                fill="none"
+                stroke={colors.green}
+                strokeWidth={10}
+                opacity={fadeIn(frame, at, 6)}
+              />
+            );
+          })}
         </svg>
       </AbsoluteFill>
     </SceneShell>

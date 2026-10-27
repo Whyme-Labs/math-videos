@@ -132,7 +132,9 @@ export const Clock: React.FC<{
   readonly n?: number;
   readonly pos: number;
   readonly numbers?: boolean;
-}> = ({ x, y, r = 150, n = 12, pos, numbers = true }) => (
+  // label the top mark 0 instead of n (for modular arithmetic)
+  readonly zeroTop?: boolean;
+}> = ({ x, y, r = 150, n = 12, pos, numbers = true, zeroTop = false }) => (
   <g transform={`translate(${x} ${y})`}>
     <circle
       cx={0}
@@ -164,7 +166,7 @@ export const Clock: React.FC<{
               fontFamily={fonts.math}
               fontWeight={700}
             >
-              {k === 0 ? n : k}
+              {k === 0 && !zeroTop ? n : k}
             </text>
           ) : null}
         </g>

@@ -57,9 +57,9 @@ export const ColdOpen: React.FC = () => {
       <Sfx name="whoosh" at={c4 + 4} volume={0.14} />
 
       <Camera
-        zoom={lerp(1, 1.5, push)}
+        zoom={lerp(1, 1.35, push)}
         x={lerp(0, 310, push)}
-        y={lerp(0, -200, push)}
+        y={lerp(0, -170, push)}
       >
         <svg
           width={1920}
@@ -86,7 +86,7 @@ export const ColdOpen: React.FC = () => {
           />
           <text
             x={BOARD.x + BOARD.w / 2}
-            y={BOARD.y + 120}
+            y={BOARD.y + 100}
             fill={colors.paper}
             fontSize={80}
             textAnchor="middle"
@@ -101,11 +101,11 @@ export const ColdOpen: React.FC = () => {
             const s = Math.min(1, springIn(frame, brickAt(k), fps, 10));
             const bx =
               BOARD.x +
-              80 +
-              k * 130 +
+              60 +
+              k * 110 +
               (crack ? shake(frame, c3 + 34 + k, 10) : 0) +
               apart * (k - 2) * 40;
-            const by = BOARD.y + 250 + apart * (k % 2 ? 30 : -20);
+            const by = BOARD.y + 285 + apart * (k % 2 ? 30 : -20);
             return (
               <g
                 key={k}
@@ -115,7 +115,7 @@ export const ColdOpen: React.FC = () => {
                 <rect
                   x={0}
                   y={-50}
-                  width={120}
+                  width={100}
                   height={80}
                   rx={10}
                   fill={colors.highlight}
@@ -123,7 +123,7 @@ export const ColdOpen: React.FC = () => {
                   strokeWidth={4}
                 />
                 <text
-                  x={60}
+                  x={50}
                   y={8}
                   fill={colors.ink}
                   fontSize={34}
@@ -145,10 +145,10 @@ export const ColdOpen: React.FC = () => {
             );
           })}
           <text
-            x={BOARD.x + 760}
-            y={BOARD.y + 262}
+            x={BOARD.x + 640}
+            y={BOARD.y + 300}
             fill={colors.paper}
-            fontSize={60}
+            fontSize={52}
             fontFamily={fonts.math}
             fontWeight={700}
             opacity={split}
@@ -189,13 +189,13 @@ export const ColdOpen: React.FC = () => {
           {[0, 1].map((row) =>
             Array.from({ length: 6 }).map((_, k) => {
               const x = 820 + k * 170 + row * 80;
-              const y = 640 + row * 140;
+              const y = 680 + row * 125;
               const him = row === 0 && k === 3;
               return (
-                <g key={`${row}-${k}`}>
+                <g key={`${row}-${k}`} opacity={1 - 0.85 * push}>
                   <Person
                     x={x}
-                    y={y - (him ? 90 * stand : 0)}
+                    y={y - (him ? 60 * stand : 0)}
                     color={him ? colors.green : guestColor(row * 6 + k)}
                     size={1}
                     facing={-1}
@@ -214,7 +214,7 @@ export const ColdOpen: React.FC = () => {
           )}
           <text
             x={820 + 3 * 170}
-            y={640 - 270 - 90 * stand + 90}
+            y={680 - 270 - 60 * stand + 90}
             fill={colors.green}
             fontSize={36}
             textAnchor="middle"
@@ -226,29 +226,29 @@ export const ColdOpen: React.FC = () => {
           {/* his question */}
           <g
             opacity={bubble}
-            transform={`translate(${820 + 3 * 170} ${380}) scale(${bubble})`}
+            transform={`translate(${820 + 3 * 170} ${300}) scale(${bubble})`}
           >
             <rect
               x={-200}
-              y={-60}
+              y={-42}
               width={400}
-              height={100}
+              height={80}
               rx={30}
               fill={colors.paper}
               stroke={colors.ink}
               strokeWidth={4}
             />
             <path
-              d="M -20 40 L 0 80 L 30 40 Z"
+              d="M -20 38 L 0 70 L 30 38 Z"
               fill={colors.paper}
               stroke={colors.ink}
               strokeWidth={4}
             />
             <text
               x={0}
-              y={8}
+              y={12}
               fill={colors.ink}
-              fontSize={42}
+              fontSize={38}
               textAnchor="middle"
               fontWeight={800}
             >
@@ -266,11 +266,11 @@ export const ColdOpen: React.FC = () => {
             />
           ) : null}
           <text
-            x={470}
-            y={520}
+            x={315}
+            y={620}
             fill={colors.highlight}
             fontSize={36}
-            textAnchor="middle"
+            textAnchor="end"
             fontWeight={800}
             opacity={fadeIn(frame, c3 + 30)}
           >

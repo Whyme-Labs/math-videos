@@ -20,7 +20,7 @@ export const EndCard: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("endCard");
   const [c0, c1] = cues;
-  const dropAt = (k: number) => c0 + 16 + k * 16;
+  const dropAt = (k: number) => c0 + 20 + k * 40;
   const part1 = fadeOut(frame, c1, 10);
   const arc = glide(frame, c1 + 10, fps, 24);
   const tryLines = glide(frame, c1 + 40, fps, 20);
@@ -46,7 +46,7 @@ export const EndCard: React.FC = () => {
             return (
               <g key={k}>
                 {k === 0 ? (
-                  <Clock x={x} y={520} r={170} n={6} pos={0} />
+                  <Clock x={x} y={520} r={170} n={6} pos={0} zeroTop />
                 ) : (
                   <g>
                     <rect
@@ -74,7 +74,7 @@ export const EndCard: React.FC = () => {
                 )}
                 {/* the drop of glue: the ideal */}
                 <g
-                  opacity={drop < 1 ? 1 : 0}
+                  opacity={drop > 0 && drop < 1 ? 1 : 0}
                   transform={`translate(${x} ${lerp(160, 360, drop)})`}
                 >
                   <path
@@ -86,9 +86,9 @@ export const EndCard: React.FC = () => {
                 </g>
                 <text
                   x={x}
-                  y={760}
+                  y={770}
                   fill={colors.highlight}
-                  fontSize={44}
+                  fontSize={54}
                   textAnchor="middle"
                   fontFamily={fonts.math}
                   fontWeight={800}

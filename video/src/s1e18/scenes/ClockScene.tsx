@@ -54,7 +54,7 @@ export const ClockScene: React.FC = () => {
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
           <g transform={`translate(${zero ? shake(frame, c0 + 76, 10) : 0} 0)`}>
-            <Clock x={700} y={500} r={260} n={6} pos={2 * strides} />
+            <Clock x={700} y={500} r={260} n={6} pos={2 * strides} zeroTop />
           </g>
           {/* the strides, as arcs around the rim */}
           {[0, 1, 2].map((k) => {
@@ -100,7 +100,7 @@ export const ClockScene: React.FC = () => {
       {/* seven hours: every number has a partner */}
       <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
         <svg width={1920} height={1080}>
-          <Clock x={C7.x} y={C7.y} r={R} n={7} pos={0} />
+          <Clock x={C7.x} y={C7.y} r={R} n={7} pos={0} zeroTop />
           {PAIRS.map(([a, b], k) => {
             const t = glide(frame, pairAt(k), fps, 14);
             const p = pos7(a);
@@ -142,8 +142,8 @@ export const ClockScene: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 70,
-            left: 120,
+            top: 150,
+            left: 1340,
             fontFamily: fonts.title,
             fontSize: 56,
             fontWeight: 800,

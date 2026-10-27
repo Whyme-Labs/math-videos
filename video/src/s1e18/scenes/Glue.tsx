@@ -13,7 +13,7 @@ import { useStrings } from "../i18n";
 // the same answer complex multiplication gives. Beside it, x on the plane
 // is a quarter turn: x · x swings 1 round to −1.
 
-const G = { x: 520, y: 330, w: 260, h: 170 };
+const G = { x: 600, y: 300, w: 300, h: 190 };
 const CELLS = [
   { r: 0, c: 0, t: "3" },
   { r: 0, c: 1, t: "x" },
@@ -27,25 +27,25 @@ export const Glue: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("glue");
   const [c0, c1] = cues;
-  const cellAt = (k: number) => c0 + 12 + k * 10;
-  const rule = Math.min(1, springIn(frame, c0 + 60, fps, 10));
-  const flip = glide(frame, c0 + 80, fps, 14);
+  const cellAt = (k: number) => c0 + 20 + k * 14;
+  const rule = Math.min(1, springIn(frame, c0 + 90, fps, 10));
+  const flip = glide(frame, c0 + 120, fps, 14);
   const collect = glide(frame, c1 + 6, fps, 20);
-  const toI = glide(frame, c1 + 40, fps, 14);
+  const toI = glide(frame, c1 + 50, fps, 14);
   const quarter =
-    glide(frame, c1 + 60, fps, 16) + glide(frame, c1 + 84, fps, 16);
+    glide(frame, c1 + 80, fps, 16) + glide(frame, c1 + 130, fps, 16);
 
   return (
     <SceneShell id="glue">
       {CELLS.map((_, k) => (
         <Sfx key={k} name="pop" at={cellAt(k)} volume={0.14} />
       ))}
-      <Sfx name="thud" at={c0 + 60} volume={0.3} />
-      <Sfx name="whoosh" at={c0 + 80} volume={0.14} />
+      <Sfx name="thud" at={c0 + 90} volume={0.3} />
+      <Sfx name="whoosh" at={c0 + 120} volume={0.14} />
       <Sfx name="whoosh" at={c1 + 6} volume={0.14} />
-      <Sfx name="ding" at={c1 + 40} />
-      <Sfx name="pluck2" at={c1 + 60} volume={0.14} />
-      <Sfx name="pluck4" at={c1 + 84} volume={0.14} />
+      <Sfx name="ding" at={c1 + 50} />
+      <Sfx name="pluck2" at={c1 + 80} volume={0.14} />
+      <Sfx name="pluck4" at={c1 + 130} volume={0.14} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         {/* the factors along the edges */}
@@ -87,12 +87,17 @@ export const Glue: React.FC = () => {
           const x = G.x + cl.c * G.w;
           const y = G.y + cl.r * G.h;
           // collecting: everything slides into one row
-          const tx2 = lerp(x, 1000 + [0, 1, 1, 0][k] * 320, collect);
-          const ty2 = lerp(y, 700, collect);
+          // collecting: every cell flies into the answer and dissolves
+          const tx2 = lerp(
+            x,
+            1180 - G.w / 2 + [-1, 1, 1, -1][k] * 120,
+            collect,
+          );
+          const ty2 = lerp(y, 470 - G.h / 2, collect);
           return (
             <g
               key={k}
-              opacity={s * (1 - collect * 0.9)}
+              opacity={s * (1 - collect)}
               transform={`translate(${tx2 + G.w / 2} ${ty2 + G.h / 2}) scale(${Math.abs(Math.cos(Math.PI * fl)) * s} ${s})`}
             >
               <rect
@@ -122,10 +127,10 @@ export const Glue: React.FC = () => {
         {/* the result: 1 + 7x, and then x becomes i */}
         <g opacity={collect}>
           <text
-            x={1160}
-            y={760}
+            x={1180}
+            y={520}
             fill={colors.highlight}
-            fontSize={110}
+            fontSize={150}
             textAnchor="middle"
             fontFamily={fonts.math}
             fontWeight={800}
@@ -139,7 +144,7 @@ export const Glue: React.FC = () => {
         {/* the rule card */}
         <g
           opacity={rule}
-          transform={`translate(1380 ${lerp(200, 260, rule)}) rotate(-4) scale(${rule})`}
+          transform={`translate(1520 ${lerp(140, 190, rule)}) rotate(-4) scale(${rule})`}
         >
           <rect
             x={-220}
@@ -164,7 +169,7 @@ export const Glue: React.FC = () => {
           </text>
         </g>
         {/* x as a quarter turn */}
-        <g opacity={fadeIn(frame, c1 + 56)} transform="translate(440 640)">
+        <g opacity={fadeIn(frame, c1 + 56)} transform="translate(480 470)">
           <line
             x1={-180}
             y1={0}
@@ -204,15 +209,29 @@ export const Glue: React.FC = () => {
           >
             {tx.becomesI}
           </text>
+          <text
+            x={0}
+            y={-220}
+            fill={colors.text}
+            fontSize={56}
+            textAnchor="middle"
+            fontFamily={fonts.math}
+            fontWeight={800}
+            opacity={fadeIn(frame, c1 + 146)}
+          >
+            x · x = −1
+          </text>
         </g>
       </svg>
       <div
         style={{
           position: "absolute",
-          top: 70,
-          left: 120,
+          top: 110,
+          left: 0,
+          width: 1500,
+          textAlign: "center",
           fontFamily: fonts.math,
-          fontSize: 56,
+          fontSize: 72,
           fontWeight: 800,
           color: colors.text,
           opacity: fadeIn(frame, c0 + 6) * fadeOut(frame, c1 + 6, 10),

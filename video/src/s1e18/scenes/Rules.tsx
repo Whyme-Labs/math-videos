@@ -13,8 +13,8 @@ import { useStrings } from "../i18n";
 // times minus: on the number line an arrow from 0 to 1; times −1 swings it
 // half a turn to −1, times −1 again swings it home to 1.
 
-const CELL = 110;
-const G = { x: 560, y: 300 };
+const CELL = 150;
+const G = { x: 525, y: 290 };
 
 export const Rules: React.FC = () => {
   const frame = useCurrentFrame();
@@ -22,27 +22,29 @@ export const Rules: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("rules");
   const [c0, c1] = cues;
-  const tileAt = (k: number) => c0 + 10 + k * 3;
-  const cut = glide(frame, c0 + 50, fps, 16);
-  const apart = glide(frame, c0 + 70, fps, 16);
+  const tileAt = (k: number) => c0 + 10 + k * 4;
+  const cut = glide(frame, c0 + 60, fps, 16);
+  const apart = glide(frame, c0 + 84, fps, 16);
   const part1 = fadeOut(frame, c1, 10);
   // −1 × −1: two half turns
-  const turn1 = glide(frame, c1 + 30, fps, 18);
-  const turn2 = glide(frame, c1 + 70, fps, 18);
+  const turn1 = glide(frame, c1 + 40, fps, 18);
+  const turn2 = glide(frame, c1 + 110, fps, 18);
   const angle = 180 * (turn1 + turn2);
-  const done = Math.min(1, springIn(frame, c1 + 92, fps, 10));
+  const done = Math.min(1, springIn(frame, c1 + 140, fps, 10));
 
   return (
     <SceneShell id="rules">
       {Array.from({ length: 10 }).map((_, k) => (
         <Sfx key={k} name="tick" at={tileAt(k)} volume={0.08} />
       ))}
-      <Sfx name="scratch" at={c0 + 50} volume={0.2} />
-      <Sfx name="whoosh" at={c0 + 70} volume={0.14} />
-      <Sfx name="ding" at={c0 + 90} volume={0.18} />
-      <Sfx name="whoosh" at={c1 + 30} volume={0.14} />
-      <Sfx name="whoosh" at={c1 + 70} volume={0.14} />
-      <Sfx name="chime" at={c1 + 92} />
+      <Sfx name="scratch" at={c0 + 60} volume={0.2} />
+      <Sfx name="whoosh" at={c0 + 84} volume={0.14} />
+      <Sfx name="ding" at={c0 + 104} volume={0.18} />
+      <Sfx name="pop" at={c0 + 130} volume={0.16} />
+      <Sfx name="pop" at={c0 + 140} volume={0.16} />
+      <Sfx name="whoosh" at={c1 + 40} volume={0.14} />
+      <Sfx name="whoosh" at={c1 + 110} volume={0.14} />
+      <Sfx name="chime" at={c1 + 140} />
 
       {/* a(b + c) = ab + ac, as tiles */}
       <AbsoluteFill style={{ opacity: part1 }}>
@@ -79,7 +81,7 @@ export const Rules: React.FC = () => {
           />
           {/* side labels */}
           <text
-            x={G.x - 40}
+            x={G.x - 50}
             y={G.y + CELL + 16}
             fill={colors.text}
             fontSize={56}
@@ -92,7 +94,7 @@ export const Rules: React.FC = () => {
           </text>
           <text
             x={G.x + 1.5 * CELL}
-            y={G.y + 2 * CELL + 70}
+            y={G.y + 2 * CELL + 64}
             fill={colors.primary}
             fontSize={56}
             textAnchor="middle"
@@ -104,7 +106,7 @@ export const Rules: React.FC = () => {
           </text>
           <text
             x={G.x + 4 * CELL + 120 * apart}
-            y={G.y + 2 * CELL + 70}
+            y={G.y + 2 * CELL + 64}
             fill={apart > 0.5 ? colors.orange : colors.primary}
             fontSize={56}
             textAnchor="middle"
@@ -114,6 +116,41 @@ export const Rules: React.FC = () => {
           >
             c
           </text>
+          {/* the two blocks name themselves: ab and ac */}
+          {[
+            { t: "ab", x: G.x + 1.5 * CELL, at: c0 + 130 },
+            { t: "ac", x: G.x + 4 * CELL + 120, at: c0 + 140 },
+          ].map((l) => {
+            const s = Math.min(1, springIn(frame, l.at, fps, 10));
+            return (
+              <g
+                key={l.t}
+                opacity={s}
+                transform={`translate(${l.x} ${G.y + CELL + 26}) scale(${s})`}
+              >
+                <rect
+                  x={-80}
+                  y={-56}
+                  width={160}
+                  height={84}
+                  rx={18}
+                  fill={colors.ink}
+                  opacity={0.85}
+                />
+                <text
+                  x={0}
+                  y={10}
+                  fill={colors.paper}
+                  fontSize={64}
+                  textAnchor="middle"
+                  fontFamily={fonts.math}
+                  fontWeight={800}
+                >
+                  {l.t}
+                </text>
+              </g>
+            );
+          })}
         </svg>
         <div
           style={{
@@ -125,8 +162,8 @@ export const Rules: React.FC = () => {
             fontSize: 72,
             fontWeight: 800,
             color: colors.text,
-            opacity: fadeIn(frame, c0 + 90),
-            translate: riseIn(frame, c0 + 90, 16),
+            opacity: fadeIn(frame, c0 + 104),
+            translate: riseIn(frame, c0 + 104, 16),
           }}
         >
           {tx.spreads}
@@ -181,8 +218,8 @@ export const Rules: React.FC = () => {
           </g>
           <circle cx={960} cy={520} r={14} fill={colors.ink} />
           {[
-            { t: "× (−1)", at: c1 + 30, x: 960, y: 320 },
-            { t: "× (−1)", at: c1 + 70, x: 960, y: 720 },
+            { t: "× (−1)", at: c1 + 40, x: 960, y: 320 },
+            { t: "× (−1)", at: c1 + 110, x: 960, y: 720 },
           ].map((l, k) => (
             <text
               key={k}

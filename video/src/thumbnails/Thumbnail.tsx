@@ -894,7 +894,7 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     // the six-hour clock, three strides of 2 around the rim, landing on a red 0
     return (
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
-        <Clock x={1420} y={560} r={300} n={6} pos={0} />
+        <Clock x={1420} y={560} r={300} n={6} pos={0} zeroTop />
         {[0, 1, 2].map((k) => {
           const a0 = ((2 * k) / 6) * Math.PI * 2 - Math.PI / 2 + 0.05;
           const a1 = ((2 * k + 2) / 6) * Math.PI * 2 - Math.PI / 2 - 0.05;

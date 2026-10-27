@@ -14,14 +14,14 @@ import { useStrings } from "../i18n";
 // up two ways: PP and QQ′ under 2 and 3, PQ and PQ′ under the other two.
 // The same four pieces, regrouped: unique again.
 
-const TOP = { x: 960, y: 190 };
+const TOP = { x: 960, y: 210 };
 const LEAVES = [
   { x: 420, l: "2", ideal: ["P", "P"] },
   { x: 740, l: "3", ideal: ["Q", "Q′"] },
   { x: 1180, l: "1 + √−5", ideal: ["P", "Q"] },
   { x: 1560, l: "1 − √−5", ideal: ["P", "Q′"] },
 ];
-const LEAF_Y = 420;
+const LEAF_Y = 470;
 const IDEAL_COLORS: Record<string, string> = {
   P: colors.highlight,
   Q: colors.green,
@@ -67,16 +67,18 @@ export const Breaks: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("breaks");
   const [c0, c1, c2] = cues;
-  const branch = (k: number) => glide(frame, c0 + 20 + k * 14, fps, 14);
+  // the left tree as "2 times 3" is read, the right one on "and also"
+  const branchAt = (k: number) => c0 + [50, 60, 120, 130][k];
+  const branch = (k: number) => glide(frame, branchAt(k), fps, 14);
   const tryAt = (k: number) => c1 + 10 + k * 16;
-  const idealAt = (k: number) => c2 + 20 + k * 8;
-  const pair = glide(frame, c2 + 70, fps, 24);
+  const idealAt = (k: number) => c2 + 30 + k * 14;
+  const pair = glide(frame, c2 + 110, fps, 24);
 
   return (
     <SceneShell id="breaks">
       <Sfx name="pop" at={c0 + 6} volume={0.18} />
       {LEAVES.map((_, k) => (
-        <Sfx key={k} name={PLUCKS[k]} at={c0 + 20 + k * 14} volume={0.14} />
+        <Sfx key={k} name={PLUCKS[k]} at={branchAt(k)} volume={0.14} />
       ))}
       {LEAVES.map((_, k) => (
         <Sfx key={`t${k}`} name="scratch" at={tryAt(k) + 10} volume={0.18} />
@@ -84,19 +86,19 @@ export const Breaks: React.FC = () => {
       {[0, 1, 2, 3].map((k) => (
         <Sfx key={`i${k}`} name="pop" at={idealAt(k)} volume={0.14} />
       ))}
-      <Sfx name="whoosh" at={c2 + 70} volume={0.16} />
-      <Sfx name="chime" at={c2 + 96} />
+      <Sfx name="whoosh" at={c2 + 110} volume={0.16} />
+      <Sfx name="chime" at={c2 + 136} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <line
           x1={960}
           y1={140}
           x2={960}
-          y2={860}
+          y2={800}
           stroke={alpha(colors.muted, 0.35)}
           strokeWidth={3}
           strokeDasharray="12 10"
-          opacity={fadeIn(frame, c0 + 20)}
+          opacity={fadeIn(frame, c0 + 50)}
         />
         {/* the two trees */}
         {LEAVES.map((lf, k) => {
@@ -165,7 +167,7 @@ export const Breaks: React.FC = () => {
                 ? k * 2 + j
                 : order.indexOf(name) + (name === "P" && k === 3 ? 1 : 0);
             const start = { x: 560 + slot * 260, y: 760 };
-            const end = { x: lf.x + (j ? 56 : -56), y: LEAF_Y + 150 };
+            const end = { x: lf.x + (j ? 56 : -56), y: LEAF_Y + 160 };
             const s = Math.min(1, springIn(frame, idealAt(slot), fps, 10));
             return (
               <g key={`${k}${j}`} opacity={s}>
@@ -196,10 +198,11 @@ export const Breaks: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 60,
-          left: 120,
+          top: 700,
+          width: "100%",
+          textAlign: "center",
           fontFamily: fonts.title,
-          fontSize: 56,
+          fontSize: 64,
           fontWeight: 800,
           color: colors.red,
           opacity: fadeIn(frame, tryAt(3) + 16) * (1 - fadeIn(frame, c2, 10)),
@@ -211,14 +214,15 @@ export const Breaks: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 60,
-          left: 120,
+          top: 730,
+          width: "100%",
+          textAlign: "center",
           fontFamily: fonts.title,
-          fontSize: 56,
+          fontSize: 64,
           fontWeight: 800,
           color: colors.highlight,
-          opacity: fadeIn(frame, c2 + 10),
-          translate: riseIn(frame, c2 + 10, 16),
+          opacity: fadeIn(frame, c2 + 136),
+          translate: riseIn(frame, c2 + 136, 16),
         }}
       >
         {tx.ideals}
