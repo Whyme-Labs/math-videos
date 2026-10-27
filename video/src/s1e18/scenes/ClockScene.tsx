@@ -26,7 +26,10 @@ export const ClockScene: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("clock");
   const [c0, c1] = cues;
-  const strides = [0, 1, 2].reduce((a, k) => a + glide(frame, c0 + 16 + k * 22, fps, 14), 0);
+  const strides = [0, 1, 2].reduce(
+    (a, k) => a + glide(frame, c0 + 16 + k * 22, fps, 14),
+    0,
+  );
   const zero = frame >= c0 + 76;
   const part1 = fadeOut(frame, c1, 10);
   const pairAt = (k: number) => c1 + 30 + k * 18;
@@ -59,10 +62,36 @@ export const ClockScene: React.FC = () => {
             const a0 = ((2 * k) / 6) * Math.PI * 2 - Math.PI / 2;
             const a1 = a0 + (2 / 6) * Math.PI * 2 * t;
             const r = 320;
-            return t > 0 ? <path key={k} d={`M ${700 + r * Math.cos(a0)} ${500 + r * Math.sin(a0)} A ${r} ${r} 0 0 1 ${700 + r * Math.cos(a1)} ${500 + r * Math.sin(a1)}`} fill="none" stroke={colors.highlight} strokeWidth={10} strokeLinecap="round" /> : null;
+            return t > 0 ? (
+              <path
+                key={k}
+                d={`M ${700 + r * Math.cos(a0)} ${500 + r * Math.sin(a0)} A ${r} ${r} 0 0 1 ${700 + r * Math.cos(a1)} ${500 + r * Math.sin(a1)}`}
+                fill="none"
+                stroke={colors.highlight}
+                strokeWidth={10}
+                strokeLinecap="round"
+              />
+            ) : null;
           })}
-          <circle cx={700} cy={500 - 260 * 0.7} r={60} fill="none" stroke={colors.red} strokeWidth={10} opacity={zero ? fadeIn(frame, c0 + 76, 4) : 0} />
-          <text x={1420} y={520} fill={zero ? colors.red : colors.text} fontSize={110} textAnchor="middle" fontFamily={fonts.math} fontWeight={800} opacity={fadeIn(frame, c0 + 20)}>
+          <circle
+            cx={700}
+            cy={500 - 260 * 0.7}
+            r={60}
+            fill="none"
+            stroke={colors.red}
+            strokeWidth={10}
+            opacity={zero ? fadeIn(frame, c0 + 76, 4) : 0}
+          />
+          <text
+            x={1420}
+            y={520}
+            fill={zero ? colors.red : colors.text}
+            fontSize={110}
+            textAnchor="middle"
+            fontFamily={fonts.math}
+            fontWeight={800}
+            opacity={fadeIn(frame, c0 + 20)}
+          >
             {tx.zeroDivisor}
           </text>
         </svg>
@@ -78,8 +107,31 @@ export const ClockScene: React.FC = () => {
             const q = pos7(b);
             return (
               <g key={k} opacity={t}>
-                {a === b ? <circle cx={p.x} cy={p.y} r={38} fill="none" stroke={colors.green} strokeWidth={7} /> : <path d={`M ${p.x} ${p.y} Q ${C7.x} ${C7.y} ${lerp(p.x, q.x, t)} ${lerp(p.y, q.y, t)}`} fill="none" stroke={colors.green} strokeWidth={7} />}
-                <text x={1340} y={300 + k * 120} fill={colors.text} fontSize={60} fontFamily={fonts.math} fontWeight={800}>
+                {a === b ? (
+                  <circle
+                    cx={p.x}
+                    cy={p.y}
+                    r={38}
+                    fill="none"
+                    stroke={colors.green}
+                    strokeWidth={7}
+                  />
+                ) : (
+                  <path
+                    d={`M ${p.x} ${p.y} Q ${C7.x} ${C7.y} ${lerp(p.x, q.x, t)} ${lerp(p.y, q.y, t)}`}
+                    fill="none"
+                    stroke={colors.green}
+                    strokeWidth={7}
+                  />
+                )}
+                <text
+                  x={1340}
+                  y={300 + k * 120}
+                  fill={colors.text}
+                  fontSize={60}
+                  fontFamily={fonts.math}
+                  fontWeight={800}
+                >
                   {a} × {b} = {a * b}
                   <tspan fill={colors.green}>{a * b === 1 ? "" : ` → 1`}</tspan>
                 </text>
@@ -87,7 +139,24 @@ export const ClockScene: React.FC = () => {
             );
           })}
         </svg>
-        <div style={{ position: "absolute", top: 70, left: 120, fontFamily: fonts.title, fontSize: 56, fontWeight: 800, color: colors.green, opacity: fadeIn(frame, pairAt(3) + 16), translate: riseIn(frame, pairAt(3) + 16, 16), scale: lerp(1.2, 1, Math.min(1, springIn(frame, pairAt(3) + 16, fps, 10))) }}>
+        <div
+          style={{
+            position: "absolute",
+            top: 70,
+            left: 120,
+            fontFamily: fonts.title,
+            fontSize: 56,
+            fontWeight: 800,
+            color: colors.green,
+            opacity: fadeIn(frame, pairAt(3) + 16),
+            translate: riseIn(frame, pairAt(3) + 16, 16),
+            scale: lerp(
+              1.2,
+              1,
+              Math.min(1, springIn(frame, pairAt(3) + 16, fps, 10)),
+            ),
+          }}
+        >
           {tx.partners}
         </div>
       </AbsoluteFill>

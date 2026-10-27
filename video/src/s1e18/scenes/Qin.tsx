@@ -20,7 +20,10 @@ export const Qin: React.FC = () => {
   const cues = useCues("qin");
   const [c0, c1, c2] = cues;
   const slip = glide(frame, c0 + 6, fps, 16);
-  const strides = [0, 1, 2].reduce((a, k) => a + glide(frame, c1 + 30 + k * 22, fps, 14), 0);
+  const strides = [0, 1, 2].reduce(
+    (a, k) => a + glide(frame, c1 + 30 + k * 22, fps, 14),
+    0,
+  );
   const found = Math.min(1, springIn(frame, c1 + 96, fps, 10));
   const glow = fadeIn(frame, c2 + 10);
 
@@ -36,14 +39,39 @@ export const Qin: React.FC = () => {
       <AbsoluteFill style={{ opacity: fadeOut(frame, c1, 10) }}>
         <svg width={1920} height={1080}>
           <g opacity={slip} transform={`translate(0 ${lerp(-60, 0, slip)})`}>
-            <rect x={900} y={140} width={130} height={640} rx={14} fill={colors.wood} stroke={colors.ink} strokeWidth={4} />
+            <rect
+              x={900}
+              y={140}
+              width={130}
+              height={640}
+              rx={14}
+              fill={colors.wood}
+              stroke={colors.ink}
+              strokeWidth={4}
+            />
             {[...tx.qinName].map((ch, j) => (
-              <text key={j} x={965} y={250 + j * 110} fill={colors.ink} fontSize={80} textAnchor="middle" fontFamily={fonts.title}>
+              <text
+                key={j}
+                x={965}
+                y={250 + j * 110}
+                fill={colors.ink}
+                fontSize={80}
+                textAnchor="middle"
+                fontFamily={fonts.title}
+              >
                 {ch}
               </text>
             ))}
           </g>
-          <text x={960} y={880 - 40} fill={colors.primary} fontSize={48} textAnchor="middle" fontFamily={fonts.title} opacity={fadeIn(frame, c0 + 20)}>
+          <text
+            x={960}
+            y={880 - 40}
+            fill={colors.primary}
+            fontSize={48}
+            textAnchor="middle"
+            fontFamily={fonts.title}
+            opacity={fadeIn(frame, c0 + 20)}
+          >
             {tx.qinSource}
           </text>
         </svg>
@@ -53,17 +81,51 @@ export const Qin: React.FC = () => {
         <svg width={1920} height={1080}>
           <Clock x={700} y={480} r={260} n={7} pos={(5 * strides) % 7} />
           {[0, 1, 2].map((k) => (
-            <text key={k} x={1300} y={300 + k * 120} fill={k === 2 ? colors.highlight : colors.text} fontSize={60} fontFamily={fonts.math} fontWeight={800} opacity={fadeIn(frame, c1 + 40 + k * 22)}>
+            <text
+              key={k}
+              x={1300}
+              y={300 + k * 120}
+              fill={k === 2 ? colors.highlight : colors.text}
+              fontSize={60}
+              fontFamily={fonts.math}
+              fontWeight={800}
+              opacity={fadeIn(frame, c1 + 40 + k * 22)}
+            >
               5 × {k + 1} = {5 * (k + 1)} → {(5 * (k + 1)) % 7}
             </text>
           ))}
           <g opacity={found} transform={`translate(1450 700) scale(${found})`}>
-            <rect x={-260} y={-60} width={520} height={110} rx={24} fill={colors.highlight} stroke={colors.ink} strokeWidth={5} />
-            <text x={0} y={18} fill={colors.ink} fontSize={56} textAnchor="middle" fontFamily={fonts.title} fontWeight={800}>
+            <rect
+              x={-260}
+              y={-60}
+              width={520}
+              height={110}
+              rx={24}
+              fill={colors.highlight}
+              stroke={colors.ink}
+              strokeWidth={5}
+            />
+            <text
+              x={0}
+              y={18}
+              fill={colors.ink}
+              fontSize={56}
+              textAnchor="middle"
+              fontFamily={fonts.title}
+              fontWeight={800}
+            >
               余一
             </text>
           </g>
-          <circle cx={700} cy={480 - 260 * 0.7} r={56} fill="none" stroke={colors.green} strokeWidth={10} opacity={glow} />
+          <circle
+            cx={700}
+            cy={480 - 260 * 0.7}
+            r={56}
+            fill="none"
+            stroke={colors.green}
+            strokeWidth={10}
+            opacity={glow}
+          />
         </svg>
       </AbsoluteFill>
     </SceneShell>
