@@ -40,6 +40,10 @@ and written up in [`../lessons`](../lessons), built with
 | `S1E15-ZH` | 公理的尽头（中文版） | [`src/s1e15`](src/s1e15) | [`s1e15-narration-zh.md`](s1e15-narration-zh.md) |
 | `S1E16` | Groups | [`src/s1e16`](src/s1e16) | [`s1e16-narration.md`](s1e16-narration.md) |
 | `S1E16-ZH` | 群（中文版） | [`src/s1e16`](src/s1e16) | [`s1e16-narration-zh.md`](s1e16-narration-zh.md) |
+| `S1E17` | Homomorphisms | [`src/s1e17`](src/s1e17) | [`s1e17-narration.md`](s1e17-narration.md) |
+| `S1E17-ZH` | 同态（中文版） | [`src/s1e17`](src/s1e17) | [`s1e17-narration-zh.md`](s1e17-narration-zh.md) |
+| `S1E18` | Rings | [`src/s1e18`](src/s1e18) | [`s1e18-narration.md`](s1e18-narration.md) |
+| `S1E18-ZH` | 环（中文版） | [`src/s1e18`](src/s1e18) | [`s1e18-narration-zh.md`](s1e18-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -168,8 +172,10 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s1e12-social.md`](s1e12-social.md), for S1E13 in
 [`s1e13-social.md`](s1e13-social.md), for S1E14 in
 [`s1e14-social.md`](s1e14-social.md), for S1E15 in
-[`s1e15-social.md`](s1e15-social.md), and for S1E16 in
-[`s1e16-social.md`](s1e16-social.md).
+[`s1e15-social.md`](s1e15-social.md), for S1E16 in
+[`s1e16-social.md`](s1e16-social.md), for S1E17 in
+[`s1e17-social.md`](s1e17-social.md), and for S1E18 in
+[`s1e18-social.md`](s1e18-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).

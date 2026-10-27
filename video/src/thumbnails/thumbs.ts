@@ -110,6 +110,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Same pattern,", "different clothes"], accent: 1, size: 120 },
     zh: { lines: ["换了衣服", "还是同一个"], accent: 1, size: 140 },
   },
+  {
+    ep: 18,
+    en: { lines: ["On this clock,", "2 × 3 = 0"], accent: 1, size: 128 },
+    zh: { lines: ["这个钟面上", "2 × 3 = 0"], accent: 1, size: 140 },
+  },
 ];
 
 export const SERIES_NAME: Record<Locale, string> = {

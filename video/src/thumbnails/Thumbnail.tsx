@@ -890,6 +890,37 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 18) {
+    // the six-hour clock, three strides of 2 around the rim, landing on a red 0
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <Clock x={1420} y={560} r={300} n={6} pos={0} />
+        {[0, 1, 2].map((k) => {
+          const a0 = ((2 * k) / 6) * Math.PI * 2 - Math.PI / 2 + 0.05;
+          const a1 = ((2 * k + 2) / 6) * Math.PI * 2 - Math.PI / 2 - 0.05;
+          const r = 370;
+          return (
+            <path
+              key={k}
+              d={`M ${1420 + r * Math.cos(a0)} ${560 + r * Math.sin(a0)} A ${r} ${r} 0 0 1 ${1420 + r * Math.cos(a1)} ${560 + r * Math.sin(a1)}`}
+              fill="none"
+              stroke={colors.highlight}
+              strokeWidth={16}
+              strokeLinecap="round"
+            />
+          );
+        })}
+        <circle
+          cx={1420}
+          cy={560 - 300 * 0.7}
+          r={70}
+          fill="none"
+          stroke={colors.red}
+          strokeWidth={14}
+        />
+      </svg>
+    );
+  }
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (
