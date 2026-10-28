@@ -5,8 +5,10 @@ All twenty episodes of Season 1 joined into one video per language by
 the MP4 as well). Every episode has the fixed music plan, so the music runs to
 the end of each episode.
 
-- English: `out/s1-season-en.mp4` (44:43)
-- Chinese: `out/s1-season-zh.mp4` (43:56)
+- English: `out/s1-season-en.mp4` (44:43, full quality, 502 MiB) and
+  `out/s1-season-en-share.mp4` (230 MiB, for sending and uploading)
+- Chinese: `out/s1-season-zh.mp4` (43:56, 502 MiB) and
+  `out/s1-season-zh-share.mp4` (229 MiB)
 
 Before posting: confirm the background-music licence covers that platform.
 
