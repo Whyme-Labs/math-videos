@@ -24,9 +24,9 @@ const Square: React.FC<{
 }> = ({ x, y, turn, flat, order }) => {
   const pts = [
     [0, 0],
-    [120, 0],
-    [120, -80],
-    [0, -80],
+    [200, 0],
+    [200, -130],
+    [0, -130],
   ].map(([px, py]) => {
     const r = (p: number[]) => {
       const a = (-Math.PI / 2) * turn;
@@ -168,13 +168,13 @@ export const EndCard: React.FC = () => {
       {/* the teaser: order matters */}
       <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
         <svg width={1920} height={1080}>
-          <Square x={1180} y={560} turn={a1} flat={a2} order="turnFirst" />
-          <Square x={1560} y={560} turn={a2} flat={a1} order="flatFirst" />
+          <Square x={1240} y={600} turn={a1} flat={a2} order="turnFirst" />
+          <Square x={1560} y={600} turn={a2} flat={a1} order="flatFirst" />
           <line
-            x1={1050}
-            y1={560}
-            x2={1820}
-            y2={560}
+            x1={980}
+            y1={600}
+            x2={1840}
+            y2={600}
             stroke={alpha(colors.paper, 0.3)}
             strokeWidth={3}
           />

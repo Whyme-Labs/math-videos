@@ -28,7 +28,7 @@ export const ColdOpen: React.FC = () => {
   const cues = useCues("coldOpen");
   const [c0, c1, c2, c3] = cues;
   const walk = ramp(frame, c0, c2 + 20 - c0);
-  const walkX = lerp(200, 760, walk);
+  const walkX = lerp(150, 1010, walk);
   const walking = frame < c2 + 20;
   const triedAt = (k: number) => c1 + 10 + k * 40;
   const push = glide(frame, c2 + 30, fps, 30);

@@ -13,8 +13,8 @@ import { useStrings } from "../i18n";
 // Then the whole grid follows, cell by cell, and the arrow v = 2e₁ + e₂ is
 // carried along to 2T(e₁) + T(e₂): nothing else had any choice.
 
-const O = { x: 760, y: 640 };
-const S = 120;
+const O = { x: 700, y: 650 };
+const S = 165;
 const M = { a: 1.25, b: 0.55, c: 0.35, d: 1.0 }; // columns (a, c) and (b, d)
 
 export const Basis: React.FC = () => {
@@ -23,7 +23,7 @@ export const Basis: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("basis");
   const [c0, c1] = cues;
-  const e = glide(frame, c0 + 30, fps, 30);
+  const e = glide(frame, c0 + 30, fps, 70);
   const grid = glide(frame, c1 + 10, fps, 50);
   const vShow = Math.min(1, springIn(frame, c1 + 70, fps, 10));
   const lerpM = (t: number) => ({
@@ -50,7 +50,7 @@ export const Basis: React.FC = () => {
         {/* the grid, carried along by the map */}
         {Array.from({ length: 9 }).map((_, i) => {
           const k = i - 2;
-          const a1 = scr(g, k, -1.5);
+          const a1 = scr(g, k, -1.0);
           const a2 = scr(g, k, 4);
           const b1 = scr(g, -3, k);
           const b2 = scr(g, 7, k);
@@ -64,7 +64,7 @@ export const Basis: React.FC = () => {
                 stroke={alpha(colors.paper, k === 0 ? 0.5 : 0.16)}
                 strokeWidth={k === 0 ? 4 : 2}
               />
-              {k >= -1 && k <= 4 ? (
+              {k >= 0 && k <= 3 ? (
                 <line
                   x1={b1.x}
                   y1={b1.y}

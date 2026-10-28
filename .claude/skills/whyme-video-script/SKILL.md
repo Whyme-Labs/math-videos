@@ -147,7 +147,9 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     规矩:《孟子·离娄上》"不以规矩，不能成方圆" and the Tang 伏羲女娲 silk
     paintings from Astana, Turfan (S1E19), 秦九韶《数书九章》遥度圆城's
     tenth-degree equation and 正负开方术 (S1E20),
-    《九章算术·方程》problem 1 and 遍乘直除 (S2E01).
+    《九章算术·方程》problem 1 and 遍乘直除 (S2E01), 《周礼·考工记》
+    "画缋之事，杂五色" (S2E02), the 《授时历》(1280) 招差术 (S2E03),
+    刘徽 on 方程, "并列为行，故谓之方程" (S2E04).
 
 ## Titles and posts for each platform
 

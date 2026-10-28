@@ -130,6 +130,21 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Add and scale.", "That's a vector."], accent: 1, size: 116 },
     zh: { lines: ["能相加，能伸缩", "就是向量"], accent: 1, size: 130 },
   },
+  {
+    ep: 202,
+    en: { lines: ["Why three,", "and not four?"], accent: 1, size: 130 },
+    zh: { lines: ["为什么是三，", "不是四？"], accent: 1, size: 140 },
+  },
+  {
+    ep: 203,
+    en: { lines: ["A machine", "that only adds"], accent: 1, size: 130 },
+    zh: { lines: ["一台只会", "做加法的机器"], accent: 1, size: 130 },
+  },
+  {
+    ep: 204,
+    en: { lines: ["Why AB ≠ BA"], accent: 0, size: 140 },
+    zh: { lines: ["为什么", "AB ≠ BA"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

@@ -24,7 +24,7 @@ export const Shadows: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("shadows");
   const [c0, c1] = cues;
-  const turn = glide(frame, c0 + 40, fps, 80) * (Math.PI / 4);
+  const turn = glide(frame, c0 + 30, fps, 150) * (Math.PI / 4);
   const act = glide(frame, c1 + 40, fps, 40);
   const snap = Math.min(1, springIn(frame, c1 + 90, fps, 10));
   // the matrix in the turned basis: Pᵀ M P with P = rotation by `turn`

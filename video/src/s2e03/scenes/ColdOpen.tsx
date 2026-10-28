@@ -155,7 +155,7 @@ export const ColdOpen: React.FC = () => {
           {/* by steam! */}
           <g
             opacity={bubble * part1}
-            transform={`translate(420 ${260 - 60 * jump}) scale(${bubble})`}
+            transform={`translate(470 ${170 - 60 * jump}) scale(${bubble})`}
           >
             <ellipse
               rx={190}

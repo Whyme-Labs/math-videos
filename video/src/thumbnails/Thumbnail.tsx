@@ -1123,6 +1123,155 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 202) {
+    // three coloured lights from one corner: colour has three directions
+    const O = { x: 1400, y: 640 };
+    const dirs = [
+      { x: 360, y: 140, c: "#ff4d4d" },
+      { x: -40, y: -380, c: "#5eea7a" },
+      { x: -330, y: 170, c: "#5a8cff" },
+    ];
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {dirs.map((d, k) => (
+          <circle
+            key={`g${k}`}
+            cx={O.x + d.x * 0.55}
+            cy={O.y + d.y * 0.55}
+            r={170}
+            fill={d.c}
+            opacity={0.35}
+            style={{ mixBlendMode: "screen" }}
+          />
+        ))}
+        {dirs.map((d, k) => {
+          const a = Math.atan2(d.y, d.x);
+          const tip = { x: O.x + d.x, y: O.y + d.y };
+          return (
+            <g key={k}>
+              <line
+                x1={O.x}
+                y1={O.y}
+                x2={tip.x - 50 * Math.cos(a)}
+                y2={tip.y - 50 * Math.sin(a)}
+                stroke={d.c}
+                strokeWidth={22}
+                strokeLinecap="round"
+              />
+              <polygon
+                points={`${tip.x},${tip.y} ${tip.x - 70 * Math.cos(a) + 38 * Math.sin(a)},${tip.y - 70 * Math.sin(a) - 38 * Math.cos(a)} ${tip.x - 70 * Math.cos(a) - 38 * Math.sin(a)},${tip.y - 70 * Math.sin(a) + 38 * Math.cos(a)}`}
+                fill={d.c}
+              />
+            </g>
+          );
+        })}
+      </svg>
+    );
+  }
+  if (ep === 203) {
+    // the difference engine: columns of number wheels and a crank
+    const vals = ["025", "011", "002"];
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <g transform="translate(1520 540) scale(0.8) translate(-1500 -540)">
+          <rect
+            x={1060}
+            y={240}
+            width={680}
+            height={600}
+            rx={30}
+            fill={alpha(colors.wood, 0.3)}
+            stroke={colors.wood}
+            strokeWidth={10}
+          />
+          {vals.map((v, c) =>
+            [...v].map((d, r) => (
+              <g
+                key={`${c}${r}`}
+                transform={`translate(${1200 + c * 200} ${360 + r * 170})`}
+              >
+                <ellipse
+                  rx={80}
+                  ry={60}
+                  fill={colors.paper}
+                  stroke={colors.ink}
+                  strokeWidth={6}
+                />
+                <text
+                  y={26}
+                  fill={colors.ink}
+                  fontSize={76}
+                  textAnchor="middle"
+                  fontFamily={fonts.mono}
+                  fontWeight={800}
+                >
+                  {d}
+                </text>
+              </g>
+            )),
+          )}
+          <g transform="translate(1800 540) rotate(-30)">
+            <line
+              x1={0}
+              y1={0}
+              x2={120}
+              y2={0}
+              stroke={colors.muted}
+              strokeWidth={20}
+              strokeLinecap="round"
+            />
+            <circle cx={120} cy={0} r={28} fill={colors.primary} />
+            <circle r={24} fill={colors.ink} />
+          </g>
+        </g>
+      </svg>
+    );
+  }
+  if (ep === 204) {
+    // one square, two shadows: flat and short, tall and thin
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1000}
+          y1={760}
+          x2={1840}
+          y2={760}
+          stroke={alpha(colors.paper, 0.5)}
+          strokeWidth={6}
+        />
+        <rect
+          x={1240}
+          y={250}
+          width={240}
+          height={240}
+          fill={alpha(colors.primary, 0.25)}
+          stroke={colors.primary}
+          strokeWidth={10}
+          strokeDasharray="22 14"
+        />
+        <rect x={1060} y={738} width={240} height={22} fill={colors.primary} />
+        <rect x={1640} y={520} width={22} height={240} fill={colors.orange} />
+        <line
+          x1={1300}
+          y1={500}
+          x2={1180}
+          y2={720}
+          stroke={alpha(colors.primary, 0.6)}
+          strokeWidth={8}
+          strokeDasharray="16 12"
+        />
+        <line
+          x1={1440}
+          y1={500}
+          x2={1640}
+          y2={560}
+          stroke={alpha(colors.orange, 0.6)}
+          strokeWidth={8}
+          strokeDasharray="16 12"
+        />
+      </svg>
+    );
+  }
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (

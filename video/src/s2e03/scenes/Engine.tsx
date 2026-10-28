@@ -132,6 +132,17 @@ export const Engine: React.FC = () => {
                   </g>
                 );
               })}
+              <text
+                x={x}
+                y={770}
+                fill={c === 2 ? colors.green : colors.primary}
+                fontSize={64}
+                textAnchor="middle"
+                fontFamily={fonts.math}
+                fontWeight={900}
+              >
+                {state[c]}
+              </text>
               {c > 0 ? (
                 <path
                   d={`M ${x - 110} 640 Q ${x - 130} 670 ${COL_X[c - 1] + 110} 640`}

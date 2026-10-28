@@ -103,7 +103,7 @@ export const Compose: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("compose");
   const [c0, c1] = cues;
-  const go = glide(frame, c0 + 20, fps, 60);
+  const go = glide(frame, c0 + 20, fps, 120);
   const part1 = fadeOut(frame, c1, 10);
   const entryAt = (k: number) => c1 + 30 + k * 40;
   const k = [0, 1, 2, 3].filter((i) => frame >= entryAt(i)).length - 1;
