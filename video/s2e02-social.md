@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e02-basis-and-dimension.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e02-zh-ji-yu-wei-shu.mp4` (DUR_ZH, 16:9). It has a
+- English edition: `out/s2e02-basis-and-dimension.mp4` (1:45, 16:9)
+- Chinese edition: `out/s2e02-zh-ji-yu-wei-shu.mp4` (1:47, 16:9). It has a
   scene the English edition doesn't: 《周礼·考工记》“画缋之事，杂五色”. Five
   pigments, but colour only has three directions, so some of the five are
   redundant: linear dependence.

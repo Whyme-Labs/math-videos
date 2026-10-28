@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e03-linear-maps.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e03-zh-xian-xing-ying-she.mp4` (DUR_ZH, 16:9). It
+- English edition: `out/s2e03-linear-maps.mp4` (1:40, 16:9)
+- Chinese edition: `out/s2e03-zh-xian-xing-ying-she.mp4` (1:43, 16:9). It
   has a scene the English edition doesn't: the 招差术 of the 《授时历》
   (1280), the cubes and their difference table, subtract down to a constant
   and add back up.

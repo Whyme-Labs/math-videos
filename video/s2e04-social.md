@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e04-matrices-as-shadows.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e04-zh-ju-zhen-shi-ying-zi.mp4` (DUR_ZH, 16:9). It
+- English edition: `out/s2e04-matrices-as-shadows.mp4` (1:36, 16:9)
+- Chinese edition: `out/s2e04-zh-ju-zhen-shi-ying-zi.mp4` (1:40, 16:9). It
   has a scene the English edition doesn't: 刘徽 on the word 方程, “并列为行，
   故谓之方程”, a grid of counting-rod numerals that was already a matrix two
   thousand years ago.
