@@ -1073,7 +1073,7 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
   }
   if (ep === 201) {
     // two arrows tip to tail, their sum, and the sum stretched
-    const O = { x: 1060, y: 860 };
+    const O = { x: 1000, y: 900 };
     const arrow = (
       x1: number,
       y1: number,
@@ -1103,19 +1103,21 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     };
     return (
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {/* the sum stretched 1.4×, behind; then u, v and their sum */}
+        {arrow(O.x, O.y, O.x + 728, O.y - 560, colors.orange, 14)}
         {arrow(O.x, O.y, O.x + 380, O.y - 50, colors.primary)}
         {arrow(O.x + 380, O.y - 50, O.x + 520, O.y - 400, colors.primary)}
         {arrow(O.x, O.y, O.x + 520, O.y - 400, colors.highlight)}
-        {arrow(O.x, O.y, O.x + 780, O.y - 600, colors.orange, 14)}
         <text
-          x={O.x + 820}
-          y={O.y - 620}
+          x={O.x + 560}
+          y={O.y - 650}
           fill={colors.orange}
           fontSize={90}
+          textAnchor="middle"
           fontFamily={fonts.math}
           fontWeight={800}
         >
-          × 1.5
+          × 1.4
         </text>
       </svg>
     );

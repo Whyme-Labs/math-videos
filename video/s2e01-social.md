@@ -5,8 +5,8 @@ The first episode of Season 2, *Spaces, Maps, and Measurements* (《空间、映
 Chinese. The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e01-add-and-scale.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e01-zh-xiang-liang.mp4` (DUR_ZH, 16:9). It has a
+- English edition: `out/s2e01-add-and-scale.mp4` (1:49, 16:9)
+- Chinese edition: `out/s2e01-zh-xiang-liang.mp4` (1:47, 16:9). It has a
   scene the English edition doesn't: 《九章算术·方程》's first problem (上禾、
   中禾、下禾) on a counting board, solved by 遍乘直除, scaling a whole column
   and subtracting a whole column.

@@ -4,8 +4,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s1e20-galois.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s1e20-zh-qie-luo-wa.mp4` (DUR_ZH, 16:9). It has a
+- English edition: `out/s1e20-galois.mp4` (1:49, 16:9)
+- Chinese edition: `out/s1e20-zh-qie-luo-wa.mp4` (1:47, 16:9). It has a
   scene the English edition doesn't: 秦九韶《数书九章》(1247)'s 遥度圆城, a
   tenth-degree equation solved digit by digit with 正负开方术 (城径九里), set
   against the question of a formula.
