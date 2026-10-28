@@ -53,13 +53,13 @@ def spans(line: str) -> str:
 
 for t in data["thumbs"]:
     for loc in ("en", "zh"):
-        name = f"E{t['ep']:02d}-{loc.upper()}"
+        name = f"{t['code']}-{loc.upper()}"
         art = OUT / "art" / f"{name}.jpg"
         if not art.exists():
             continue
         tx = t[loc]
         zh = loc == "zh"
-        bw = 230 if zh else 190
+        bw = t['badgeW']['zh' if zh else 'en']
         hook = "\n".join(
             f'    <text x="{L["textX"]}" y="{L["firstBaseline"] + i * tx["size"] * L["lineGap"]:.1f}" '
             f'font-family="{BODY if zh else TITLE}" font-size="{tx["size"]}" font-weight="{900 if zh else 800}" '
@@ -77,7 +77,7 @@ for t in data["thumbs"]:
   <g id="badge">
     <rect x="{L['textX']}" y="{L['badgeY']}" width="{bw}" height="{L['badgeH']}" rx="20" fill="{COLORS['primary']}"/>
     <text x="{L['textX'] + bw / 2}" y="{L['badgeY'] + L['badgeH'] * 0.72:.1f}" font-family="{BODY if zh else TITLE}" font-size="60" font-weight="800" fill="{COLORS['ink']}" text-anchor="middle">{escape(t['badge'][loc])}</text>
-    <text x="{L['textX'] + bw + 30}" y="{L['badgeY'] + L['badgeH'] * 0.68:.1f}" font-family="{BODY}" font-size="46" font-weight="700" letter-spacing="{2 if zh else 6}" fill="{COLORS['muted']}">{escape(data['series'][loc])}</text>
+    <text x="{L['textX'] + bw + 30}" y="{L['badgeY'] + L['badgeH'] * 0.68:.1f}" font-family="{BODY}" font-size="46" font-weight="700" letter-spacing="{2 if zh else 6}" fill="{COLORS['muted']}">{escape(t['series'][loc])}</text>
   </g>
   <g id="hook">
 {hook}
@@ -95,13 +95,13 @@ for t in data["thumbs"]:
 for shape, Q in data["covers"].items():
     for t in data["thumbs"]:
         for loc in ("en", "zh"):
-            name = f"E{t['ep']:02d}-{loc.upper()}"
+            name = f"{t['code']}-{loc.upper()}"
             art = OUT / f"cover-{shape}" / "art" / f"{name}.jpg"
             if not art.exists():
                 continue
             tx = t[loc]
             zh = loc == "zh"
-            bw = 200 if zh else 160
+            bw = t['badgeW']['coverZh' if zh else 'coverEn']
             size = tx["size"] * Q["hookScale"]
             hook = "\n".join(
                 f'    <text x="{Q["cx"]}" y="{Q["firstBaseline"] + i * size * Q["lineGap"]:.1f}" text-anchor="middle" '
@@ -121,7 +121,7 @@ for shape, Q in data["covers"].items():
     <g id="badge">
         <rect x="{Q['cx'] - bw / 2}" y="{Q['badgeY']}" width="{bw}" height="{Q['badgeH']}" rx="18" fill="{COLORS['primary']}"/>
         <text x="{Q['cx']}" y="{Q['badgeY'] + Q['badgeH'] * 0.72:.1f}" font-family="{BODY if zh else TITLE}" font-size="{Q['badgeFont']}" font-weight="800" fill="{COLORS['ink']}" text-anchor="middle">{escape(t['badge'][loc])}</text>
-        <text x="{Q['cx']}" y="{Q['seriesY']}" font-family="{BODY}" font-size="{Q['seriesFont']}" font-weight="700" letter-spacing="{2 if zh else 5}" fill="{COLORS['muted']}" text-anchor="middle">{escape(data['series'][loc])}</text>
+        <text x="{Q['cx']}" y="{Q['seriesY']}" font-family="{BODY}" font-size="{Q['seriesFont']}" font-weight="700" letter-spacing="{2 if zh else 5}" fill="{COLORS['muted']}" text-anchor="middle">{escape(t['series'][loc])}</text>
     </g>
     <g id="hook">
   {hook}

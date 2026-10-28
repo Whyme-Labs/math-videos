@@ -1,8 +1,9 @@
 import { Folder, Still } from "remotion";
 import { Thumbnail, type ThumbProps } from "./Thumbnail";
-import { COVERS, type CoverShape, THUMBS } from "./thumbs";
+import { code, COVERS, type CoverShape, THUMBS } from "./thumbs";
 
-// Three stills per episode and language: Thumb-E05-EN (wide, 16:9) and the
+// Three stills per episode and language: Thumb-E05-EN (wide, 16:9; later
+// seasons Thumb-S2E01-EN) and the
 // covers Thumb-E05-EN-4x3 and Thumb-E05-EN-3x4, and the same for ZH.
 // Render with scripts/thumbnails.sh (PNG for upload, art-only PNG and an
 // editable SVG for changing the text).
@@ -10,7 +11,7 @@ export const ThumbnailStills: React.FC = () => (
   <Folder name="Thumbnails">
     {THUMBS.flatMap((t) =>
       (["en", "zh"] as const).flatMap((locale) => {
-        const id = `Thumb-E${String(t.ep).padStart(2, "0")}-${locale.toUpperCase()}`;
+        const id = `Thumb-${code(t.ep)}-${locale.toUpperCase()}`;
         return [
           <Still
             key={id}

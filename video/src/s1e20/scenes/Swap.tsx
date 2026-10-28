@@ -4,6 +4,8 @@ import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import { glide, hop, shake, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
+import { useEpisode } from "../../shared/episode";
+import { useLocale } from "../../shared/locale";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { useStrings } from "../i18n";
 
@@ -24,7 +26,11 @@ export const Swap: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("swap");
   const [c0, c1] = cues;
-  const swaps = [c0 + 60, c0 + 120, c1 + 24, c1 + 70];
+  const { durationInFrames } = useEpisode().sceneTiming("swap", useLocale());
+  const swaps = [c0 + 60, c0 + 150, c1 + 40, c1 + 120];
+  // the last beats fit inside the line, however long it runs
+  const rootAt = Math.min(c1 + 170, durationInFrames - 100);
+  const formulaAt = Math.min(c1 + 210, durationInFrames - 60);
   // how many swaps have finished, and the one in flight
   const ts = swaps.map((at) => glide(frame, at, fps, 18));
   const done = ts.filter((t) => t >= 0.999).length;
@@ -37,8 +43,8 @@ export const Swap: React.FC = () => {
   const r2 = hop(live, xOf(6 - r1From), LINE_Y, xOf(6 - r1To), LINE_Y, -120);
   const settled = live === 0;
   const diff = (r2.x - r1.x) / UNIT; // r₂ − r₁, live
-  const square = glide(frame, c1 + 40, fps, 16);
-  const root = glide(frame, c1 + 110, fps, 18);
+  const square = glide(frame, c1 + 76, fps, 16);
+  const root = glide(frame, rootAt, fps, 18);
   const part1 = fadeOut(frame, c1, 10);
   const checkAt = (k: number) => swaps[k] + 18;
 
@@ -51,9 +57,9 @@ export const Swap: React.FC = () => {
       <Sfx name="ding" at={checkAt(0)} volume={0.14} />
       <Sfx name="ding" at={checkAt(1)} volume={0.14} />
       <Sfx name="thud" at={checkAt(2)} volume={0.26} />
-      <Sfx name="pop" at={c1 + 40} volume={0.18} />
-      <Sfx name="scratch" at={c1 + 110} volume={0.2} />
-      <Sfx name="chime" at={c1 + 140} />
+      <Sfx name="pop" at={c1 + 76} volume={0.18} />
+      <Sfx name="scratch" at={rootAt} volume={0.2} />
+      <Sfx name="chime" at={formulaAt} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         {/* the number line */}
@@ -241,8 +247,8 @@ export const Swap: React.FC = () => {
           fontSize: 84,
           fontWeight: 800,
           color: colors.text,
-          opacity: fadeIn(frame, c1 + 140),
-          translate: riseIn(frame, c1 + 140, 16),
+          opacity: fadeIn(frame, formulaAt),
+          translate: riseIn(frame, formulaAt, 16),
         }}
       >
         {tx.quadFormula}

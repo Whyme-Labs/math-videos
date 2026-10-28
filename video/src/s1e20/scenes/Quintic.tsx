@@ -222,8 +222,8 @@ export const Quintic: React.FC = () => {
             const s = Math.min(1, springIn(frame, stackAt(k), fps, 10));
             const x0 = 860;
             const y0 = 700 - k * 62;
-            const fx = x0 + fall * (k * k * 14 + 40);
-            const fy = y0 + fall * k * 70;
+            const fx = x0 + fall * (k - 2.5) * 70;
+            const fy = lerp(y0, 760, fall);
             return (
               <g
                 key={k}
@@ -279,8 +279,8 @@ export const Quintic: React.FC = () => {
             </text>
           </g>
           <text
-            x={960}
-            y={780}
+            x={860}
+            y={330}
             fill={colors.red}
             fontSize={72}
             textAnchor="middle"

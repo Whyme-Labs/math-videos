@@ -115,15 +115,53 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["On this clock,", "2 × 3 = 0"], accent: 1, size: 128 },
     zh: { lines: ["这个钟面上", "2 × 3 = 0"], accent: 1, size: 140 },
   },
+  {
+    ep: 19,
+    en: { lines: ["Cut it in three?", "Impossible."], accent: 1, size: 120 },
+    zh: { lines: ["三等分一个角", "做不到"], accent: 1, size: 140 },
+  },
+  {
+    ep: 20,
+    en: { lines: ["Why degree 5", "has no formula"], accent: 1, size: 120 },
+    zh: { lines: ["五次方程", "为什么没有公式"], accent: 1, size: 130 },
+  },
+  {
+    ep: 201,
+    en: { lines: ["Add and scale.", "That's a vector."], accent: 1, size: 116 },
+    zh: { lines: ["能相加，能伸缩", "就是向量"], accent: 1, size: 130 },
+  },
 ];
+
+// Season 1 episodes are numbered 1–20; later seasons are 100 × season +
+// episode, so S2E01 is 201. `code` names the stills and files (E19, S2E01).
+export const seasonOf = (ep: number) => (ep < 100 ? 1 : Math.floor(ep / 100));
+const pad = (n: number) => String(n % 100).padStart(2, "0");
+export const code = (ep: number) =>
+  ep < 100 ? `E${pad(ep)}` : `S${seasonOf(ep)}E${pad(ep)}`;
 
 export const SERIES_NAME: Record<Locale, string> = {
   en: "WHAT IS A NUMBER?",
   zh: "数是什么？",
 };
+const SERIES_NAMES: Record<number, Record<Locale, string>> = {
+  1: SERIES_NAME,
+  2: { en: "SPACES, MAPS, AND MEASUREMENTS", zh: "空间、映射与度量" },
+};
+export const seriesName = (ep: number, locale: Locale) =>
+  SERIES_NAMES[seasonOf(ep)][locale];
 
-export const badge = (ep: number, locale: Locale) =>
-  locale === "zh" ? `第 ${ep} 集` : `E${String(ep).padStart(2, "0")}`;
+export const badge = (ep: number, locale: Locale) => {
+  const n = ep % 100;
+  if (seasonOf(ep) === 1) return locale === "zh" ? `第 ${n} 集` : `E${pad(n)}`;
+  return locale === "zh" ? `S${seasonOf(ep)} 第 ${n} 集` : code(ep);
+};
+
+// width of the badge box: wide thumbnail, or a cover
+export const badgeWidth = (ep: number, locale: Locale, cover = false) => {
+  const s1 = seasonOf(ep) === 1;
+  if (locale === "zh") return (s1 ? 230 : 320) - (cover ? 30 : 0);
+  return (s1 ? 190 : 260) - (cover ? 30 : 0);
+};
 
 // Shared layout, used by both the stills and the SVG export.
 export const LAYOUT = {

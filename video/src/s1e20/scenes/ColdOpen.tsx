@@ -22,7 +22,7 @@ import { useStrings } from "../i18n";
 // five dots, the roots, lift off the page and trade places in pairs, while
 // the window turns from night to the first grey of dawn.
 
-const WIN = { x: 120, y: 120, w: 360, h: 300 };
+const WIN = { x: 120, y: 60, w: 360, h: 260 };
 const PAGE = { x: 780, y: 110, w: 900, h: 660 };
 const SWAPS: [number, number][] = [
   [0, 3],
@@ -38,7 +38,7 @@ export const ColdOpen: React.FC = () => {
   const [c0, c1, c2, c3] = cues;
   const end = c3 + 150;
   const dawn = ramp(frame, c2, end - c2);
-  const page = glide(frame, c1 + 4, fps, 20);
+  const page = glide(frame, c0 + 70, fps, 20);
   const writing = ramp(frame, c1 + 30, 140);
   const margin = typed(tx.noTime, frame, c2 + 10, fps, 14);
   const quintic = Math.min(1, springIn(frame, c2 + 80, fps, 10));
@@ -86,7 +86,7 @@ export const ColdOpen: React.FC = () => {
 
   return (
     <SceneShell id="coldOpen">
-      <Sfx name="page" at={c1 + 4} volume={0.18} />
+      <Sfx name="page" at={c0 + 70} volume={0.18} />
       <Sfx name="scratch" at={c1 + 30} volume={0.14} />
       <Sfx name="scratch" at={c2 + 10} volume={0.24} />
       <Sfx name="thud" at={c2 + 80} volume={0.3} />
@@ -165,7 +165,7 @@ export const ColdOpen: React.FC = () => {
           />
           <text
             x={380}
-            y={330}
+            y={390}
             fill={colors.highlight}
             fontSize={42}
             textAnchor="middle"

@@ -40,9 +40,9 @@ export const Group: React.FC = () => {
   const [c0, c1] = cues;
   const turn = glide(frame, c0 + 30, fps, 22);
   const flip = glide(frame, c0 + 76, fps, 22);
-  const cardAt = (k: number) => c0 + 110 + k * 8;
+  const cardAt = (k: number) => c0 + 110 + k * 16;
   const part1 = fadeOut(frame, c1, 10);
-  const ladderAt = (k: number) => c1 + 20 + k * 34;
+  const ladderAt = (k: number) => c1 + 20 + k * 64;
 
   // root i sits at angle 120·i, turned by the rotation, mirrored by the flip
   const rootAt = (i: number) => {
@@ -64,7 +64,7 @@ export const Group: React.FC = () => {
           <Sfx
             key={`${k}${i}`}
             name={PLUCKS[(k + i) % PLUCKS.length]}
-            at={ladderAt(k) + 10 + i * 16}
+            at={ladderAt(k) + 10 + i * 20}
             volume={0.14}
           />
         )),
@@ -185,7 +185,7 @@ export const Group: React.FC = () => {
           {LADDERS.map((l, k) => {
             const steps = l.steps.length;
             const down = l.steps.reduce(
-              (a, _, i) => a + glide(frame, ladderAt(k) + 10 + i * 16, fps, 12),
+              (a, _, i) => a + glide(frame, ladderAt(k) + 10 + i * 20, fps, 12),
               0,
             );
             return (
@@ -200,7 +200,7 @@ export const Group: React.FC = () => {
                 label={tx.ladderLabels[k]}
                 ok={
                   down >= steps - 0.01
-                    ? fadeIn(frame, ladderAt(k) + 10 + steps * 16, 6)
+                    ? fadeIn(frame, ladderAt(k) + 10 + steps * 20, 6)
                     : 0
                 }
                 opacity={fadeIn(frame, ladderAt(k) - 10, 8)}

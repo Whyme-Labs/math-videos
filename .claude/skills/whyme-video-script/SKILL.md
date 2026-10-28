@@ -143,7 +143,11 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     《墨子·经下》"以言为尽悖，悖" (S1E14),
     《庄子·养生主》"吾生也有涯，而知也无涯" (S1E15),
     洛书, 《大戴礼记·明堂》"二九四，七五三，六一八" (S1E16),
-    《孙子算经》物不知数 (S1E17), 秦九韶《数书九章》大衍求一术 (S1E18).
+    《孙子算经》物不知数 (S1E17), 秦九韶《数书九章》大衍求一术 (S1E18),
+    规矩:《孟子·离娄上》"不以规矩，不能成方圆" and the Tang 伏羲女娲 silk
+    paintings from Astana, Turfan (S1E19), 秦九韶《数书九章》遥度圆城's
+    tenth-degree equation and 正负开方术 (S1E20),
+    《九章算术·方程》problem 1 and 遍乘直除 (S2E01).
 
 ## Titles and posts for each platform
 

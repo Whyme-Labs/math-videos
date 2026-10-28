@@ -27,7 +27,7 @@ export const TowerScene: React.FC = () => {
   const appear = [0, 1, 2, 3, 4].map((i) =>
     glide(frame, c0 + 4 + i * 5, fps, 14),
   );
-  const floorAt = (i: number) => c0 + 50 + i * 24;
+  const floorAt = (i: number) => c0 + 40 + i * 36;
   const built = [0, 1, 2, 3, 4].map((i) => glide(frame, floorAt(i), fps, 10));
   const question = built.map((b) => 1 - b);
   const answer = Math.min(1, springIn(frame, c1 + 40, fps, 10));

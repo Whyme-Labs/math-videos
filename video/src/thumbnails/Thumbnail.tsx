@@ -26,7 +26,8 @@ import {
   COVERS,
   type CoverShape,
   LAYOUT,
-  SERIES_NAME,
+  seriesName,
+  badgeWidth,
   THUMBS,
 } from "./thumbs";
 
@@ -921,6 +922,204 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 19) {
+    // a 60° angle, trial thirds that miss, a red cross, and the compass
+    const V = { x: 1080, y: 820 };
+    const ray = (d: number, len: number) => ({
+      x: V.x + len * Math.cos((d * Math.PI) / 180),
+      y: V.y - len * Math.sin((d * Math.PI) / 180),
+    });
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {[0, 60].map((d) => (
+          <line
+            key={d}
+            x1={V.x}
+            y1={V.y}
+            x2={ray(d, d ? 680 : 760).x}
+            y2={ray(d, d ? 680 : 760).y}
+            stroke={colors.paper}
+            strokeWidth={14}
+            strokeLinecap="round"
+          />
+        ))}
+        {[17, 22.5, 39, 43].map((d, k) => (
+          <line
+            key={k}
+            x1={V.x}
+            y1={V.y}
+            x2={ray(d, 620).x}
+            y2={ray(d, 620).y}
+            stroke={colors.orange}
+            strokeWidth={8}
+            strokeDasharray="22 14"
+          />
+        ))}
+        <path
+          d={`M ${V.x + 260} ${V.y} A 260 260 0 0 0 ${ray(60, 260).x} ${ray(60, 260).y}`}
+          fill="none"
+          stroke={colors.highlight}
+          strokeWidth={10}
+        />
+        <line
+          x1={ray(30, 540).x - 60}
+          y1={ray(30, 540).y - 60}
+          x2={ray(30, 540).x + 60}
+          y2={ray(30, 540).y + 60}
+          stroke={colors.red}
+          strokeWidth={22}
+          strokeLinecap="round"
+        />
+        <line
+          x1={ray(30, 540).x - 60}
+          y1={ray(30, 540).y + 60}
+          x2={ray(30, 540).x + 60}
+          y2={ray(30, 540).y - 60}
+          stroke={colors.red}
+          strokeWidth={22}
+          strokeLinecap="round"
+        />
+        {/* the compass */}
+        <line
+          x1={1560}
+          y1={180}
+          x2={1460}
+          y2={460}
+          stroke={colors.muted}
+          strokeWidth={16}
+          strokeLinecap="round"
+        />
+        <line
+          x1={1560}
+          y1={180}
+          x2={1700}
+          y2={440}
+          stroke={colors.muted}
+          strokeWidth={16}
+          strokeLinecap="round"
+        />
+        <circle
+          cx={1560}
+          cy={180}
+          r={26}
+          fill={colors.primary}
+          stroke={colors.ink}
+          strokeWidth={5}
+        />
+      </svg>
+    );
+  }
+  if (ep === 20) {
+    // five roots on a ring, two pairs swapping along arcs, and a "?"
+    const C = { x: 1420, y: 540, r: 300 };
+    const p = (i: number) => {
+      const a = (i / 5) * Math.PI * 2 - Math.PI / 2;
+      return { x: C.x + C.r * Math.cos(a), y: C.y + C.r * Math.sin(a) };
+    };
+    const ring = [
+      colors.primary,
+      colors.highlight,
+      colors.green,
+      colors.orange,
+      colors.paper,
+    ];
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <circle
+          cx={C.x}
+          cy={C.y}
+          r={C.r}
+          fill="none"
+          stroke={alpha(colors.paper, 0.3)}
+          strokeWidth={6}
+          strokeDasharray="16 16"
+        />
+        {[
+          [0, 2],
+          [1, 4],
+        ].map(([a, b], k) => (
+          <path
+            key={k}
+            d={`M ${p(a).x} ${p(a).y} Q ${C.x + (k ? -60 : 60)} ${C.y + (k ? 60 : -60)} ${p(b).x} ${p(b).y}`}
+            fill="none"
+            stroke={colors.highlight}
+            strokeWidth={10}
+            strokeDasharray="20 14"
+          />
+        ))}
+        {ring.map((c, i) => (
+          <circle
+            key={i}
+            cx={p(i).x}
+            cy={p(i).y}
+            r={56}
+            fill={c}
+            stroke={colors.ink}
+            strokeWidth={8}
+          />
+        ))}
+        <text
+          x={C.x}
+          y={C.y + 90}
+          fill={colors.highlight}
+          fontSize={260}
+          textAnchor="middle"
+          fontWeight={900}
+        >
+          ?
+        </text>
+      </svg>
+    );
+  }
+  if (ep === 201) {
+    // two arrows tip to tail, their sum, and the sum stretched
+    const O = { x: 1060, y: 860 };
+    const arrow = (
+      x1: number,
+      y1: number,
+      x2: number,
+      y2: number,
+      c: string,
+      w = 22,
+    ) => {
+      const a = Math.atan2(y2 - y1, x2 - x1);
+      return (
+        <g>
+          <line
+            x1={x1}
+            y1={y1}
+            x2={x2 - 50 * Math.cos(a)}
+            y2={y2 - 50 * Math.sin(a)}
+            stroke={c}
+            strokeWidth={w}
+            strokeLinecap="round"
+          />
+          <polygon
+            points={`${x2},${y2} ${x2 - 70 * Math.cos(a) + 38 * Math.sin(a)},${y2 - 70 * Math.sin(a) - 38 * Math.cos(a)} ${x2 - 70 * Math.cos(a) - 38 * Math.sin(a)},${y2 - 70 * Math.sin(a) + 38 * Math.cos(a)}`}
+            fill={c}
+          />
+        </g>
+      );
+    };
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {arrow(O.x, O.y, O.x + 380, O.y - 50, colors.primary)}
+        {arrow(O.x + 380, O.y - 50, O.x + 520, O.y - 400, colors.primary)}
+        {arrow(O.x, O.y, O.x + 520, O.y - 400, colors.highlight)}
+        {arrow(O.x, O.y, O.x + 780, O.y - 600, colors.orange, 14)}
+        <text
+          x={O.x + 820}
+          y={O.y - 620}
+          fill={colors.orange}
+          fontSize={90}
+          fontFamily={fonts.math}
+          fontWeight={800}
+        >
+          × 1.5
+        </text>
+      </svg>
+    );
+  }
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (
@@ -1020,13 +1219,13 @@ export const Thumbnail: React.FC<ThumbProps> = ({
             <rect
               x={L.textX}
               y={L.badgeY}
-              width={zh ? 230 : 190}
+              width={badgeWidth(ep, locale)}
               height={L.badgeH}
               rx={20}
               fill={colors.primary}
             />
             <text
-              x={L.textX + (zh ? 115 : 95)}
+              x={L.textX + badgeWidth(ep, locale) / 2}
               y={L.badgeY + L.badgeH * 0.72}
               fill={colors.ink}
               fontSize={60}
@@ -1037,7 +1236,7 @@ export const Thumbnail: React.FC<ThumbProps> = ({
               {badge(ep, locale)}
             </text>
             <text
-              x={L.textX + (zh ? 260 : 220)}
+              x={L.textX + badgeWidth(ep, locale) + 30}
               y={L.badgeY + L.badgeH * 0.68}
               fill={colors.muted}
               fontSize={46}
@@ -1045,7 +1244,7 @@ export const Thumbnail: React.FC<ThumbProps> = ({
               letterSpacing={zh ? 2 : 6}
               fontFamily={fonts.body}
             >
-              {SERIES_NAME[locale]}
+              {seriesName(ep, locale)}
             </text>
             {/* the hook */}
             {tx.lines.map((line, i) => (
@@ -1133,7 +1332,7 @@ const CoverThumbnail: React.FC<{
   const Q = COVERS[shape];
   const zh = locale === "zh";
   const size = tx.size * Q.hookScale;
-  const bw = zh ? 200 : 160;
+  const bw = badgeWidth(ep, locale, true);
   return (
     <LocaleProvider locale={locale}>
       <AbsoluteFill
@@ -1193,7 +1392,7 @@ const CoverThumbnail: React.FC<{
               textAnchor="middle"
               fontFamily={fonts.body}
             >
-              {SERIES_NAME[locale]}
+              {seriesName(ep, locale)}
             </text>
             {tx.lines.map((line, i) => (
               <text

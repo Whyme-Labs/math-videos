@@ -6,8 +6,8 @@ description: House rules and the end-to-end workflow for Whyme Labs math videos 
 # Whyme Labs math videos
 
 Every episode of the series should look, sound and move like the same show.
-S1E01–S1E18 (`video/src/s1e01` … `s1e18`) are the reference
-implementations, built on the shared code in `video/src/shared`. When this
+S1E01–S1E20 (`video/src/s1e01` … `s1e20`) and S2E01 (`video/src/s2e01`)
+are the reference implementations, built on the shared code in `video/src/shared`. When this
 skill and the code disagree, fix one of them so they agree again.
 
 ## The five skills
@@ -131,7 +131,9 @@ An episode or scene change is finished when all of these hold:
 - [ ] The episode has a thumbnail: an entry in
       `video/src/thumbnails/thumbs.ts` (a hook of at most two short lines in
       each language) and a picture in `Thumbnail.tsx`. Then run
-      `scripts/thumbnails.sh <NN>` and look at both PNGs. See
+      `scripts/thumbnails.sh <NN>` (Season 1) or `scripts/thumbnails.sh S2E01`
+      (later seasons, whose `thumbs.ts` entries are numbered 100 × season +
+      episode, e.g. 201) and look at both PNGs. See
       `video/thumbnails/README.md`.
 
 ## QA: contact sheets
