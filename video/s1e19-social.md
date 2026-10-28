@@ -4,8 +4,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s1e19-fields.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s1e19-zh-yu.mp4` (DUR_ZH, 16:9). It has a scene the
+- English edition: `out/s1e19-fields.mp4` (1:45, 16:9)
+- Chinese edition: `out/s1e19-zh-yu.mp4` (1:38, 16:9). It has a scene the
   English edition doesn't: 规矩. 《孟子·离娄上》's “不以规矩，不能成方圆”, and
   the Tang silk paintings from Astana, Turfan, where 伏羲 holds the 矩 and
   女娲 the 规.
