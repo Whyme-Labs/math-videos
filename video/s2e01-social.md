@@ -5,8 +5,8 @@ The first episode of Season 2, *Spaces, Maps, and Measurements* (《空间、映
 Chinese. The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e01-add-and-scale.mp4` (1:49, 16:9)
-- Chinese edition: `out/s2e01-zh-xiang-liang.mp4` (1:47, 16:9). It has a
+- English edition: `out/s2e01-add-and-scale.mp4` (1:48, 16:9)
+- Chinese edition: `out/s2e01-zh-xiang-liang.mp4` (1:48, 16:9). It has a
   scene the English edition doesn't: 《九章算术·方程》's first problem (上禾、
   中禾、下禾) on a counting board, solved by 遍乘直除, scaling a whole column
   and subtracting a whole column.
@@ -17,6 +17,8 @@ Chinese. The rules behind them are in
 - New season: start a Season 2 playlist on YouTube and a 合集 on bilibili and
   抖音. The series name on screen and on the thumbnails is *Spaces, Maps, and
   Measurements*.
+- Music: Season 2 has its own background track. Fill in its title in the
+  music credit lines below (`<Season 2 track title>`).
 - Before posting anywhere: confirm the background-music licence covers that
   platform. Fill in `<YouTube link>`, `<S1E20 link>` and `<bilibili link>`
   once the uploads are live.
@@ -41,10 +43,10 @@ Stettin, 1844. Hermann Grassmann, a schoolteacher, publishes a book about adding
 Season 2, episode 1 of Whyme Labs' math series. An arrow, a polynomial, a sound and the waves that solve y″ + y = 0 look unrelated, but each can be added to another of its kind and stretched by a number. Keep only those two moves and a few rules (order doesn't matter, there's a zero, everything has an opposite, stretching spreads over adding), with scalars from any field: that's a vector space. Bit strings under XOR form one with exactly eight vectors; every function from the reals to the reals forms one; positive numbers, spheres and lines that miss the origin don't. And the payoff: for a linear equation any mix of solutions is a solution, which is why two sounds can cross a room untouched, and why zooming in on any smooth curve makes it look linear.
 
 0:00 Stettin, 1844
-0:29 Four things that add
+0:28 Four things that add
 0:47 The rules, and the scalars
-1:04 The stamp takes, and bounces
-1:22 Superposition, and zooming in
+1:03 The stamp takes, and bounces
+1:21 Superposition, and zooming in
 1:37 Next: basis and dimension
 
 Previous episode (Season 1 finale): Galois <S1E20 link>
@@ -54,7 +56,7 @@ Also in Chinese (中文版): <YouTube ZH link>
 
 Sources: H. Grassmann, Die lineale Ausdehnungslehre (1844); G. Peano, Calcolo geometrico secondo l'Ausdehnungslehre di H. Grassmann (1888); S. Axler, Linear Algebra Done Right, ch. 1.
 Made by Whyme Labs.
-Music: "We Never" (instrumental), used under licence.
+Music: <Season 2 track title>, used under licence.
 Fonts: Fraunces, Inter, JetBrains Mono, STIX Two, Noto Sans SC (SIL Open Font License).
 
 #math #linearalgebra #vectors
@@ -78,12 +80,12 @@ Fonts: Fraunces, Inter, JetBrains Mono, STIX Two, Noto Sans SC (SIL Open Font Li
 Whyme Labs 数学系列第二季第 1 集。箭头、多项式、声音、满足 y″ + y = 0 的波，看似毫不相干，却都能和同类相加、乘一个数伸缩。只留这两个动作和几条规矩（不讲先后、有零、有相反、伸缩分配），数取自任意一个域：这就是向量空间。异或下的比特串是一个只有八个向量的空间；所有实函数也是；正数、球面、不过原点的直线都不是。最后：线性方程的解任意组合还是解，所以两个声音能穿过同一个房间；任何光滑曲线放大到足够近都像直线。中文版还加了《九章算术·方程》的“遍乘直除”。
 
 0:00 1844 年，斯德丁
-0:26 四样能相加的东西
-0:42 规矩与数
+0:25 四样能相加的东西
+0:43 规矩与数
 0:55 《九章算术·方程》
 1:12 盖章与弹开
 1:26 叠加，以及放大
-1:38 下一集：基与维数
+1:39 下一集：基与维数
 
 上一集（第一季终章）：伽罗瓦 <S1E20 链接>
 下一集：确定一个向量要几个数？这个个数是真的，还是只是一种选择？
@@ -92,7 +94,7 @@ English version: <YouTube EN link>
 
 出处：《九章算术·方程》；格拉斯曼《线性扩张论》(1844)；皮亚诺《几何演算》(1888)。
 Whyme Labs 出品
-音乐：We Never（纯音乐），已获授权
+音乐：<第二季配乐曲名>，已获授权
 字体：思源黑体 Noto Sans SC 等（SIL Open Font License）
 
 #数学 #线性代数 #向量
@@ -171,18 +173,18 @@ Whyme Labs 数学系列第二季第 1 集。向量不是箭头，也不是一列
 中文版另加《九章算术·方程》第一题：上禾三秉、中禾二秉、下禾一秉，实三十九斗……用“遍乘直除”：中行整列乘 3，再两次减去右行，得 0、5、1、24。答：上禾一秉九斗又四分之一。
 
 00:00 1844 年，斯德丁
-00:26 四样能相加的东西
-00:42 规矩与数
+00:25 四样能相加的东西
+00:43 规矩与数
 00:55 《九章算术·方程》
 01:12 盖章与弹开
 01:26 叠加，以及放大
-01:38 下一集：基与维数
+01:39 下一集：基与维数
 
 上一集（第一季终章）：伽罗瓦 <B 站 S1E20 链接>
 下一集：确定一个向量要几个数？
 
 出处：《九章算术·方程》；格拉斯曼 (1844)；皮亚诺 (1888)。
-音乐：We Never（纯音乐），已获授权
+音乐：<第二季配乐曲名>，已获授权
 字体：思源黑体 Noto Sans SC（SIL Open Font License）
 Whyme Labs 出品，自制
 ```

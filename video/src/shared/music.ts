@@ -1,95 +1,131 @@
-// Background music: "We Never" (instrumental), public/music/bgm.wav.
-// Measured with librosa (see video/README.md): a constant 128 BPM grid whose
-// first beat is at 0.4721 s and whose bars start every 4 beats from there.
-export const MUSIC_SRC = "music/bgm.wav"; // WAV, not AAC, so bar-aligned trims are sample-accurate
-export const BEAT_SECONDS = 60 / 128;
-export const BAR_SECONDS = 4 * BEAT_SECONDS;
-export const FIRST_BEAT_SECONDS = 0.4721;
+// Background music, one track per season, each measured with librosa
+// (scripts/analyze-beats.py; see video/README.md) to a constant beat grid
+// whose bars start every 4 beats from the first beat. Tracks are WAV, not
+// AAC, so bar-aligned trims are sample-accurate.
+export type Track = {
+  readonly src: string;
+  readonly bpm: number;
+  readonly firstBeat: number; // seconds
+  // song sections, in bars counted from the first beat
+  readonly bodyStartBar: number; // after the intro
+  readonly bodyEndBar: number; // the outro starts here
+  readonly outroBars: number; // the song's real ending, fading to silence
+};
 
-// Song sections, in bars counted from the first beat.
-const BODY_START_BAR = 8; // after the intro
-const BODY_END_BAR = 72; // the outro starts here
-const OUTRO_BARS = 8; // bars 72–80: the ending, fading to silence by bar 80
-const BODY_BARS = BODY_END_BAR - BODY_START_BAR;
-
-export const barTime = (bar: number) => FIRST_BEAT_SECONDS + bar * BAR_SECONDS;
-
-// Music starts at video time 0, and every splice is a whole number of bars,
-// so this grid holds for the whole episode.
-export const nearestBeat = (t: number) =>
-  FIRST_BEAT_SECONDS +
-  Math.round((t - FIRST_BEAT_SECONDS) / BEAT_SECONDS) * BEAT_SECONDS;
-
-export const nextBarIndex = (t: number) =>
-  Math.ceil((t - FIRST_BEAT_SECONDS) / BAR_SECONDS - 1e-6);
-
-export const nextBeat = (t: number) =>
-  FIRST_BEAT_SECONDS +
-  Math.ceil((t - FIRST_BEAT_SECONDS) / BEAT_SECONDS - 1e-6) * BEAT_SECONDS;
+export const TRACKS: Record<number, Track> = {
+  // Season 1: "We Never" (instrumental). 128 BPM; the outro is bars 72–80.
+  1: {
+    src: "music/bgm.wav",
+    bpm: 128,
+    firstBeat: 0.4721,
+    bodyStartBar: 8,
+    bodyEndBar: 72,
+    outroBars: 8,
+  },
+  // Season 2: the track supplied for Season 2, with its last 5 s (silence)
+  // cut. 112.8 BPM. Intro bars 0–8, body 8–76 (a breakdown at 40–48), and
+  // the ending fades out over bars 76–84.
+  2: {
+    src: "music/bgm-s2.wav",
+    bpm: 112.795,
+    firstBeat: 0.4362,
+    bodyStartBar: 8,
+    bodyEndBar: 76,
+    outroBars: 8,
+  },
+};
 
 export type MusicSegment = {
+  readonly src: string;
   readonly videoStart: number;
   readonly songStart: number;
   readonly seconds: number;
 };
 
-// Splice plan for a video that ends on bar `endBar`:
-// intro + body once, then whole body loops, then the last bars of the body
-// running straight into the song's real ending, which finishes the video.
-export const musicPlan = (endBar: number): MusicSegment[] => {
-  const outroStartBar = endBar - OUTRO_BARS;
-  const segments: MusicSegment[] = [];
-  const firstPlayBars = Math.min(outroStartBar, BODY_END_BAR);
-  segments.push({
-    videoStart: 0,
-    songStart: 0,
-    seconds: barTime(firstPlayBars),
-  });
-  // Short videos stop the first play early, so the loops (if any) and the
-  // ending pick up from wherever it stopped, not from the end of the body.
-  let bar = firstPlayBars;
-  let filler = outroStartBar - bar;
-  while (filler >= BODY_BARS) {
+// The beat grid and splice plan for one track. Music starts at video time
+// 0, and every splice is a whole number of bars, so the grid holds for the
+// whole episode.
+export const beatGrid = (track: Track) => {
+  const beat = 60 / track.bpm;
+  const bar = 4 * beat;
+  const first = track.firstBeat;
+  const bodyBars = track.bodyEndBar - track.bodyStartBar;
+  const barTime = (n: number) => first + n * bar;
+
+  // Splice plan for a video that ends on bar `endBar`: intro and body once
+  // (cut short for a short video), then whole body loops, then the last
+  // bars of the body running straight into the song's real ending, which
+  // finishes the video.
+  const musicPlan = (endBar: number): MusicSegment[] => {
+    const outroStartBar = endBar - track.outroBars;
+    const segments: MusicSegment[] = [];
+    const firstPlayBars = Math.min(outroStartBar, track.bodyEndBar);
     segments.push({
-      videoStart: barTime(bar),
-      songStart: barTime(BODY_START_BAR),
-      seconds: BODY_BARS * BAR_SECONDS,
+      src: track.src,
+      videoStart: 0,
+      songStart: 0,
+      seconds: barTime(firstPlayBars),
     });
-    bar += BODY_BARS;
-    filler -= BODY_BARS;
-  }
-  if (filler > 0) {
+    // short videos stop the first play early, so the loops (if any) and
+    // the ending pick up from wherever it stopped
+    let n = firstPlayBars;
+    let filler = outroStartBar - n;
+    while (filler >= bodyBars) {
+      segments.push({
+        src: track.src,
+        videoStart: barTime(n),
+        songStart: barTime(track.bodyStartBar),
+        seconds: bodyBars * bar,
+      });
+      n += bodyBars;
+      filler -= bodyBars;
+    }
+    if (filler > 0) {
+      segments.push({
+        src: track.src,
+        videoStart: barTime(n),
+        songStart: barTime(track.bodyEndBar - filler),
+        seconds: filler * bar,
+      });
+      n += filler;
+    }
     segments.push({
-      videoStart: barTime(bar),
-      songStart: barTime(BODY_END_BAR - filler),
-      seconds: filler * BAR_SECONDS,
+      src: track.src,
+      videoStart: barTime(Math.max(n, outroStartBar)),
+      songStart: barTime(track.bodyEndBar),
+      seconds: track.outroBars * bar,
     });
-    bar += filler;
-  }
-  const outroStart = Math.max(bar, outroStartBar);
-  segments.push({
-    videoStart: barTime(outroStart),
-    songStart: barTime(BODY_END_BAR),
-    seconds: OUTRO_BARS * BAR_SECONDS,
-  });
-  return segments;
+    return segments;
+  };
+
+  return {
+    beatSeconds: beat,
+    barSeconds: bar,
+    barTime,
+    nearestBeat: (t: number) => first + Math.round((t - first) / beat) * beat,
+    nextBarIndex: (t: number) => Math.ceil((t - first) / bar - 1e-6),
+    nextBeat: (t: number) =>
+      first + Math.ceil((t - first) / beat - 1e-6) * beat,
+    musicPlan,
+    // 0..1 pulse that peaks on each beat and decays quickly; bars hit
+    // harder. Too flashy for the whole background (it flickers twice a
+    // second); use it only for small accents. The stage uses stageSwell.
+    beatPulse: (seconds: number) => {
+      const k = Math.floor((seconds - first) / beat);
+      if (k < 0) return 0;
+      const since = seconds - (first + k * beat);
+      const strength = k % 4 === 0 ? 1 : 0.45;
+      return strength * Math.exp(-since / 0.16);
+    },
+    // 0..1 slow swell, one smooth cosine per bar, brightest on the
+    // downbeat. The stage lights breathe with the music instead of flashing
+    // on every beat.
+    stageSwell: (seconds: number) => {
+      if (seconds < first) return 1;
+      const phase = ((seconds - first) / bar) % 1;
+      return 0.5 + 0.5 * Math.cos(2 * Math.PI * phase);
+    },
+  };
 };
 
-// 0..1 pulse that peaks on each beat and decays quickly; bars hit harder.
-// Too flashy for the whole background (it flickers twice a second); use it
-// only for small accents. The stage uses stageSwell.
-export const beatPulse = (seconds: number) => {
-  const k = Math.floor((seconds - FIRST_BEAT_SECONDS) / BEAT_SECONDS);
-  if (k < 0) return 0;
-  const since = seconds - (FIRST_BEAT_SECONDS + k * BEAT_SECONDS);
-  const strength = k % 4 === 0 ? 1 : 0.45;
-  return strength * Math.exp(-since / 0.16);
-};
-
-// 0..1 slow swell, one smooth cosine per bar, brightest on the downbeat.
-// The stage lights breathe with the music instead of flashing on every beat.
-export const stageSwell = (seconds: number) => {
-  if (seconds < FIRST_BEAT_SECONDS) return 1;
-  const phase = ((seconds - FIRST_BEAT_SECONDS) / BAR_SECONDS) % 1;
-  return 0.5 + 0.5 * Math.cos(2 * Math.PI * phase);
-};
+export type BeatGrid = ReturnType<typeof beatGrid>;

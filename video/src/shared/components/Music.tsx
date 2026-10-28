@@ -7,7 +7,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { MUSIC_SRC, type MusicSegment } from "../music";
+import type { MusicSegment } from "../music";
 
 const MUSIC_VOLUME = 0.6; // captions only for now; drop to ~0.2 under a voiceover
 const SEAM_FRAMES = 2; // tiny fades so splices don't click
@@ -23,7 +23,7 @@ const Segment: React.FC<{
   const tail = isLast ? 3 * fps : SEAM_FRAMES;
   return (
     <Audio
-      src={staticFile(MUSIC_SRC)}
+      src={staticFile(segment.src)}
       trimBefore={Math.round(segment.songStart * fps)}
       volume={interpolate(
         frame,

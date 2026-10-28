@@ -1,11 +1,4 @@
-import {
-  barTime,
-  BEAT_SECONDS,
-  musicPlan,
-  nearestBeat,
-  nextBarIndex,
-  nextBeat,
-} from "./music";
+import { beatGrid, type BeatGrid, TRACKS } from "./music";
 import { LOCALES, type Locale } from "./locale";
 
 // Every episode's timing is derived from its narration: each line is one
@@ -44,6 +37,8 @@ export type EpisodeSpec<Id extends string> = {
   readonly minSeconds?: Partial<Record<Id, Record<number, number>>>;
   // Scenes without narration (the brand sting) have a fixed length.
   readonly fixedSeconds?: Partial<Record<Id, number>>;
+  // Which season's music the cuts snap to (default 1).
+  readonly season?: number;
 };
 
 export type SceneTiming = {
@@ -59,7 +54,9 @@ export type SceneTiming = {
 const buildTimeline = <Id extends string>(
   spec: EpisodeSpec<Id>,
   locale: Locale,
+  grid: BeatGrid,
 ) => {
+  const { barTime, nearestBeat, nextBarIndex, nextBeat } = grid;
   const half = TRANSITION_FRAMES / 2 / FPS;
   const timeline = {} as Record<Id, SceneTiming>;
   const order = orderFor(spec, locale);
@@ -77,7 +74,7 @@ const buildTimeline = <Id extends string>(
         if (j > 0) {
           let snapped = nearestBeat(start + t) - start;
           while (snapped < rel[j - 1] + MIN_GAP_SECONDS)
-            snapped += BEAT_SECONDS;
+            snapped += grid.beatSeconds;
           rel.push(snapped);
           t = snapped;
         }
@@ -122,8 +119,9 @@ export const makeEpisodeTiming = <Id extends string>(spec: EpisodeSpec<Id>) => {
       if (spec.narration[locale][id].length !== n)
         throw new Error(`Scene ${id}: ${locale} has a different line count`);
   }
+  const grid = beatGrid(TRACKS[spec.season ?? 1]);
   const timelines = Object.fromEntries(
-    LOCALES.map((l) => [l, buildTimeline(spec, l)]),
+    LOCALES.map((l) => [l, buildTimeline(spec, l, grid)]),
   ) as Record<Locale, ReturnType<typeof buildTimeline<Id>>>;
   const sceneTiming = (id: Id, locale: Locale = "en") =>
     timelines[locale].timeline[id];
@@ -142,7 +140,9 @@ export const makeEpisodeTiming = <Id extends string>(spec: EpisodeSpec<Id>) => {
     episodeDuration: (locale: Locale = "en") =>
       sceneTiming(last(locale), locale).start +
       sceneTiming(last(locale), locale).durationInFrames,
+    // the season's beat grid (for the stage lights and beat accents)
+    grid,
     musicSegments: (locale: Locale = "en") =>
-      musicPlan(timelines[locale].endBar),
+      grid.musicPlan(timelines[locale].endBar),
   };
 };

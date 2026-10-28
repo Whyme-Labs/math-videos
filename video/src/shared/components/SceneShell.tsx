@@ -5,7 +5,6 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { stageSwell } from "../music";
 import { useEpisode } from "../episode";
 import { useLocale } from "../locale";
 import { alpha, colors, fonts } from "../theme";
@@ -30,7 +29,7 @@ export const SceneShell: React.FC<{
   const { start, starts, durationInFrames } = episode.sceneTiming(id, locale);
   const lines = episode.narration[locale][id];
   // Lights breathe gently with the bar (no per-beat flashing: it read as flicker).
-  const swell = stageSwell((start + frame) / fps);
+  const swell = episode.grid.stageSwell((start + frame) / fps);
   let current = 0;
   for (let i = 0; i < starts.length; i++) if (frame >= starts[i]) current = i;
 

@@ -117,4 +117,5 @@ export const S2E01 = makeEpisodeTiming({
   minSeconds: MIN_SECONDS,
   fixedSeconds: FIXED_SECONDS,
   onlyIn: { fangcheng: "zh" },
+  season: 2,
 });

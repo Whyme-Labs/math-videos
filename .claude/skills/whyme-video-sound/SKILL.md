@@ -7,7 +7,7 @@ description: Sound rules for Whyme Labs math videos. Covers background music cut
 
 ## Background music, cut to the beat
 
-The track is `public/music/bgm.wav` ("We Never", instrumental). It is
+Season 1's track is `public/music/bgm.wav` ("We Never", instrumental). It is
 licensed separately and kept out of git, so copy it in before rendering.
 Keep the source as WAV. AAC trims landed about 31 ms late and the beat
 drifted at every splice.
@@ -27,6 +27,15 @@ video.
 - `SceneShell` lets the stage lights swell gently once per bar
   (`stageSwell`). Per-beat flashing (`beatPulse`) looked like flicker on the
   whole background, so it is only for small accents.
+
+**One track per season.** `TRACKS` in `shared/music.ts` holds each
+season's track and its measured grid: Season 1 is "We Never" (128 BPM,
+`public/music/bgm.wav`, outro bars 72–80); Season 2 is
+`public/music/bgm-s2.wav` (112.795 BPM, first beat 0.4362 s, intro bars
+0–8, body 8–76 with a breakdown at 40–48, an ending that fades out over
+bars 76–84; the supplied file's last 5 s were cut). An episode sets
+`season: 2` in its `makeEpisodeTiming` spec, and its cuts, captions, stage
+swell and splice plan all follow that track's grid.
 
 **Splice plan** (`musicPlan(endBar)`): intro and body play once (bars 0–72).
 A video shorter than the song (under bar 80, about 2:30) cuts the body short
