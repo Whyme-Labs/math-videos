@@ -1,6 +1,6 @@
 ---
 name: whyme-video-style
-description: Visual identity for Whyme Labs math videos. Covers the brand sting, watermark and end card, the violet-and-lemon palette and what each colour means, fonts for English and Chinese, the 1920×1080 layout grid and type scale, and the recurring visual motifs (number tower, question tray, vectors in lemon, covectors in orange). Use it whenever you put anything on screen in video/: a new scene, a label, a diagram, a title card, or a colour or font change, and whenever someone asks how the videos should look.
+description: Visual identity for Whyme Labs math videos. Covers the brand sting, watermark and end card, the violet-and-lemon palette (Season 1) and the deep-teal stage (Season 2) and what each colour means, fonts for English and Chinese, the 1920×1080 layout grid and type scale, and the recurring visual motifs (number tower, question tray, vectors in lemon, covectors in orange). Use it whenever you put anything on screen in video/: a new scene, a label, a diagram, a title card, or a colour or font change, and whenever someone asks how the videos should look.
 ---
 
 # Whyme Labs video style
@@ -44,6 +44,18 @@ a legend. Pick a colour by role, not by taste.
 | `violet`, `brandPurple` | `#7c15bc`, `#613896` | secondary shapes, panels, inactive items |
 | `paper` / `ink` / `wood` | `#fff6d6` / `#2a1450` / `#ff7a1a` | props: paper, dictionary pages, wooden pieces |
 | `panel`, `panelEdge` | translucent white / lilac | cards and boxes |
+
+**Each season has its own stage.** The table above is Season 1 (violet).
+Season 2 (*Spaces, Maps, and Measurements*) uses a deep-teal stage: `bg` →
+`bgMid` → `bgGlow` `#03201e` → `#063d39` → `#0c6b62`, `highlight` coral
+`#ff8a80`, `violet` (the panel and card fill role) `#0f7f73`, `muted`
+`#a6d6cc`, `ink` `#062b28`, `paper` `#fffbea`. Lemon, orange, green, red and
+wood stay the same in every season, so the brand light and the roles (lemon
+vectors, orange covectors) carry over. The palettes live in `PALETTES` in
+`theme.ts`; an episode picks its season's palette from its code (`S2E01` →
+Season 2), and thumbnails from their episode number. Always read colours
+through `colors.x` inside a component, never into a module-level constant,
+or the colour is frozen at Season 1's value.
 
 - Use `alpha(color, a)` for glows and translucent fills.
 - One idea gets one colour for the whole series. Vectors are always lemon

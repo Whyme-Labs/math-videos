@@ -6,6 +6,7 @@ import { Composition, Folder, useVideoConfig } from "remotion";
 import { Music } from "./components/Music";
 import { Sfx } from "./components/Sfx";
 import { LOCALES, LocaleProvider, type Locale } from "./locale";
+import { seasonOfCode, setSeason } from "./theme";
 import { FPS, TRANSITION_FRAMES, type EpisodeTiming } from "./timeline";
 
 // The episode a scene belongs to, so SceneShell and useCues can find its
@@ -28,12 +29,17 @@ export type SceneEntry<Id extends string> = {
 const Providers: React.FC<{
   readonly timing: EpisodeTiming<string>;
   readonly locale: Locale;
+  readonly season: number;
   readonly children: React.ReactNode;
-}> = ({ timing, locale, children }) => (
-  <EpisodeContext.Provider value={timing}>
-    <LocaleProvider locale={locale}>{children}</LocaleProvider>
-  </EpisodeContext.Provider>
-);
+}> = ({ timing, locale, season, children }) => {
+  // the season's palette, before any scene reads a colour
+  setSeason(season);
+  return (
+    <EpisodeContext.Provider value={timing}>
+      <LocaleProvider locale={locale}>{children}</LocaleProvider>
+    </EpisodeContext.Provider>
+  );
+};
 
 // The whole episode: music, a soft whoosh under every cut, and the scenes
 // joined by 12-frame crossfades.
@@ -41,10 +47,11 @@ const Film: React.FC<{
   readonly timing: EpisodeTiming<string>;
   readonly scenes: readonly SceneEntry<string>[];
   readonly locale: Locale;
-}> = ({ timing, scenes, locale }) => {
+  readonly season: number;
+}> = ({ timing, scenes, locale, season }) => {
   const { fps } = useVideoConfig();
   return (
-    <Providers timing={timing} locale={locale}>
+    <Providers timing={timing} locale={locale} season={season}>
       <Music segments={timing.musicSegments(locale)} />
       {scenes.slice(1).map((s) => (
         <Sfx
@@ -86,12 +93,14 @@ export const makeEpisodeCompositions = <Id extends string>(
   // Scenes look timing up by plain string ids at runtime.
   const any = timing as unknown as EpisodeTiming<string>;
   const suffix = (l: Locale) => (l === "en" ? "" : `-${l.toUpperCase()}`);
+  const season = seasonOfCode(code);
   const films = LOCALES.map((locale) => {
     const Component: React.FC = () => (
       <Film
         timing={any}
         scenes={scenes.filter((s) => timing.shows(s.id, locale))}
         locale={locale}
+        season={season}
       />
     );
     return { locale, Component };
@@ -102,7 +111,7 @@ export const makeEpisodeCompositions = <Id extends string>(
       .filter((s) => timing.shows(s.id, locale))
       .map((s) => {
         const Component: React.FC = () => (
-          <Providers timing={any} locale={locale}>
+          <Providers timing={any} locale={locale} season={season}>
             <s.component />
           </Providers>
         );

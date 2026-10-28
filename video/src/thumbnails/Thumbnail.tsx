@@ -12,7 +12,7 @@ import {
 } from "../shared/components/rationals";
 import { Tower } from "../shared/components/Tower";
 import { LocaleProvider, useLocale, type Locale } from "../shared/locale";
-import { alpha, colors, fonts } from "../shared/theme";
+import { alpha, colors, fonts, setSeason } from "../shared/theme";
 import { SetBox } from "../s1e04/components/sets";
 import { guestColor } from "../s1e11/components/hotel";
 import { Runner } from "../s1e13/components/race";
@@ -27,6 +27,7 @@ import {
   type CoverShape,
   LAYOUT,
   seriesName,
+  seasonOf,
   badgeWidth,
   THUMBS,
 } from "./thumbs";
@@ -1189,6 +1190,7 @@ export const Thumbnail: React.FC<ThumbProps> = ({
   layer,
   shape = "wide",
 }) => {
+  setSeason(seasonOf(ep));
   if (shape !== "wide")
     return (
       <CoverThumbnail ep={ep} locale={locale} layer={layer} shape={shape} />
@@ -1329,6 +1331,7 @@ const CoverThumbnail: React.FC<{
   readonly layer: "full" | "art";
   readonly shape: CoverShape;
 }> = ({ ep, locale, layer, shape }) => {
+  setSeason(seasonOf(ep));
   const t = THUMBS.find((x) => x.ep === ep)!;
   const tx = t[locale];
   const Q = COVERS[shape];
