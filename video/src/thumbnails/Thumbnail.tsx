@@ -1272,6 +1272,115 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 205) {
+    // the family x² + C, glued into one glowing point
+    const curveAt = (c: number) =>
+      Array.from({ length: 41 }, (_, k) => {
+        const x = -1.6 + (3.2 * k) / 40;
+        return `${k ? "L" : "M"} ${(1380 + x * 190).toFixed(1)} ${(700 - (x * x + c) * 70).toFixed(1)}`;
+      }).join(" ");
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {[-1, 0, 1, 2, 3].map((c) => (
+          <path
+            key={c}
+            d={curveAt(c)}
+            fill="none"
+            stroke={c === 0 ? colors.primary : alpha(colors.orange, 0.8)}
+            strokeWidth={8}
+          />
+        ))}
+        <circle cx={1380} cy={250} r={90} fill={alpha(colors.primary, 0.25)} />
+        <circle cx={1380} cy={250} r={36} fill={colors.primary} />
+      </svg>
+    );
+  }
+  if (ep === 206) {
+    // an arrow piercing an orange stack of sheets
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {Array.from({ length: 6 }).map((_, k) => (
+          <line
+            key={k}
+            x1={1220 + k * 110 - 110}
+            y1={900}
+            x2={1220 + k * 110 + 110}
+            y2={180}
+            stroke={colors.orange}
+            strokeWidth={12}
+            strokeLinecap="round"
+          />
+        ))}
+        <line
+          x1={1200}
+          y1={600}
+          x2={1660}
+          y2={460}
+          stroke={colors.primary}
+          strokeWidth={20}
+          strokeLinecap="round"
+        />
+        <polygon points="1720,445 1650,430 1670,495" fill={colors.primary} />
+      </svg>
+    );
+  }
+  if (ep === 207) {
+    // a barrel on its side, probed at the two ends and the middle
+    const top = (t: number) => ({
+      x: 1100 + t * 600,
+      y: 560 - (150 + 60 * Math.sin(Math.PI * t)),
+    });
+    const pts = Array.from({ length: 31 }, (_, k) => top(k / 30));
+    const d = `M ${pts.map((p) => `${p.x} ${p.y}`).join(" L ")} L ${pts
+      .slice()
+      .reverse()
+      .map((p) => `${p.x} ${1120 - p.y}`)
+      .join(" L ")} Z`;
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <path
+          d={d}
+          fill={alpha(colors.wood, 0.6)}
+          stroke={colors.ink}
+          strokeWidth={8}
+        />
+        {[0.12, 0.3, 0.7, 0.88].map((t) => (
+          <line
+            key={t}
+            x1={top(t).x}
+            y1={top(t).y}
+            x2={top(t).x}
+            y2={1120 - top(t).y}
+            stroke={alpha(colors.ink, 0.6)}
+            strokeWidth={12}
+          />
+        ))}
+        {[
+          { t: 0, r: 26 },
+          { t: 0.5, r: 48 },
+          { t: 1, r: 26 },
+        ].map((p) => (
+          <g key={p.t}>
+            <line
+              x1={top(p.t).x}
+              y1={top(p.t).y - 170}
+              x2={top(p.t).x}
+              y2={top(p.t).y - p.r}
+              stroke={colors.orange}
+              strokeWidth={10}
+            />
+            <circle
+              cx={top(p.t).x}
+              cy={top(p.t).y}
+              r={p.r}
+              fill={colors.orange}
+            />
+          </g>
+        ))}
+      </svg>
+    );
+  }
+
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;
   return (

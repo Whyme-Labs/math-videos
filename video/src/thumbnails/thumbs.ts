@@ -145,6 +145,21 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Why AB ≠ BA"], accent: 0, size: 140 },
     zh: { lines: ["为什么", "AB ≠ BA"], accent: 1, size: 140 },
   },
+  {
+    ep: 205,
+    en: { lines: ["You forgot", "the + C"], accent: 1, size: 130 },
+    zh: { lines: ["老师说", "你漏了 +C"], accent: 1, size: 140 },
+  },
+  {
+    ep: 206,
+    en: { lines: ["Not every list", "is a vector"], accent: 1, size: 120 },
+    zh: { lines: ["价目表", "不是向量"], accent: 1, size: 140 },
+  },
+  {
+    ep: 207,
+    en: { lines: ["Kepler's", "wine barrels"], accent: 1, size: 130 },
+    zh: { lines: ["开普勒", "量酒桶"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
