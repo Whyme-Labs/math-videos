@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e06-covectors.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e06-zh-yu-xiang-liang.mp4` (DUR_ZH, 16:9). It has
+- English edition: `out/s2e06-covectors.mp4` (1:45, 16:9)
+- Chinese edition: `out/s2e06-zh-yu-xiang-liang.mp4` (1:45, 16:9). It has
   a scene the English edition doesn't: Qin's standardisation of weights and
   measures. The edict "法度量则不壹歉疑者，皆明壹之" is on the base of the
   商鞅方升 (344 BC, Shanghai Museum); change the vessel and the reading

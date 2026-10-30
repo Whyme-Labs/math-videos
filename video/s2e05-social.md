@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e05-building-new-spaces.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e05-zh-zao-xin-de-kong-jian.mp4` (DUR_ZH, 16:9). It
+- English edition: `out/s2e05-building-new-spaces.mp4` (2:02, 16:9)
+- Chinese edition: `out/s2e05-zh-zao-xin-de-kong-jian.mp4` (1:57, 16:9). It
   has a scene the English edition doesn't: the sixty-year 干支 cycle as
   gluing. 1984 and 2044 are both 甲子 years, and a Shang oracle bone already
   carries the complete table of sixty.

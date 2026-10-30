@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e07-functionals-everywhere.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e07-zh-wu-chu-bu-zai-de-fan-han.mp4` (DUR_ZH,
+- English edition: `out/s2e07-functionals-everywhere.mp4` (1:49, 16:9)
+- Chinese edition: `out/s2e07-zh-wu-chu-bu-zai-de-fan-han.mp4` (1:51,
   16:9). It has a scene the English edition doesn't: 刘焯's 《皇极历》
   (600 CE) and equal-interval quadratic interpolation, three observations of
   the sun fitted with a parabola.
