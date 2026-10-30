@@ -56,6 +56,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E03-ZH` | 线性映射（中文版） | [`src/s2e03`](src/s2e03) | [`s2e03-narration-zh.md`](s2e03-narration-zh.md) |
 | `S2E04` | Matrices as Shadows | [`src/s2e04`](src/s2e04) | [`s2e04-narration.md`](s2e04-narration.md) |
 | `S2E04-ZH` | 矩阵是影子（中文版） | [`src/s2e04`](src/s2e04) | [`s2e04-narration-zh.md`](s2e04-narration-zh.md) |
+| `S2E05` | Building New Spaces | [`src/s2e05`](src/s2e05) | [`s2e05-narration.md`](s2e05-narration.md) |
+| `S2E05-ZH` | 造新的空间（中文版） | [`src/s2e05`](src/s2e05) | [`s2e05-narration-zh.md`](s2e05-narration-zh.md) |
+| `S2E06` | Covectors | [`src/s2e06`](src/s2e06) | [`s2e06-narration.md`](s2e06-narration.md) |
+| `S2E06-ZH` | 余向量（中文版） | [`src/s2e06`](src/s2e06) | [`s2e06-narration-zh.md`](s2e06-narration-zh.md) |
+| `S2E07` | Functionals Everywhere | [`src/s2e07`](src/s2e07) | [`s2e07-narration.md`](s2e07-narration.md) |
+| `S2E07-ZH` | 无处不在的泛函（中文版） | [`src/s2e07`](src/s2e07) | [`s2e07-narration-zh.md`](s2e07-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -192,8 +198,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s1e20-social.md`](s1e20-social.md), for S2E01 in
 [`s2e01-social.md`](s2e01-social.md), for S2E02 in
 [`s2e02-social.md`](s2e02-social.md), for S2E03 in
-[`s2e03-social.md`](s2e03-social.md), and for S2E04 in
-[`s2e04-social.md`](s2e04-social.md).
+[`s2e03-social.md`](s2e03-social.md), for S2E04 in
+[`s2e04-social.md`](s2e04-social.md), for S2E05 in
+[`s2e05-social.md`](s2e05-social.md), for S2E06 in
+[`s2e06-social.md`](s2e06-social.md), and for S2E07 in
+[`s2e07-social.md`](s2e07-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).

@@ -149,7 +149,10 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     tenth-degree equation and 正负开方术 (S1E20),
     《九章算术·方程》problem 1 and 遍乘直除 (S2E01), 《周礼·考工记》
     "画缋之事，杂五色" (S2E02), the 《授时历》(1280) 招差术 (S2E03),
-    刘徽 on 方程, "并列为行，故谓之方程" (S2E04).
+    刘徽 on 方程, "并列为行，故谓之方程" (S2E04), 干支纪年 and the Shang
+    oracle-bone table of sixty (S2E05), 商鞅方升 and the Qin edict
+    "法度量则不壹歉疑者，皆明壹之" (S2E06), 刘焯《皇极历》 (600) quadratic
+    interpolation (S2E07).
 
 ## Titles and posts for each platform
 

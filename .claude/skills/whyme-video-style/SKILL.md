@@ -140,7 +140,7 @@ series table is in `storyline/04-production-notes.md` ("Visual language").
 | Open questions | `QuestionTray.tsx`. Small pills top-right that stay until an episode answers them |
 | Number line | `NumberLine.tsx` |
 | Callback stamp | small `muted` tag like "↩ E11" / "↩ 第 11 集" whenever an old idea returns |
-| Vectors / covectors | lemon arrows / orange stacks of level lines |
+| Vectors / covectors | lemon arrows (`Arrow`, `src/s2e01/components/vec.tsx`) / orange stacks of evenly spaced level lines (`Stack`, `src/s2e06/components/stack.tsx`); the reading is the number of sheets an arrow crosses |
 | Bijection | threads joining two sets, then sliding together |
 | Build or describe? | the two-panel comparison from S1E01 `BuildDescribe` |
 | Works / fails | green tick or red cross plus a `shake` (see `whyme-video-motion`) |
