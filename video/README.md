@@ -68,6 +68,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E09-ZH` | 双线性型（中文版） | [`src/s2e09`](src/s2e09) | [`s2e09-narration-zh.md`](s2e09-narration-zh.md) |
 | `S2E10` | The Tensor Product | [`src/s2e10`](src/s2e10) | [`s2e10-narration.md`](s2e10-narration.md) |
 | `S2E10-ZH` | 张量积（中文版） | [`src/s2e10`](src/s2e10) | [`s2e10-narration-zh.md`](s2e10-narration-zh.md) |
+| `S2E11` | Exterior Algebra and the Determinant | [`src/s2e11`](src/s2e11) | [`s2e11-narration.md`](s2e11-narration.md) |
+| `S2E11-ZH` | 外代数与行列式（中文版） | [`src/s2e11`](src/s2e11) | [`s2e11-narration-zh.md`](s2e11-narration-zh.md) |
+| `S2E12` | Eigenvectors | [`src/s2e12`](src/s2e12) | [`s2e12-narration.md`](s2e12-narration.md) |
+| `S2E12-ZH` | 特征向量（中文版） | [`src/s2e12`](src/s2e12) | [`s2e12-narration-zh.md`](s2e12-narration-zh.md) |
+| `S2E13` | When Diagonalization Fails | [`src/s2e13`](src/s2e13) | [`s2e13-narration.md`](s2e13-narration.md) |
+| `S2E13-ZH` | 对角化失灵的时候（中文版） | [`src/s2e13`](src/s2e13) | [`s2e13-narration-zh.md`](s2e13-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -210,8 +216,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e06-social.md`](s2e06-social.md), for S2E07 in
 [`s2e07-social.md`](s2e07-social.md), for S2E08 in
 [`s2e08-social.md`](s2e08-social.md), for S2E09 in
-[`s2e09-social.md`](s2e09-social.md), and for S2E10 in
-[`s2e10-social.md`](s2e10-social.md).
+[`s2e09-social.md`](s2e09-social.md), for S2E10 in
+[`s2e10-social.md`](s2e10-social.md), for S2E11 in
+[`s2e11-social.md`](s2e11-social.md), for S2E12 in
+[`s2e12-social.md`](s2e12-social.md), and for S2E13 in
+[`s2e13-social.md`](s2e13-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
