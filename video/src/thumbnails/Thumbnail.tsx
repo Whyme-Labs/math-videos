@@ -1380,6 +1380,131 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 208) {
+    // a 2 × 3 grid and its 3 × 2 transpose, joined by a curved arrow
+    const grid = (
+      x: number,
+      y: number,
+      rows: number,
+      cols: number,
+      c: string,
+    ) =>
+      Array.from({ length: rows * cols }).map((_, k) => (
+        <rect
+          key={`${x}${k}`}
+          x={x + (k % cols) * 110}
+          y={y + Math.floor(k / cols) * 110}
+          width={90}
+          height={90}
+          rx={14}
+          fill={alpha(c, 0.25)}
+          stroke={c}
+          strokeWidth={6}
+        />
+      ));
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {grid(1260, 240, 2, 3, colors.primary)}
+        {grid(1600, 470, 3, 2, colors.orange)}
+        <path
+          d="M 1430 500 Q 1440 690 1580 690"
+          fill="none"
+          stroke={colors.text}
+          strokeWidth={8}
+        />
+        <polygon points="1596,690 1568,674 1568,706" fill={colors.text} />
+      </svg>
+    );
+  }
+  if (ep === 209) {
+    // one grid: arrows on one side, ellipses on the other
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {[60, 120, 180].map((r) => (
+          <ellipse
+            key={r}
+            cx={1600}
+            cy={620}
+            rx={r * 1.7}
+            ry={r}
+            transform="rotate(-45 1600 620)"
+            fill="none"
+            stroke={colors.orange}
+            strokeWidth={8}
+          />
+        ))}
+        <line
+          x1={1240}
+          y1={780}
+          x2={1420}
+          y2={500}
+          stroke={colors.primary}
+          strokeWidth={18}
+          strokeLinecap="round"
+        />
+        <polygon points="1440,472 1398,496 1430,520" fill={colors.primary} />
+        <g transform="translate(1330 340)">
+          <path
+            d="M -120 -90 l -20 0 l 0 180 l 20 0 M 120 -90 l 20 0 l 0 180 l -20 0"
+            fill="none"
+            stroke={colors.text}
+            strokeWidth={7}
+          />
+          {["2", "1", "1", "2"].map((t, k) => (
+            <text
+              key={k}
+              x={-60 + (k % 2) * 120}
+              y={-14 + Math.floor(k / 2) * 90}
+              fill={colors.text}
+              fontSize={64}
+              textAnchor="middle"
+              fontFamily={fonts.math}
+              fontWeight={800}
+            >
+              {t}
+            </text>
+          ))}
+        </g>
+      </svg>
+    );
+  }
+  if (ep === 210) {
+    // the ⊗ funnel and a tensor node with lemon and orange legs
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <path
+          d="M 1120 200 L 1500 200 L 1360 460 L 1360 580 L 1260 580 L 1260 460 Z"
+          fill={alpha(colors.primary, 0.2)}
+          stroke={colors.primary}
+          strokeWidth={10}
+        />
+        <text
+          x={1310}
+          y={360}
+          fill={colors.primary}
+          fontSize={130}
+          textAnchor="middle"
+          fontFamily={fonts.math}
+          fontWeight={800}
+        >
+          ⊗
+        </text>
+        {[-2.3, -0.8, 1.2, 2.4].map((a, k) => (
+          <line
+            key={k}
+            x1={1600}
+            y1={720}
+            x2={1600 + 170 * Math.cos(a)}
+            y2={720 + 170 * Math.sin(a)}
+            stroke={k % 2 ? colors.orange : colors.primary}
+            strokeWidth={18}
+            strokeLinecap="round"
+          />
+        ))}
+        <circle cx={1600} cy={720} r={50} fill={colors.primary} />
+      </svg>
+    );
+  }
 
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;

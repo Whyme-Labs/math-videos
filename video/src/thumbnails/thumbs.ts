@@ -160,6 +160,21 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Kepler's", "wine barrels"], accent: 1, size: 130 },
     zh: { lines: ["开普勒", "量酒桶"], accent: 1, size: 140 },
   },
+  {
+    ep: 208,
+    en: { lines: ["Row rank =", "column rank. Why?"], accent: 1, size: 116 },
+    zh: { lines: ["行秩 = 列秩", "为什么？"], accent: 1, size: 130 },
+  },
+  {
+    ep: 209,
+    en: { lines: ["Same numbers,", "two objects"], accent: 1, size: 124 },
+    zh: { lines: ["同一格数", "两种东西"], accent: 1, size: 140 },
+  },
+  {
+    ep: 210,
+    en: { lines: ["What is a", "tensor, really?"], accent: 1, size: 124 },
+    zh: { lines: ["张量", "到底是什么？"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
