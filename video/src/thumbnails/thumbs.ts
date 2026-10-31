@@ -175,6 +175,25 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["What is a", "tensor, really?"], accent: 1, size: 124 },
     zh: { lines: ["张量", "到底是什么？"], accent: 1, size: 140 },
   },
+  {
+    ep: 211,
+    en: { lines: ["The determinant", "is a volume"], accent: 1, size: 116 },
+    zh: { lines: ["行列式", "就是体积"], accent: 1, size: 140 },
+  },
+  {
+    ep: 212,
+    en: {
+      lines: ["The golden ratio", "is an eigenvalue"],
+      accent: 1,
+      size: 110,
+    },
+    zh: { lines: ["黄金比", "是个特征值"], accent: 1, size: 140 },
+  },
+  {
+    ep: 213,
+    en: { lines: ["When eigenvectors", "run out"], accent: 1, size: 110 },
+    zh: { lines: ["特征向量", "不够用了"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

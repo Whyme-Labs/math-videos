@@ -202,11 +202,21 @@ export const Zoo: React.FC = () => {
                       : Array.from({ length: 10 }).map((_, j) => (
                           <circle
                             key={j}
-                            cx={XS[k] + 40 + ((j * 44 - frame * 1.5) % 440 + 440) % 440}
+                            cx={
+                              XS[k] +
+                              40 +
+                              ((((j * 44 - frame * 1.5) % 440) + 440) % 440)
+                            }
                             cy={cy - 120 * Math.sin(j * 0.9 + frame / 40) * 0.8}
                             r={11}
                             fill={colors.primary}
-                            opacity={Math.min(1, (440 - ((j * 44 - frame * 1.5) % 440 + 440) % 440) / 120)}
+                            opacity={Math.min(
+                              1,
+                              (440 -
+                                ((((j * 44 - frame * 1.5) % 440) + 440) %
+                                  440)) /
+                                120,
+                            )}
                           />
                         ))}
                 </g>

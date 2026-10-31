@@ -1505,6 +1505,118 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 211) {
+    // a slanted box (a unit cube after a map), isometric
+    const to = (x: number, y: number, z: number) => ({
+      x: 1380 + (x - y) * 0.866 * 190,
+      y: 560 - z * 190 + (x + y) * 0.5 * 190,
+    });
+    const a = [1.3, 0.2, 0];
+    const b = [0.4, 1.1, 0.2];
+    const c = [0, 0.3, 1.4];
+    const add = (...vs: number[][]) =>
+      [0, 1, 2].map((i) => vs.reduce((t, v) => t + v[i], 0));
+    const faces = [
+      [[0, 0, 0], a, add(a, b), b],
+      [[0, 0, 0], b, add(b, c), c],
+      [[0, 0, 0], c, add(c, a), a],
+      [c, add(c, a), add(a, b, c), add(b, c)],
+      [a, add(a, b), add(a, b, c), add(a, c)],
+      [b, add(b, c), add(a, b, c), add(a, b)],
+    ];
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {faces.map((f, k) => (
+          <polygon
+            key={k}
+            points={f
+              .map((p) => `${to(p[0], p[1], p[2]).x},${to(p[0], p[1], p[2]).y}`)
+              .join(" ")}
+            fill={alpha(colors.primary, k < 3 ? 0.1 : 0.28)}
+            stroke={colors.primary}
+            strokeWidth={7}
+            strokeLinejoin="round"
+          />
+        ))}
+      </svg>
+    );
+  }
+  if (ep === 212) {
+    // the golden line with Fibonacci points hopping onto it
+    const pts = [
+      [1, 1],
+      [2, 1],
+      [3, 2],
+      [5, 3],
+      [8, 5],
+      [13, 8],
+      [21, 13],
+    ];
+    const phi = (1 + Math.sqrt(5)) / 2;
+    const to = (x: number, y: number) => ({
+      x: 1120 + x * 30,
+      y: 820 - y * 30,
+    });
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={to(0, 0).x}
+          y1={to(0, 0).y}
+          x2={to(24, 24 / phi).x}
+          y2={to(24, 24 / phi).y}
+          stroke={colors.primary}
+          strokeWidth={10}
+        />
+        {pts.map((p, k) => (
+          <circle
+            key={k}
+            cx={to(p[0], p[1]).x}
+            cy={to(p[0], p[1]).y}
+            r={14 + k * 2}
+            fill={colors.orange}
+          />
+        ))}
+        <text
+          x={1500}
+          y={380}
+          fill={colors.primary}
+          fontSize={110}
+          fontFamily={fonts.math}
+          fontWeight={800}
+        >
+          φ
+        </text>
+      </svg>
+    );
+  }
+  if (ep === 213) {
+    // a sheared deck of cards with one glowing line under it
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {Array.from({ length: 14 }).map((_, k) => (
+          <rect
+            key={k}
+            x={1240 + k * 24}
+            y={760 - k * 34}
+            width={380}
+            height={28}
+            rx={5}
+            fill={k % 2 ? colors.paper : alpha(colors.paper, 0.85)}
+            stroke={colors.ink}
+            strokeWidth={3}
+          />
+        ))}
+        <line
+          x1={1200}
+          y1={808}
+          x2={1880}
+          y2={808}
+          stroke={colors.primary}
+          strokeWidth={12}
+        />
+      </svg>
+    );
+  }
 
   // ep 8: a knife over the hole, and a swarm closing in on it
   const Y = 640;

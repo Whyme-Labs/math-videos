@@ -84,7 +84,9 @@ export const ColdOpen: React.FC = () => {
             fill={alpha(colors.green, 0.22)}
             stroke={colors.wood}
             strokeWidth={14}
-            opacity={1 - 0.75 * fadeIn(frame, c2, 10) * (1 - fadeIn(frame, c3, 10))}
+            opacity={
+              1 - 0.75 * fadeIn(frame, c2, 10) * (1 - fadeIn(frame, c3, 10))
+            }
           />
           <Desk x={120} w={620} />
           <Person

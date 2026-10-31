@@ -79,7 +79,8 @@ export const Pairs: React.FC = () => {
   const pull = glide(frame, c0, fps, 50);
   const zoom = lerp(1.9, 1.18, pull);
   // a slow drift across the town while the signposts go up
-  const drift = lerp(-70, 40, ramp(frame, c0, c1 - c0)) * (1 - glide(frame, c1, fps, 20));
+  const drift =
+    lerp(-70, 40, ramp(frame, c0, c1 - c0)) * (1 - glide(frame, c1, fps, 20));
   const tagAt = (k: number) => c0 + 30 + k * 12;
   const TAGS: C[] = [
     { re: 2, im: 1 },
