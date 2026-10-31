@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e11-exterior-algebra-and-determinant.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e11-zh-wai-dai-shu-yu-hang-lie-shi.mp4` (DUR_ZH, 16:9). It has a scene the English edition
+- English edition: `out/s2e11-exterior-algebra-and-determinant.mp4` (1:49, 16:9)
+- Chinese edition: `out/s2e11-zh-wai-dai-shu-yu-hang-lie-shi.mp4` (1:38, 16:9). It has a scene the English edition
   doesn't: 刘徽's 出入相补, cutting a triangle off a parallelogram and
   filling it in on the other side: same area, which is why a determinant
   doesn't mind a shear.

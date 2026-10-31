@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e13-when-diagonalization-fails.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e13-zh-dui-jiao-hua-shi-ling.mp4` (DUR_ZH, 16:9). It has a scene the English edition
+- English edition: `out/s2e13-when-diagonalization-fails.mp4` (1:43, 16:9)
+- Chinese edition: `out/s2e13-zh-dui-jiao-hua-shi-ling.mp4` (1:43, 16:9). It has a scene the English edition
   doesn't: 祖暅原理, "幂势既同，则积不容异": a sheared stack of cards keeps
   its volume (det = 1) but still has only one eigen-direction.
 - Thumbnails: `thumbnails/png/S2E13-EN.png` and `S2E13-ZH.png` (16:9, for

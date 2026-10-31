@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e12-eigenvectors.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e12-zh-te-zheng-xiang-liang.mp4` (DUR_ZH, 16:9). It has a scene the English edition
+- English edition: `out/s2e12-eigenvectors.mp4` (1:45, 16:9)
+- Chinese edition: `out/s2e12-zh-te-zheng-xiang-liang.mp4` (1:45, 16:9). It has a scene the English edition
   doesn't: 杨辉三角 (贾宪's table, recorded by 杨辉 in 1261), whose shallow
   diagonals sum to the Fibonacci numbers.
 - Thumbnails: `thumbnails/png/S2E12-EN.png` and `S2E12-ZH.png` (16:9, for
