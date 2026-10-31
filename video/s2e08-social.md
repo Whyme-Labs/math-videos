@@ -5,9 +5,9 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e08-transpose-and-double-dual.mp4` (DUR_EN, 16:9)
+- English edition: `out/s2e08-transpose-and-double-dual.mp4` (1:55, 16:9)
 - Chinese edition: `out/s2e08-zh-zhuan-zhi-yu-shuang-chong-dui-ou.mp4`
-  (DUR_ZH, 16:9). It has a scene the English edition doesn't: 苏蕙's
+  (1:51, 16:9). It has a scene the English edition doesn't: 苏蕙's
   《璇玑图》 (前秦), a 29 × 29 weave of 841 characters that reads as poetry
   along rows and along columns, with the grid flipping across its diagonal.
 - Thumbnails: `thumbnails/png/S2E08-EN.png` and `S2E08-ZH.png` (16:9, for

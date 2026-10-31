@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e09-bilinear-forms.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e09-zh-shuang-xian-xing-xing.mp4` (DUR_ZH, 16:9).
+- English edition: `out/s2e09-bilinear-forms.mp4` (1:47, 16:9)
+- Chinese edition: `out/s2e09-zh-shuang-xian-xing-xing.mp4` (1:45, 16:9).
   It has a scene the English edition doesn't: 商高's "勾广三，股修四，径隅五"
   from 《周髀算经》, the squares 9 + 16 = 25 as the oldest quadratic form,
   and Minkowski turning its plus into a minus.

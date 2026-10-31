@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e10-tensor-product.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e10-zh-zhang-liang-ji.mp4` (DUR_ZH, 16:9). It has
+- English edition: `out/s2e10-tensor-product.mp4` (1:45, 16:9)
+- Chinese edition: `out/s2e10-zh-zhang-liang-ji.mp4` (1:43, 16:9). It has
   a scene the English edition doesn't: the multiplication table on a Qin
   bamboo slip excavated at 里耶 in 2002; laid out as a 9 × 9 grid it is a
   column times a row, a pure tensor of rank one.
