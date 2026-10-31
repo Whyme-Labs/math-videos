@@ -152,7 +152,9 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     刘徽 on 方程, "并列为行，故谓之方程" (S2E04), 干支纪年 and the Shang
     oracle-bone table of sixty (S2E05), 商鞅方升 and the Qin edict
     "法度量则不壹歉疑者，皆明壹之" (S2E06), 刘焯《皇极历》 (600) quadratic
-    interpolation (S2E07).
+    interpolation (S2E07), 苏蕙《璇玑图》, read along rows and columns
+    (S2E08), 《周髀算经》 商高 "勾广三，股修四，径隅五" (S2E09), the 里耶
+    Qin-slip multiplication table as a rank-one tensor (S2E10).
 
 ## Titles and posts for each platform
 

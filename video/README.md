@@ -62,6 +62,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E06-ZH` | 余向量（中文版） | [`src/s2e06`](src/s2e06) | [`s2e06-narration-zh.md`](s2e06-narration-zh.md) |
 | `S2E07` | Functionals Everywhere | [`src/s2e07`](src/s2e07) | [`s2e07-narration.md`](s2e07-narration.md) |
 | `S2E07-ZH` | 无处不在的泛函（中文版） | [`src/s2e07`](src/s2e07) | [`s2e07-narration-zh.md`](s2e07-narration-zh.md) |
+| `S2E08` | The Transpose and the Double Dual | [`src/s2e08`](src/s2e08) | [`s2e08-narration.md`](s2e08-narration.md) |
+| `S2E08-ZH` | 转置与双重对偶（中文版） | [`src/s2e08`](src/s2e08) | [`s2e08-narration-zh.md`](s2e08-narration-zh.md) |
+| `S2E09` | Bilinear Forms | [`src/s2e09`](src/s2e09) | [`s2e09-narration.md`](s2e09-narration.md) |
+| `S2E09-ZH` | 双线性型（中文版） | [`src/s2e09`](src/s2e09) | [`s2e09-narration-zh.md`](s2e09-narration-zh.md) |
+| `S2E10` | The Tensor Product | [`src/s2e10`](src/s2e10) | [`s2e10-narration.md`](s2e10-narration.md) |
+| `S2E10-ZH` | 张量积（中文版） | [`src/s2e10`](src/s2e10) | [`s2e10-narration-zh.md`](s2e10-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -201,8 +207,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e03-social.md`](s2e03-social.md), for S2E04 in
 [`s2e04-social.md`](s2e04-social.md), for S2E05 in
 [`s2e05-social.md`](s2e05-social.md), for S2E06 in
-[`s2e06-social.md`](s2e06-social.md), and for S2E07 in
-[`s2e07-social.md`](s2e07-social.md).
+[`s2e06-social.md`](s2e06-social.md), for S2E07 in
+[`s2e07-social.md`](s2e07-social.md), for S2E08 in
+[`s2e08-social.md`](s2e08-social.md), for S2E09 in
+[`s2e09-social.md`](s2e09-social.md), and for S2E10 in
+[`s2e10-social.md`](s2e10-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
