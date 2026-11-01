@@ -75,11 +75,11 @@ export const Bar: React.FC = () => {
     <SceneShell id="bar">
       <Sfx name="whoosh" at={c0 + 10} volume={0.1} />
       <Sfx name="pop" at={c0 + 70} volume={0.14} />
-      <Sfx name="chime" at={c0 + 90} volume={0.6} />
+      <Sfx name="chime" at={c0 + 90} volume={0.35} />
       <Sfx name="pop" at={c1 + 40} volume={0.12} />
       <Sfx name="whoosh" at={c1 + 62} volume={0.1} />
       <Sfx name="whoosh" at={c1 + 82} volume={0.1} />
-      <Sfx name="ding" at={c1 + 100} volume={0.8} />
+      <Sfx name="ding" at={c1 + 100} volume={0.45} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>

@@ -50,7 +50,7 @@ export const EndCard: React.FC = () => {
     <SceneShell id="endCard" showWatermark={false}>
       <Sfx name="clink" at={c0 + 20} volume={0.18} />
       <Sfx name="whoosh" at={c1 + 20} volume={0.12} />
-      <Sfx name="sparkle" at={c1 + 60} volume={0.7} />
+      <Sfx name="sparkle" at={c1 + 60} volume={0.5} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>

@@ -58,9 +58,9 @@ export const Fourier: React.FC = () => {
           volume={0.14}
         />
       ))}
-      <Sfx name="ding" at={c1 + 36} volume={0.7} />
+      <Sfx name="ding" at={c1 + 36} volume={0.45} />
       <Sfx name="whoosh" at={c1 + 70} volume={0.12} />
-      <Sfx name="sparkle" at={c1 + 126} volume={0.7} />
+      <Sfx name="sparkle" at={c1 + 126} volume={0.5} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <line

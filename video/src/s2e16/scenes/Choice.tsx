@@ -57,7 +57,7 @@ export const Choice: React.FC = () => {
       <Sfx name="whoosh" at={c0 + 30} volume={0.12} />
       <Sfx name="whoosh" at={c0 + 100} volume={0.12} />
       <Sfx name="pop" at={c1 + 20} volume={0.14} />
-      <Sfx name="chime" at={c1 + 60} volume={0.6} />
+      <Sfx name="chime" at={c1 + 60} volume={0.35} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <defs>

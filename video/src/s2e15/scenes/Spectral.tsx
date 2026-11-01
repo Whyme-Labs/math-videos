@@ -42,9 +42,9 @@ export const Spectral: React.FC = () => {
   return (
     <SceneShell id="spectral">
       <Sfx name="whoosh" at={c0 + 30} volume={0.12} />
-      <Sfx name="chime" at={c0 + 80} volume={0.6} />
+      <Sfx name="chime" at={c0 + 80} volume={0.35} />
       <Sfx name="pop" at={c1 + 10} volume={0.14} />
-      <Sfx name="chime" at={c1 + 70} volume={0.6} />
+      <Sfx name="chime" at={c1 + 70} volume={0.35} />
       <Sfx name="pluck2" at={c1 + 80} volume={0.14} />
       <Sfx name="pluck4" at={c1 + 140} volume={0.14} />
 

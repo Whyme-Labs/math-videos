@@ -16,7 +16,7 @@ export const TitleCard: React.FC = () => {
 
   return (
     <SceneShell id="title" showCaptions={false} showWatermark={false}>
-      <Sfx name="chime" at={15} />
+      <Sfx name="chime" at={15} volume={0.35} />
       <Sfx name="whoosh" at={10} volume={0.14} />
 
       <AbsoluteFill style={{ zIndex: -1, opacity: 0.3 }}>

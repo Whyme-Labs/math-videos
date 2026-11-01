@@ -43,7 +43,7 @@ export const Geyuan: React.FC = () => {
       {doubleAt.map((t, k) => (
         <Sfx key={k} name="pop" at={t} volume={0.12} />
       ))}
-      <Sfx name="chime" at={c1 + 40} volume={0.6} />
+      <Sfx name="chime" at={c1 + 40} volume={0.35} />
       {Array.from({ length: 6 }).map((_, k) => (
         <Sfx key={`w${k}`} name="tick" at={c2 + 20 + k * 18} volume={0.1} />
       ))}

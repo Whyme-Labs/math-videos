@@ -44,7 +44,7 @@ export const Riesz: React.FC = () => {
       {PAIRS.map((_, k) => (
         <Sfx key={k} name="clink" at={c1 + 40 + k * 20} volume={0.18} />
       ))}
-      <Sfx name="chime" at={c1 + 110} volume={0.6} />
+      <Sfx name="chime" at={c1 + 110} volume={0.35} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
