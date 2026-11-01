@@ -2,18 +2,20 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
-import { glide, lerp, shake, typed } from "../../shared/components/motion";
+import { glide, lerp, shake } from "../../shared/components/motion";
+import { Eq, type Tok } from "../../shared/components/Eq";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Person } from "../../s1e14/components/study";
 import { useStrings } from "../i18n";
 
-// The story. Berlin, 1932: von Neumann beside his book, a state vector with
-// complex entries floating over it. Then the test: the dot product of
-// (1, i) with itself is typed out and a length² gauge adds the terms: 1·1
-// lifts it to 1, i·i pulls it back to 0 with a thud. (1, 2i) sends the bar
-// below zero to −3, in red. Last, a small orange bar hovers over the
-// first i: the fix, still unexplained.
+// The story. Berlin, 1932: von Neumann beside his book, the state (1, i)
+// on it, and its two entries as arrows on little complex dials turning
+// together. Then the test, worked in front of you: 1·1 + i·i becomes
+// 1 + (−1) and collapses to 0, while a length² gauge rises and falls with
+// it. (1, 2i) goes 1 + (−4) to −3 and the gauge drops below zero. Last,
+// (1, i) comes back and an orange bar drops onto the first i: the fix,
+// not yet explained.
 
 export const ColdOpen: React.FC = () => {
   const frame = useCurrentFrame();
@@ -22,34 +24,81 @@ export const ColdOpen: React.FC = () => {
   const cues = useCues("coldOpen");
   const [c0, c1, c2, c3] = cues;
   const part1 = fadeOut(frame, c1, 10);
-  // the gauge adds the terms as they're typed: 1·1 lifts it to 1, i·i
-  // takes 1 away and it lands on 0; then 1·1 again and 2i·2i takes 4: −3
-  const up1 = glide(frame, c1 + 28, fps, 12);
+  // the gauge follows the algebra: 1 + (−1) lands on 0, 1 + (−4) on −3,
+  // and it empties again when (1, i) comes back for the bar
+  const up1 = glide(frame, c1 + 48, fps, 12);
   const fall = glide(frame, c1 + 70, fps, 14);
-  const up2 = glide(frame, c2 + 12, fps, 12);
-  const neg = glide(frame, c2 + 30, fps, 20);
-  const val = up1 - fall + up2 - 4 * neg;
-  const two = frame >= c2 + 10;
+  const up2 = glide(frame, c2 + 26, fps, 12);
+  const neg = glide(frame, c2 + 40, fps, 20);
+  const reset = glide(frame, c3 + 20, fps, 14);
+  const val = (up1 - fall + up2 - 4 * neg) * (1 - reset);
   const G = { x: 1500, y: 470 };
   const U = 80;
   const jolt = shake(frame, c2 + 50, 12);
-  const hover = fadeIn(frame, c3 + 30, 10);
-  const segs = two ? ["1·1 + ", "2i", "·2i"] : ["1·1 + ", "i", "·i"];
-  const shown = two ? 99 : typed("1·1 + i·i", frame, c1 + 20, fps, 16).length;
+  const red = colors.red;
+  const steps: Tok[][] = [
+    [
+      { id: "a", t: "1·1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "i" },
+      { id: "c", t: "·i" },
+    ],
+    [
+      { id: "a", t: "1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "(−1)", color: red },
+    ],
+    [{ id: "z", t: "0", color: red }],
+    [
+      { id: "a", t: "1·1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "2i" },
+      { id: "c", t: "·2i" },
+    ],
+    [
+      { id: "a", t: "1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "(−4)", color: red },
+    ],
+    [{ id: "z", t: "−3", color: red }],
+    [
+      { id: "a", t: "1·1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "i" },
+      { id: "c", t: "·i" },
+    ],
+    [
+      { id: "a", t: "1·1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "i", bar: true },
+      { id: "c", t: "·i" },
+    ],
+  ];
+  const at = [
+    c1 + 20,
+    c1 + 48,
+    c1 + 70,
+    c2 + 10,
+    c2 + 26,
+    c2 + 40,
+    c3 + 20,
+    c3 + 40,
+  ];
+  // the two entries of the state as arrows on little complex dials, turning together
+  const phase = Math.max(0, frame - c0 - 40) * 0.05;
 
   return (
     <SceneShell id="coldOpen">
       <Sfx name="page" at={c0 + 20} volume={0.2} />
       <Sfx name="whoosh" at={c0 + 40} volume={0.1} />
-      {Array.from({ length: 6 }).map((_, k) => (
-        <Sfx key={k} name="tick" at={c1 + 20 + k * 7} volume={0.1} />
-      ))}
-      <Sfx name="pop" at={c1 + 28} volume={0.12} />
-      <Sfx name="thud" at={c1 + 70} volume={0.3} />
-      <Sfx name="pop" at={c2 + 12} volume={0.12} />
-      <Sfx name="scratch" at={c2 + 30} volume={0.22} />
-      <Sfx name="riser" at={c3 + 10} volume={0.12} />
-      <Sfx name="pop" at={c3 + 30} volume={0.14} />
+      <Sfx name="pop" at={c1 + 20} volume={0.12} />
+      <Sfx name="whoosh" at={c1 + 48} volume={0.1} />
+      <Sfx name="thud" at={c1 + 70} volume={0.26} />
+      <Sfx name="pop" at={c2 + 10} volume={0.12} />
+      <Sfx name="whoosh" at={c2 + 26} volume={0.1} />
+      <Sfx name="scratch" at={c2 + 40} volume={0.18} />
+      <Sfx name="whoosh" at={c3 + 20} volume={0.1} />
+      <Sfx name="pop" at={c3 + 40} volume={0.12} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
@@ -87,6 +136,54 @@ export const ColdOpen: React.FC = () => {
               (1, i)
             </text>
           </g>
+          {[0, 1].map((k) => {
+            const a = (k * Math.PI) / 2 + phase;
+            return (
+              <g
+                key={k}
+                transform={`translate(1000 ${420 + k * 220})`}
+                opacity={fadeIn(frame, c0 + 36 + k * 6)}
+              >
+                <circle
+                  r={80}
+                  fill="none"
+                  stroke={alpha(colors.primary, 0.5)}
+                  strokeWidth={4}
+                />
+                <line
+                  x1={-100}
+                  y1={0}
+                  x2={100}
+                  y2={0}
+                  stroke={alpha(colors.paper, 0.3)}
+                  strokeWidth={3}
+                />
+                <line
+                  x1={0}
+                  y1={-100}
+                  x2={0}
+                  y2={100}
+                  stroke={alpha(colors.paper, 0.3)}
+                  strokeWidth={3}
+                />
+                <line
+                  x1={0}
+                  y1={0}
+                  x2={80 * Math.cos(a)}
+                  y2={-80 * Math.sin(a)}
+                  stroke={colors.orange}
+                  strokeWidth={8}
+                  strokeLinecap="round"
+                />
+                <circle
+                  cx={80 * Math.cos(a)}
+                  cy={-80 * Math.sin(a)}
+                  r={12}
+                  fill={colors.orange}
+                />
+              </g>
+            );
+          })}
           <Person
             x={1400}
             y={800}
@@ -139,48 +236,7 @@ export const ColdOpen: React.FC = () => {
       </AbsoluteFill>
 
       <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 380,
-            left: 140,
-            fontFamily: fonts.math,
-            fontSize: 104,
-            fontWeight: 800,
-            color: colors.text,
-            whiteSpace: "pre",
-          }}
-        >
-          {segs[0].slice(0, shown)}
-          <span style={{ position: "relative" }}>
-            {segs[1].slice(0, Math.max(0, shown - segs[0].length))}
-            <span
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                top: -10,
-                height: 12,
-                borderRadius: 6,
-                background: colors.orange,
-                opacity: hover,
-                translate: `0 ${Math.sin((frame - c3) * 0.15) * 10 - 20}px`,
-              }}
-            />
-          </span>
-          {segs[2].slice(
-            0,
-            Math.max(0, shown - segs[0].length - segs[1].length),
-          )}
-          <span
-            style={{
-              color: colors.red,
-              opacity: fadeIn(frame, two ? c2 + 30 : c1 + 70, 6),
-            }}
-          >
-            {two ? " = −3" : " = 0"}
-          </span>
-        </div>
+        <Eq steps={steps} at={at} x={640} y={400} size={110} />
         <svg width={1920} height={1080} style={{ position: "absolute" }}>
           <g transform={`translate(${G.x + jolt} ${G.y})`}>
             <rect

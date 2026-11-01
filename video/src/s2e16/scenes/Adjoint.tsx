@@ -7,10 +7,17 @@ import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
 import { Stack } from "../../s2e06/components/stack";
+import {
+  IDENTITY,
+  Plane,
+  lerpMat,
+  linear,
+} from "../../shared/components/Plane";
 import { useStrings } from "../i18n";
 
 // The adjoint as a round trip. Two planes, V on the left and W on the
-// right, with A = [1 2; 0 1] carrying V to W. A stack β = (0.6, 0.3) on W
+// right, with A = [1 2; 0 1] carrying V to W: first W's grid bends from
+// square into A's shear, taking a test arrow along with it. A stack β = (0.6, 0.3) on W
 // is pulled back through A to the stack Aᵀβ = (0.6, 1.5) on V, which the
 // ruler turns into an arrow. Then a card: with the dot product that round
 // trip is the transpose [1 0; 2 1]; with the ruler G = diag(1, 4) on both
@@ -35,13 +42,19 @@ export const Adjoint: React.FC = () => {
   const ruler = glide(frame, c1 + 50, fps, 30);
   const arr = { x: PB.a, y: lerp(PB.b, PB.b / 4, ruler) };
   const K = 1.4;
+  // first A itself: W's grid bends from square to A's grid, carrying a
+  // test arrow t = (1, 0.5) in V to At = (2, 0.5) in W
+  const bend = glide(frame, c0 + 6, fps, 30);
+  const Am = lerpMat(IDENTITY, [1, 2, 0, 1], bend);
+  const tW = linear(Am)(1, 0.5);
 
   return (
     <SceneShell id="adjoint">
-      <Sfx name="pop" at={c0 + 10} volume={0.14} />
-      <Sfx name="whoosh" at={c0 + 40} volume={0.12} />
-      <Sfx name="pop" at={c0 + 56} volume={0.14} />
-      <Sfx name="chime" at={c0 + 90} volume={0.6} />
+      <Sfx name="whoosh" at={c0 + 6} volume={0.12} />
+      <Sfx name="pop" at={c0 + 50} volume={0.14} />
+      <Sfx name="whoosh" at={c0 + 80} volume={0.12} />
+      <Sfx name="pop" at={c0 + 96} volume={0.14} />
+      <Sfx name="chime" at={c0 + 130} volume={0.6} />
       <Sfx name="pop" at={c1 + 10} volume={0.14} />
       <Sfx name="whoosh" at={c1 + 50} volume={0.12} />
 
@@ -103,10 +116,25 @@ export const Adjoint: React.FC = () => {
         >
           A
         </text>
-        <g clipPath="url(#e16W)" opacity={fadeIn(frame, c0 + 10)}>
+        <g clipPath="url(#e16V)">
+          <Plane map={linear(IDENTITY)} scr={sV} range={4} />
+        </g>
+        <g clipPath="url(#e16W)">
+          <Plane map={linear(Am)} scr={sW} range={6} />
+        </g>
+        <g opacity={fadeIn(frame, c0 + 6) * (1 - fadeIn(frame, c0 + 50))}>
+          <Arrow from={V} to={sV(1, 0.5)} width={12} color={colors.highlight} />
+          <Arrow
+            from={W}
+            to={sW(tW.x, tW.y)}
+            width={12}
+            color={colors.highlight}
+          />
+        </g>
+        <g clipPath="url(#e16W)" opacity={fadeIn(frame, c0 + 50)}>
           <Stack a={BETA.a} b={BETA.b} scr={sW} range={6} />
         </g>
-        <g opacity={fadeIn(frame, c0 + 40)}>
+        <g opacity={fadeIn(frame, c0 + 80)}>
           <path
             d="M 1120 540 Q 960 610 810 540"
             fill="none"
@@ -126,10 +154,10 @@ export const Adjoint: React.FC = () => {
             {tx.pullBack}
           </text>
         </g>
-        <g clipPath="url(#e16V)" opacity={fadeIn(frame, c0 + 56)}>
+        <g clipPath="url(#e16V)" opacity={fadeIn(frame, c0 + 96)}>
           <Stack a={PB.a} b={PB.b} scr={sV} range={10} opacity={0.8} />
         </g>
-        <g opacity={fadeIn(frame, c0 + 90)}>
+        <g opacity={fadeIn(frame, c0 + 130)}>
           <Arrow from={V} to={sV(arr.x * K, arr.y * K)} width={16} />
         </g>
       </svg>
@@ -141,8 +169,8 @@ export const Adjoint: React.FC = () => {
           fontSize: 40,
           fontWeight: 800,
           color: colors.primary,
-          opacity: fadeIn(frame, c0 + 90),
-          translate: riseIn(frame, c0 + 90, 12),
+          opacity: fadeIn(frame, c0 + 130),
+          translate: riseIn(frame, c0 + 130, 12),
         }}
       >
         {tx.toArrow}

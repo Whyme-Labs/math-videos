@@ -2,18 +2,20 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
-import { glide, lerp } from "../../shared/components/motion";
+import { glide } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import { Eq, type Tok } from "../../shared/components/Eq";
 import { useStrings } from "../i18n";
 
 // Why the bar. A complex plane: z (lemon) turning slowly, z·z (orange)
 // turning twice as fast so its real part keeps changing sign, and the
 // mirror image z̄ (dashed). Their product z̄·z sits still on the positive
 // real axis as a green dot at |z|². On the right two readouts: z·z wanders
-// in colour, z̄·z holds. Then (1, i) again: with the bar on the first i the
-// sum is 1 + 1 and the length² gauge rises to a green 2.
+// in colour, z̄·z holds. Then (1, i) again, worked in front of you: the bar
+// drops onto the first i, ī becomes −i, (−i)·i becomes 1, and 1 + 1
+// settles on 2 as the length² gauge rises to a green 2.
 
 const O = { x: 640, y: 470 };
 const S = 200;
@@ -36,7 +38,37 @@ export const Bar: React.FC = () => {
   const zz = { x: R * R * Math.cos(2 * th), y: R * R * Math.sin(2 * th) };
   const p = (x: number, y: number) => ({ x: O.x + x * S, y: O.y - y * S });
   const mirror = fadeIn(frame, c0 + 70, 10);
-  const rise = glide(frame, c1 + 60, fps, 20);
+  const rise = glide(frame, c1 + 100, fps, 20);
+  // (1, i) again, with the bar: 1·1 + ī·i, then ī = −i so the second term
+  // is (−i)·i = 1, and the whole thing settles on 2
+  const green = colors.green;
+  const steps: Tok[][] = [
+    [
+      { id: "a", t: "1·1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "i" },
+      { id: "c", t: "·i" },
+    ],
+    [
+      { id: "a", t: "1·1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "i", bar: true },
+      { id: "c", t: "·i" },
+    ],
+    [
+      { id: "a", t: "1" },
+      { id: "p", t: " + " },
+      { id: "b", t: "(−i)", color: colors.orange },
+      { id: "c", t: "·i" },
+    ],
+    [
+      { id: "a", t: "1" },
+      { id: "p", t: " + " },
+      { id: "r", t: "1", color: green },
+    ],
+    [{ id: "z", t: "2", color: green }],
+  ];
+  const at = [c1 + 10, c1 + 40, c1 + 62, c1 + 82, c1 + 100];
   const U = 80;
 
   return (
@@ -44,8 +76,10 @@ export const Bar: React.FC = () => {
       <Sfx name="whoosh" at={c0 + 10} volume={0.1} />
       <Sfx name="pop" at={c0 + 70} volume={0.14} />
       <Sfx name="chime" at={c0 + 90} volume={0.6} />
-      <Sfx name="pop" at={c1 + 40} volume={0.14} />
-      <Sfx name="ding" at={c1 + 60} />
+      <Sfx name="pop" at={c1 + 40} volume={0.12} />
+      <Sfx name="whoosh" at={c1 + 62} volume={0.1} />
+      <Sfx name="whoosh" at={c1 + 82} volume={0.1} />
+      <Sfx name="ding" at={c1 + 100} volume={0.8} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
@@ -182,43 +216,7 @@ export const Bar: React.FC = () => {
       </AbsoluteFill>
 
       <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 380,
-            left: 160,
-            fontFamily: fonts.math,
-            fontSize: 110,
-            fontWeight: 800,
-            color: colors.text,
-            opacity: fadeIn(frame, c1 + 10),
-            translate: riseIn(frame, c1 + 10, 14),
-          }}
-        >
-          1·1 +{" "}
-          <span style={{ position: "relative" }}>
-            i
-            <span
-              style={{
-                position: "absolute",
-                left: "-0.05em",
-                right: "-0.05em",
-                top: "0.12em",
-                height: 10,
-                borderRadius: 5,
-                background: colors.orange,
-                opacity: fadeIn(frame, c1 + 40, 6),
-                translate: `0 ${lerp(-60, 0, glide(frame, c1 + 40, fps, 10))}px`,
-              }}
-            />
-          </span>
-          ·i ={" "}
-          <span
-            style={{ color: colors.green, opacity: fadeIn(frame, c1 + 60, 6) }}
-          >
-            1 + 1
-          </span>
-        </div>
+        <Eq steps={steps} at={at} x={700} y={400} size={110} />
         <svg width={1920} height={1080} style={{ position: "absolute" }}>
           <g transform="translate(1500 600)">
             <rect

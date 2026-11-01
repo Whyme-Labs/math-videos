@@ -5,23 +5,42 @@ import { Sfx } from "../../shared/components/Sfx";
 import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Arrow } from "../../s2e01/components/vec";
+import {
+  Arrow3,
+  Stage3D,
+  Surface,
+  Tube,
+  type V3,
+} from "../../shared/components/three3d";
 import { useStrings } from "../i18n";
 
-// The gradient. Contours of f = x²y, and the point P = (1, 2) where
-// df = (4, 1): near P an orange local stack, the tangent sheets 4x + y = k.
-// Then the arrow for df: with the dot product it's (4, 1), the textbook
-// gradient; with the ruler G = diag(4, 1) it's G⁻¹df = (1, 1). The arrow
-// swings between the two rulers, while a fixed small step h = (0.1, 0.2)
-// keeps its climb df(h) = 0.6 the whole time.
+// The gradient, in 3D. The hill f = x²y as a surface over the floor, its
+// contour lines both on the hill and dropped onto the floor, and the
+// point P = (1, 2) where df = (4, 1). Around P on the floor an orange local
+// stack grows: the tangent sheets 4x + y = k, which count contours crossed.
+// Then the arrow for df on the floor: with the dot product it's (4, 1), the
+// textbook gradient; with the ruler G = diag(4, 1) it's G⁻¹df = (1, 1). The
+// arrow swings between the two rulers while a fixed step h = (0.25, 0.5),
+// in green, climbs the same 1.5 up the tangent plane every time. The camera
+// circles the hill throughout.
 
-const U = 170;
-const scr = (x: number, y: number) => ({
-  x: 620 + (x - 1) * U,
-  y: 460 - (y - 2) * U,
-});
-const P = scr(1, 2);
-const LEVELS = [0.5, 1, 2, 3, 4.5, 6.5];
+const K = 0.2; // height scale
+const f = (x: number, y: number) => x * x * y;
+const LEVELS = [0.5, 1, 2, 3, 4.5, 6];
+const X0 = 0.45;
+const X1 = 1.65;
+const Y0 = 0.7;
+const Y1 = 3.1;
+const contour = (c: number, z: number): V3[] => {
+  const pts: V3[] = [];
+  for (let i = 0; i <= 50; i++) {
+    const x = X0 + (i / 50) * (X1 - X0);
+    const y = c / (x * x);
+    if (y >= Y0 && y <= Y1) pts.push([x, y, z]);
+  }
+  return pts;
+};
+const H = { x: 0.25, y: 0.5 };
 
 export const Gradient: React.FC = () => {
   const frame = useCurrentFrame();
@@ -37,87 +56,141 @@ export const Gradient: React.FC = () => {
         glide(frame, c1 + 170, fps, 30);
   const g = { x: lerp(4, 1, flip), y: 1 };
   const n = Math.hypot(g.x, g.y);
-  const tip = { x: P.x + (260 * g.x) / n, y: P.y - (260 * g.y) / n };
-  const H = { x: 0.1, y: 0.2 };
-  const hTip = scr(1 + H.x * 4, 2 + H.y * 4);
-  const curve = (c: number) =>
-    Array.from({ length: 60 }, (_, i) => {
-      const x = 0.3 + (i / 59) * 3.2;
-      const p = scr(x, Math.min(c / (x * x), 4.6));
-      return `${i ? "L" : "M"} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`;
-    }).join(" ");
+  const rise = glide(frame, c0 + 4, fps, 30);
+  const stack = fadeIn(frame, c0 + 30, 12);
+  const arrows = fadeIn(frame, c1 + 10, 10);
+  const azimuth = -0.95 + (frame - c0) * 0.002;
+  const P0: V3 = [1, 2, 0];
+  const Ps: V3 = [1, 2, K * rise * f(1, 2)];
+  // the tangent direction of the contour through P, and the local sheets
+  const t = { x: 1 / Math.sqrt(17), y: -4 / Math.sqrt(17) };
 
   return (
     <SceneShell id="gradient">
+      <Sfx name="riser" at={c0 + 4} volume={0.1} />
       <Sfx name="pop" at={c0 + 30} volume={0.14} />
       <Sfx name="pop" at={c1 + 10} volume={0.14} />
       <Sfx name="whoosh" at={c1 + 40} volume={0.12} />
       <Sfx name="whoosh" at={c1 + 120} volume={0.12} />
       <Sfx name="whoosh" at={c1 + 170} volume={0.12} />
 
-      <svg width={1920} height={1080} style={{ position: "absolute" }}>
-        <defs>
-          <clipPath id="e16grad">
-            <rect x={160} y={80} width={980} height={740} rx={30} />
-          </clipPath>
-          <clipPath id="e16local">
-            <circle cx={P.x} cy={P.y} r={130} />
-          </clipPath>
-        </defs>
-        <g clipPath="url(#e16grad)" opacity={fadeIn(frame, c0 + 6)}>
-          {LEVELS.map((c) => (
-            <path
-              key={c}
-              d={curve(c)}
-              fill="none"
-              stroke={c === 2 ? colors.orange : alpha(colors.orange, 0.4)}
-              strokeWidth={c === 2 ? 6 : 4}
+      <Stage3D
+        azimuth={azimuth}
+        elevation={0.5}
+        distance={5.4}
+        target={[1.05, 1.9, 0.55]}
+        style={{ left: -230, top: -90 }}
+      >
+        {/* the floor the contours are dropped onto */}
+        <mesh position={[(X0 + X1) / 2, (Y0 + Y1) / 2, -0.002]}>
+          <planeGeometry args={[X1 - X0, Y1 - Y0]} />
+          <meshStandardMaterial
+            color={colors.paper}
+            transparent
+            opacity={0.08}
+            depthWrite={false}
+          />
+        </mesh>
+        {(
+          [
+            [X0, Y0, X1, Y0],
+            [X1, Y0, X1, Y1],
+            [X1, Y1, X0, Y1],
+            [X0, Y1, X0, Y0],
+          ] as const
+        ).map(([a, b, c, d], k) => (
+          <Tube
+            key={k}
+            points={[
+              [a, b, 0],
+              [c, d, 0],
+            ]}
+            radius={0.006}
+            color={colors.paper}
+            opacity={0.35}
+          />
+        ))}
+        <Surface
+          f={(x, y) => K * rise * f(x, y)}
+          range={[X0, X1, Y0, Y1]}
+          color={colors.green}
+          opacity={0.4}
+        />
+        {LEVELS.map((c) => (
+          <group key={c}>
+            <Tube
+              points={contour(c, 0)}
+              radius={c === 2 ? 0.024 : 0.014}
+              color={colors.orange}
+              opacity={c === 2 ? 1 : 0.6}
             />
-          ))}
-        </g>
-        <g clipPath="url(#e16local)" opacity={fadeIn(frame, c0 + 30)}>
-          {[-3, -2, -1, 0, 1, 2, 3].map((k) => {
-            const d = k * 0.18;
-            const c = {
-              x: 1 + (4 * d) / Math.sqrt(17),
-              y: 2 + d / Math.sqrt(17),
-            };
-            const t = { x: 1 / Math.sqrt(17), y: -4 / Math.sqrt(17) };
-            const a = scr(c.x - t.x, c.y - t.y);
-            const b = scr(c.x + t.x, c.y + t.y);
-            return (
-              <line
-                key={k}
-                x1={a.x}
-                y1={a.y}
-                x2={b.x}
-                y2={b.y}
-                stroke={colors.orange}
-                strokeWidth={k === 0 ? 8 : 5}
-              />
-            );
-          })}
-        </g>
-        <g opacity={fadeIn(frame, c1 + 10)}>
-          <Arrow from={P} to={hTip} width={10} color={colors.green} />
-          <Arrow from={P} to={tip} width={16} />
-          <text
-            x={tip.x + 16}
-            y={tip.y - 14}
-            fill={colors.primary}
-            fontSize={40}
-            fontWeight={800}
-          >
-            {tx.steepest}
-          </text>
-        </g>
-        <circle cx={P.x} cy={P.y} r={14} fill={colors.text} />
-      </svg>
+            <Tube
+              points={contour(c, K * rise * c)}
+              radius={0.012}
+              color={colors.orange}
+              opacity={0.35 * rise}
+            />
+          </group>
+        ))}
+        {[-3, -2, -1, 1, 2, 3].map((k) => {
+          const d = k * 0.11;
+          const cx = 1 + (4 * d) / Math.sqrt(17);
+          const cy = 2 + d / Math.sqrt(17);
+          return (
+            <Tube
+              key={k}
+              points={[
+                [cx - 0.35 * t.x, cy - 0.35 * t.y, 0.005],
+                [cx + 0.35 * t.x, cy + 0.35 * t.y, 0.005],
+              ]}
+              radius={0.016}
+              color={colors.orange}
+              opacity={stack}
+            />
+          );
+        })}
+        <Tube
+          points={[P0, Ps]}
+          radius={0.008}
+          color={colors.paper}
+          opacity={0.6}
+        />
+        <mesh position={[...Ps]}>
+          <sphereGeometry args={[0.06, 20, 20]} />
+          <meshStandardMaterial color={colors.text} />
+        </mesh>
+        <mesh position={[...P0]}>
+          <sphereGeometry args={[0.05, 20, 20]} />
+          <meshStandardMaterial color={colors.text} />
+        </mesh>
+        <Arrow3
+          from={P0}
+          to={[1 + (0.95 * g.x) / n, 2 + (0.95 * g.y) / n, 0.01]}
+          color={colors.primary}
+          radius={0.035}
+          opacity={arrows}
+        />
+        <Arrow3
+          from={P0}
+          to={[1 + H.x, 2 + H.y, 0.01]}
+          color={colors.green}
+          radius={0.025}
+          opacity={arrows}
+        />
+        <Arrow3
+          from={Ps}
+          to={[1 + H.x, 2 + H.y, Ps[2] + K * (4 * H.x + H.y)]}
+          color={colors.green}
+          radius={0.025}
+          opacity={arrows}
+        />
+      </Stage3D>
+
       <div
         style={{
           position: "absolute",
           top: 160,
-          left: 1260,
+          left: 1300,
           fontFamily: fonts.math,
           fontSize: 64,
           fontWeight: 800,
@@ -132,7 +205,7 @@ export const Gradient: React.FC = () => {
         style={{
           position: "absolute",
           top: 320,
-          left: 1260,
+          left: 1300,
           width: 520,
           padding: "12px 0",
           borderRadius: 16,
@@ -154,7 +227,7 @@ export const Gradient: React.FC = () => {
         style={{
           position: "absolute",
           top: 480,
-          left: 1260,
+          left: 1300,
           width: 520,
           textAlign: "center",
           fontSize: 48,
@@ -164,7 +237,7 @@ export const Gradient: React.FC = () => {
           translate: riseIn(frame, c1 + 60, 12),
         }}
       >
-        {tx.climb}: <span style={{ fontFamily: fonts.mono }}>0.6</span>
+        {tx.climb}: <span style={{ fontFamily: fonts.mono }}>1.5</span>
       </div>
     </SceneShell>
   );

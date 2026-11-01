@@ -6,6 +6,7 @@ import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import { Plane, linear } from "../../shared/components/Plane";
 import { useStrings } from "../i18n";
 
 // Coordinates can't give a ruler. Two perpendicular arrows u = (1, 0) and
@@ -43,22 +44,9 @@ export const Camera: React.FC = () => {
           </clipPath>
         </defs>
         <g clipPath="url(#camStage)">
-          {Array.from({ length: 13 }).map((_, i) => {
-            const k = i - 6;
-            const p1 = scr(k - 6 * b2.x, -6);
-            const p2 = scr(k + 6 * b2.x, 6);
-            return (
-              <g key={i} stroke={alpha(colors.paper, 0.15)} strokeWidth={2}>
-                <line x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} />
-                <line
-                  x1={scr(-8, k).x}
-                  y1={scr(0, k).y}
-                  x2={scr(8, k).x}
-                  y2={scr(0, k).y}
-                />
-              </g>
-            );
-          })}
+          {/* the coordinate grid of the basis (1, 0), b₂: the whole plane
+              shears as b₂ tips over, while the two arrows stay put */}
+          <Plane map={linear([1, b2.x, 0, b2.y])} scr={scr} range={10} />
         </g>
         <Arrow from={O} to={scr(1, 0)} width={14} />
         <Arrow from={O} to={scr(0, 1)} width={14} color={colors.highlight} />

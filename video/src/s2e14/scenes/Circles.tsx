@@ -5,22 +5,32 @@ import { Sfx } from "../../shared/components/Sfx";
 import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Arrow } from "../../s2e01/components/vec";
+import {
+  Arrow3,
+  Sheet,
+  Stage3D,
+  ParamSurface,
+  Tube,
+  type V3,
+} from "../../shared/components/three3d";
 
-// Many unit circles. The unit circle xᵀGx = 1 of an inner product G, drawn
-// with a pair of arrows that are perpendicular for G (with a right-angle
-// mark in G's sense). G morphs through several positive-definite choices,
-// from round to tilted ellipses; the circle and the pair follow, and a
-// small G-card on the right churns its entries.
+// Many unit circles, in 3D. An inner product G is drawn as the bowl
+// z = xᵀGx over the plane: it rises out of the floor (positive: every
+// nonzero arrow gets a positive height), then a glass sheet comes down to
+// height 1 and the rim where it cuts the bowl lights up. That rim, dropped
+// onto the floor, is G's unit circle, an ellipse, with a pair of arrows
+// that are perpendicular for G. Then G morphs through other choices; the
+// bowl tips and stretches, the rim and the pair follow, and the camera
+// keeps circling. A G-card on the right shows the entries.
 
-const O = { x: 760, y: 480 };
-const S = 230;
 const GS = [
   [1, 0, 1],
   [1, 0.6, 1.4],
   [2.2, -0.8, 0.8],
   [0.6, 0.3, 2],
 ];
+const Z = 0.6; // height scale: the sheet sits at z = Z (xᵀGx = 1)
+const R = 1.4; // the bowl is cut off where xᵀGx = R²
 
 export const Circles: React.FC = () => {
   const frame = useCurrentFrame();
@@ -28,55 +38,105 @@ export const Circles: React.FC = () => {
   const cues = useCues("circles");
   const [c0, c1] = cues;
   let g = GS[0];
-  [c0 + 40, c1 + 10, c1 + 70].forEach((at, k) => {
+  [c0 + 90, c1 + 10, c1 + 80].forEach((at, k) => {
     const t = glide(frame, at, fps, 36);
     g = g.map((v, i) => lerp(v, GS[k + 1][i], t));
   });
   const [a, b, c] = g;
-  const len = (x: number, y: number) =>
-    Math.sqrt(a * x * x + 2 * b * x * y + c * y * y);
-  const ellipse = Array.from({ length: 73 }, (_, i) => {
-    const t = (i / 72) * Math.PI * 2;
-    const x = Math.cos(t);
-    const y = Math.sin(t);
-    const l = len(x, y);
-    return `${i ? "L" : "M"} ${(O.x + (x / l) * S).toFixed(1)} ${(O.y - (y / l) * S).toFixed(1)}`;
-  }).join(" ");
-  // a G-orthonormal pair: u along a slowly turning direction, v ⟂_G u
+  const rise = glide(frame, c0 + 6, fps, 30);
+  const drop = glide(frame, c0 + 40, fps, 24);
+  const rim = fadeIn(frame, c0 + 60, 10);
+  const q = (x: number, y: number) => a * x * x + 2 * b * x * y + c * y * y;
+  const len = (x: number, y: number) => Math.sqrt(q(x, y));
+  // the bowl in G-polar coordinates: radius r along direction t, so the
+  // rim sits at one height whatever G is
+  const bowl = (uu: number, vv: number): V3 => {
+    const t = vv * Math.PI * 2;
+    const l = len(Math.cos(t), Math.sin(t));
+    const r = uu * R;
+    return [(r * Math.cos(t)) / l, (r * Math.sin(t)) / l, Z * rise * r * r];
+  };
+  const ellipse = (z: number): V3[] =>
+    Array.from({ length: 73 }, (_, i) => {
+      const t = (i / 72) * Math.PI * 2;
+      const l = len(Math.cos(t), Math.sin(t));
+      return [Math.cos(t) / l, Math.sin(t) / l, z];
+    });
+  // a G-orthonormal pair: u turning slowly, v ⟂_G u
   const th = 0.4 + (frame - c0) * 0.01;
   const u0 = { x: Math.cos(th), y: Math.sin(th) };
   const u = { x: u0.x / len(u0.x, u0.y), y: u0.y / len(u0.x, u0.y) };
   const gu = { x: a * u.x + b * u.y, y: b * u.x + c * u.y };
   const v0 = { x: -gu.y, y: gu.x };
   const v = { x: v0.x / len(v0.x, v0.y), y: v0.y / len(v0.x, v0.y) };
-  const p = (q: { x: number; y: number }, k = 1) => ({
-    x: O.x + q.x * S * k,
-    y: O.y - q.y * S * k,
-  });
-  const corner = { x: (u.x + v.x) * 0.18, y: (u.y + v.y) * 0.18 };
+  const m = 0.18;
+  const azimuth = -1.75 + (frame - c0) * 0.004;
 
   return (
     <SceneShell id="circles">
+      <Sfx name="riser" at={c0 + 6} volume={0.1} />
       <Sfx name="whoosh" at={c0 + 40} volume={0.1} />
+      <Sfx name="chime" at={c0 + 62} volume={0.5} />
+      <Sfx name="whoosh" at={c0 + 90} volume={0.1} />
       <Sfx name="whoosh" at={c1 + 10} volume={0.1} />
-      <Sfx name="whoosh" at={c1 + 70} volume={0.1} />
+      <Sfx name="whoosh" at={c1 + 80} volume={0.1} />
+
+      <Stage3D
+        azimuth={azimuth}
+        elevation={0.42}
+        distance={8.4}
+        target={[0, 0, 0.5]}
+        style={{ left: -260, top: -60 }}
+      >
+        <ParamSurface p={bowl} color={colors.green} opacity={0.38} />
+        <Sheet
+          size={4.2}
+          z={lerp(2.4, Z, drop)}
+          color={colors.paper}
+          opacity={0.14 * drop}
+        />
+        <Tube
+          points={ellipse(Z)}
+          radius={0.035}
+          color={colors.primary}
+          opacity={rim}
+          closed
+        />
+        <Tube
+          points={ellipse(0)}
+          radius={0.03}
+          color={colors.primary}
+          opacity={rim}
+          closed
+        />
+        <Arrow3
+          from={[0, 0, 0]}
+          to={[u.x, u.y, 0]}
+          color={colors.orange}
+          radius={0.045}
+          opacity={rim}
+        />
+        <Arrow3
+          from={[0, 0, 0]}
+          to={[v.x, v.y, 0]}
+          color={colors.highlight}
+          radius={0.045}
+          opacity={rim}
+        />
+        <Tube
+          points={[
+            [u.x * m, u.y * m, 0],
+            [(u.x + v.x) * m, (u.y + v.y) * m, 0],
+            [v.x * m, v.y * m, 0],
+          ]}
+          radius={0.015}
+          color={colors.green}
+          opacity={rim}
+        />
+      </Stage3D>
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
-        <path
-          d={ellipse}
-          fill={alpha(colors.primary, 0.1)}
-          stroke={colors.primary}
-          strokeWidth={7}
-        />
-        <Arrow from={O} to={p(u)} width={14} color={colors.orange} />
-        <Arrow from={O} to={p(v)} width={14} color={colors.highlight} />
-        <path
-          d={`M ${p(u, 0.18).x} ${p(u, 0.18).y} L ${p(corner).x} ${p(corner).y} L ${p(v, 0.18).x} ${p(v, 0.18).y}`}
-          fill="none"
-          stroke={colors.green}
-          strokeWidth={5}
-        />
-        <g transform="translate(1520 420)" opacity={fadeIn(frame, c0 + 10)}>
+        <g transform="translate(1560 420)" opacity={fadeIn(frame, c0 + 10)}>
           <text
             y={-130}
             fill={colors.muted}
@@ -87,6 +147,14 @@ export const Circles: React.FC = () => {
           >
             G
           </text>
+          <rect
+            x={-170}
+            y={-100}
+            width={340}
+            height={200}
+            rx={16}
+            fill={alpha(colors.bg, 0.6)}
+          />
           <path
             d="M -110 -90 l -20 0 l 0 180 l 20 0 M 110 -90 l 20 0 l 0 180 l -20 0"
             fill="none"

@@ -40,7 +40,7 @@ export const Unitary: React.FC = () => {
         <Sfx key={k} name="tick" at={c0 + 20 + k * 14} volume={0.08} />
       ))}
       <Sfx name="whoosh" at={c1 + 40} volume={0.12} />
-      <Sfx name="ding" at={c1 + 80} />
+      <Sfx name="ding" at={c1 + 80} volume={0.7} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>

@@ -156,6 +156,31 @@ the series one feel.
 - Scene transitions are the 12-frame `fade()` in `Episode.tsx`, with a whoosh.
   Don't add a different transition for one scene.
 
+## One main visual that keeps moving
+
+From Season 2's middle on, the ideas are hard enough that a scene built from
+panels that swap in and out doesn't carry them. Build each scene around one
+main visual that keeps changing for the whole scene: the plane bends, the
+surface reshapes, the formula works itself out. Labels and readouts sit
+beside it; they don't replace it. Three shared components make this cheap:
+
+| Component | File | Use for |
+|---|---|---|
+| `Plane` | `shared/components/Plane.tsx` | the whole grid pushed through a map (`linear(m)` for a matrix, any function for a curved map), with `lerpMat` to bend it from one matrix to another. Basis changes, shears, rotations, a map from V to W. |
+| `Eq` | `shared/components/Eq.tsx` | a formula that does its own algebra. Give it steps of tokens with ids; shared tokens slide, cancelled ones drop away, new ones rise, and `bar` drops a conjugate bar onto a token. Use it instead of typing a formula and leaving it there. It still counts as the one formula on screen. |
+| `Stage3D` and friends | `shared/components/three3d.tsx` | real 3D through `@remotion/three`: `Surface` (a graph), `ParamSurface` (a bowl, sphere, cylinder), `Tube`, `Arrow3`, `Sheet`. Math coordinates with z up; orbit by animating `azimuth`. |
+
+- **Use 3D when the idea has a third dimension in it.** A quadratic form is
+  a bowl and its unit circle is where a plane at height 1 cuts it (S2E14). A
+  gradient lives on a hill (S2E16). Projections, cross products and
+  eigen-directions in space come next. Keep the camera circling slowly
+  (`azimuth` from the frame) so depth reads; a still 3D view looks flat.
+- 3D frames take longer to render. Keep surfaces to about 64 × 64 and the
+  number of tubes modest.
+- Put labels and readouts in HTML or SVG over the 3D stage, not in 3D.
+- After any change to a 3D or `Eq` scene, render stills across the scene and
+  look at them: camera angle, scale and token spacing are easy to get wrong.
+
 ## Checks before you call a scene done
 
 - **The textbook test.** Pause on any frame. If it could be printed in a

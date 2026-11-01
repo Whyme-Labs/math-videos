@@ -24,9 +24,7 @@ export const Geyuan: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("geyuan");
   const [c0, c1, c2] = cues;
-  const doubleAt = NS.map((_, k) =>
-    k === 0 ? c0 + 20 : c1 + 10 + (k - 1) * 24,
-  );
+  const doubleAt = [c0 + 20, c0 + 80, c1 + 10, c1 + 34, c1 + 58, c1 + 82];
   const idx = doubleAt.filter((t) => frame >= t).length - 1;
   const n = NS[Math.max(0, idx)];
   const grow = glide(frame, doubleAt[Math.max(0, idx)], fps, 14);
