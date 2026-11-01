@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e14-length-and-angle.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e14-zh-chang-du-yu-jiao-du.mp4` (DUR_ZH, 16:9). It has a scene the English edition
+- English edition: `out/s2e14-length-and-angle.mp4` (1:47, 16:9)
+- Chinese edition: `out/s2e14-zh-chang-du-yu-jiao-du.mp4` (1:40, 16:9). It has a scene the English edition
   doesn't: 《墨经》's definition of a circle, "圜，一中同长也": twelve equal
   spokes trace a circle, then trace an ellipse once the ruler changes.
 - Thumbnails: `thumbnails/png/S2E14-EN.png` and `S2E14-ZH.png` (16:9, for
