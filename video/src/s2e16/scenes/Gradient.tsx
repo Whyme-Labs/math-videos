@@ -47,18 +47,20 @@ export const Gradient: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("gradient");
-  const [c0, c1] = cues;
+  const [c0, c1, c2, c3, c4, c5] = cues;
   const flip =
-    frame < c1 + 40
+    frame < c3 + 10
       ? 0
-      : glide(frame, c1 + 40, fps, 30) -
-        glide(frame, c1 + 120, fps, 30) +
-        glide(frame, c1 + 170, fps, 30);
+      : glide(frame, c3 + 10, fps, 30) -
+        glide(frame, c4 + 20, fps, 30) +
+        glide(frame, c4 + 90, fps, 30) -
+        glide(frame, c5 + 20, fps, 30);
   const g = { x: lerp(4, 1, flip), y: 1 };
   const n = Math.hypot(g.x, g.y);
   const rise = glide(frame, c0 + 4, fps, 30);
-  const stack = fadeIn(frame, c0 + 30, 12);
-  const arrows = fadeIn(frame, c1 + 10, 10);
+  const stack = fadeIn(frame, c1 + 6, 12);
+  const arrows = fadeIn(frame, c2 + 10, 10);
+  const climbOp = fadeIn(frame, c4 + 6, 10);
   const azimuth = -0.95 + (frame - c0) * 0.002;
   const P0: V3 = [1, 2, 0];
   const Ps: V3 = [1, 2, K * rise * f(1, 2)];
@@ -68,11 +70,13 @@ export const Gradient: React.FC = () => {
   return (
     <SceneShell id="gradient">
       <Sfx name="riser" at={c0 + 4} volume={0.1} />
-      <Sfx name="pop" at={c0 + 30} volume={0.14} />
-      <Sfx name="pop" at={c1 + 10} volume={0.14} />
-      <Sfx name="whoosh" at={c1 + 40} volume={0.12} />
-      <Sfx name="whoosh" at={c1 + 120} volume={0.12} />
-      <Sfx name="whoosh" at={c1 + 170} volume={0.12} />
+      <Sfx name="pop" at={c1 + 6} volume={0.14} />
+      <Sfx name="pop" at={c2 + 10} volume={0.14} />
+      <Sfx name="whoosh" at={c3 + 10} volume={0.12} />
+      <Sfx name="pop" at={c4 + 6} volume={0.12} />
+      <Sfx name="whoosh" at={c4 + 20} volume={0.1} />
+      <Sfx name="whoosh" at={c4 + 90} volume={0.1} />
+      <Sfx name="whoosh" at={c5 + 20} volume={0.1} />
 
       <Stage3D
         azimuth={azimuth}
@@ -175,14 +179,14 @@ export const Gradient: React.FC = () => {
           to={[1 + H.x, 2 + H.y, 0.01]}
           color={colors.green}
           radius={0.025}
-          opacity={arrows}
+          opacity={climbOp}
         />
         <Arrow3
           from={Ps}
           to={[1 + H.x, 2 + H.y, Ps[2] + K * (4 * H.x + H.y)]}
           color={colors.green}
           radius={0.025}
-          opacity={arrows}
+          opacity={climbOp}
         />
       </Stage3D>
 
@@ -195,8 +199,8 @@ export const Gradient: React.FC = () => {
           fontSize: 64,
           fontWeight: 800,
           color: colors.orange,
-          opacity: fadeIn(frame, c0 + 30),
-          translate: riseIn(frame, c0 + 30, 14),
+          opacity: fadeIn(frame, c1 + 10),
+          translate: riseIn(frame, c1 + 10, 14),
         }}
       >
         df = (4, 1)
@@ -215,7 +219,7 @@ export const Gradient: React.FC = () => {
           fontSize: 40,
           fontWeight: 800,
           color: colors.primary,
-          opacity: fadeIn(frame, c1 + 10),
+          opacity: fadeIn(frame, c2 + 10),
         }}
       >
         {flip > 0.5 ? tx.otherRuler : tx.dotRuler}
@@ -233,8 +237,8 @@ export const Gradient: React.FC = () => {
           fontSize: 48,
           fontWeight: 800,
           color: colors.green,
-          opacity: fadeIn(frame, c1 + 60),
-          translate: riseIn(frame, c1 + 60, 12),
+          opacity: climbOp,
+          translate: riseIn(frame, c4 + 6, 12),
         }}
       >
         {tx.climb}: <span style={{ fontFamily: fonts.mono }}>1.5</span>

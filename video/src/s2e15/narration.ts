@@ -86,7 +86,7 @@ const EN: Record<SceneId, string[]> = {
     "Perpendicular eigen-axes, each with its own scale.",
   ],
   matrixLand: [
-    "Numbers come in three special kinds on the complex plane.",
+    "Three special kinds of numbers on the complex plane.",
     "Real numbers: the line. Hermitian matrices land here.",
     "Unit numbers: the circle. Unitary matrices live there.",
     "Positive numbers: the ray. Positive matrices.",

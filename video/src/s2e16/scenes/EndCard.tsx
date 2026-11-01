@@ -31,12 +31,12 @@ export const EndCard: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("endCard");
-  const [c0, c1] = cues;
-  const part1 = fadeOut(frame, c1, 10);
-  const link = glide(frame, c0 + 20, fps, 16);
+  const [c0, c1, c2] = cues;
+  const part1 = fadeIn(frame, c0 + 2, 8) * fadeOut(frame, c2, 10);
+  const link = glide(frame, c1 + 10, fps, 16);
   // the ruler keeps turning; the stack stays and the arrow follows the ruler
-  const sway = Math.sin(Math.max(0, frame - c0 - 40) * 0.05);
-  const fit = glide(frame, c1 + 20, fps, 40);
+  const sway = Math.sin(Math.max(0, frame - c1 - 30) * 0.05);
+  const fit = glide(frame, c2 + 20, fps, 40);
   // least-squares slope through the origin-centred cloud
   const best =
     PTS.reduce((s, [x, y]) => s + x * y, 0) /
@@ -48,9 +48,9 @@ export const EndCard: React.FC = () => {
 
   return (
     <SceneShell id="endCard" showWatermark={false}>
-      <Sfx name="clink" at={c0 + 20} volume={0.18} />
-      <Sfx name="whoosh" at={c1 + 20} volume={0.12} />
-      <Sfx name="sparkle" at={c1 + 60} volume={0.5} />
+      <Sfx name="clink" at={c1 + 10} volume={0.18} />
+      <Sfx name="whoosh" at={c2 + 20} volume={0.12} />
+      <Sfx name="sparkle" at={c2 + 60} volume={0.5} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
@@ -105,7 +105,7 @@ export const EndCard: React.FC = () => {
         </svg>
       </AbsoluteFill>
 
-      <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
+      <AbsoluteFill style={{ opacity: fadeIn(frame, c2 + 4, 10) }}>
         <svg width={1920} height={1080}>
           <line
             x1={scr(-4, -4 * m).x}
@@ -143,8 +143,8 @@ export const EndCard: React.FC = () => {
               fontSize: 52,
               color: colors.muted,
               maxWidth: 700,
-              opacity: fadeIn(frame, c1 + 70),
-              translate: riseIn(frame, c1 + 70),
+              opacity: fadeIn(frame, c2 + 70),
+              translate: riseIn(frame, c2 + 70),
             }}
           >
             {tx.nextEpisode}
@@ -152,7 +152,7 @@ export const EndCard: React.FC = () => {
           </div>
           <SignOff
             line={tx.seriesLine}
-            style={{ opacity: fadeIn(frame, c1 + 90) }}
+            style={{ opacity: fadeIn(frame, c2 + 90) }}
           />
         </AbsoluteFill>
       </AbsoluteFill>

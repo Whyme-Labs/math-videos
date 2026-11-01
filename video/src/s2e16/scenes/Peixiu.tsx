@@ -24,31 +24,31 @@ export const Peixiu: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("peixiu");
-  const [c0, c1, c2] = cues;
-  const squash = glide(frame, c1 + 40, fps, 30);
+  const [c0, c1, c2, c3] = cues;
+  const squash = glide(frame, c2 + 40, fps, 30);
   const wobble =
-    frame > c2
+    frame > c3
       ? 0.25 *
-        Math.sin((frame - c2 - 10) * 0.08) *
-        Math.min(1, (frame - c2) / 20)
+        Math.sin((frame - c3 - 10) * 0.08) *
+        Math.min(1, (frame - c3) / 20)
       : 0;
   const s = lerp(1, 0.6, squash) + wobble;
   const P = (x: number, y: number) => ({ x: M.x + x * U, y: M.y - y * U * s });
   const ang = (Math.acos((s * s - 1) / (s * s + 1)) * 180) / Math.PI;
   const right = Math.abs(ang - 90) < 1;
-  const partL = 1 - fadeIn(frame, c2, 10);
-  const partC = fadeIn(frame, c2 + 4, 10);
+  const partL = 1 - fadeIn(frame, c3, 10);
+  const partC = fadeIn(frame, c3 + 4, 10);
   const n = Math.hypot(1, 1 / s);
   const steep = { x: M.x + (230 * 1) / n, y: M.y - (230 * (1 / s)) / n };
 
   return (
     <SceneShell id="peixiu">
       {Array.from({ length: 6 }).map((_, k) => (
-        <Sfx key={k} name="tick" at={c0 + 20 + k * 8} volume={0.1} />
+        <Sfx key={k} name="tick" at={c1 + 6 + k * 8} volume={0.1} />
       ))}
-      <Sfx name="whoosh" at={c1 + 40} volume={0.12} />
-      <Sfx name="thud" at={c1 + 70} volume={0.24} />
-      <Sfx name="pop" at={c2 + 20} volume={0.14} />
+      <Sfx name="whoosh" at={c2 + 40} volume={0.12} />
+      <Sfx name="thud" at={c2 + 70} volume={0.24} />
+      <Sfx name="pop" at={c3 + 20} volume={0.14} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <rect
@@ -134,7 +134,7 @@ export const Peixiu: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 40,
+          top: 96,
           left: 120,
           fontFamily: fonts.title,
           fontSize: 52,
@@ -157,7 +157,7 @@ export const Peixiu: React.FC = () => {
         }}
       >
         {tx.six.map((w, k) => {
-          const hot = k < 2 && frame >= c1 + 10;
+          const hot = k < 2 && frame >= c2 + 10;
           return (
             <div
               key={k}
@@ -172,8 +172,8 @@ export const Peixiu: React.FC = () => {
                 color: hot ? colors.bg : colors.text,
                 background: hot ? colors.highlight : alpha(colors.bg, 0.8),
                 border: `4px solid ${hot ? colors.highlight : alpha(colors.paper, 0.4)}`,
-                opacity: fadeIn(frame, c0 + 20 + k * 8),
-                translate: riseIn(frame, c0 + 20 + k * 8, 12),
+                opacity: fadeIn(frame, c1 + 6 + k * 8),
+                translate: riseIn(frame, c1 + 6 + k * 8, 12),
               }}
             >
               {w}
@@ -189,7 +189,7 @@ export const Peixiu: React.FC = () => {
           fontSize: 52,
           fontWeight: 800,
           color: colors.green,
-          opacity: partC * fadeIn(frame, c2 + 20),
+          opacity: partC * fadeIn(frame, c3 + 20),
         }}
       >
         {tx.crossed}
@@ -202,7 +202,7 @@ export const Peixiu: React.FC = () => {
           fontSize: 48,
           fontWeight: 800,
           color: colors.highlight,
-          opacity: partC * fadeIn(frame, c2 + 30),
+          opacity: partC * fadeIn(frame, c3 + 30),
         }}
       >
         {tx.steepest}

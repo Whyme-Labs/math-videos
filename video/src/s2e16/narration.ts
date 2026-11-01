@@ -20,6 +20,7 @@ export type SceneId =
   | "choice"
   | "peixiu"
   | "gradient"
+  | "steepest"
   | "adjoint"
   | "delta"
   | "endCard";
@@ -27,13 +28,13 @@ export type SceneId =
 const EN: Record<SceneId, string[]> = {
   brand: [],
   coldOpen: [
-    "1907. Riesz in Hungary and Fréchet in Paris prove the same theorem.",
-    "It settles a hiker's question: which way is straight uphill?",
+    "1907: Riesz and Fréchet, apart, prove the same theorem.",
+    "A hiker's question: which way is straight uphill?",
     "Here's the hill. Its contour lines go on a map.",
     "On the map, uphill is perpendicular to the contours.",
     "Now squash the map north to south.",
     "The contours on the ground didn't move.",
-    "But 'perpendicular' on the squashed map is a new direction.",
+    "On the squashed map, 'perpendicular' points elsewhere.",
     "So which is real: the contours, or the arrow?",
   ],
   title: ["Season two, episode sixteen. Vectors and covectors."],
@@ -47,8 +48,10 @@ const EN: Record<SceneId, string[]> = {
   riesz: [
     "An inner product gives a pairing. Start from an arrow v.",
     "Measure any arrow by its overlap with v: that's a stack.",
-    "The sheets stand perpendicular to v. Longer v, denser sheets.",
+    "Sheets are perpendicular to v. Longer v, denser sheets.",
     "Riesz: every stack comes from exactly one arrow.",
+    "To build it, read the stack on each orthonormal arrow.",
+    "Use the readings as coordinates. That arrow is r.",
     "Why only one? Two arrows giving the same stack…",
     "…differ by an arrow perpendicular to itself. Length zero.",
   ],
@@ -63,10 +66,18 @@ const EN: Record<SceneId, string[]> = {
   gradient: [
     "Back to the hill: f = x²y. At P = (1, 2):",
     "df counts contours crossed. It's a stack: (4, 1).",
-    "With the dot product, its arrow is (4, 1): the textbook gradient.",
+    "With the dot product it's (4, 1): the textbook gradient.",
     "With G = diag(4, 1), the arrow is (1, 1).",
     "Steepest is a choice. The climb along a step is not.",
     "That's why gradient descent tunes its ruler.",
+  ],
+  steepest: [
+    "Why 'steepest'? Try every step of length 1.",
+    "With the dot product, length-1 steps fill a circle.",
+    "The climb is biggest where it touches the highest sheet.",
+    "That best step points along (4, 1).",
+    "Change the ruler: length-1 steps fill an ellipse.",
+    "Now the best step points along (1, 1).",
   ],
   adjoint: [
     "A map A carries V to W. Watch W's grid bend.",
@@ -93,7 +104,7 @@ const EN: Record<SceneId, string[]> = {
 const ZH: Record<SceneId, string[]> = {
   brand: [],
   coldOpen: [
-    "1907 年。匈牙利的里斯和巴黎的弗雷歇，证出同一个定理。",
+    "1907 年，里斯和弗雷歇各自证出同一个定理。",
     "它回答登山者的问题：哪边是笔直的上坡？",
     "这是一座山。等高线画到地图上。",
     "在地图上，上坡方向垂直于等高线。",
@@ -115,6 +126,8 @@ const ZH: Record<SceneId, string[]> = {
     "用和 v 的重叠量去量任何箭头：这就是一叠薄片。",
     "薄片垂直于 v。v 越长，薄片越密。",
     "里斯：每叠薄片都恰好来自一支箭头。",
+    "构造它：在每支标准正交箭头上读出薄片的值。",
+    "把读数当坐标，这支箭头就是 r。",
     "为什么只有一支？若两支箭头给出同一叠薄片……",
     "……它们的差垂直于自己。长度为零。",
   ],
@@ -139,6 +152,14 @@ const ZH: Record<SceneId, string[]> = {
     "用 G = diag(4, 1)，箭头是 (1, 1)。",
     "哪边最陡是一种选择；沿一步升高多少却不是。",
     "所以梯度下降要调它的尺子。",
+  ],
+  steepest: [
+    "为什么叫“最陡”？把长度为 1 的步子都试一遍。",
+    "用点积，长度为 1 的步子铺成一个圆。",
+    "升高最多的那一步，碰到最高的那张薄片。",
+    "这最好的一步指向 (4, 1)。",
+    "换一把尺：长度为 1 的步子铺成椭圆。",
+    "现在最好的一步指向 (1, 1)。",
   ],
   adjoint: [
     "映射 A 把 V 送到 W。看 W 的网格弯过去。",
@@ -171,14 +192,15 @@ export const NARRATION: Record<Locale, Record<SceneId, string[]>> = {
 // (scene id → line index → seconds). Values come from the scenes' frame offsets.
 const MIN_SECONDS: Partial<Record<SceneId, Record<number, number>>> = {
   title: { 0: 2.8 },
-  coldOpen: { 0: 4.5, 1: 3.5, 2: 5, 3: 4.5, 4: 4.5, 5: 3.5, 6: 5, 7: 4 },
+  coldOpen: { 0: 4.5, 1: 3.5, 2: 6, 3: 4.5, 4: 4.5, 5: 3.5, 6: 5.5, 7: 4 },
   twoKinds: { 0: 4, 1: 5, 2: 4.5, 3: 5, 4: 3.5 },
-  riesz: { 0: 3.5, 1: 4.5, 2: 5.5, 3: 5, 4: 4, 5: 5 },
+  riesz: { 0: 3.5, 1: 4.5, 2: 5.5, 3: 5, 4: 5, 5: 5, 6: 4, 7: 5 },
   choice: { 0: 3.5, 1: 4, 2: 5, 3: 4.5, 4: 4 },
   peixiu: { 0: 4, 1: 4.5, 2: 5, 3: 5 },
   gradient: { 0: 5, 1: 4.5, 2: 4.5, 3: 4.5, 4: 6, 5: 4 },
-  adjoint: { 0: 4.5, 1: 5, 2: 5, 3: 4, 4: 5, 5: 5 },
-  delta: { 0: 4, 1: 4.5, 2: 5, 3: 5, 4: 4.5 },
+  steepest: { 0: 4, 1: 4.5, 2: 5.5, 3: 4, 4: 5, 5: 5 },
+  adjoint: { 0: 4.5, 1: 5.5, 2: 5.5, 3: 4, 4: 5, 5: 5.5 },
+  delta: { 0: 4.5, 1: 5, 2: 5.5, 3: 6, 4: 5 },
   endCard: { 0: 4, 1: 4.5, 2: 5 },
 };
 
@@ -194,6 +216,7 @@ export const sceneOrder: SceneId[] = [
   "choice",
   "peixiu",
   "gradient",
+  "steepest",
   "adjoint",
   "delta",
   "endCard",

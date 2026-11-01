@@ -1,6 +1,6 @@
 import type React from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
-import { fadeIn, riseIn } from "../../shared/components/anim";
+import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
@@ -13,6 +13,7 @@ import {
   lerpMat,
   linear,
 } from "../../shared/components/Plane";
+import { Eq } from "../../shared/components/Eq";
 import { useStrings } from "../i18n";
 
 // The adjoint as a round trip. Two planes, V on the left and W on the
@@ -22,6 +23,8 @@ import { useStrings } from "../i18n";
 // ruler turns into an arrow. Then a card: with the dot product that round
 // trip is the transpose [1 0; 2 1]; with the ruler G = diag(1, 4) on both
 // sides it's G⁻¹AᵀG = [1 0; 0.5 1], and the arrow on V swings to match.
+// Last the check with v = (0, 1), w = (1, 0) in that ruler: ⟨Av, w⟩ = 2 =
+// ⟨v, A*w⟩, while the plain transpose would give 8 (c5).
 
 const V = { x: 520, y: 400 };
 const W = { x: 1400, y: 400 };
@@ -38,8 +41,8 @@ export const Adjoint: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("adjoint");
-  const [c0, c1] = cues;
-  const ruler = glide(frame, c1 + 50, fps, 30);
+  const [c0, c1, c2, c3, c4, c5] = cues;
+  const ruler = glide(frame, c4 + 10, fps, 30);
   const arr = { x: PB.a, y: lerp(PB.b, PB.b / 4, ruler) };
   const K = 1.4;
   // first A itself: W's grid bends from square to A's grid, carrying a
@@ -51,12 +54,12 @@ export const Adjoint: React.FC = () => {
   return (
     <SceneShell id="adjoint">
       <Sfx name="whoosh" at={c0 + 6} volume={0.12} />
-      <Sfx name="pop" at={c0 + 50} volume={0.14} />
-      <Sfx name="whoosh" at={c0 + 80} volume={0.12} />
-      <Sfx name="pop" at={c0 + 96} volume={0.14} />
-      <Sfx name="chime" at={c0 + 130} volume={0.35} />
-      <Sfx name="pop" at={c1 + 10} volume={0.14} />
-      <Sfx name="whoosh" at={c1 + 50} volume={0.12} />
+      <Sfx name="pop" at={c1 + 6} volume={0.14} />
+      <Sfx name="whoosh" at={c1 + 30} volume={0.12} />
+      <Sfx name="pop" at={c1 + 50} volume={0.14} />
+      <Sfx name="chime" at={c2 + 6} volume={0.35} />
+      <Sfx name="pop" at={c3 + 6} volume={0.14} />
+      <Sfx name="whoosh" at={c4 + 10} volume={0.12} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <defs>
@@ -122,7 +125,7 @@ export const Adjoint: React.FC = () => {
         <g clipPath="url(#e16W)">
           <Plane map={linear(Am)} scr={sW} range={6} />
         </g>
-        <g opacity={fadeIn(frame, c0 + 6) * (1 - fadeIn(frame, c0 + 50))}>
+        <g opacity={fadeIn(frame, c0 + 6) * (1 - fadeIn(frame, c1 + 6))}>
           <Arrow from={V} to={sV(1, 0.5)} width={12} color={colors.highlight} />
           <Arrow
             from={W}
@@ -131,10 +134,10 @@ export const Adjoint: React.FC = () => {
             color={colors.highlight}
           />
         </g>
-        <g clipPath="url(#e16W)" opacity={fadeIn(frame, c0 + 50)}>
+        <g clipPath="url(#e16W)" opacity={fadeIn(frame, c1 + 6)}>
           <Stack a={BETA.a} b={BETA.b} scr={sW} range={6} />
         </g>
-        <g opacity={fadeIn(frame, c0 + 80)}>
+        <g opacity={fadeIn(frame, c1 + 30)}>
           <path
             d="M 1120 540 Q 960 610 810 540"
             fill="none"
@@ -154,10 +157,10 @@ export const Adjoint: React.FC = () => {
             {tx.pullBack}
           </text>
         </g>
-        <g clipPath="url(#e16V)" opacity={fadeIn(frame, c0 + 96)}>
+        <g clipPath="url(#e16V)" opacity={fadeIn(frame, c1 + 50)}>
           <Stack a={PB.a} b={PB.b} scr={sV} range={10} opacity={0.8} />
         </g>
-        <g opacity={fadeIn(frame, c0 + 130)}>
+        <g opacity={fadeIn(frame, c2 + 6)}>
           <Arrow from={V} to={sV(arr.x * K, arr.y * K)} width={16} />
         </g>
       </svg>
@@ -169,8 +172,8 @@ export const Adjoint: React.FC = () => {
           fontSize: 40,
           fontWeight: 800,
           color: colors.primary,
-          opacity: fadeIn(frame, c0 + 130),
-          translate: riseIn(frame, c0 + 130, 12),
+          opacity: fadeIn(frame, c2 + 6) * fadeOut(frame, c5, 8),
+          translate: riseIn(frame, c2 + 6, 12),
         }}
       >
         {tx.toArrow}
@@ -184,8 +187,8 @@ export const Adjoint: React.FC = () => {
           display: "flex",
           alignItems: "center",
           gap: 24,
-          opacity: fadeIn(frame, c1 + 10),
-          translate: riseIn(frame, c1 + 10, 12),
+          opacity: fadeIn(frame, c3 + 6),
+          translate: riseIn(frame, c3 + 6, 12),
         }}
       >
         <div
@@ -197,7 +200,7 @@ export const Adjoint: React.FC = () => {
             textAlign: "right",
           }}
         >
-          {ruler > 0.5 ? tx.otherRuler : tx.transpose}
+          {ruler > 0.5 ? tx.adjointRuler : tx.transpose}
         </div>
         <div
           style={{
@@ -227,6 +230,36 @@ export const Adjoint: React.FC = () => {
             </span>
           ))}
         </div>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: fadeIn(frame, c5 + 4),
+        }}
+      >
+        <Eq
+          steps={[
+            [{ id: "l", t: "⟨Av, w⟩ = 2" }],
+            [
+              { id: "l", t: "⟨Av, w⟩ = 2" },
+              { id: "s", t: "   " },
+              { id: "r", t: "⟨v, A*w⟩ = 2 ✓", color: colors.green },
+            ],
+            [
+              { id: "l", t: "⟨Av, w⟩ = 2" },
+              { id: "s", t: "   " },
+              { id: "r", t: "⟨v, A*w⟩ = 2 ✓", color: colors.green },
+              { id: "s2", t: "   " },
+              { id: "t", t: "⟨v, Aᵀw⟩ = 8 ✗", color: colors.red },
+            ],
+          ]}
+          at={[c5 + 6, c5 + 40, c5 + 80]}
+          x={960}
+          y={60}
+          size={46}
+          family={fonts.body}
+        />
       </div>
     </SceneShell>
   );

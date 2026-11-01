@@ -19,6 +19,7 @@ const EN = {
   pairing: "pairing from a basis",
   // Riesz
   rieszThm: "one arrow ↔ one stack",
+  forAll: " for all u",
   // Choice
   rowsCols: "row ≠ column unless G = I",
   // 裴秀 (Chinese edition only; kept for type parity)
@@ -34,6 +35,7 @@ const EN = {
   pullBack: "pull back",
   toArrow: "turn into an arrow",
   transpose: "transpose",
+  adjointRuler: "G = diag(1, 4)",
   // Delta
   valueAt0: "p ↦ p(0)",
   degree: "degree",
@@ -61,6 +63,7 @@ const ZH: Strings = {
   count: "穿过的薄片",
   pairing: "由一组基配对",
   rieszThm: "一支箭头 ↔ 一叠薄片",
+  forAll: "，对所有 u",
   rowsCols: "除非 G = I，行 ≠ 列",
   peixiu: "裴秀 · 制图六体",
   six: ["分率", "准望", "道里", "高下", "方邪", "迂直"],
@@ -72,6 +75,7 @@ const ZH: Strings = {
   pullBack: "拉回",
   toArrow: "变成箭头",
   transpose: "转置",
+  adjointRuler: "G = diag(1, 4)",
   valueAt0: "p ↦ p(0)",
   degree: "次数",
   length: "长度",

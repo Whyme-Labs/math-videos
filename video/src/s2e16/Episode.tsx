@@ -4,11 +4,14 @@ import { S2E16, type SceneId } from "./narration";
 import { Adjoint } from "./scenes/Adjoint";
 import { Choice } from "./scenes/Choice";
 import { ColdOpen } from "./scenes/ColdOpen";
+import { Delta } from "./scenes/Delta";
 import { EndCard } from "./scenes/EndCard";
 import { Gradient } from "./scenes/Gradient";
 import { Peixiu } from "./scenes/Peixiu";
 import { Riesz } from "./scenes/Riesz";
+import { Steepest } from "./scenes/Steepest";
 import { TitleCard } from "./scenes/TitleCard";
+import { TwoKinds } from "./scenes/TwoKinds";
 
 // S2E16 "Vectors and Covectors". Scene lengths come from the narration (narration.ts), so
 // the script and the picture stay in sync.
@@ -22,11 +25,17 @@ const SCENES: SceneEntry<SceneId>[] = [
   {
     id: "coldOpen",
     key: "ColdOpen",
-    name: "Cold open: 1907",
+    name: "Cold open: the hiker's squashed map",
     component: ColdOpen,
   },
   { id: "title", key: "Title", name: "Title", component: TitleCard },
-  { id: "riesz", key: "Riesz", name: "Arrows become stacks", component: Riesz },
+  {
+    id: "twoKinds",
+    key: "TwoKinds",
+    name: "Arrows and stacks",
+    component: TwoKinds,
+  },
+  { id: "riesz", key: "Riesz", name: "The Riesz theorem", component: Riesz },
   {
     id: "choice",
     key: "Choice",
@@ -45,7 +54,14 @@ const SCENES: SceneEntry<SceneId>[] = [
     name: "The gradient needs a ruler",
     component: Gradient,
   },
+  {
+    id: "steepest",
+    key: "Steepest",
+    name: "Why steepest depends on the ruler",
+    component: Steepest,
+  },
   { id: "adjoint", key: "Adjoint", name: "The adjoint", component: Adjoint },
+  { id: "delta", key: "Delta", name: "Where Riesz runs out", component: Delta },
   { id: "endCard", key: "EndCard", name: "End card", component: EndCard },
 ];
 
