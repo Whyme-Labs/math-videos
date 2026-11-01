@@ -10,7 +10,8 @@ import { Arrow } from "../../s2e01/components/vec";
 import { useStrings } from "../i18n";
 
 // Recap: a stack on the left, an arrow on the right, and between them a
-// ruler (an ellipse) with green links snapping to both sides. Teaser for
+// ruler (an ellipse) with green links snapping to both sides. The ruler
+// turns back and forth; the stack stays put and the arrow swings with it. Teaser for
 // projection: a cloud of points and a line that turns until it settles as
 // the best fit, with dashed drops from each point to the line.
 
@@ -33,6 +34,8 @@ export const EndCard: React.FC = () => {
   const [c0, c1] = cues;
   const part1 = fadeOut(frame, c1, 10);
   const link = glide(frame, c0 + 20, fps, 16);
+  // the ruler keeps turning; the stack stays and the arrow follows the ruler
+  const sway = Math.sin(Math.max(0, frame - c0 - 40) * 0.05);
   const fit = glide(frame, c1 + 20, fps, 40);
   // least-squares slope through the origin-centred cloud
   const best =
@@ -71,11 +74,14 @@ export const EndCard: React.FC = () => {
             fill={alpha(colors.primary, 0.1)}
             stroke={colors.primary}
             strokeWidth={6}
-            transform="rotate(-20 960 470)"
+            transform={`rotate(${-20 + 30 * sway} 960 470)`}
           />
           <Arrow
             from={{ x: 1340, y: 470 }}
-            to={{ x: 1620, y: 470 }}
+            to={{
+              x: 1340 + 280 * Math.cos(0.4 * sway),
+              y: 470 - 280 * Math.sin(0.4 * sway),
+            }}
             width={18}
           />
           <line

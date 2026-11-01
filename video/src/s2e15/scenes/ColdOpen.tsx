@@ -10,8 +10,8 @@ import { useStrings } from "../i18n";
 
 // The story. Berlin, 1932: von Neumann beside his book, a state vector with
 // complex entries floating over it. Then the test: the dot product of
-// (1, i) with itself is typed out and a length² gauge, which should show a
-// healthy positive bar, collapses to 0 with a thud. (1, 2i) sends the bar
+// (1, i) with itself is typed out and a length² gauge adds the terms: 1·1
+// lifts it to 1, i·i pulls it back to 0 with a thud. (1, 2i) sends the bar
 // below zero to −3, in red. Last, a small orange bar hovers over the
 // first i: the fix, still unexplained.
 
@@ -22,10 +22,13 @@ export const ColdOpen: React.FC = () => {
   const cues = useCues("coldOpen");
   const [c0, c1, c2, c3] = cues;
   const part1 = fadeOut(frame, c1, 10);
-  // the gauge value: hoped-for 2, falls to 0, then −3
+  // the gauge adds the terms as they're typed: 1·1 lifts it to 1, i·i
+  // takes 1 away and it lands on 0; then 1·1 again and 2i·2i takes 4: −3
+  const up1 = glide(frame, c1 + 28, fps, 12);
   const fall = glide(frame, c1 + 70, fps, 14);
+  const up2 = glide(frame, c2 + 12, fps, 12);
   const neg = glide(frame, c2 + 30, fps, 20);
-  const val = lerp(lerp(2, 0, fall), -3, neg);
+  const val = up1 - fall + up2 - 4 * neg;
   const two = frame >= c2 + 10;
   const G = { x: 1500, y: 470 };
   const U = 80;
@@ -41,7 +44,9 @@ export const ColdOpen: React.FC = () => {
       {Array.from({ length: 6 }).map((_, k) => (
         <Sfx key={k} name="tick" at={c1 + 20 + k * 7} volume={0.1} />
       ))}
+      <Sfx name="pop" at={c1 + 28} volume={0.12} />
       <Sfx name="thud" at={c1 + 70} volume={0.3} />
+      <Sfx name="pop" at={c2 + 12} volume={0.12} />
       <Sfx name="scratch" at={c2 + 30} volume={0.22} />
       <Sfx name="riser" at={c3 + 10} volume={0.12} />
       <Sfx name="pop" at={c3 + 30} volume={0.14} />

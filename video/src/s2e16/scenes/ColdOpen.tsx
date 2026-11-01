@@ -11,7 +11,8 @@ import { Person } from "../../s1e14/components/study";
 import { useStrings } from "../i18n";
 
 // The story. 1907: Riesz on the left, Fréchet on the right, each pushing a
-// paper to the middle where the two land on top of each other. Then a
+// paper to the middle where the two land on top of each other, both
+// filling with the same lines. Then a
 // hillside: contour lines of x + y as an orange stack, a hiker dot, and
 // the uphill arrow (1, 1) at right angles to them. A squashed map (inset)
 // has its own perpendicular, (1, 2) on the map, which is (1, 4) on the
@@ -114,7 +115,11 @@ export const ColdOpen: React.FC = () => {
                     key={j}
                     x1={-110}
                     y1={-140 + j * 44}
-                    x2={j % 3 === 2 ? 40 : 110}
+                    x2={lerp(
+                      -110,
+                      j % 3 === 2 ? 40 : 110,
+                      glide(frame, c0 + 40 + j * 12 + k * 4, fps, 10),
+                    )}
                     y2={-140 + j * 44}
                     stroke={alpha(colors.ink, 0.35)}
                     strokeWidth={6}
