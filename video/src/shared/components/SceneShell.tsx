@@ -28,6 +28,7 @@ export const SceneShell: React.FC<{
   const episode = useEpisode();
   const { start, starts, durationInFrames } = episode.sceneTiming(id, locale);
   const lines = episode.narration[locale][id];
+  const large = episode.captions === "large";
   // Lights breathe gently with the bar (no per-beat flashing: it read as flicker).
   const swell = episode.grid.stageSwell((start + frame) / fps);
   let current = 0;
@@ -102,11 +103,12 @@ export const SceneShell: React.FC<{
               backgroundColor: alpha(colors.bg, 0.72),
               border: `1px solid ${alpha(colors.primary, 0.35)}`,
               borderRadius: 16,
-              padding: "18px 32px",
-              fontSize: 38,
-              lineHeight: 1.35,
+              padding: large ? "16px 40px" : "18px 32px",
+              fontSize: large ? 54 : 38,
+              fontWeight: large ? 600 : undefined,
+              lineHeight: large ? 1.25 : 1.35,
               textAlign: "center",
-              maxWidth: 1500,
+              maxWidth: large ? 1600 : 1500,
             }}
           >
             {lines[current]}

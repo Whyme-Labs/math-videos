@@ -9,8 +9,9 @@ import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
 import { useStrings } from "../i18n";
 
-// Recap: a unit circle with two perpendicular arrows, a right-angle mark
-// and the dashed hypotenuse, a slow turn so the pair keeps its right angle.
+// Recap (c0): a unit circle with two perpendicular arrows, a right-angle mark
+// and the dashed hypotenuse, a slow turn so the pair keeps its right angle;
+// Pythagoras lands above it (c1, Euclid for free).
 // Teaser for unitary spaces: the length² of (1, i) by the old rule,
 // 1·1 + i·i = 0 in red; then a bar lands over the first i and the 0 flips
 // to a green 2.
@@ -20,8 +21,8 @@ export const EndCard: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("endCard");
-  const [c0, c1] = cues;
-  const part1 = fadeOut(frame, c1, 10);
+  const [c0, c1, c2] = cues;
+  const part1 = fadeOut(frame, c2, 10);
   const th = 0.3 + (frame - c0) * 0.008;
   const O = { x: 960, y: 470 };
   const R = 260;
@@ -32,15 +33,16 @@ export const EndCard: React.FC = () => {
     x: O.x + ((a.x - O.x) / R) * m,
     y: O.y + ((a.y - O.y) / R) * m,
   });
-  const bar = glide(frame, c1 + 60, fps, 14);
+  const bar = glide(frame, c2 + 60, fps, 14);
   const fixed = bar > 0.9;
 
   return (
     <SceneShell id="endCard" showWatermark={false}>
       <Sfx name="pop" at={c0 + 10} volume={0.14} />
-      <Sfx name="thud" at={c1 + 30} volume={0.24} />
-      <Sfx name="sparkle" at={c1 + 66} />
+      <Sfx name="thud" at={c2 + 30} volume={0.24} />
+      <Sfx name="sparkle" at={c2 + 66} />
 
+      <Sfx name="pop" at={c1 + 10} volume={0.12} />
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
           <circle
@@ -72,7 +74,24 @@ export const EndCard: React.FC = () => {
         </svg>
       </AbsoluteFill>
 
-      <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
+      <div
+        style={{
+          position: "absolute",
+          top: 70,
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          fontFamily: fonts.math,
+          fontSize: 64,
+          fontWeight: 800,
+          color: colors.green,
+          opacity: fadeIn(frame, c1 + 10) * part1,
+          translate: riseIn(frame, c1 + 10, 12),
+        }}
+      >
+        ‖u + v‖² = ‖u‖² + ‖v‖²
+      </div>
+      <AbsoluteFill style={{ opacity: fadeIn(frame, c2 + 4, 10) }}>
         <div
           style={{
             position: "absolute",
@@ -84,8 +103,8 @@ export const EndCard: React.FC = () => {
             fontSize: 110,
             fontWeight: 800,
             color: colors.text,
-            opacity: fadeIn(frame, c1 + 20),
-            translate: riseIn(frame, c1 + 20, 16),
+            opacity: fadeIn(frame, c2 + 20),
+            translate: riseIn(frame, c2 + 20, 16),
           }}
         >
           1·1 +{" "}
@@ -118,8 +137,8 @@ export const EndCard: React.FC = () => {
               fontSize: 52,
               color: colors.muted,
               maxWidth: 900,
-              opacity: fadeIn(frame, c1 + 90),
-              translate: riseIn(frame, c1 + 90),
+              opacity: fadeIn(frame, c2 + 90),
+              translate: riseIn(frame, c2 + 90),
             }}
           >
             {tx.nextEpisode}
@@ -127,7 +146,7 @@ export const EndCard: React.FC = () => {
           </div>
           <SignOff
             line={tx.seriesLine}
-            style={{ opacity: fadeIn(frame, c1 + 110) }}
+            style={{ opacity: fadeIn(frame, c2 + 110) }}
           />
         </AbsoluteFill>
       </AbsoluteFill>

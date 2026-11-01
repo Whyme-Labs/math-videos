@@ -74,15 +74,24 @@ export const Eq: React.FC<{
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   // measure only once the fonts are in: a width taken from the fallback
-  // font would be cached and the whole row laid out wrong for good
+  // font would be cached and the whole row laid out wrong for good.
+  // fonts.ready alone isn't enough (it can resolve before a face has even
+  // started loading), so load this exact font for these exact characters.
   const [handle] = useState(() => delayRender("Eq: waiting for fonts"));
   const [ready, setReady] = useState(false);
+  const sample = steps
+    .flat()
+    .map((k) => k.t)
+    .join("");
   useEffect(() => {
-    document.fonts.ready.then(() => {
-      setReady(true);
-      continueRender(handle);
-    });
-  }, [handle]);
+    document.fonts
+      .load(`${WEIGHT} ${size}px ${family}`, sample)
+      .then(() => document.fonts.ready)
+      .then(() => {
+        setReady(true);
+        continueRender(handle);
+      });
+  }, [handle, size, family, sample]);
   if (!ready) return null;
   const s = Math.max(0, at.filter((a) => frame >= a).length - 1);
   const cur = layout(steps[s], size, family);

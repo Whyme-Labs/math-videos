@@ -21,10 +21,10 @@ export const Mojing: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("mojing");
-  const [c0, c1, c2] = cues;
-  const sweep = Math.min(1, Math.max(0, (frame - c0 - 20) / 50));
-  const ruler = glide(frame, c1 + 20, fps, 40);
-  const ghost = fadeIn(frame, c2 + 10, 10);
+  const [c0, c1, c2, c3] = cues;
+  const sweep = Math.min(1, Math.max(0, (frame - c1 - 10) / 50));
+  const ruler = glide(frame, c2 + 20, fps, 40);
+  const ghost = fadeIn(frame, c3 + 10, 10);
   // the new ruler: unit length means (x/1.5)² + (y/0.75)² = 1, tilted 25°
   const rx = lerp(R, R * 1.5, ruler);
   const ry = lerp(R, R * 0.7, ruler);
@@ -36,12 +36,12 @@ export const Mojing: React.FC = () => {
         <Sfx
           key={k}
           name="tick"
-          at={c0 + 20 + Math.round((k / 12) * 50)}
+          at={c1 + 10 + Math.round((k / 12) * 50)}
           volume={0.1}
         />
       ))}
-      <Sfx name="whoosh" at={c1 + 20} volume={0.12} />
-      <Sfx name="chime" at={c2 + 20} />
+      <Sfx name="whoosh" at={c2 + 20} volume={0.12} />
+      <Sfx name="chime" at={c3 + 20} volume={0.35} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
         <circle
@@ -92,7 +92,7 @@ export const Mojing: React.FC = () => {
         {/* the ruler */}
         <g
           transform={`translate(1500 ${lerp(820, 560, ruler)})`}
-          opacity={fadeIn(frame, c1 + 10, 10)}
+          opacity={fadeIn(frame, c2 + 10, 10)}
         >
           <rect
             x={-200}
@@ -129,7 +129,7 @@ export const Mojing: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 40,
+          top: 96,
           left: 120,
           fontFamily: fonts.title,
           fontSize: 52,

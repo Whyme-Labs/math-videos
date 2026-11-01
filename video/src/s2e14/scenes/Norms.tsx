@@ -6,16 +6,19 @@ import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import { Eq } from "../../shared/components/Eq";
 import { useStrings } from "../i18n";
 
-// The payoff. Part 1: one unit circle |x|^p + |y|^p = 1 morphing from the
-// taxi diamond (p = 1) to the round circle (p = 2) to the max square
-// (p → ∞), each named as it forms. Part 2: the parallelogram law as a
-// balance. On the left the unit square's sides (lemon) and diagonals
-// (orange) inside the current unit ball; on the right a beam with two orange
-// blocks (the squared diagonals) against four lemon ones (twice the
-// squared sides). p sweeps through every ruler and the beam only sits level
-// at p = 2, where it settles with a ding.
+// Rulers without protractors. Part 1: one unit circle |x|^p + |y|^p = 1,
+// round (c0), morphing to the taxi diamond (c1) and the chessboard square
+// (c2), each named. Part 2, taxi Pythagoras (c3–c4): a unit square on a
+// street grid; a taxi drives along the two sides, its odometer reaching
+// 2, while the straight diagonal is drawn dashed; then the Pythagoras
+// check 1² + 1² = 2 ≠ 4 = 2² works itself out and the diagonal turns red.
+// Part 3, the parallelogram law as a balance (c5–c7): the unit square's
+// sides (lemon) and diagonals (orange) inside the current unit ball; two
+// orange blocks (diagonals²) against four lemon ones (2 × sides²); p
+// sweeps through every ruler and the beam only sits level at p = 2.
 
 const ball = (q: number, cx: number, cy: number, r: number) =>
   Array.from({ length: 145 }, (_, i) => {
@@ -34,33 +37,43 @@ export const Norms: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("norms");
-  const [c0, c1] = cues;
+  const [c0, c1, c2, c3, c4, c5, c6, c7] = cues;
 
-  // part 1: q = 1/p
+  // part 1: q = 1/p, round → diamond → square
   const q1 = lerp(
-    lerp(1, 0.5, glide(frame, c0 + 60, fps, 30)),
+    lerp(0.5, 1, glide(frame, c1 + 6, fps, 30)),
     Q_INF,
-    glide(frame, c0 + 130, fps, 30),
+    glide(frame, c2 + 6, fps, 30),
   );
+  const part1 = fadeOut(frame, c3, 10);
   const named = [
-    { at: c0 + 20, until: c0 + 60, label: tx.taxi },
-    { at: c0 + 90, until: c0 + 130, label: tx.round },
-    { at: c0 + 160, until: c1, label: tx.max },
+    { at: c0 + 6, label: tx.round, color: colors.green },
+    { at: c1 + 20, label: tx.taxi, color: colors.primary },
+    { at: c2 + 20, label: tx.chess, color: colors.primary },
   ];
-  const part1 = fadeOut(frame, c1, 10);
 
-  // part 2: p sweeps 1 → ∞, then settles at 2
+  // part 2: the taxi drive
+  const part2 = fadeIn(frame, c3 + 4, 10) * fadeOut(frame, c5, 10);
+  const drive = glide(frame, c3 + 16, fps, 60);
+  const T = { x: 520, y: 640 };
+  const L = 320;
+  const car =
+    drive < 0.5
+      ? { x: T.x + 2 * drive * L, y: T.y }
+      : { x: T.x + L, y: T.y - (2 * drive - 1) * L };
+  const odo = 2 * drive;
+
+  // part 3: the balance, p sweeping 1 → ∞, then settling at 2
+  const part3 = fadeIn(frame, c5 + 4, 10);
   const q2 = lerp(
-    lerp(1, Q_INF, glide(frame, c1 + 30, fps, 70)),
+    lerp(1, Q_INF, glide(frame, c6 + 6, fps, 90)),
     0.5,
-    glide(frame, c1 + 110, fps, 40),
+    glide(frame, c7 + 4, fps, 40),
   );
   const p = 1 / q2;
-  const diag2 = 2 ** (2 * q2); // ‖e₁ ± e₂‖² for the p-norm
-  const left = 2 * diag2;
-  const right = 4;
-  const tilt = Math.max(-14, Math.min(14, (left - right) * 5));
-  const level = Math.abs(left - right) < 0.05;
+  const diag2 = 2 ** (2 * q2);
+  const tilt = Math.max(-14, Math.min(14, (2 * diag2 - 4) * 5));
+  const level = Math.abs(2 * diag2 - 4) < 0.05;
   const H = 34;
   const O = { x: 440, y: 560 };
   const R = 220;
@@ -68,44 +81,47 @@ export const Norms: React.FC = () => {
 
   return (
     <SceneShell id="norms">
-      <Sfx name="pop" at={c0 + 20} volume={0.14} />
-      <Sfx name="pop" at={c0 + 90} volume={0.14} />
-      <Sfx name="pop" at={c0 + 160} volume={0.14} />
-      <Sfx name="whoosh" at={c1 + 30} volume={0.12} />
-      <Sfx name="ding" at={c1 + 150} />
+      <Sfx name="whoosh" at={c1 + 6} volume={0.1} />
+      <Sfx name="whoosh" at={c2 + 6} volume={0.1} />
+      <Sfx name="riser" at={c3 + 16} volume={0.08} />
+      <Sfx name="pop" at={c3 + 76} volume={0.14} />
+      <Sfx name="thud" at={c4 + 30} volume={0.22} />
+      <Sfx name="pop" at={c5 + 10} volume={0.12} />
+      <Sfx name="whoosh" at={c6 + 6} volume={0.1} />
+      <Sfx name="ding" at={c7 + 44} volume={0.4} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
-          {[1, 0.5, Q_INF].map((q, i) => (
+          {[0.5, 1, Q_INF].map((q, i) => (
             <path
               key={i}
-              d={ball(q, 960, 470, 300)}
+              d={ball(q, 760, 450, 300)}
               fill="none"
               stroke={alpha(colors.paper, 0.18)}
               strokeWidth={3}
               strokeDasharray="10 10"
-              opacity={fadeIn(frame, named[i].until)}
+              opacity={fadeIn(frame, named[i].at + 20)}
             />
           ))}
           <path
-            d={ball(q1, 960, 470, 300)}
+            d={ball(q1, 760, 450, 300)}
             fill={alpha(colors.primary, 0.12)}
             stroke={colors.primary}
             strokeWidth={8}
           />
           <line
-            x1={600}
-            y1={470}
-            x2={1320}
-            y2={470}
+            x1={400}
+            y1={450}
+            x2={1120}
+            y2={450}
             stroke={alpha(colors.paper, 0.3)}
             strokeWidth={2}
           />
           <line
-            x1={960}
-            y1={110}
-            x2={960}
-            y2={830}
+            x1={760}
+            y1={90}
+            x2={760}
+            y2={810}
             stroke={alpha(colors.paper, 0.3)}
             strokeWidth={2}
           />
@@ -116,10 +132,10 @@ export const Norms: React.FC = () => {
             style={{
               position: "absolute",
               top: 200 + i * 130,
-              left: 1400,
+              left: 1360,
               fontSize: 60,
               fontWeight: 800,
-              color: frame < n.until || i === 2 ? colors.primary : colors.muted,
+              color: n.color,
               opacity: fadeIn(frame, n.at),
               translate: riseIn(frame, n.at, 14),
             }}
@@ -129,9 +145,128 @@ export const Norms: React.FC = () => {
         ))}
       </AbsoluteFill>
 
-      <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
+      <AbsoluteFill style={{ opacity: part2 }}>
         <svg width={1920} height={1080}>
-          {/* the unit ball and the unit square's sides and diagonals */}
+          {Array.from({ length: 7 }).map((_, k) => (
+            <g key={k} stroke={alpha(colors.paper, 0.14)} strokeWidth={2}>
+              <line
+                x1={T.x - L + k * (L / 2)}
+                y1={T.y + L / 2}
+                x2={T.x - L + k * (L / 2)}
+                y2={T.y - 1.5 * L}
+              />
+              <line
+                x1={T.x - L}
+                y1={T.y + L / 2 - k * (L / 2)}
+                x2={T.x + 2 * L}
+                y2={T.y + L / 2 - k * (L / 2)}
+              />
+            </g>
+          ))}
+          <rect
+            x={T.x}
+            y={T.y - L}
+            width={L}
+            height={L}
+            fill={alpha(colors.primary, 0.08)}
+            stroke={alpha(colors.primary, 0.5)}
+            strokeWidth={4}
+          />
+          <line
+            x1={T.x}
+            y1={T.y}
+            x2={T.x + L}
+            y2={T.y - L}
+            stroke={fadeIn(frame, c4 + 30) > 0.5 ? colors.red : colors.paper}
+            strokeWidth={6}
+            strokeDasharray="14 10"
+          />
+          <path
+            d={`M ${T.x} ${T.y} L ${drive < 0.5 ? car.x : T.x + L} ${T.y} ${drive >= 0.5 ? `L ${car.x} ${car.y}` : ""}`}
+            fill="none"
+            stroke={colors.orange}
+            strokeWidth={10}
+            strokeLinecap="round"
+          />
+          <rect
+            x={car.x - 22}
+            y={car.y - 14}
+            width={44}
+            height={28}
+            rx={8}
+            fill={colors.highlight}
+          />
+          <text
+            x={T.x + L / 2}
+            y={T.y + 56}
+            fill={colors.muted}
+            fontSize={42}
+            textAnchor="middle"
+            fontFamily={fonts.mono}
+          >
+            1
+          </text>
+          <text
+            x={T.x + L + 30}
+            y={T.y - L / 2 + 14}
+            fill={colors.muted}
+            fontSize={42}
+            fontFamily={fonts.mono}
+          >
+            1
+          </text>
+        </svg>
+        <div
+          style={{
+            position: "absolute",
+            top: 220,
+            left: 1180,
+            width: 520,
+            padding: "14px 0",
+            borderRadius: 20,
+            textAlign: "center",
+            background: alpha(colors.bg, 0.85),
+            border: `4px solid ${colors.orange}`,
+          }}
+        >
+          <div style={{ fontSize: 32, color: colors.muted, fontWeight: 700 }}>
+            {tx.taxi}
+          </div>
+          <div
+            style={{
+              fontFamily: fonts.mono,
+              fontSize: 88,
+              fontWeight: 800,
+              color: colors.orange,
+            }}
+          >
+            {odo.toFixed(2)}
+          </div>
+        </div>
+        <Eq
+          steps={[
+            [
+              { id: "a", t: "1² + 1²" },
+              { id: "e", t: " = " },
+              { id: "b", t: "2" },
+            ],
+            [
+              { id: "a", t: "1² + 1²" },
+              { id: "e", t: " = " },
+              { id: "b", t: "2" },
+              { id: "n", t: " ≠ ", color: colors.red },
+              { id: "c", t: "2²", color: colors.red },
+            ],
+          ]}
+          at={[c4 + 4, c4 + 30]}
+          x={1440}
+          y={480}
+          size={66}
+        />
+      </AbsoluteFill>
+
+      <AbsoluteFill style={{ opacity: part3 }}>
+        <svg width={1920} height={1080}>
           <path
             d={ball(q2, O.x, O.y, R)}
             fill={alpha(colors.primary, 0.08)}
@@ -174,7 +309,6 @@ export const Norms: React.FC = () => {
             stroke={colors.orange}
             strokeWidth={8}
           />
-          {/* the balance */}
           <g transform="translate(1340 640)">
             <path
               d="M -40 120 L 0 0 L 40 120 Z"
@@ -212,6 +346,15 @@ export const Norms: React.FC = () => {
                     fill={colors.orange}
                   />
                 ))}
+                <text
+                  y={60}
+                  fill={colors.orange}
+                  fontSize={34}
+                  textAnchor="middle"
+                  fontWeight={800}
+                >
+                  {tx.diagonals}
+                </text>
               </g>
               <g transform={`translate(240 0) rotate(${-tilt})`}>
                 <line
@@ -233,6 +376,15 @@ export const Norms: React.FC = () => {
                     fill={colors.primary}
                   />
                 ))}
+                <text
+                  y={60}
+                  fill={colors.primary}
+                  fontSize={34}
+                  textAnchor="middle"
+                  fontWeight={800}
+                >
+                  {tx.sides}
+                </text>
               </g>
             </g>
             <circle r={12} fill={colors.text} />
@@ -241,14 +393,14 @@ export const Norms: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 60,
+            top: 96,
             left: 120,
             fontFamily: fonts.title,
             fontSize: 56,
             fontWeight: 800,
             color: colors.primary,
-            opacity: fadeIn(frame, c1 + 10),
-            translate: riseIn(frame, c1 + 10, 16),
+            opacity: fadeIn(frame, c5 + 10),
+            translate: riseIn(frame, c5 + 10, 16),
           }}
         >
           {tx.parallelogram}
@@ -262,7 +414,7 @@ export const Norms: React.FC = () => {
             fontSize: 72,
             fontWeight: 800,
             color: level ? colors.green : colors.text,
-            opacity: fadeIn(frame, c1 + 20),
+            opacity: fadeIn(frame, c5 + 20),
           }}
         >
           p = {p > 30 ? "∞" : p.toFixed(1)}

@@ -1,11 +1,15 @@
 import { makeEpisodeCompositions, type SceneEntry } from "../shared/episode";
 import { BrandIntro } from "../shared/scenes/BrandIntro";
 import { S2E14, type SceneId } from "./narration";
-import { Camera } from "./scenes/Camera";
+import { Angle } from "./scenes/Angle";
+import { Axioms } from "./scenes/Axioms";
+import { Bowl } from "./scenes/Bowl";
 import { Cauchy } from "./scenes/Cauchy";
-import { Circles } from "./scenes/Circles";
 import { ColdOpen } from "./scenes/ColdOpen";
+import { Coords } from "./scenes/Coords";
+import { Ellipse } from "./scenes/Ellipse";
 import { EndCard } from "./scenes/EndCard";
+import { Inside } from "./scenes/Inside";
 import { Mojing } from "./scenes/Mojing";
 import { Norms } from "./scenes/Norms";
 import { TitleCard } from "./scenes/TitleCard";
@@ -22,21 +26,46 @@ const SCENES: SceneEntry<SceneId>[] = [
   {
     id: "coldOpen",
     key: "ColdOpen",
-    name: "Cold open: Göttingen, 1908",
+    name: "Cold open: are 1 and x perpendicular?",
     component: ColdOpen,
   },
   { id: "title", key: "Title", name: "Title", component: TitleCard },
   {
-    id: "camera",
-    key: "Camera",
-    name: "Coordinates can't give a ruler",
-    component: Camera,
+    id: "coords",
+    key: "Coords",
+    name: "Dotting coordinates is not a ruler",
+    component: Coords,
+  },
+  { id: "axioms", key: "Axioms", name: "The three rules", component: Axioms },
+  {
+    id: "bowl",
+    key: "Bowl",
+    name: "Why positive: bowl or saddle",
+    component: Bowl,
   },
   {
-    id: "circles",
-    key: "Circles",
-    name: "Many unit circles",
-    component: Circles,
+    id: "ellipse",
+    key: "Ellipse",
+    name: "The unit ellipse",
+    component: Ellipse,
+  },
+  {
+    id: "inside",
+    key: "Inside",
+    name: "The view from inside",
+    component: Inside,
+  },
+  {
+    id: "cauchy",
+    key: "Cauchy",
+    name: "Cauchy–Schwarz, proved",
+    component: Cauchy,
+  },
+  {
+    id: "angle",
+    key: "Angle",
+    name: "Angles, and the 30° computed",
+    component: Angle,
   },
   {
     id: "mojing",
@@ -44,8 +73,12 @@ const SCENES: SceneEntry<SceneId>[] = [
     name: "《墨经》 (Chinese edition only)",
     component: Mojing,
   },
-  { id: "cauchy", key: "Cauchy", name: "Cauchy–Schwarz", component: Cauchy },
-  { id: "norms", key: "Norms", name: "Norms without angles", component: Norms },
+  {
+    id: "norms",
+    key: "Norms",
+    name: "Rulers without protractors",
+    component: Norms,
+  },
   { id: "endCard", key: "EndCard", name: "End card", component: EndCard },
 ];
 

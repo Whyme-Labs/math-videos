@@ -158,6 +158,14 @@ the series one feel.
 
 ## One main visual that keeps moving
 
+**Engineered, not illustrated.** A visual has to *show why*: the viewer
+should be able to follow cause and effect without the caption. Prefer a
+live quantity tied to the motion (an area swept with a running total, a
+parabola traced point by point as an arrow slides, an angle readout that
+climbs to 90° as the plane stretches) over a card or badge that states a
+result. If a scene could be replaced by a slide with a sentence on it,
+redesign it.
+
 From Season 2's middle on, the ideas are hard enough that a scene built from
 panels that swap in and out doesn't carry them. Build each scene around one
 main visual that keeps changing for the whole scene: the plane bends, the

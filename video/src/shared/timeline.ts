@@ -39,6 +39,11 @@ export type EpisodeSpec<Id extends string> = {
   readonly fixedSeconds?: Partial<Record<Id, number>>;
   // Which season's music the cuts snap to (default 1).
   readonly season?: number;
+  // Caption style. "classic" (default, up to S2E13): 38 px, up to two lines
+  // of narration. "large" (S2E14 on): 54 px, one short line (about 12 words,
+  // 16 Chinese characters) that names what's on screen; the visuals carry
+  // the explanation and minSeconds gives them the time.
+  readonly captions?: "classic" | "large";
 };
 
 export type SceneTiming = {
@@ -129,6 +134,7 @@ export const makeEpisodeTiming = <Id extends string>(spec: EpisodeSpec<Id>) => {
   return {
     narration: spec.narration,
     order: spec.order,
+    captions: spec.captions ?? "classic",
     // Whether a scene appears in a language's film.
     shows: (id: Id, locale: Locale) => (spec.onlyIn?.[id] ?? locale) === locale,
     // Start frame of each line within its scene, plus the scene's total length.

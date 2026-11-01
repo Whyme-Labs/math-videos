@@ -58,6 +58,20 @@ story, instead of going right into the topic."
 
 Each entry in `NARRATION[locale][scene]` is one caption and one cue.
 
+**From S2E14 on (`captions: "large"`):** captions are 54 px and name what
+is on screen; the picture does the explaining. One line each: at most
+about 12 English words (56 characters) and about 20 Chinese characters.
+Every line gets a `MIN_SECONDS` entry sized to its animation, so an
+episode runs 4–6 minutes with 50–70 lines. Teach the lesson properly, in
+this order: the cold-open puzzle worked on screen; the naive attempt and
+why it fails; the definition, each rule acted out; why each rule is
+needed (a counter-example that breaks without it); the main theorem with
+its proof made visible; the cold open's puzzle computed; a limit case or
+counter-example; the payoff. Pull the steps from the lesson file in
+`lessons/`, not from memory.
+
+Up to S2E13 (classic captions):
+
 - **One idea per line.** 6–20 English words, at most 2 lines in the caption
   box (about 110 characters). If you need "and" twice, split it.
 - **Write numbers the way they are said** when the sound matters ("zero

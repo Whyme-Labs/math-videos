@@ -14,7 +14,12 @@ import {
   type V3,
 } from "../../shared/components/three3d";
 
-// Many unit circles, in 3D. An inner product G is drawn as the bowl
+// The unit ellipse, in 3D. The bowl rises with its G-card (c0); a glass
+// sheet comes down to height 1 (c1); the rim lights up and drops to the
+// floor as the ellipse (c2); G changes and everything follows (c3); then a
+// G-perpendicular pair of arrows with its right-angle mark appears and
+// keeps turning, still perpendicular for G (c4).
+// Earlier notes: many unit circles, in 3D. An inner product G is drawn as the bowl
 // z = xᵀGx over the plane: it rises out of the floor (positive: every
 // nonzero arrow gets a positive height), then a glass sheet comes down to
 // height 1 and the rim where it cuts the bowl lights up. That rim, dropped
@@ -32,20 +37,21 @@ const GS = [
 const Z = 0.6; // height scale: the sheet sits at z = Z (xᵀGx = 1)
 const R = 1.4; // the bowl is cut off where xᵀGx = R²
 
-export const Circles: React.FC = () => {
+export const Ellipse: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const cues = useCues("circles");
-  const [c0, c1] = cues;
+  const cues = useCues("ellipse");
+  const [c0, c1, c2, c3, c4] = cues;
   let g = GS[0];
-  [c0 + 90, c1 + 10, c1 + 80].forEach((at, k) => {
+  [c3 + 6, c3 + 70, c4 + 60].forEach((at, k) => {
     const t = glide(frame, at, fps, 36);
     g = g.map((v, i) => lerp(v, GS[k + 1][i], t));
   });
   const [a, b, c] = g;
   const rise = glide(frame, c0 + 6, fps, 30);
-  const drop = glide(frame, c0 + 40, fps, 24);
-  const rim = fadeIn(frame, c0 + 60, 10);
+  const drop = glide(frame, c1 + 6, fps, 24);
+  const rim = fadeIn(frame, c2 + 4, 10);
+  const pair = fadeIn(frame, c4 + 4, 10);
   const q = (x: number, y: number) => a * x * x + 2 * b * x * y + c * y * y;
   const len = (x: number, y: number) => Math.sqrt(q(x, y));
   // the bowl in G-polar coordinates: radius r along direction t, so the
@@ -73,13 +79,14 @@ export const Circles: React.FC = () => {
   const azimuth = -1.75 + (frame - c0) * 0.004;
 
   return (
-    <SceneShell id="circles">
+    <SceneShell id="ellipse">
       <Sfx name="riser" at={c0 + 6} volume={0.1} />
-      <Sfx name="whoosh" at={c0 + 40} volume={0.1} />
-      <Sfx name="chime" at={c0 + 62} volume={0.5} />
-      <Sfx name="whoosh" at={c0 + 90} volume={0.1} />
-      <Sfx name="whoosh" at={c1 + 10} volume={0.1} />
-      <Sfx name="whoosh" at={c1 + 80} volume={0.1} />
+      <Sfx name="whoosh" at={c1 + 6} volume={0.1} />
+      <Sfx name="chime" at={c2 + 6} volume={0.35} />
+      <Sfx name="whoosh" at={c3 + 6} volume={0.1} />
+      <Sfx name="whoosh" at={c3 + 70} volume={0.1} />
+      <Sfx name="pop" at={c4 + 4} volume={0.12} />
+      <Sfx name="whoosh" at={c4 + 60} volume={0.1} />
 
       <Stage3D
         azimuth={azimuth}
@@ -114,14 +121,14 @@ export const Circles: React.FC = () => {
           to={[u.x, u.y, 0]}
           color={colors.orange}
           radius={0.045}
-          opacity={rim}
+          opacity={pair}
         />
         <Arrow3
           from={[0, 0, 0]}
           to={[v.x, v.y, 0]}
           color={colors.highlight}
           radius={0.045}
-          opacity={rim}
+          opacity={pair}
         />
         <Tube
           points={[
@@ -131,7 +138,7 @@ export const Circles: React.FC = () => {
           ]}
           radius={0.015}
           color={colors.green}
-          opacity={rim}
+          opacity={pair}
         />
       </Stage3D>
 
