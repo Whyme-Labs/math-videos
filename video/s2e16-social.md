@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e16-vectors-and-covectors.mp4` (1:45, 16:9)
-- Chinese edition: `out/s2e16-zh-xiang-liang-yu-yu-xiang-liang.mp4` (1:43, 16:9). It has a scene the English edition
+- English edition: `out/s2e16-vectors-and-covectors.mp4` (DUR_EN, 16:9)
+- Chinese edition: `out/s2e16-zh-xiang-liang-yu-yu-xiang-liang.mp4` (DUR_ZH, 16:9). It has a scene the English edition
   doesn't: 裴秀's six principles of map-making (制图六体): when the map's
   scale (分率) goes wrong, right angles break but contour counts don't.
 - Thumbnails: `thumbnails/png/S2E16-EN.png` and `S2E16-ZH.png` (16:9, for
@@ -37,14 +37,17 @@ The rules behind them are in
 ```
 1907. Frigyes Riesz, a schoolteacher in Hungary, and Maurice Fréchet in Paris publish the same theorem in the same year. It answers a hiker's question: which way is straight uphill? On the map, perpendicular to the contours. But squash the map north to south and perpendicular points somewhere else on the ground. The contours didn't change. The arrow did.
 
-Season 2, episode 16 of Whyme Labs' math series. An inner product turns every arrow v into a stack of sheets: measure any arrow by its overlap with v. The Riesz theorem says every stack comes from exactly one arrow, so once you've chosen a ruler, arrows and stacks match one to one. Change the inner product and the stack stays put while the arrow standing for it swings: the stack was the real thing all along. That's the gradient: df is a stack that counts contours crossed (for f = x²y at (1, 2), df = (4, 1)). The dot product turns it into the textbook gradient (4, 1); another ruler gives another arrow. Steepest is a choice; how much you climb is not. And the transpose finally makes sense: pull a measurement back through a map and turn it into an arrow again. That round trip is the adjoint, which is the transpose only for the dot product.
+Season 2, episode 16 of Whyme Labs' math series. A 3D hill becomes a contour map, and squashing the map swings the 'uphill' arrow while the contours stay put. Arrows and stacks are different things: a basis can pair them, but bend the basis and the pairing changes. An inner product gives a pairing that doesn't depend on a basis: the Riesz theorem, built on screen from an orthonormal basis and proved unique (two candidates differ by an arrow perpendicular to itself). Change the ruler and the arrow for a fixed stack swings to G⁻¹a. On the hill f = x²y, df = (4, 1) is a stack; the gradient is (4, 1) for the dot product and (1, 1) for G = diag(4, 1). Why 'steepest'? Sweep every unit step: the best one touches the highest sheet, and the unit circle becomes an ellipse when the ruler changes. The adjoint is the round trip stack → pull back → arrow, checked numerically against the transpose. And where Riesz runs out: the arrows for 'evaluate at 0' spike higher with lengths 2, 3, 4, … and on all polynomials no arrow exists.
 
-0:00 1907: Riesz and Fréchet
-0:34 Arrows become stacks
-0:49 The stack stays, the arrow moves
-1:01 The gradient needs a ruler
-1:16 The adjoint
-1:33 Next: projection and least squares
+0:00 1907: the hiker's squashed map
+0:41 Arrows and stacks
+1:02 The Riesz theorem
+1:38 The stack stays, the arrow moves
+1:59 The gradient needs a ruler
+2:26 Why steepest depends on the ruler
+2:53 The adjoint
+3:22 Where Riesz runs out
+3:47 Next: projection and least squares
 
 Previous episode: Unitary spaces <S2E15 link>
 Next: the closest point. Projections, and the line that best fits a cloud of data.
@@ -74,15 +77,18 @@ Fonts: Fraunces, Inter, JetBrains Mono, STIX Two, Noto Sans SC (SIL Open Font Li
 ```
 1907 年。匈牙利的中学教师里斯，和巴黎的弗雷歇，在同一年发表了同一个定理。它回答登山者的问题：哪边是笔直的上坡？在地图上，垂直于等高线。可把地图南北压扁，“垂直”在地面上就指向别处了。等高线没变，变的是箭头。
 
-Whyme Labs 数学系列第二季第 16 集。内积把每支箭头 v 变成一叠薄片：用和 v 的重叠量去量任何箭头。里斯定理说，每叠薄片都恰好来自一支箭头：选定一把尺子，箭头和薄片一一对应。换一个内积，薄片不动，代表它的箭头却转了：真正的东西从来是那叠薄片。这就是梯度：df 是一叠数等高线的薄片（f = x²y 在 (1, 2) 处 df = (4, 1)）。用点积得到课本上的梯度 (4, 1)；换一把尺，就是另一支箭头。哪边最陡是一种选择，升高多少却不是。转置也终于讲通：把测量沿映射拉回来，再变回箭头，这一圈就是伴随；只有用点积时它才是转置。中文版另加裴秀“制图六体”。
+Whyme Labs 数学系列第二季第 16 集。一座三维的山变成等高线地图，把地图压扁，“上坡”箭头转了，等高线却不动。箭头和薄片是两种东西：一组基能把它们配对，可基一弯，配对就变。内积给出不依赖基的配对：里斯定理，在画面上用标准正交基构造出来，再证明唯一（两个候选之差垂直于自己）。换一把尺，固定薄片对应的箭头转到 G⁻¹a。在山 f = x²y 上，df = (4, 1) 是一叠薄片；用点积梯度是 (4, 1)，用 G = diag(4, 1) 是 (1, 1)。为什么叫“最陡”？把所有单位步都扫一遍：最好的那一步碰到最高的薄片，换尺后单位圆变成椭圆。伴随是“薄片 → 拉回 → 箭头”这一圈，并用数字验证它和转置不同。最后看里斯定理失效的地方：“在 0 处取值”的箭头越来越尖，长度 2、3、4……，在所有多项式上箭头不存在。中文版另加裴秀制图六体。
 
-0:00 1907 年：里斯与弗雷歇
-0:29 箭头变成薄片
-0:41 薄片不动，箭头在转
-0:50 裴秀制图六体
-1:06 梯度需要一把尺子
-1:19 伴随
-1:30 下一集：投影与最小二乘
+0:00 1907 年：压扁的地图
+0:41 箭头与薄片
+1:02 里斯定理
+1:38 薄片不动，箭头在转
+1:59 裴秀制图六体
+2:16 梯度需要一把尺子
+2:43 “最陡”取决于尺子
+3:10 伴随
+3:40 里斯定理失效的地方
+4:05 下一集：投影与最小二乘
 
 上一集：酉空间 <S2E15 链接>
 下一集：最近的那一点。投影，以及最贴合一团数据的那条直线。
@@ -167,13 +173,16 @@ Whyme Labs 数学系列第二季第 16 集。
 内积把箭头变成薄片；里斯定理：每叠薄片恰好来自一支箭头。换内积，薄片不动、箭头在转。梯度：df = (4, 1) 是薄片，用点积才是课本梯度。伴随：拉回再变成箭头，只有点积时才是转置。
 中文版另加裴秀“制图六体”：分率一歪，图上的直角就对不上，可穿过几条等高线不变。
 
-00:00 1907 年：里斯与弗雷歇
-00:29 箭头变成薄片
-00:41 薄片不动，箭头在转
-00:50 裴秀制图六体
-01:06 梯度需要一把尺子
-01:19 伴随
-01:30 下一集：投影与最小二乘
+00:00 1907 年：压扁的地图
+00:41 箭头与薄片
+01:02 里斯定理
+01:38 薄片不动，箭头在转
+01:59 裴秀制图六体
+02:16 梯度需要一把尺子
+02:43 “最陡”取决于尺子
+03:10 伴随
+03:40 里斯定理失效的地方
+04:05 下一集：投影与最小二乘
 
 上一集：酉空间 <B 站 S2E15 链接>
 下一集：投影与最小二乘
