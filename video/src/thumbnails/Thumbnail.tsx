@@ -1589,6 +1589,149 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
       </svg>
     );
   }
+  if (ep === 214) {
+    // a round circle and a tilted ellipse, each with its own right angle
+    const pair = (
+      cx: number,
+      cy: number,
+      rx: number,
+      ry: number,
+      rot: number,
+    ) => (
+      <g transform={`translate(${cx} ${cy}) rotate(${rot})`}>
+        <ellipse
+          rx={rx}
+          ry={ry}
+          fill={alpha(colors.primary, 0.12)}
+          stroke={colors.primary}
+          strokeWidth={10}
+        />
+        <line
+          x1={0}
+          y1={0}
+          x2={rx}
+          y2={0}
+          stroke={colors.orange}
+          strokeWidth={12}
+          strokeLinecap="round"
+        />
+        <line
+          x1={0}
+          y1={0}
+          x2={0}
+          y2={-ry}
+          stroke={colors.highlight}
+          strokeWidth={12}
+          strokeLinecap="round"
+        />
+        <path
+          d="M 40 0 L 40 -40 L 0 -40"
+          fill="none"
+          stroke={colors.green}
+          strokeWidth={8}
+        />
+      </g>
+    );
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {pair(1420, 360, 170, 170, 0)}
+        {pair(1600, 720, 250, 120, -25)}
+      </svg>
+    );
+  }
+
+  if (ep === 215) {
+    // a complex plane: z, its mirror z̄, and their product sitting still on the real axis
+    const O = { x: 1500, y: 560 };
+    const R = 290;
+    const a = 0.9;
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={O.x - 380}
+          y1={O.y}
+          x2={O.x + 380}
+          y2={O.y}
+          stroke={alpha(colors.paper, 0.5)}
+          strokeWidth={5}
+        />
+        <line
+          x1={O.x}
+          y1={O.y - 360}
+          x2={O.x}
+          y2={O.y + 360}
+          stroke={alpha(colors.paper, 0.5)}
+          strokeWidth={5}
+        />
+        <circle
+          cx={O.x}
+          cy={O.y}
+          r={R}
+          fill={alpha(colors.primary, 0.1)}
+          stroke={colors.primary}
+          strokeWidth={10}
+        />
+        <line
+          x1={O.x}
+          y1={O.y}
+          x2={O.x + R * Math.cos(a)}
+          y2={O.y + R * Math.sin(a)}
+          stroke={colors.orange}
+          strokeWidth={10}
+          strokeDasharray="22 16"
+        />
+        <line
+          x1={O.x}
+          y1={O.y}
+          x2={O.x + R * Math.cos(a)}
+          y2={O.y - R * Math.sin(a)}
+          stroke={colors.orange}
+          strokeWidth={14}
+          strokeLinecap="round"
+        />
+        <circle
+          cx={O.x + R * Math.cos(a)}
+          cy={O.y - R * Math.sin(a)}
+          r={22}
+          fill={colors.orange}
+        />
+        <circle cx={O.x + R} cy={O.y} r={30} fill={colors.green} />
+      </svg>
+    );
+  }
+
+  if (ep === 216) {
+    // an orange stack of sheets and the lemon arrow standing for it
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <g transform="translate(1500 560) rotate(-30)">
+          {[-3, -2, -1, 0, 1, 2, 3].map((k) => (
+            <line
+              key={k}
+              x1={k * 70}
+              y1={-300}
+              x2={k * 70}
+              y2={300}
+              stroke={colors.orange}
+              strokeWidth={k === 0 ? 18 : 12}
+              strokeLinecap="round"
+            />
+          ))}
+          <line
+            x1={0}
+            y1={0}
+            x2={250}
+            y2={0}
+            stroke={colors.primary}
+            strokeWidth={22}
+            strokeLinecap="round"
+          />
+          <polygon points="300,0 236,-40 236,40" fill={colors.primary} />
+        </g>
+      </svg>
+    );
+  }
+
   if (ep === 213) {
     // a sheared deck of cards with one glowing line under it
     return (

@@ -21,8 +21,18 @@
  },
  {
   "family": "Noto Sans SC",
+  "file": "fonts/zh/noto-sans-sc-33.woff2",
+  "unicodeRange": "U+8e41-8e42,U+8e47,U+8e49-8e4b,U+8e50-8e53,U+8e59-8e5a,U+8e5f-8e60,U+8e64,U+8e69,U+8e6c,U+8e70,U+8e74,U+8e76,U+8e7a-8e7c,U+8e7f,U+8e84-8e85,U+8e87,U+8e89,U+8e8b,U+8e8d,U+8e8f-8e90,U+8e94,U+8e99,U+8e9c,U+8e9e,U+8eaa,U+8eac,U+8eb0,U+8eb6,U+8ec0,U+8ec6,U+8eca-8ece,U+8ed2,U+8eda,U+8edf,U+8ee2,U+8eeb,U+8ef8,U+8efb-8efe,U+8f03,U+8f09,U+8f0b,U+8f12-8f15,U+8f1b,U+8f1d,U+8f1f,U+8f29-8f2a,U+8f2f,U+8f36,U+8f38,U+8f3b,U+8f3e-8f3f,U+8f44-8f45,U+8f49,U+8f4d-8f4e,U+8f5f,U+8f6b,U+8f6d,U+8f71-8f73,U+8f75-8f76,U+8f78-8f7a,U+8f7c,U+8f7e,U+8f81-8f82,U+8f84,U+8f87,U+8f8a-8f8b,U+8f8d-8f8f,U+8f94-8f95,U+8f97-8f9a,U+8fa6,U+8fad-8faf,U+8fb2,U+8fb5-8fb7,U+8fba-8fbc,U+8fbf,U+8fc2,U+8fcb,U+8fcd,U+8fd3,U+8fd5,U+8fd7,U+8fda,U+8fe2-8fe5,U+8fe8-8fe9,U+8fee,U+8ff3-8ff4,U+8ff8,U+8ffa"
+ },
+ {
+  "family": "Noto Sans SC",
   "file": "fonts/zh/noto-sans-sc-35.woff2",
   "unicodeRange": "U+8b80,U+8b83,U+8b8a,U+8b8c,U+8b90,U+8b93,U+8b99-8b9a,U+8ba0,U+8ba3,U+8ba5-8ba7,U+8baa-8bac,U+8bb4-8bb5,U+8bb7,U+8bb9,U+8bc2-8bc3,U+8bc5,U+8bcb-8bcc,U+8bce-8bd0,U+8bd2-8bd4,U+8bd6,U+8bd8-8bd9,U+8bdc,U+8bdf,U+8be3-8be4,U+8be7-8be9,U+8beb-8bec,U+8bee,U+8bf0,U+8bf2-8bf3,U+8bf6,U+8bf9,U+8bfc-8bfd,U+8bff-8c00,U+8c02,U+8c04,U+8c06-8c07,U+8c0c,U+8c0f,U+8c11-8c12,U+8c14-8c1b,U+8c1d-8c21,U+8c24-8c25,U+8c27,U+8c2a-8c2c,U+8c2e-8c30,U+8c32-8c36,U+8c3f,U+8c47-8c4c,U+8c4e-8c50,U+8c54-8c56,U+8c62,U+8c68,U+8c6c,U+8c73,U+8c78,U+8c7a,U+8c82,U+8c85,U+8c89-8c8a,U+8c8d-8c8e,U+8c90,U+8c93-8c94,U+8c98,U+8c9d-8c9e,U+8ca0-8ca2,U+8ca7-8cac,U+8caf-8cb0,U+8cb3-8cb4,U+8cb6-8cb9,U+8cbb-8cbc"
+ },
+ {
+  "family": "Noto Sans SC",
+  "file": "fonts/zh/noto-sans-sc-37.woff2",
+  "unicodeRange": "U+8882,U+8884-8886,U+8888,U+888f,U+8892-8893,U+889b,U+88a2,U+88a4,U+88a6,U+88a8,U+88aa,U+88ae,U+88b1,U+88b4,U+88b7,U+88bc,U+88c0,U+88c6-88c9,U+88ce-88cf,U+88d1-88d3,U+88d8,U+88db-88dd,U+88df,U+88e1-88e3,U+88e5,U+88e8,U+88ec,U+88f0-88f1,U+88f3-88f4,U+88fc-88fe,U+8900,U+8902,U+8906-8907,U+8909-890c,U+8912-8915,U+8918-891b,U+8921,U+8925,U+892b,U+8930,U+8932,U+8934,U+8936,U+893b,U+893d,U+8941,U+894c,U+8955-8956,U+8959,U+895c,U+895e-8960,U+8966,U+896a,U+896c,U+896f-8970,U+8972,U+897b,U+897e,U+8980,U+8983,U+8985,U+8987-8988,U+898c,U+898f,U+8993,U+8997,U+899a,U+89a1,U+89a7,U+89a9-89aa,U+89b2-89b3,U+89b7,U+89c0,U+89c7,U+89ca-89cc,U+89ce-89d1,U+89d6,U+89da,U+89dc,U+89de,U+89e5,U+89e7,U+89eb,U+89ef,U+89f1,U+89f3-89f4,U+89f8,U+89ff,U+8a01-8a03,U+8a07-8a0a,U+8a0e-8a0f,U+8a13"
  },
  {
   "family": "Noto Sans SC",
@@ -108,6 +118,11 @@
   "family": "Noto Sans SC",
   "file": "fonts/zh/noto-sans-sc-76.woff2",
   "unicodeRange": "U+5820,U+5822-5823,U+5825-5826,U+582c,U+582f,U+5831,U+583a,U+583d,U+583f-5842,U+5844-5846,U+5848,U+584a,U+584d,U+5852,U+5857,U+5859-585a,U+585c-585d,U+5862,U+5868-5869,U+586c-586d,U+586f-5873,U+5875,U+5879,U+587d-587e,U+5880-5881,U+5888-588a,U+588d,U+5892,U+5896-5898,U+589a,U+589c-589d,U+58a0-58a1,U+58a3,U+58a6,U+58a9,U+58ab-58ae,U+58b0,U+58b3,U+58bb-58bf,U+58c2-58c3,U+58c5-58c8,U+58ca,U+58cc,U+58ce,U+58d1-58d3,U+58d5,U+58d8-58d9,U+58de-58df,U+58e2,U+58e9,U+58ec,U+58ef,U+58f1-58f2,U+58f5,U+58f7-58f8,U+58fa,U+58fd,U+5900,U+5902,U+5906,U+5908-590c,U+590e,U+5910,U+5914,U+5919,U+591b,U+591d-591e,U+5920,U+5922-5925,U+5928,U+592c-592d,U+592f,U+5932,U+5936,U+593c,U+593e,U+5940-5942,U+5944,U+594c-594d,U+5950,U+5953,U+5958,U+595a,U+5961,U+5966-5968"
+ },
+ {
+  "family": "Noto Sans SC",
+  "file": "fonts/zh/noto-sans-sc-77.woff2",
+  "unicodeRange": "U+56f9,U+56fc,U+56ff-5700,U+5703-5704,U+5709-570a,U+570c-570d,U+570f,U+5712-5713,U+5718-5719,U+571c,U+571e,U+5725,U+5727,U+5729-572a,U+572c,U+572e-572f,U+5734-5735,U+5739,U+573b,U+5741,U+5743,U+5745,U+5749,U+574c-574d,U+575c,U+5763,U+5768-5769,U+576b,U+576d-576e,U+5770,U+5773,U+5775,U+5777,U+577b-577c,U+5785-5786,U+5788,U+578c,U+578e-578f,U+5793-5795,U+5799-57a1,U+57a3-57a4,U+57a6-57aa,U+57ac-57ad,U+57af-57b2,U+57b4-57b6,U+57b8-57b9,U+57bd-57bf,U+57c2,U+57c4-57c8,U+57cc-57cd,U+57cf,U+57d2,U+57d5-57de,U+57e1-57e2,U+57e4-57e5,U+57e7,U+57eb,U+57ed,U+57ef,U+57f4-57f8,U+57fc-57fd,U+5800-5801,U+5803,U+5805,U+5807,U+5809,U+580b-580e,U+5811,U+5814,U+5819,U+581b-581f"
  },
  {
   "family": "Noto Sans SC",

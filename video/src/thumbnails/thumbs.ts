@@ -194,6 +194,29 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["When eigenvectors", "run out"], accent: 1, size: 110 },
     zh: { lines: ["特征向量", "不够用了"], accent: 1, size: 140 },
   },
+  {
+    ep: 214,
+    en: {
+      lines: ["Who decides what", "a right angle is?"],
+      accent: 1,
+      size: 100,
+    },
+    zh: { lines: ["直角", "由谁说了算？"], accent: 1, size: 140 },
+  },
+  {
+    ep: 215,
+    en: { lines: ["(1, i) has", "length zero?"], accent: 1, size: 110 },
+    zh: { lines: ["(1, i) 的长度", "是零？"], accent: 1, size: 130 },
+  },
+  {
+    ep: 216,
+    en: {
+      lines: ["Is the gradient", "really an arrow?"],
+      accent: 1,
+      size: 104,
+    },
+    zh: { lines: ["梯度", "真的是箭头吗？"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
