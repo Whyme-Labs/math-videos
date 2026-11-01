@@ -4,38 +4,94 @@ Voiceover script for *Length and Angle Are a Choice*, generated from `src/s2e14/
 which is the source of truth. Each line is one caption. Condensed from
 `lessons/s2/e14-inner-products.md`.
 
-## Cold open: Göttingen, 1908
+## Cold open: are 1 and x perpendicular?
 
-1. Göttingen, 1908. Erhard Schmidt, a student of Hilbert, takes infinite lists of numbers and talks about them in Euclid's words: length, angle, right angle.
-2. So try it on functions. Are 1 and x perpendicular? By their coefficients, yes. By how much they overlap from minus 1 to 1, yes again.
-3. By how much they overlap from 0 to 1, no: they meet at exactly 30 degrees. Three honest answers, and they disagree.
-4. A vector space only knows how to add and scale. Length and angle are something extra that you choose. Today: that choice.
+1. Göttingen, 1908. Schmidt treats functions as arrows.
+2. Functions add and scale. So: are 1 and x perpendicular?
+3. By coefficients, 1 is (1, 0) and x is (0, 1). Yes.
+4. Or multiply them and add up the area from −1 to 1.
+5. The halves cancel. Overlap zero: perpendicular again.
+6. Now add up from 0 to 1. Nothing cancels.
+7. Worked out, the angle is exactly 30 degrees.
+8. Three honest answers. They disagree.
+9. A vector space can't measure angles. You choose how.
 
 ## Title
 
 1. Season two, episode fourteen. Length and angle are a choice.
 
-## Coordinates can't give a ruler
+## Dotting coordinates is not a ruler
 
-1. First try: multiply the coordinates and add. But coordinates depend on the basis. Switch basis, and the same two arrows stop being perpendicular.
-2. So a ruler can't come from coordinates. It has to be a choice of its own: an inner product.
+1. First idea: pick a basis and dot the coordinates.
+2. Here's a basis: b₁ along the floor, b₂ tilted up.
+3. In its own coordinates, b₁ = (1, 0) and b₂ = (0, 1).
+4. Dot them: zero. The coordinates say perpendicular.
+5. The protractor says 45 degrees.
+6. Change the basis, the answer changes. Not a real angle.
 
-## Many unit circles
+## The three rules
 
-1. An inner product is a symmetric form that's positive: every nonzero arrow gets a positive squared length. Its unit circle is an ellipse.
-2. Pick a different one and you get a different ellipse, with different right angles. Each one is a perfectly good geometry.
+1. So choose the ruler on purpose. Call it ⟨u, v⟩.
+2. Rule one, linear: double u and the overlap doubles.
+3. Rule two, symmetric: ⟨u, v⟩ equals ⟨v, u⟩.
+4. Rule three, positive: ⟨v, v⟩ > 0 unless v = 0.
+5. That's an inner product. Nothing else is assumed.
 
-## Cauchy–Schwarz
+## Why positive: bowl or saddle
 
-1. Whatever ruler you pick, one inequality holds: the overlap of two arrows is never more than the product of their lengths.
-2. That's Cauchy–Schwarz, found three times by three people. It's what makes angles possible: the ratio always lands between minus one and one.
+1. Draw ⟨v, v⟩ as a height above every arrow v.
+2. The dot product makes a bowl, up everywhere but 0.
+3. Some symmetric forms make a saddle instead.
+4. A saddle dips below zero: a negative length². Ruled out.
+5. An inner product is always a bowl.
 
-## Norms without angles
+## The unit ellipse
 
-1. Now the payoff. Some rulers measure length but have no angles at all. The taxi ruler's unit circle is a diamond; the max ruler's is a square.
-2. Which rulers hide a protractor? In 1935 Jordan and von Neumann found the test: the parallelogram law. Only the round ruler passes.
+1. Every bowl comes from a symmetric matrix G.
+2. Slice the bowl at height 1.
+3. The rim is G's unit circle: an ellipse.
+4. Change G: the bowl tips, the ellipse turns.
+5. Each ellipse brings its own right angles.
+
+## The view from inside
+
+1. Now live inside one of these geometries.
+2. Stretch the plane until the ellipse is round.
+3. Its right-angle pair becomes an ordinary right angle.
+4. From inside, every inner product is the dot product.
+5. What differs is which arrows count as perpendicular.
+
+## Cauchy–Schwarz, proved
+
+1. One inequality holds for every inner product. Why?
+2. Take u and v. Slide along v: the arrow u − tv.
+3. Plot its length² against t. It traces a parabola.
+4. Positive rule: the parabola never goes below zero.
+5. At the bottom, u − tv is perpendicular to v.
+6. Never below zero means overlap² ≤ length² × length².
+7. Cauchy–Schwarz. Equal only when u lies along v.
+
+## Angles, and the 30° computed
+
+1. So overlap ÷ (length × length) stays between −1 and 1.
+2. Call it cos θ. Every inner product gets angles.
+3. Back to 1 and x on [0, 1]: overlap ½.
+4. Lengths²: 1 for the 1, ⅓ for the x. So cos θ = √3/2.
+5. θ = 30°. A real angle between two arrows.
+
+## Rulers without protractors
+
+1. Some rulers measure length but hide no protractor.
+2. Taxi length |x| + |y|: the unit circle is a diamond.
+3. Chessboard length, the bigger of |x|, |y|: a square.
+4. Taxi Pythagoras: the unit square's diagonal is 2.
+5. Not √2. Pythagoras fails, so there are no angles.
+6. The test: diagonals² against sides², on a balance.
+7. Sweep every ruler from diamond to square.
+8. Only the round one balances. Jordan–von Neumann, 1935.
 
 ## End card
 
-1. Length and angle are a choice: an inner product. Choose one and you get circles, right angles and Pythagoras.
-2. Next episode: complex vectors break the dot product. One bar over one letter fixes it.
+1. A vector space has no ruler. You choose one.
+2. Choose an inner product and Euclid comes for free.
+3. Next: complex vectors break it. One bar fixes it.

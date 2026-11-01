@@ -23,8 +23,8 @@ export const Geyuan: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("geyuan");
-  const [c0, c1, c2] = cues;
-  const doubleAt = [c0 + 20, c0 + 80, c1 + 10, c1 + 34, c1 + 58, c1 + 82];
+  const [c0, c1, c2, c3, c4] = cues;
+  const doubleAt = [c0 + 20, c1 + 6, c1 + 30, c1 + 54, c1 + 78, c2 + 6];
   const idx = doubleAt.filter((t) => frame >= t).length - 1;
   const n = NS[Math.max(0, idx)];
   const grow = glide(frame, doubleAt[Math.max(0, idx)], fps, 14);
@@ -33,19 +33,19 @@ export const Geyuan: React.FC = () => {
     return `${k ? "L" : "M"} ${(C.x + R * Math.cos(a)).toFixed(1)} ${(C.y - R * Math.sin(a)).toFixed(1)}`;
   }).join(" ");
   const est = n * Math.sin(Math.PI / n);
-  const walker = Math.max(0, frame - c2 - 20) / 18;
+  const walker = Math.max(0, frame - c3 - 10) / 18;
   const wk = Math.floor(walker);
   const wa =
-    ((wk + glide(frame, c2 + 20 + wk * 18, fps, 10)) / 6) * Math.PI * 2;
+    ((wk + glide(frame, c3 + 10 + wk * 18, fps, 10)) / 6) * Math.PI * 2;
 
   return (
     <SceneShell id="geyuan">
       {doubleAt.map((t, k) => (
         <Sfx key={k} name="pop" at={t} volume={0.12} />
       ))}
-      <Sfx name="chime" at={c1 + 40} volume={0.35} />
+      <Sfx name="chime" at={c2 + 20} volume={0.35} />
       {Array.from({ length: 6 }).map((_, k) => (
-        <Sfx key={`w${k}`} name="tick" at={c2 + 20 + k * 18} volume={0.1} />
+        <Sfx key={`w${k}`} name="tick" at={c3 + 10 + k * 18} volume={0.1} />
       ))}
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
@@ -65,7 +65,7 @@ export const Geyuan: React.FC = () => {
           opacity={fadeIn(frame, c0 + 20)}
           transform={`translate(${C.x} ${C.y}) scale(${0.97 + 0.03 * grow}) translate(${-C.x} ${-C.y})`}
         />
-        <g opacity={fadeIn(frame, c2 + 10)}>
+        <g opacity={fadeIn(frame, c3 + 4)}>
           <line
             x1={C.x}
             y1={C.y}
@@ -87,7 +87,7 @@ export const Geyuan: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 40,
+          top: 96,
           left: 120,
           fontFamily: fonts.title,
           fontSize: 52,
@@ -124,8 +124,8 @@ export const Geyuan: React.FC = () => {
           fontSize: 52,
           fontWeight: 800,
           color: colors.highlight,
-          opacity: fadeIn(frame, c1 + 40),
-          translate: riseIn(frame, c1 + 40, 14),
+          opacity: fadeIn(frame, c2 + 20),
+          translate: riseIn(frame, c2 + 20, 14),
         }}
       >
         “{tx.quote}”
@@ -138,8 +138,8 @@ export const Geyuan: React.FC = () => {
           fontSize: 44,
           fontWeight: 800,
           color: colors.orange,
-          opacity: fadeIn(frame, c2 + 30),
-          translate: riseIn(frame, c2 + 30, 12),
+          opacity: fadeIn(frame, c4 + 6),
+          translate: riseIn(frame, c4 + 6, 12),
         }}
       >
         {tx.step}

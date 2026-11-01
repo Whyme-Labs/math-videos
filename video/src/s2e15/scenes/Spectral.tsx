@@ -2,91 +2,107 @@ import type React from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
-import { glide, lerp } from "../../shared/components/motion";
+import { glide } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import {
+  Plane,
+  IDENTITY,
+  lerpMat,
+  linear,
+  type Mat2,
+} from "../../shared/components/Plane";
 import { useStrings } from "../i18n";
 
-// Schur, then the spectral theorem. A 3 × 3 matrix of stars with λ₁, λ₂, λ₃
-// on the diagonal. An orthonormal frame on the right turns, and the stars
-// below the diagonal drain to 0: triangular. Then a badge (commutes with its
-// adjoint) and the stars above drain too: diagonal. Last, a small complex
-// plane: three eigenvalue dots slide onto the real line (Hermitian), then
-// onto the unit circle (unitary).
+// Schur, then the spectral theorem. A 3 × 3 matrix of stars with λ₁, λ₂,
+// λ₃ on the diagonal. An eigenvector arrow appears on the plane at the
+// right and becomes the first basis arrow; the first column below the
+// diagonal drains to 0 (c1). Repeating on what's left drains the second
+// column: a staircase of zeros (c2). A badge, "commutes with its
+// conjugate transpose" (c3); the stars above the diagonal drain too:
+// diagonal (c4). Last the plane stretches along two perpendicular
+// eigen-axes, each by its own amount (c5).
 
-const EIG = [
-  { x: 0.9, y: 0.7 },
-  { x: -0.6, y: 0.4 },
-  { x: 0.2, y: -0.9 },
+const Q = 0.5;
+const c = Math.cos(Q);
+const s = Math.sin(Q);
+// Q · diag(1.8, 0.6) · Qᵀ: perpendicular eigen-axes at angles Q and Q + 90°
+const N: Mat2 = [
+  1.8 * c * c + 0.6 * s * s,
+  (1.8 - 0.6) * c * s,
+  (1.8 - 0.6) * c * s,
+  1.8 * s * s + 0.6 * c * c,
 ];
-const REAL = [1.2, -0.7, 0.3];
-const CIRC = [0.7, 2.6, -1.4];
 
 export const Spectral: React.FC = () => {
   const frame = useCurrentFrame();
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("spectral");
-  const [c0, c1] = cues;
-  const turn = glide(frame, c0 + 30, fps, 50);
-  const lower = glide(frame, c0 + 50, fps, 30);
-  const upper = glide(frame, c1 + 40, fps, 30);
-  const herm = glide(frame, c1 + 80, fps, 24);
-  const unit = glide(frame, c1 + 140, fps, 24);
-  const F = { x: 1500, y: 300 };
-  const fa = -0.2 + turn * 1.1;
-  const P = { x: 1500, y: 640 };
-  const S = 130;
+  const [c0, c1, c2, c3, c4, c5] = cues;
+  const col1 = glide(frame, c1 + 30, fps, 24);
+  const col2 = glide(frame, c2 + 20, fps, 24);
+  const upper = glide(frame, c4 + 6, fps, 30);
+  const stretch = glide(frame, c5 + 6, fps, 40);
+  const drained = (i: number, j: number) =>
+    i > j ? (j === 0 ? col1 : col2) : upper;
+  const O = { x: 1420, y: 470 };
+  const S = 140;
+  const scr = (x: number, y: number) => ({ x: O.x + x * S, y: O.y - y * S });
+  const M = lerpMat(IDENTITY, N, stretch);
+  const e1 = linear(M)(c, s);
+  const e2 = linear(M)(-s, c);
 
   return (
     <SceneShell id="spectral">
-      <Sfx name="whoosh" at={c0 + 30} volume={0.12} />
-      <Sfx name="chime" at={c0 + 80} volume={0.35} />
-      <Sfx name="pop" at={c1 + 10} volume={0.14} />
-      <Sfx name="chime" at={c1 + 70} volume={0.35} />
-      <Sfx name="pluck2" at={c1 + 80} volume={0.14} />
-      <Sfx name="pluck4" at={c1 + 140} volume={0.14} />
+      <Sfx name="pop" at={c1 + 6} volume={0.12} />
+      <Sfx name="whoosh" at={c1 + 30} volume={0.1} />
+      <Sfx name="whoosh" at={c2 + 20} volume={0.1} />
+      <Sfx name="pop" at={c3 + 6} volume={0.12} />
+      <Sfx name="whoosh" at={c4 + 6} volume={0.1} />
+      <Sfx name="chime" at={c4 + 40} volume={0.3} />
+      <Sfx name="riser" at={c5 + 6} volume={0.08} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
-        <g transform="translate(640 470)">
+        <g transform="translate(600 470)">
           <path
-            d="M -280 -230 l -24 0 l 0 460 l 24 0 M 280 -230 l 24 0 l 0 460 l -24 0"
+            d="M -300 -250 l -26 0 l 0 500 l 26 0 M 300 -250 l 26 0 l 0 500 l -26 0"
             fill="none"
             stroke={colors.text}
-            strokeWidth={6}
+            strokeWidth={7}
           />
           {Array.from({ length: 9 }).map((_, n) => {
             const i = Math.floor(n / 3);
             const j = n % 3;
-            const x = -180 + j * 180;
-            const y = -120 + i * 150;
+            const x = -190 + j * 190;
+            const y = -150 + i * 160;
             if (i === j)
               return (
                 <text
                   key={n}
                   x={x}
-                  y={y + 20}
+                  y={y + 24}
                   fill={colors.orange}
-                  fontSize={68}
+                  fontSize={76}
                   textAnchor="middle"
                   fontFamily={fonts.math}
                   fontWeight={800}
                 >
                   λ
-                  <tspan dy={14} fontSize={40}>
+                  <tspan dy={16} fontSize={44}>
                     {i + 1}
                   </tspan>
                 </text>
               );
-            const t = i > j ? lower : upper;
+            const t = drained(i, j);
             return (
               <g key={n}>
                 <text
                   x={x}
-                  y={y + 30}
+                  y={y + 34}
                   fill={colors.text}
-                  fontSize={84}
+                  fontSize={96}
                   textAnchor="middle"
                   fontFamily={fonts.math}
                   fontWeight={800}
@@ -96,9 +112,9 @@ export const Spectral: React.FC = () => {
                 </text>
                 <text
                   x={x}
-                  y={y + 22}
-                  fill={alpha(colors.green, 0.8)}
-                  fontSize={64}
+                  y={y + 26}
+                  fill={colors.green}
+                  fontSize={72}
                   textAnchor="middle"
                   fontFamily={fonts.math}
                   fontWeight={800}
@@ -109,69 +125,65 @@ export const Spectral: React.FC = () => {
               </g>
             );
           })}
-        </g>
-        {/* the orthonormal frame */}
-        <g opacity={fadeIn(frame, c0 + 20) * (1 - fadeIn(frame, c1 + 70))}>
-          <Arrow
-            from={F}
-            to={{ x: F.x + 150 * Math.cos(fa), y: F.y - 150 * Math.sin(fa) }}
-            width={12}
-          />
-          <Arrow
-            from={F}
-            to={{ x: F.x - 150 * Math.sin(fa), y: F.y - 150 * Math.cos(fa) }}
-            width={12}
+          {/* the staircase outline under the diagonal */}
+          <path
+            d="M -285 -70 L -95 -70 L -95 90 L 95 90 L 95 240"
+            fill="none"
+            stroke={colors.green}
+            strokeWidth={5}
+            strokeDasharray="12 10"
+            opacity={col2 * (1 - upper)}
           />
         </g>
-        {/* the eigenvalue plane */}
-        <g opacity={fadeIn(frame, c1 + 70)}>
+        {/* the plane on the right */}
+        <defs>
+          <clipPath id="e15spec">
+            <circle cx={O.x} cy={O.y} r={300} />
+          </clipPath>
+        </defs>
+        <g clipPath="url(#e15spec)" opacity={fadeIn(frame, c1 + 4)}>
+          <Plane map={linear(M)} scr={scr} range={6} step={0.5} />
+        </g>
+        <g opacity={fadeIn(frame, c1 + 4)}>
+          <Arrow
+            from={O}
+            to={scr(e1.x, e1.y)}
+            width={14}
+            color={colors.orange}
+          />
+        </g>
+        <g opacity={fadeIn(frame, c5 + 4)} clipPath="url(#e15spec)">
+          <Arrow
+            from={O}
+            to={scr(e2.x, e2.y)}
+            width={14}
+            color={colors.highlight}
+          />
           <line
-            x1={P.x - 260}
-            y1={P.y}
-            x2={P.x + 260}
-            y2={P.y}
-            stroke={alpha(colors.paper, 0.4)}
+            x1={scr(-3 * c, -3 * s).x}
+            y1={scr(-3 * c, -3 * s).y}
+            x2={scr(3 * c, 3 * s).x}
+            y2={scr(3 * c, 3 * s).y}
+            stroke={alpha(colors.orange, 0.5)}
             strokeWidth={4}
           />
           <line
-            x1={P.x}
-            y1={P.y - 180}
-            x2={P.x}
-            y2={P.y + 180}
-            stroke={alpha(colors.paper, 0.3)}
-            strokeWidth={3}
+            x1={scr(3 * s, -3 * c).x}
+            y1={scr(3 * s, -3 * c).y}
+            x2={scr(-3 * s, 3 * c).x}
+            y2={scr(-3 * s, 3 * c).y}
+            stroke={alpha(colors.highlight, 0.5)}
+            strokeWidth={4}
           />
-          <circle
-            cx={P.x}
-            cy={P.y}
-            r={S}
-            fill="none"
-            stroke={colors.primary}
-            strokeWidth={5}
-            opacity={unit}
-          />
-          {EIG.map((e, i) => {
-            const x = lerp(lerp(e.x, REAL[i], herm), Math.cos(CIRC[i]), unit);
-            const y = lerp(lerp(e.y, 0, herm), Math.sin(CIRC[i]), unit);
-            return (
-              <circle
-                key={i}
-                cx={P.x + x * S}
-                cy={P.y - y * S}
-                r={16}
-                fill={colors.orange}
-              />
-            );
-          })}
         </g>
       </svg>
       <div
         style={{
           position: "absolute",
-          top: 40,
+          top: 96,
           left: 120,
           fontFamily: fonts.title,
-          fontSize: 52,
+          fontSize: 56,
           fontWeight: 800,
           color: colors.primary,
           opacity: fadeIn(frame, c0 + 4),
@@ -183,37 +195,22 @@ export const Spectral: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 160,
-          left: 1260,
-          width: 480,
+          top: 740,
+          left: 370,
+          width: 460,
           textAlign: "center",
-          padding: "12px 0",
+          padding: "10px 0",
           borderRadius: 16,
-          border: `5px solid ${colors.highlight}`,
-          background: alpha(colors.bg, 0.85),
-          fontSize: 36,
+          border: `4px solid ${colors.highlight}`,
+          fontSize: 52,
+          fontFamily: fonts.math,
           fontWeight: 800,
           color: colors.highlight,
-          opacity: fadeIn(frame, c1 + 10) * (1 - fadeIn(frame, c1 + 70)),
-          translate: riseIn(frame, c1 + 10, 12),
+          opacity: fadeIn(frame, c3 + 6),
+          translate: riseIn(frame, c3 + 6, 12),
         }}
       >
-        {tx.normal}
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: 380,
-          left: 1260,
-          width: 480,
-          textAlign: "center",
-          fontSize: 40,
-          fontWeight: 800,
-          color: unit > 0.5 ? colors.primary : colors.green,
-          opacity: fadeIn(frame, c1 + 80),
-        }}
-      >
-        {unit > 0.5 ? tx.unitaryEig : tx.hermitian}
+        N N* = N* N
       </div>
     </SceneShell>
   );

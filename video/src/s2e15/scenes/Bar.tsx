@@ -1,157 +1,83 @@
 import type React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
+import { useCurrentFrame } from "remotion";
+import { fadeIn, riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
-import { glide } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
-import { Eq, type Tok } from "../../shared/components/Eq";
-import { useStrings } from "../i18n";
 
-// Why the bar. A complex plane: z (lemon) turning slowly, z·z (orange)
-// turning twice as fast so its real part keeps changing sign, and the
-// mirror image z̄ (dashed). Their product z̄·z sits still on the positive
-// real axis as a green dot at |z|². On the right two readouts: z·z wanders
-// in colour, z̄·z holds. Then (1, i) again, worked in front of you: the bar
-// drops onto the first i, ī becomes −i, (−i)·i becomes 1, and 1 + 1
-// settles on 2 as the length² gauge rises to a green 2.
+// Why the bar. One complex number z turning slowly on its circle (c0).
+// z·z appears, turning twice as fast; a readout of its real part keeps
+// flipping sign, red when negative (c1). The mirror image z̄ appears,
+// dashed, turning the other way (c2). Their product z̄·z appears as a
+// green dot that never moves, sitting on the positive real axis at |z|²,
+// with a steady readout (c3). Last the angles: +θ on z, −θ on z̄, and
+// they add to 0 (c4): the conjugate undoes the turn and keeps the size.
 
-const O = { x: 640, y: 470 };
-const S = 200;
+const O = { x: 680, y: 480 };
+const S = 210;
 const R = 1.15;
-const fmt = (x: number, y: number) => {
-  const r = (n: number) =>
-    (Math.round(n * 10) / 10).toFixed(1).replace("-", "−");
-  return `${r(x)} ${y < 0 ? "−" : "+"} ${r(Math.abs(y)).replace("−", "")}i`;
-};
 
 export const Bar: React.FC = () => {
   const frame = useCurrentFrame();
-  const tx = useStrings();
-  const { fps } = useVideoConfig();
   const cues = useCues("bar");
-  const [c0, c1] = cues;
-  const part1 = fadeOut(frame, c1, 10);
-  const th = 0.5 + Math.max(0, frame - c0 - 10) * 0.03;
+  const [c0, c1, c2, c3, c4] = cues;
+  const th = 0.5 + Math.max(0, frame - c0 - 10) * 0.025;
   const z = { x: R * Math.cos(th), y: R * Math.sin(th) };
   const zz = { x: R * R * Math.cos(2 * th), y: R * R * Math.sin(2 * th) };
   const p = (x: number, y: number) => ({ x: O.x + x * S, y: O.y - y * S });
-  const mirror = fadeIn(frame, c0 + 70, 10);
-  const rise = glide(frame, c1 + 100, fps, 20);
-  // (1, i) again, with the bar: 1·1 + ī·i, then ī = −i so the second term
-  // is (−i)·i = 1, and the whole thing settles on 2
-  const green = colors.green;
-  const steps: Tok[][] = [
-    [
-      { id: "a", t: "1·1" },
-      { id: "p", t: " + " },
-      { id: "b", t: "i" },
-      { id: "c", t: "·i" },
-    ],
-    [
-      { id: "a", t: "1·1" },
-      { id: "p", t: " + " },
-      { id: "b", t: "i", bar: true },
-      { id: "c", t: "·i" },
-    ],
-    [
-      { id: "a", t: "1" },
-      { id: "p", t: " + " },
-      { id: "b", t: "(−i)", color: colors.orange },
-      { id: "c", t: "·i" },
-    ],
-    [
-      { id: "a", t: "1" },
-      { id: "p", t: " + " },
-      { id: "r", t: "1", color: green },
-    ],
-    [{ id: "z", t: "2", color: green }],
-  ];
-  const at = [c1 + 10, c1 + 40, c1 + 62, c1 + 82, c1 + 100];
-  const U = 80;
+  const sq = fadeIn(frame, c1 + 4, 10);
+  const mirror = fadeIn(frame, c2 + 4, 10);
+  const prod = fadeIn(frame, c3 + 4, 10);
+  const arcs = fadeIn(frame, c4 + 4, 10);
+  const fmt = (n: number) =>
+    (Math.round(n * 100) / 100).toFixed(2).replace("-", "−");
+  const thDeg = Math.round(
+    (((th % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) * (180 / Math.PI),
+  );
+  const arc = (a: number, r: number) => {
+    const s = a >= 0 ? 0 : 1;
+    const e = p((r / S) * Math.cos(a), (r / S) * Math.sin(a));
+    return `M ${O.x + r} ${O.y} A ${r} ${r} 0 ${Math.abs(a) > Math.PI ? 1 : 0} ${s} ${e.x} ${e.y}`;
+  };
+  const a = ((th + Math.PI) % (2 * Math.PI)) - Math.PI;
 
   return (
     <SceneShell id="bar">
       <Sfx name="whoosh" at={c0 + 10} volume={0.1} />
-      <Sfx name="pop" at={c0 + 70} volume={0.14} />
-      <Sfx name="chime" at={c0 + 90} volume={0.35} />
-      <Sfx name="pop" at={c1 + 40} volume={0.12} />
-      <Sfx name="whoosh" at={c1 + 62} volume={0.1} />
-      <Sfx name="whoosh" at={c1 + 82} volume={0.1} />
-      <Sfx name="ding" at={c1 + 100} volume={0.25} />
+      <Sfx name="pop" at={c1 + 4} volume={0.12} />
+      <Sfx name="pop" at={c2 + 4} volume={0.12} />
+      <Sfx name="chime" at={c3 + 10} volume={0.3} />
+      <Sfx name="pop" at={c4 + 4} volume={0.12} />
 
-      <AbsoluteFill style={{ opacity: part1 }}>
-        <svg width={1920} height={1080}>
-          <line
-            x1={p(-1.8, 0).x}
-            y1={O.y}
-            x2={p(1.8, 0).x}
-            y2={O.y}
-            stroke={alpha(colors.paper, 0.35)}
-            strokeWidth={3}
-          />
-          <line
-            x1={O.x}
-            y1={p(0, -1.6).y}
-            x2={O.x}
-            y2={p(0, 1.6).y}
-            stroke={alpha(colors.paper, 0.35)}
-            strokeWidth={3}
-          />
-          <circle
-            cx={O.x}
-            cy={O.y}
-            r={R * S}
-            fill="none"
-            stroke={alpha(colors.primary, 0.25)}
-            strokeWidth={3}
-            strokeDasharray="10 10"
-          />
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={p(-1.9, 0).x}
+          y1={O.y}
+          x2={p(1.9, 0).x}
+          y2={O.y}
+          stroke={alpha(colors.paper, 0.35)}
+          strokeWidth={3}
+        />
+        <line
+          x1={O.x}
+          y1={p(0, -1.7).y}
+          x2={O.x}
+          y2={p(0, 1.7).y}
+          stroke={alpha(colors.paper, 0.35)}
+          strokeWidth={3}
+        />
+        <circle
+          cx={O.x}
+          cy={O.y}
+          r={R * S}
+          fill="none"
+          stroke={alpha(colors.primary, 0.25)}
+          strokeWidth={3}
+          strokeDasharray="10 10"
+        />
+        <g opacity={sq}>
           <Arrow from={O} to={p(zz.x, zz.y)} width={12} color={colors.orange} />
-          <Arrow from={O} to={p(z.x, z.y)} width={14} />
-          <g opacity={mirror}>
-            <line
-              x1={O.x}
-              y1={O.y}
-              x2={p(z.x, -z.y).x}
-              y2={p(z.x, -z.y).y}
-              stroke={colors.primary}
-              strokeWidth={6}
-              strokeDasharray="12 10"
-            />
-            <circle cx={p(R * R, 0).x} cy={O.y} r={18} fill={colors.green} />
-            <text
-              x={p(R * R, 0).x + 30}
-              y={O.y - 24}
-              fill={colors.green}
-              fontSize={48}
-              fontFamily={fonts.math}
-              fontWeight={800}
-            >
-              <tspan textDecoration="overline">z</tspan>z
-            </text>
-            <text
-              x={p(z.x, -z.y).x + 16}
-              y={p(z.x, -z.y).y + 46}
-              fill={colors.primary}
-              fontSize={48}
-              fontFamily={fonts.math}
-              fontWeight={800}
-            >
-              <tspan textDecoration="overline">z</tspan>
-            </text>
-          </g>
-          <text
-            x={p(z.x, z.y).x + 16}
-            y={p(z.x, z.y).y - 16}
-            fill={colors.primary}
-            fontSize={52}
-            fontFamily={fonts.math}
-            fontWeight={800}
-          >
-            z
-          </text>
           <text
             x={p(zz.x, zz.y).x + 16}
             y={p(zz.x, zz.y).y - 16}
@@ -160,115 +86,122 @@ export const Bar: React.FC = () => {
             fontFamily={fonts.math}
             fontWeight={800}
           >
-            z²
+            z·z
           </text>
-        </svg>
+        </g>
+        <Arrow from={O} to={p(z.x, z.y)} width={15} />
+        <text
+          x={p(z.x, z.y).x + 16}
+          y={p(z.x, z.y).y - 16}
+          fill={colors.primary}
+          fontSize={56}
+          fontFamily={fonts.math}
+          fontWeight={800}
+        >
+          z
+        </text>
+        <g opacity={mirror}>
+          <line
+            x1={O.x}
+            y1={O.y}
+            x2={p(z.x, -z.y).x}
+            y2={p(z.x, -z.y).y}
+            stroke={colors.primary}
+            strokeWidth={7}
+            strokeDasharray="14 10"
+          />
+          <circle
+            cx={p(z.x, -z.y).x}
+            cy={p(z.x, -z.y).y}
+            r={12}
+            fill={colors.primary}
+          />
+          <text
+            x={p(z.x, -z.y).x + 16}
+            y={p(z.x, -z.y).y + 52}
+            fill={colors.primary}
+            fontSize={56}
+            fontFamily={fonts.math}
+            fontWeight={800}
+          >
+            <tspan textDecoration="overline">z</tspan>
+          </text>
+        </g>
+        <g opacity={prod}>
+          <circle cx={p(R * R, 0).x} cy={O.y} r={22} fill={colors.green} />
+          <text
+            x={p(R * R, 0).x + 30}
+            y={O.y + 60}
+            fill={colors.green}
+            fontSize={52}
+            fontFamily={fonts.math}
+            fontWeight={800}
+          >
+            <tspan textDecoration="overline">z</tspan>·z
+          </text>
+        </g>
+        <g opacity={arcs}>
+          <path
+            d={arc(a, 90)}
+            fill="none"
+            stroke={colors.primary}
+            strokeWidth={7}
+          />
+          <path
+            d={arc(-a, 120)}
+            fill="none"
+            stroke={colors.primary}
+            strokeWidth={7}
+            strokeDasharray="10 8"
+          />
+        </g>
+      </svg>
+      <div
+        style={{
+          position: "absolute",
+          top: 200,
+          left: 1260,
+          display: "flex",
+          flexDirection: "column",
+          gap: 34,
+        }}
+      >
         <div
           style={{
-            position: "absolute",
-            top: 240,
-            left: 1240,
-            display: "flex",
-            flexDirection: "column",
-            gap: 40,
+            fontFamily: fonts.mono,
+            fontSize: 56,
+            fontWeight: 800,
+            color: zz.x < 0 ? colors.red : colors.orange,
+            opacity: sq,
           }}
         >
-          <div
-            style={{
-              fontFamily: fonts.mono,
-              fontSize: 58,
-              fontWeight: 800,
-              color: zz.x < 0 ? colors.red : colors.orange,
-              opacity: fadeIn(frame, c0 + 20),
-            }}
-          >
-            z·z = {fmt(zz.x, zz.y)}
-          </div>
-          <div
-            style={{
-              fontFamily: fonts.mono,
-              fontSize: 58,
-              fontWeight: 800,
-              color: colors.green,
-              opacity: mirror,
-              translate: riseIn(frame, c0 + 70, 12),
-            }}
-          >
-            <span style={{ textDecoration: "overline" }}>z</span>·z ={" "}
-            {fmt(R * R, 0)}
-          </div>
-          <div
-            style={{
-              fontSize: 40,
-              fontWeight: 800,
-              color: colors.muted,
-              opacity: mirror,
-            }}
-          >
-            <span
-              style={{ textDecoration: "overline", fontFamily: fonts.math }}
-            >
-              z
-            </span>{" "}
-            = {tx.conj}
-          </div>
+          Re(z·z) = {fmt(zz.x)}
         </div>
-      </AbsoluteFill>
-
-      <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
-        <Eq steps={steps} at={at} x={700} y={400} size={110} />
-        <svg width={1920} height={1080} style={{ position: "absolute" }}>
-          <g transform="translate(1500 600)">
-            <rect
-              x={-90}
-              y={-3 * U}
-              width={180}
-              height={4 * U}
-              rx={20}
-              fill={alpha(colors.bg, 0.8)}
-              stroke={alpha(colors.paper, 0.4)}
-              strokeWidth={4}
-            />
-            <line
-              x1={-110}
-              y1={0}
-              x2={110}
-              y2={0}
-              stroke={colors.text}
-              strokeWidth={5}
-            />
-            <rect
-              x={-60}
-              y={-2 * rise * U}
-              width={120}
-              height={2 * rise * U}
-              rx={8}
-              fill={colors.green}
-            />
-            <text
-              x={0}
-              y={-3 * U - 30}
-              fill={colors.muted}
-              fontSize={40}
-              textAnchor="middle"
-              fontWeight={800}
-            >
-              {tx.lengthSq}
-            </text>
-            <text
-              x={130}
-              y={-2 * U + 14}
-              fill={colors.green}
-              fontSize={48}
-              fontFamily={fonts.mono}
-              fontWeight={800}
-              opacity={rise}
-            >
-              2
-            </text>
-          </g>
-        </svg>
-      </AbsoluteFill>
+        <div
+          style={{
+            fontFamily: fonts.mono,
+            fontSize: 56,
+            fontWeight: 800,
+            color: colors.green,
+            opacity: prod,
+            translate: riseIn(frame, c3 + 4, 12),
+          }}
+        >
+          <span style={{ textDecoration: "overline" }}>z</span>·z = {fmt(R * R)}
+        </div>
+        <div
+          style={{
+            fontFamily: fonts.mono,
+            fontSize: 56,
+            fontWeight: 800,
+            color: colors.primary,
+            opacity: arcs,
+            translate: riseIn(frame, c4 + 4, 12),
+          }}
+        >
+          +{thDeg % 360}° − {thDeg % 360}° = 0°
+        </div>
+      </div>
     </SceneShell>
   );
 };

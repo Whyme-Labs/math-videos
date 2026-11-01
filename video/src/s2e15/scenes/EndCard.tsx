@@ -5,14 +5,15 @@ import { SignOff } from "../../shared/components/Brand";
 import { Sfx } from "../../shared/components/Sfx";
 import { glide } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
-import { alpha, colors } from "../../shared/theme";
+import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
 import { Stack } from "../../s2e06/components/stack";
 import { useStrings } from "../i18n";
 
-// Recap: the unit circle in the complex plane, a point turning on it, its
+// Recap (c0): the unit circle in the complex plane, a point turning on it, its
 // conjugate mirroring it, and the green dot at 1 where their product sits.
-// Teaser for vectors and covectors: an orange stack of sheets, and a lemon
+// Unitary maps keep length (c1).
+// Teaser for vectors and covectors (c2): an orange stack of sheets, and a lemon
 // arrow growing out of it, perpendicular to the sheets.
 
 export const EndCard: React.FC = () => {
@@ -20,20 +21,20 @@ export const EndCard: React.FC = () => {
   const tx = useStrings();
   const { fps } = useVideoConfig();
   const cues = useCues("endCard");
-  const [c0, c1] = cues;
-  const part1 = fadeOut(frame, c1, 10);
+  const [c0, c1, c2] = cues;
+  const part1 = fadeOut(frame, c2, 10);
   const O = { x: 960, y: 470 };
   const R = 260;
   const a = 0.4 + (frame - c0) * 0.03;
-  const grow = glide(frame, c1 + 40, fps, 24);
+  const grow = glide(frame, c2 + 40, fps, 24);
   const T = { x: 1300, y: 420 };
   const scr = (x: number, y: number) => ({ x: T.x + x * 90, y: T.y - y * 90 });
 
   return (
     <SceneShell id="endCard" showWatermark={false}>
       <Sfx name="pop" at={c0 + 10} volume={0.14} />
-      <Sfx name="whoosh" at={c1 + 20} volume={0.12} />
-      <Sfx name="sparkle" at={c1 + 50} volume={0.5} />
+      <Sfx name="whoosh" at={c2 + 20} volume={0.12} />
+      <Sfx name="sparkle" at={c2 + 50} volume={0.5} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
@@ -86,7 +87,24 @@ export const EndCard: React.FC = () => {
         </svg>
       </AbsoluteFill>
 
-      <AbsoluteFill style={{ opacity: fadeIn(frame, c1 + 4, 10) }}>
+      <div
+        style={{
+          position: "absolute",
+          top: 96,
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          fontFamily: fonts.math,
+          fontSize: 64,
+          fontWeight: 800,
+          color: colors.green,
+          opacity: fadeIn(frame, c1 + 10) * part1,
+          translate: riseIn(frame, c1 + 10, 12),
+        }}
+      >
+        ‖Uv‖ = ‖v‖
+      </div>
+      <AbsoluteFill style={{ opacity: fadeIn(frame, c2 + 4, 10) }}>
         <svg width={1920} height={1080}>
           <defs>
             <clipPath id="e15stack">
@@ -112,8 +130,8 @@ export const EndCard: React.FC = () => {
               fontSize: 52,
               color: colors.muted,
               maxWidth: 800,
-              opacity: fadeIn(frame, c1 + 70),
-              translate: riseIn(frame, c1 + 70),
+              opacity: fadeIn(frame, c2 + 70),
+              translate: riseIn(frame, c2 + 70),
             }}
           >
             {tx.nextEpisode}
@@ -121,7 +139,7 @@ export const EndCard: React.FC = () => {
           </div>
           <SignOff
             line={tx.seriesLine}
-            style={{ opacity: fadeIn(frame, c1 + 90) }}
+            style={{ opacity: fadeIn(frame, c2 + 90) }}
           />
         </AbsoluteFill>
       </AbsoluteFill>
