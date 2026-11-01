@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e16-vectors-and-covectors.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e16-zh-xiang-liang-yu-yu-xiang-liang.mp4` (DUR_ZH, 16:9). It has a scene the English edition
+- English edition: `out/s2e16-vectors-and-covectors.mp4` (4:01, 16:9)
+- Chinese edition: `out/s2e16-zh-xiang-liang-yu-yu-xiang-liang.mp4` (4:20, 16:9). It has a scene the English edition
   doesn't: 裴秀's six principles of map-making (制图六体): when the map's
   scale (分率) goes wrong, right angles break but contour counts don't.
 - Thumbnails: `thumbnails/png/S2E16-EN.png` and `S2E16-ZH.png` (16:9, for
