@@ -6,8 +6,15 @@ import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import {
+  IDENTITY,
+  Plane,
+  lerpMat,
+  linear,
+} from "../../shared/components/Plane";
 
-// The generalized eigenvector. S − I acting on the plane: the vertical
+// The generalized eigenvector. S − I acting on the whole plane (its grid
+// first collapses onto the horizontal line, then onto 0): the vertical
 // arrow e₂ swings down onto e₁; then e₁ shrinks to a dot at the origin.
 // On the right, the same thing as a two-rung ladder: e₂ on the top rung,
 // e₁ on the middle, 0 at the bottom, with "S − I" arrows stepping down.
@@ -42,6 +49,33 @@ export const Ladder: React.FC = () => {
       <Sfx name="chime" at={c1 + 80} />
 
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <defs>
+          <clipPath id="e13ladder">
+            <rect
+              x={O.x - 420}
+              y={O.y - 380}
+              width={840}
+              height={620}
+              rx={30}
+            />
+          </clipPath>
+        </defs>
+        {/* the whole plane through S − I: once, everything lands on the
+            horizontal line; twice, everything lands on 0 */}
+        <g clipPath="url(#e13ladder)">
+          <Plane
+            map={linear(
+              lerpMat(
+                lerpMat(IDENTITY, [0, 1, 0, 0], step1),
+                [0, 0, 0, 0],
+                step2,
+              ),
+            )}
+            scr={(x, y) => ({ x: O.x + x * S * 0.5, y: O.y - y * S * 0.5 })}
+            range={10}
+            opacity={0.9}
+          />
+        </g>
         <line
           x1={O.x - 360}
           y1={O.y}

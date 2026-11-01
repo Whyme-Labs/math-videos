@@ -5,17 +5,24 @@ import { Sfx } from "../../shared/components/Sfx";
 import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Box, isoAt, type V3 } from "../components/iso";
+import { type V3 } from "../components/iso";
+import {
+  Arrow3,
+  Box3,
+  FloorGrid,
+  Stage3D,
+} from "../../shared/components/three3d";
 import { useStrings } from "../i18n";
 
-// The determinant as volume. The unit cube leans and stretches into a box
+// The determinant as volume, in real 3D with the camera circling over a
+// floor grid. The unit cube leans and stretches into a box
 // while a volume counter climbs to its determinant. Then its third edge
 // swings through the floor, the box turns red and the counter goes
 // negative. Last, the third edge lies down into the plane of the other two:
 // the box flattens, the counter falls to 0, and "a direction lost" lands.
 
 const A: V3 = [1.3, 0.2, 0];
-const B: V3 = [0.4, 1.1, 0.2];
+const B: V3 = [0.4, 1.1, 0];
 const C: V3 = [0, 0.3, 1.4];
 const det3 = (a: V3, b: V3, c: V3) =>
   a[0] * (b[1] * c[2] - b[2] * c[1]) -
@@ -49,7 +56,7 @@ export const Det: React.FC = () => {
   ];
   const c = mix(c1v, flat, crush);
   const v = det3(a, b, c);
-  const to = isoAt(760, 320, 165);
+  const azimuth = -0.75 + (frame - c0) * 0.004;
   const neg = v < -0.01;
   const zero = Math.abs(v) < 0.01;
 
@@ -62,9 +69,30 @@ export const Det: React.FC = () => {
       <Sfx name="whoosh" at={c1 + 30} volume={0.12} />
       <Sfx name="scratch" at={c1 + 70} volume={0.22} />
 
-      <svg width={1920} height={1080} style={{ position: "absolute" }}>
-        <Box a={a} b={b} c={c} to={to} flipped={neg} />
-      </svg>
+      <Stage3D
+        azimuth={azimuth}
+        elevation={lerp(0.42, 1.05, crush)}
+        distance={lerp(7.4, 10.5, crush)}
+        target={[0.75, 0.75, 0.25]}
+        style={{ left: -240, top: -150 }}
+      >
+        <FloorGrid n={3} color={colors.paper} opacity={0.3} />
+        <Box3
+          a={a}
+          b={b}
+          c={c}
+          color={neg || zero ? colors.red : colors.primary}
+          opacity={0.42}
+        />
+        <Arrow3 from={[0, 0, 0]} to={a} color={colors.primary} radius={0.035} />
+        <Arrow3
+          from={[0, 0, 0]}
+          to={b}
+          color={colors.highlight}
+          radius={0.035}
+        />
+        <Arrow3 from={[0, 0, 0]} to={c} color={colors.orange} radius={0.035} />
+      </Stage3D>
       <div
         style={{
           position: "absolute",

@@ -6,9 +6,11 @@ import { glide, lerp, ramp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import { Plane, linear } from "../../shared/components/Plane";
 import { useStrings } from "../i18n";
 
-// The shear S = [[1, 1], [0, 1]]. A fan of arrows; the plane shears. The
+// The shear S = [[1, 1], [0, 1]]. A fan of arrows; the whole plane
+// shears, the unit square leaning into a parallelogram of the same area. The
 // horizontal arrows stay on their line and glow; every other arrow tilts.
 // Then a search beam sweeps round the origin looking for a second line;
 // each candidate it stops on gets a red cross. Badge: "λ = 1, twice · only
@@ -51,25 +53,21 @@ export const Shear: React.FC = () => {
           </clipPath>
         </defs>
         <g clipPath="url(#shearStage)">
-          {Array.from({ length: 13 }).map((_, i) => {
-            const k = i - 6;
-            return (
-              <g key={i} stroke={alpha(colors.paper, 0.12)} strokeWidth={2}>
-                <line
-                  x1={scr(k - 4 * sh, -4).x}
-                  y1={scr(0, -4).y}
-                  x2={scr(k + 4 * sh, 4).x}
-                  y2={scr(0, 4).y}
-                />
-                <line
-                  x1={scr(-8, k).x}
-                  y1={scr(0, k).y}
-                  x2={scr(8, k).x}
-                  y2={scr(0, k).y}
-                />
-              </g>
-            );
-          })}
+          <Plane map={linear([1, sh, 0, 1])} scr={scr} range={12} />
+          {/* the unit square shears into a parallelogram of the same area */}
+          <polygon
+            points={[
+              [0, 0],
+              [1, 0],
+              [1 + sh, 1],
+              [sh, 1],
+            ]
+              .map(([x, y]) => `${scr(x, y).x},${scr(x, y).y}`)
+              .join(" ")}
+            fill={alpha(colors.primary, 0.14)}
+            stroke={alpha(colors.primary, 0.6)}
+            strokeWidth={4}
+          />
           <line
             x1={scr(-6, 0).x}
             y1={O.y}

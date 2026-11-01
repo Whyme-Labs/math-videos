@@ -6,10 +6,17 @@ import { glide, lerp } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import {
+  IDENTITY,
+  Plane,
+  lerpMat,
+  linear,
+} from "../../shared/components/Plane";
 import { useStrings } from "../i18n";
 
 // Eigenvectors of A = [[4, 1], [2, 3]]. A fan of twelve arrows around the
-// origin; the map acts and almost every arrow swings off its own line (its
+// origin, over a grid; the map acts, the whole grid bends with it, and
+// almost every arrow swings off its own line (its
 // old line stays as a faint ghost), while the arrows on the lines through
 // (1, 1) and (1, −2) only stretch, ×5 and ×2, and those lines glow. Then
 // the grid redraws along the two eigen-lines, and the matrix card on the
@@ -53,22 +60,19 @@ export const Lines: React.FC = () => {
           </clipPath>
         </defs>
         <g clipPath="url(#linesStage)">
-          {/* grid: standard, then along the eigen-lines */}
-          {Array.from({ length: 15 }).map((_, i) => {
-            const k = i - 7;
-            const u = { x: lerp(1, 1, regrid), y: lerp(0, 1, regrid) };
-            const v = { x: lerp(0, 1, regrid), y: lerp(1, -2, regrid) };
-            const a1 = scr(k * u.x - 12 * v.x, k * u.y - 12 * v.y);
-            const a2 = scr(k * u.x + 12 * v.x, k * u.y + 12 * v.y);
-            const b1 = scr(k * v.x - 12 * u.x, k * v.y - 12 * u.y);
-            const b2 = scr(k * v.x + 12 * u.x, k * v.y + 12 * u.y);
-            return (
-              <g key={i} stroke={alpha(colors.paper, 0.12)} strokeWidth={2}>
-                <line x1={a1.x} y1={a1.y} x2={a2.x} y2={a2.y} />
-                <line x1={b1.x} y1={b1.y} x2={b2.x} y2={b2.y} />
-              </g>
-            );
-          })}
+          {/* the whole plane: square, then bent by A, then redrawn along
+              the eigen-lines (1, 1) and (1, −2) */}
+          <Plane
+            map={linear(
+              lerpMat(
+                lerpMat(IDENTITY, [4, 1, 2, 3], act),
+                [1, 1, 1, -2],
+                regrid,
+              ),
+            )}
+            scr={scr}
+            range={14}
+          />
           {EIG.map((e, k) => (
             <line
               key={k}

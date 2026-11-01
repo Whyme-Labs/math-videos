@@ -2,12 +2,27 @@ import type React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { fadeIn, fadeOut, riseIn } from "../../shared/components/anim";
 import { PLUCKS, Sfx } from "../../shared/components/Sfx";
-import { glide, lerp, springIn } from "../../shared/components/motion";
+import { glide, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
+import {
+  IDENTITY,
+  Plane,
+  lerpMat,
+  linear,
+  type Mat2,
+} from "../../shared/components/Plane";
 
-// The product rule and the formula. A unit square grows by B (×2), then by
-// A (×3): its area counter reads 1, 2, 6, and det(AB) = det A · det B
+const mul = (p: Mat2, q: Mat2): Mat2 => [
+  p[0] * q[0] + p[1] * q[2],
+  p[0] * q[1] + p[1] * q[3],
+  p[2] * q[0] + p[3] * q[2],
+  p[2] * q[1] + p[3] * q[3],
+];
+
+// The product rule and the formula. The whole plane bends by B (area ×2),
+// then by A on top of it (×3), carrying the unit square along: its area
+// counter reads 1, 2, 6, and det(AB) = det A · det B
 // lands under it. Then a 3 × 3 grid of letters a … i; expanding the wedge
 // of its three columns, the six products fly out one at a time, each
 // lighting its three cells, with its sign: aei, bfg, cdh, −ceg, −bdi, −afh.
@@ -29,15 +44,25 @@ export const Product: React.FC = () => {
   const [c0, c1] = cues;
   const g1 = glide(frame, c0 + 20, fps, 24);
   const g2 = glide(frame, c0 + 60, fps, 24);
-  const area = lerp(1, 2, g1) * lerp(1, 3, g2);
+  // B = [2 ½; 0 1] (det 2), then A = [1.5 0; ½ 2] (det 3): the whole
+  // plane bends, first by B, then by A on top of it
+  const Bt = lerpMat(IDENTITY, [2, 0.5, 0, 1], g1);
+  const At = lerpMat(IDENTITY, [1.5, 0, 0.5, 2], g2);
+  const M = mul(At, Bt);
+  const area = M[0] * M[3] - M[1] * M[2];
   const part1 = fadeOut(frame, c1, 10);
   const termAt = (k: number) => c1 + 20 + k * 16;
   const active = TERMS.findIndex(
     (_, k) => frame >= termAt(k) && frame < termAt(k) + 16,
   );
   const U = 90;
-  const w = U * lerp(1, 2, g1) * lerp(1, 1.5, g2);
-  const h = U * lerp(1, 2, g2);
+  const scr = (x: number, y: number) => ({ x: 600 + x * U, y: 660 - y * U });
+  const sq = [
+    [0, 0],
+    [1, 0],
+    [1, 1],
+    [0, 1],
+  ].map(([x, y]) => linear(M)(x, y));
 
   return (
     <SceneShell id="product">
@@ -52,11 +77,18 @@ export const Product: React.FC = () => {
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
-          <rect
-            x={560}
-            y={640 - h}
-            width={w}
-            height={h}
+          <defs>
+            <clipPath id="e11prod">
+              <rect x={180} y={110} width={900} height={720} rx={30} />
+            </clipPath>
+          </defs>
+          <g clipPath="url(#e11prod)">
+            <Plane map={linear(M)} scr={scr} range={12} />
+          </g>
+          <polygon
+            points={sq
+              .map((p) => `${scr(p.x, p.y).x},${scr(p.x, p.y).y}`)
+              .join(" ")}
             fill={alpha(colors.primary, 0.3)}
             stroke={colors.primary}
             strokeWidth={5}

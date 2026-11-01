@@ -1,15 +1,18 @@
 import type React from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
-import { fadeIn, riseIn } from "../../shared/components/anim";
+import { riseIn } from "../../shared/components/anim";
 import { Sfx } from "../../shared/components/Sfx";
 import { lerp, ramp, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { curve } from "../../s2e01/components/vec";
+import { Eq, type Tok } from "../../shared/components/Eq";
 import { useStrings } from "../i18n";
 
-// The characteristic polynomial. det(A − λ) = λ² − 7λ + 10 drawn over λ;
-// a slider λ sweeps from 0 to 7, a readout tracks det(A − λ), and where it
+// The characteristic polynomial. At the top det(A − λ) works itself out:
+// (4 − λ)(3 − λ) − 2 → λ² − 7λ + 12 − 2 → λ² − 7λ + 10, and once both
+// roots are found it factors as (λ − 5)(λ − 2). Below, the curve drawn over λ;
+// a slider λ sweeps from 0 to 7, a readout rides the dot, and where it
 // hits zero (λ = 2, λ = 5) the root dot pops and rings. Then two badges:
 // trace 7 = 5 + 2 and det 10 = 5 × 2.
 
@@ -31,6 +34,32 @@ export const Charpoly: React.FC = () => {
   const draw = curve(p, 0, Math.max(0.01, l), plot);
   const root = (r: number) =>
     Math.min(1, springIn(frame, c0 + 20 + Math.round((r / 7) * 150), fps, 10));
+  // the polynomial works itself out, then factors once both roots are found
+  const steps: Tok[][] = [
+    [
+      { id: "a", t: "det(A − λ)" },
+      { id: "e", t: " = " },
+      { id: "p", t: "(4 − λ)(3 − λ)" },
+      { id: "c", t: " − 2" },
+    ],
+    [
+      { id: "a", t: "det(A − λ)" },
+      { id: "e", t: " = " },
+      { id: "p", t: "λ² − 7λ + 12" },
+      { id: "c", t: " − 2" },
+    ],
+    [
+      { id: "a", t: "det(A − λ)" },
+      { id: "e", t: " = " },
+      { id: "p", t: "λ² − 7λ + 10", color: colors.orange },
+    ],
+    [
+      { id: "a", t: "det(A − λ)" },
+      { id: "e", t: " = " },
+      { id: "p", t: "(λ − 5)(λ − 2)", color: colors.green },
+    ],
+  ];
+  const at = [c0 + 4, c0 + 40, c0 + 66, c0 + 190];
   const badge = (k: number) =>
     Math.min(1, springIn(frame, c1 + 20 + k * 30, fps, 10));
 
@@ -113,17 +142,18 @@ export const Charpoly: React.FC = () => {
           </g>
         ))}
         <text
-          x={1360}
-          y={220}
-          fill={colors.text}
-          fontSize={44}
-          fontFamily={fonts.math}
-          fontWeight={700}
-          opacity={fadeIn(frame, c0 + 10)}
+          x={plot(l, p(l)).x + 26}
+          y={plot(l, p(l)).y - 20}
+          fill={colors.orange}
+          fontSize={40}
+          fontFamily={fonts.mono}
+          fontWeight={800}
+          opacity={sweep > 0 && sweep < 1 ? 1 : 0}
         >
-          det(A − λ) = {p(l).toFixed(2).replace("-", "−")}
+          {p(l).toFixed(1).replace("-", "−")}
         </text>
       </svg>
+      <Eq steps={steps} at={at} x={880} y={70} size={66} />
       {[
         { t: tx.traceLabel, top: 360 },
         { t: tx.detLabel, top: 480 },

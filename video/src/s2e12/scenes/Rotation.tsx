@@ -6,10 +6,12 @@ import { glide, springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
 import { Arrow } from "../../s2e01/components/vec";
+import { Plane, linear } from "../../shared/components/Plane";
 import { useStrings } from "../i18n";
 
 // A rotation has no real eigenvector. A fan of arrows and their faint
-// lines; the plane turns by 50° and every arrow leaves its line. Then the
+// lines; the whole plane (its grid with it) turns by 50° and every arrow
+// leaves its line. Then the
 // complex picture: a unit circle in ℂ with the two eigenvalues e^{±iθ} as
 // two dots, spinning in opposite directions.
 
@@ -37,6 +39,25 @@ export const Rotation: React.FC = () => {
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
+          <defs>
+            <clipPath id="e12rot">
+              <circle cx={O.x} cy={O.y} r={360} />
+            </clipPath>
+          </defs>
+          {/* the whole plane turns with the arrows */}
+          <g clipPath="url(#e12rot)">
+            <Plane
+              map={linear([
+                Math.cos(turn),
+                -Math.sin(turn),
+                Math.sin(turn),
+                Math.cos(turn),
+              ])}
+              scr={(x, y) => ({ x: O.x + x * 80, y: O.y - y * 80 })}
+              range={6}
+              opacity={0.8}
+            />
+          </g>
           {Array.from({ length: 10 }).map((_, k) => {
             const a = (k / 10) * Math.PI;
             return (

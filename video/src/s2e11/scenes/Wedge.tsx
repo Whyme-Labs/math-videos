@@ -5,15 +5,22 @@ import { PLUCKS, Sfx } from "../../shared/components/Sfx";
 import { springIn } from "../../shared/components/motion";
 import { SceneShell, useCues } from "../../shared/components/SceneShell";
 import { alpha, colors, fonts } from "../../shared/theme";
-import { Arrow } from "../../s2e01/components/vec";
-import { Box, isoAt, type V3 } from "../components/iso";
+import { type V3 } from "../components/iso";
+import {
+  Arrow3,
+  Box3,
+  FloorGrid,
+  ParamSurface,
+  Stage3D,
+} from "../../shared/components/three3d";
 import { useStrings } from "../i18n";
 
 // The wedge. Three basis arrows in 3-space. Three oriented unit patches
 // light up one at a time (e₁∧e₂, e₂∧e₃, e₃∧e₁): "3 directions". Then the
 // unit cube e₁∧e₂∧e₃ fills in: "1 direction". Then the row of dimensions
 // 1 3 3 1 builds, the last 1 glows, and a single "× λ" dial is all a map
-// can do to it.
+// can do to it, while the cube breathes in and out by that same λ. All in
+// real 3D, the camera circling.
 
 const E: V3[] = [
   [1, 0, 0],
@@ -27,13 +34,14 @@ export const Wedge: React.FC = () => {
   const { fps } = useVideoConfig();
   const cues = useCues("wedge");
   const [c0, c1] = cues;
-  const to = isoAt(760, 520, 230);
   const patch = (k: number) =>
     Math.min(1, springIn(frame, c0 + 20 + k * 30, fps, 10));
   const cube = fadeIn(frame, c0 + 150, 12);
   const row = (k: number) =>
     Math.min(1, springIn(frame, c1 + 10 + k * 10, fps, 10));
   const dial = frame * 0.05;
+  // all a map can do to the cube's one direction: scale it by λ
+  const lam = 1 + 0.22 * Math.sin(dial) * fadeIn(frame, c1 + 60, 10);
   const tints = [colors.primary, colors.highlight, colors.green];
 
   return (
@@ -47,41 +55,53 @@ export const Wedge: React.FC = () => {
       ))}
       <Sfx name="chime" at={c1 + 60} />
 
-      <AbsoluteFill style={{ opacity: fadeOut(frame, c1, 10) * 0.7 + 0.3 }}>
-        <svg width={1920} height={1080}>
-          <g opacity={cube}>
-            <Box a={E[0]} b={E[1]} c={E[2]} to={to} color={colors.orange} />
-          </g>
+      <AbsoluteFill style={{ opacity: fadeOut(frame, c1, 10) * 0.35 + 0.65 }}>
+        <Stage3D
+          azimuth={-0.8 + (frame - c0) * 0.004}
+          elevation={0.45}
+          distance={6.4}
+          target={[0.45, 0.45, 0.45]}
+          style={{ left: -260, top: -40 }}
+        >
+          <FloorGrid n={2} color={colors.paper} opacity={0.18} />
           {[0, 1, 2].map((k) => {
             const a = E[k];
             const b = E[(k + 1) % 3];
-            const pts = [
-              [0, 0, 0],
-              a,
-              [a[0] + b[0], a[1] + b[1], a[2] + b[2]],
-              b,
-            ] as V3[];
+            const o = patch(k) * (1 - 0.6 * cube);
             return (
-              <polygon
+              <ParamSurface
                 key={k}
-                points={pts.map((p) => `${to(p).x},${to(p).y}`).join(" ")}
-                fill={alpha(tints[k], 0.35 * patch(k) * (1 - 0.6 * cube))}
-                stroke={tints[k]}
-                strokeWidth={4}
-                opacity={patch(k)}
+                res={2}
+                p={(u, v) => [
+                  (u * a[0] + v * b[0]) * patch(k),
+                  (u * a[1] + v * b[1]) * patch(k),
+                  (u * a[2] + v * b[2]) * patch(k),
+                ]}
+                color={tints[k]}
+                opacity={Math.max(0.01, 0.55 * o)}
               />
             );
           })}
+          {cube > 0.01 ? (
+            <Box3
+              a={[lam, 0, 0]}
+              b={[0, lam, 0]}
+              c={[0, 0, lam]}
+              color={colors.orange}
+              opacity={0.45 * cube}
+              edge={0.012 * cube}
+            />
+          ) : null}
           {E.map((e, k) => (
-            <Arrow
+            <Arrow3
               key={k}
-              from={to([0, 0, 0])}
-              to={to([e[0] * 1.3, e[1] * 1.3, e[2] * 1.3])}
-              width={12}
+              from={[0, 0, 0]}
+              to={[e[0] * 1.35, e[1] * 1.35, e[2] * 1.35]}
               color={tints[k]}
+              radius={0.03}
             />
           ))}
-        </svg>
+        </Stage3D>
       </AbsoluteFill>
       {[
         { t: tx.threeDirs, at: c0 + 90, out: c0 + 150 },

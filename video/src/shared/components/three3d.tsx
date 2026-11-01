@@ -246,3 +246,95 @@ export const ParamSurface: React.FC<{
     </mesh>
   );
 };
+
+// The box (parallelepiped) spanned by three edge vectors from `origin`,
+// flat-shaded and translucent, with its twelve edges drawn as thin tubes.
+export const Box3: React.FC<{
+  readonly a: V3;
+  readonly b: V3;
+  readonly c: V3;
+  readonly origin?: V3;
+  readonly color: string;
+  readonly opacity?: number;
+  readonly edge?: number;
+}> = ({ a, b, c, origin = [0, 0, 0], color, opacity = 0.5, edge = 0.012 }) => {
+  const P = (i: number, j: number, k: number): V3 => [
+    origin[0] + i * a[0] + j * b[0] + k * c[0],
+    origin[1] + i * a[1] + j * b[1] + k * c[1],
+    origin[2] + i * a[2] + j * b[2] + k * c[2],
+  ];
+  const quads: V3[][] = [
+    [P(0, 0, 0), P(1, 0, 0), P(1, 1, 0), P(0, 1, 0)],
+    [P(0, 0, 1), P(1, 0, 1), P(1, 1, 1), P(0, 1, 1)],
+    [P(0, 0, 0), P(1, 0, 0), P(1, 0, 1), P(0, 0, 1)],
+    [P(0, 1, 0), P(1, 1, 0), P(1, 1, 1), P(0, 1, 1)],
+    [P(0, 0, 0), P(0, 1, 0), P(0, 1, 1), P(0, 0, 1)],
+    [P(1, 0, 0), P(1, 1, 0), P(1, 1, 1), P(1, 0, 1)],
+  ];
+  const pos: number[] = [];
+  for (const [p, q, r, s] of quads)
+    pos.push(...p, ...q, ...r, ...p, ...r, ...s);
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  g.computeVertexNormals();
+  const edges: [V3, V3][] = [];
+  for (const [i, j] of [
+    [0, 0],
+    [1, 0],
+    [0, 1],
+    [1, 1],
+  ]) {
+    edges.push([P(0, i, j), P(1, i, j)]);
+    edges.push([P(i, 0, j), P(i, 1, j)]);
+    edges.push([P(i, j, 0), P(i, j, 1)]);
+  }
+  return (
+    <group>
+      <mesh geometry={g}>
+        <meshStandardMaterial
+          color={color}
+          transparent
+          opacity={opacity}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          flatShading
+        />
+      </mesh>
+      {edges.map(([p, q], k) => (
+        <Tube key={k} points={[p, q]} radius={edge} color={color} />
+      ))}
+    </group>
+  );
+};
+
+// A square grid of thin lines on the floor z = 0, from −n to n.
+export const FloorGrid: React.FC<{
+  readonly n: number;
+  readonly color: string;
+  readonly opacity?: number;
+}> = ({ n, color, opacity = 0.25 }) => (
+  <group>
+    {Array.from({ length: 2 * n + 1 }, (_, i) => i - n).map((k) => (
+      <group key={k}>
+        <Tube
+          points={[
+            [k, -n, 0],
+            [k, n, 0],
+          ]}
+          radius={k === 0 ? 0.008 : 0.004}
+          color={color}
+          opacity={opacity}
+        />
+        <Tube
+          points={[
+            [-n, k, 0],
+            [n, k, 0],
+          ]}
+          radius={k === 0 ? 0.008 : 0.004}
+          color={color}
+          opacity={opacity}
+        />
+      </group>
+    ))}
+  </group>
+);
