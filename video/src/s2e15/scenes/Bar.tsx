@@ -79,7 +79,7 @@ export const Bar: React.FC = () => {
       <Sfx name="pop" at={c1 + 40} volume={0.12} />
       <Sfx name="whoosh" at={c1 + 62} volume={0.1} />
       <Sfx name="whoosh" at={c1 + 82} volume={0.1} />
-      <Sfx name="ding" at={c1 + 100} volume={0.45} />
+      <Sfx name="ding" at={c1 + 100} volume={0.25} />
 
       <AbsoluteFill style={{ opacity: part1 }}>
         <svg width={1920} height={1080}>
