@@ -245,6 +245,11 @@ export const THUMBS: Thumb[] = [
     },
     zh: { lines: ["无限维里", "什么会坏掉"], accent: 1, size: 140 },
   },
+  {
+    ep: 221,
+    en: { lines: ["Three rulers,", "three verdicts"], accent: 1, size: 116 },
+    zh: { lines: ["三把尺子", "三个判决"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

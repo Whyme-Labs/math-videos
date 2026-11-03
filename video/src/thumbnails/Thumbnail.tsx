@@ -1700,6 +1700,37 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 221) {
+    // the diamond, disc and square unit balls nested, three rulers at once
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <g transform="translate(1480 540)">
+          <rect
+            x={-250}
+            y={-250}
+            width={500}
+            height={500}
+            fill={alpha(colors.highlight, 0.1)}
+            stroke={colors.highlight}
+            strokeWidth={12}
+          />
+          <circle
+            r={250}
+            fill={alpha(colors.green, 0.1)}
+            stroke={colors.green}
+            strokeWidth={12}
+          />
+          <polygon
+            points="0,-250 250,0 0,250 -250,0"
+            fill={alpha(colors.primary, 0.14)}
+            stroke={colors.primary}
+            strokeWidth={12}
+          />
+        </g>
+      </svg>
+    );
+  }
+
   if (ep === 220) {
     // an endless row of boxes shifted right, the first box an empty red 0
     return (
