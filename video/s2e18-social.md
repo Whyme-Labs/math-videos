@@ -5,8 +5,8 @@ Titles, descriptions and captions for each platform, in English and Chinese.
 The rules behind them are in
 `.claude/skills/whyme-video-script/references/platforms.md`.
 
-- English edition: `out/s2e18-spectral-theorem.mp4` (DUR_EN, 16:9)
-- Chinese edition: `out/s2e18-zh-pu-ding-li.mp4` (DUR_ZH, 16:9). It has a scene the English edition
+- English edition: `out/s2e18-spectral-theorem.mp4` (4:12, 16:9)
+- Chinese edition: `out/s2e18-zh-pu-ding-li.mp4` (4:35, 16:9). It has a scene the English edition
   doesn't: the bells of Marquis Yi of Zeng, each ringing two notes (一钟双音).
 - Thumbnails: `thumbnails/png/S2E18-EN.png` and `S2E18-ZH.png` (16:9, for
   YouTube and bilibili). Covers: `thumbnails/cover-4x3/png/S2E18-*.png`
