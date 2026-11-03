@@ -86,6 +86,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E18-ZH` | 谱定理（中文版） | [`src/s2e18`](src/s2e18) | [`s2e18-narration-zh.md`](s2e18-narration-zh.md) |
 | `S2E19` | The Singular Value Decomposition | [`src/s2e19`](src/s2e19) | [`s2e19-narration.md`](s2e19-narration.md) |
 | `S2E19-ZH` | 奇异值分解（中文版） | [`src/s2e19`](src/s2e19) | [`s2e19-narration-zh.md`](s2e19-narration-zh.md) |
+| `S2E20` | What Breaks in Infinite Dimensions | [`src/s2e20`](src/s2e20) | [`s2e20-narration.md`](s2e20-narration.md) |
+| `S2E20-ZH` | 无限维里什么会坏掉（中文版） | [`src/s2e20`](src/s2e20) | [`s2e20-narration-zh.md`](s2e20-narration-zh.md) |
+| `S2E21` | Normed Spaces and Bounded Operators | [`src/s2e21`](src/s2e21) | [`s2e21-narration.md`](s2e21-narration.md) |
+| `S2E21-ZH` | 赋范空间与有界算子（中文版） | [`src/s2e21`](src/s2e21) | [`s2e21-narration-zh.md`](s2e21-narration-zh.md) |
+| `S2E22` | Measure: How Big Is a Set? | [`src/s2e22`](src/s2e22) | [`s2e22-narration.md`](s2e22-narration.md) |
+| `S2E22-ZH` | 测度：一个集合有多大？（中文版） | [`src/s2e22`](src/s2e22) | [`s2e22-narration-zh.md`](s2e22-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -237,8 +243,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e15-social.md`](s2e15-social.md), for S2E16 in
 [`s2e16-social.md`](s2e16-social.md), for S2E17 in
 [`s2e17-social.md`](s2e17-social.md), for S2E18 in
-[`s2e18-social.md`](s2e18-social.md), and for S2E19 in
-[`s2e19-social.md`](s2e19-social.md).
+[`s2e18-social.md`](s2e18-social.md), for S2E19 in
+[`s2e19-social.md`](s2e19-social.md), for S2E20 in
+[`s2e20-social.md`](s2e20-social.md), for S2E21 in
+[`s2e21-social.md`](s2e21-social.md), and for S2E22 in
+[`s2e22-social.md`](s2e22-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).

@@ -173,7 +173,8 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     祖暅原理 "幂势既同，则积不容异" (S2E13), 《墨经》 "圜，一中同长也"
     (S2E14), 刘徽割圆术 (S2E15), 裴秀 "制图六体" (S2E16), 郭守敬
     四丈高表与景符 (S2E17), 曾侯乙编钟 "一钟双音" (S2E18), 沈括《梦溪笔谈》
-    小孔成像 "鸢东则影西" (S2E19).
+    小孔成像 "鸢东则影西" (S2E19), 《墨经》 "穷，或不容尺，有穷；莫不容尺，无穷也"
+    (S2E20), 《考工记·轮人》 testing a wheel (S2E21), 曹冲称象 (S2E22).
 
 ## Titles and posts for each platform
 
