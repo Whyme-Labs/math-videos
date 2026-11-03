@@ -1700,6 +1700,37 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 222) {
+    // the Cantor set, row by row
+    const rows: [number, number][][] = [[[0, 1]]];
+    for (let k = 1; k < 6; k++)
+      rows.push(
+        rows[k - 1].flatMap(
+          ([a, b]) =>
+            [
+              [a, a + (b - a) / 3],
+              [b - (b - a) / 3, b],
+            ] as [number, number][],
+        ),
+      );
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {rows.map((r, k) =>
+          r.map(([a, b], i) => (
+            <rect
+              key={`${k}-${i}`}
+              x={1120 + 680 * a}
+              y={300 + k * 90}
+              width={Math.max(2, 680 * (b - a))}
+              height={50}
+              fill={k % 2 ? colors.orange : colors.primary}
+            />
+          )),
+        )}
+      </svg>
+    );
+  }
+
   if (ep === 221) {
     // the diamond, disc and square unit balls nested, three rulers at once
     return (

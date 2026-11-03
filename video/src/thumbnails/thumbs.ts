@@ -250,6 +250,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Three rulers,", "three verdicts"], accent: 1, size: 116 },
     zh: { lines: ["三把尺子", "三个判决"], accent: 1, size: 140 },
   },
+  {
+    ep: 222,
+    en: { lines: ["How big", "is a set?"], accent: 1, size: 130 },
+    zh: { lines: ["一个集合", "有多大？"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
