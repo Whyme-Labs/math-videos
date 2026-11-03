@@ -1770,7 +1770,7 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
           <g key={i} opacity={Math.min(1, (7 - i) / 3)}>
             <rect
               x={1120 + i * 120}
-              y={480}
+              y={680}
               width={104}
               height={104}
               rx={14}
@@ -1782,7 +1782,7 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
             />
             <text
               x={1172 + i * 120}
-              y={552}
+              y={752}
               fill={i === 0 ? colors.red : colors.primary}
               fontSize={56}
               fontWeight={800}
@@ -1794,12 +1794,12 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
           </g>
         ))}
         <path
-          d="M 1180 400 Q 1300 330 1420 400"
+          d="M 1180 600 Q 1300 530 1420 600"
           fill="none"
           stroke={colors.green}
           strokeWidth={10}
         />
-        <polygon points="1440,410 1400,370 1396,418" fill={colors.green} />
+        <polygon points="1440,610 1400,570 1396,618" fill={colors.green} />
       </svg>
     );
   }
