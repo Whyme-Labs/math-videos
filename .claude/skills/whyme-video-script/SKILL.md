@@ -171,7 +171,9 @@ padding, no 「让我们一起探索」, no stacked four-character idioms.
     Qin-slip multiplication table as a rank-one tensor (S2E10), 刘徽
     "出入相补" (S2E11), 杨辉三角 (1261) and the Fibonacci diagonals (S2E12),
     祖暅原理 "幂势既同，则积不容异" (S2E13), 《墨经》 "圜，一中同长也"
-    (S2E14), 刘徽割圆术 (S2E15), 裴秀 "制图六体" (S2E16).
+    (S2E14), 刘徽割圆术 (S2E15), 裴秀 "制图六体" (S2E16), 郭守敬
+    四丈高表与景符 (S2E17), 曾侯乙编钟 "一钟双音" (S2E18), 沈括《梦溪笔谈》
+    小孔成像 "鸢东则影西" (S2E19).
 
 ## Titles and posts for each platform
 

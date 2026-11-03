@@ -80,6 +80,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E15-ZH` | 酉空间（中文版） | [`src/s2e15`](src/s2e15) | [`s2e15-narration-zh.md`](s2e15-narration-zh.md) |
 | `S2E16` | Vectors and Covectors | [`src/s2e16`](src/s2e16) | [`s2e16-narration.md`](s2e16-narration.md) |
 | `S2E16-ZH` | 向量与余向量（中文版） | [`src/s2e16`](src/s2e16) | [`s2e16-narration-zh.md`](s2e16-narration-zh.md) |
+| `S2E17` | Projection and Least Squares | [`src/s2e17`](src/s2e17) | [`s2e17-narration.md`](s2e17-narration.md) |
+| `S2E17-ZH` | 投影与最小二乘（中文版） | [`src/s2e17`](src/s2e17) | [`s2e17-narration-zh.md`](s2e17-narration-zh.md) |
+| `S2E18` | The Spectral Theorem | [`src/s2e18`](src/s2e18) | [`s2e18-narration.md`](s2e18-narration.md) |
+| `S2E18-ZH` | 谱定理（中文版） | [`src/s2e18`](src/s2e18) | [`s2e18-narration-zh.md`](s2e18-narration-zh.md) |
+| `S2E19` | The Singular Value Decomposition | [`src/s2e19`](src/s2e19) | [`s2e19-narration.md`](s2e19-narration.md) |
+| `S2E19-ZH` | 奇异值分解（中文版） | [`src/s2e19`](src/s2e19) | [`s2e19-narration-zh.md`](s2e19-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -228,8 +234,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e12-social.md`](s2e12-social.md), for S2E13 in
 [`s2e13-social.md`](s2e13-social.md), for S2E14 in
 [`s2e14-social.md`](s2e14-social.md), for S2E15 in
-[`s2e15-social.md`](s2e15-social.md), and for S2E16 in
-[`s2e16-social.md`](s2e16-social.md).
+[`s2e15-social.md`](s2e15-social.md), for S2E16 in
+[`s2e16-social.md`](s2e16-social.md), for S2E17 in
+[`s2e17-social.md`](s2e17-social.md), for S2E18 in
+[`s2e18-social.md`](s2e18-social.md), and for S2E19 in
+[`s2e19-social.md`](s2e19-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
