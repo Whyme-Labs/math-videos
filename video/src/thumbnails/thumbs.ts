@@ -217,6 +217,25 @@ export const THUMBS: Thumb[] = [
     },
     zh: { lines: ["梯度", "真的是箭头吗？"], accent: 1, size: 140 },
   },
+  {
+    ep: 217,
+    en: { lines: ["The best fit", "is a shadow"], accent: 1, size: 116 },
+    zh: { lines: ["最好的拟合", "是一个影子"], accent: 1, size: 140 },
+  },
+  {
+    ep: 218,
+    en: { lines: ["Symmetric maps", "only stretch"], accent: 1, size: 116 },
+    zh: { lines: ["对称映射", "只做伸缩"], accent: 1, size: 140 },
+  },
+  {
+    ep: 219,
+    en: {
+      lines: ["Every matrix:", "turn, stretch, turn"],
+      accent: 1,
+      size: 104,
+    },
+    zh: { lines: ["每个矩阵", "都是转·伸·转"], accent: 1, size: 130 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

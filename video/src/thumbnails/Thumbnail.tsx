@@ -1700,6 +1700,172 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 219) {
+    // a circle with a marked radius, and the turned, stretched ellipse it becomes
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <circle
+          cx={1300}
+          cy={540}
+          r={150}
+          fill="none"
+          stroke={alpha(colors.paper, 0.5)}
+          strokeWidth={8}
+          strokeDasharray="22 16"
+        />
+        <line
+          x1={1300}
+          y1={540}
+          x2={1450}
+          y2={540}
+          stroke={alpha(colors.highlight, 0.6)}
+          strokeWidth={10}
+        />
+        <g transform="translate(1520 540) rotate(-35)">
+          <ellipse
+            rx={330}
+            ry={130}
+            fill={alpha(colors.primary, 0.12)}
+            stroke={colors.primary}
+            strokeWidth={12}
+          />
+          <line
+            x1={0}
+            y1={0}
+            x2={330}
+            y2={0}
+            stroke={colors.green}
+            strokeWidth={18}
+            strokeLinecap="round"
+          />
+          <line
+            x1={0}
+            y1={0}
+            x2={0}
+            y2={-130}
+            stroke={colors.highlight}
+            strokeWidth={18}
+            strokeLinecap="round"
+          />
+        </g>
+      </svg>
+    );
+  }
+
+  if (ep === 218) {
+    // a tilted ellipse with its two perpendicular axes, the unit circle behind
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <g transform="translate(1480 540) rotate(-28)">
+          <circle
+            r={230}
+            fill="none"
+            stroke={alpha(colors.paper, 0.4)}
+            strokeWidth={8}
+            strokeDasharray="24 18"
+          />
+          <ellipse
+            rx={360}
+            ry={150}
+            fill={alpha(colors.primary, 0.12)}
+            stroke={colors.primary}
+            strokeWidth={12}
+          />
+          <line
+            x1={0}
+            y1={0}
+            x2={360}
+            y2={0}
+            stroke={colors.green}
+            strokeWidth={18}
+            strokeLinecap="round"
+          />
+          <line
+            x1={0}
+            y1={0}
+            x2={0}
+            y2={-150}
+            stroke={colors.highlight}
+            strokeWidth={18}
+            strokeLinecap="round"
+          />
+          <path
+            d="M 50 0 L 50 -50 L 0 -50"
+            fill="none"
+            stroke={colors.text}
+            strokeWidth={8}
+          />
+        </g>
+      </svg>
+    );
+  }
+
+  if (ep === 217) {
+    // an arrow over the floor, its orange shadow and the upright error
+    const O = { x: 1180, y: 780 };
+    const T = { x: 1620, y: 300 };
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1080}
+          y1={O.y}
+          x2={1860}
+          y2={O.y}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={8}
+        />
+        {[0, 1, 2, 3, 4, 5].map((k) => (
+          <line
+            key={k}
+            x1={1250 + k * 90}
+            y1={200}
+            x2={1250 + k * 90}
+            y2={260}
+            stroke={alpha(colors.primary, 0.5)}
+            strokeWidth={6}
+          />
+        ))}
+        <line
+          x1={O.x}
+          y1={O.y - 6}
+          x2={T.x}
+          y2={O.y - 6}
+          stroke={colors.orange}
+          strokeWidth={22}
+          strokeLinecap="round"
+        />
+        <line
+          x1={T.x}
+          y1={T.y}
+          x2={T.x}
+          y2={O.y}
+          stroke={colors.green}
+          strokeWidth={12}
+          strokeDasharray="26 18"
+        />
+        <path
+          d={`M ${T.x - 56} ${O.y} L ${T.x - 56} ${O.y - 56} L ${T.x} ${O.y - 56}`}
+          fill="none"
+          stroke={colors.text}
+          strokeWidth={8}
+        />
+        <line
+          x1={O.x}
+          y1={O.y}
+          x2={T.x - 30}
+          y2={T.y + 33}
+          stroke={colors.text}
+          strokeWidth={22}
+          strokeLinecap="round"
+        />
+        <polygon
+          points={`${T.x},${T.y} ${T.x - 74},${T.y + 26} ${T.x - 28},${T.y + 78}`}
+          fill={colors.text}
+        />
+      </svg>
+    );
+  }
+
   if (ep === 216) {
     // an orange stack of sheets and the lemon arrow standing for it
     return (
