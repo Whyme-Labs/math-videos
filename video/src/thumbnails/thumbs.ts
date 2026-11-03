@@ -236,6 +236,15 @@ export const THUMBS: Thumb[] = [
     },
     zh: { lines: ["每个矩阵", "都是转·伸·转"], accent: 1, size: 130 },
   },
+  {
+    ep: 220,
+    en: {
+      lines: ["What breaks in", "infinite dimensions"],
+      accent: 1,
+      size: 100,
+    },
+    zh: { lines: ["无限维里", "什么会坏掉"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

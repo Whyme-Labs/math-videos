@@ -1700,6 +1700,48 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 220) {
+    // an endless row of boxes shifted right, the first box an empty red 0
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {Array.from({ length: 7 }).map((_, i) => (
+          <g key={i} opacity={Math.min(1, (7 - i) / 3)}>
+            <rect
+              x={1120 + i * 120}
+              y={480}
+              width={104}
+              height={104}
+              rx={14}
+              fill={
+                i === 0 ? alpha(colors.red, 0.25) : alpha(colors.paper, 0.08)
+              }
+              stroke={i === 0 ? colors.red : colors.paper}
+              strokeWidth={6}
+            />
+            <text
+              x={1172 + i * 120}
+              y={552}
+              fill={i === 0 ? colors.red : colors.primary}
+              fontSize={56}
+              fontWeight={800}
+              textAnchor="middle"
+              fontFamily="JetBrainsMono, monospace"
+            >
+              {i === 0 ? 0 : [3, 1, 4, 1, 5, 9][i - 1]}
+            </text>
+          </g>
+        ))}
+        <path
+          d="M 1180 400 Q 1300 330 1420 400"
+          fill="none"
+          stroke={colors.green}
+          strokeWidth={10}
+        />
+        <polygon points="1440,410 1400,370 1396,418" fill={colors.green} />
+      </svg>
+    );
+  }
+
   if (ep === 219) {
     // a circle with a marked radius, and the turned, stretched ellipse it becomes
     return (

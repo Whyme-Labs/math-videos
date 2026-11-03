@@ -162,6 +162,10 @@ ffmpeg -i out/s1e01-<slug>.mp4 -c:v libx264 -crf 26 -preset slow -c:a aac -b:a 1
 
 - Upload only the video file when the user asks for a link (for example to
   here.now). Do not make a site or a player page unless they ask for one.
+- Batch delivery (the user's standing request, from S2E20 on): when a batch of
+  episodes is done, put every edition's master mp4 plus its thumbnail and
+  4:3 and 3:4 covers into one zip, upload only that zip to here.now, and
+  hand over the one link. Don't send the files one by one as well.
 - Every public link contains the background music, which is licensed
   separately. Say so whenever you hand out a link.
 - Name files `sNeNN-<slug>.mp4` and `sNeNN-zh-<slug>.mp4`.
