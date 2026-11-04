@@ -1700,6 +1700,58 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 224) {
+    // a gauge whose needle jumps, over a tent at 0 too thin to see
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1080}
+          y1={920}
+          x2={1840}
+          y2={920}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={6}
+        />
+        <path
+          d="M 1300 920 L 1320 420 L 1340 920 Z"
+          fill={alpha(colors.primary, 0.35)}
+          stroke={colors.primary}
+          strokeWidth={8}
+        />
+        <circle cx={1320} cy={420} r={26} fill={colors.red} />
+        <g transform="translate(1600 560)">
+          <path
+            d="M -220 0 A 220 220 0 0 1 220 0"
+            fill="none"
+            stroke={alpha(colors.paper, 0.7)}
+            strokeWidth={14}
+          />
+          {[0.15, 0.35, 0.5, 0.65, 0.85].map((t) => (
+            <line
+              key={t}
+              x1={-200 * Math.cos(Math.PI * t)}
+              y1={-200 * Math.sin(Math.PI * t)}
+              x2={-170 * Math.cos(Math.PI * t)}
+              y2={-170 * Math.sin(Math.PI * t)}
+              stroke={alpha(colors.paper, 0.7)}
+              strokeWidth={8}
+            />
+          ))}
+          <line
+            x1={0}
+            y1={0}
+            x2={190 * Math.cos(0.3)}
+            y2={-190 * Math.sin(0.3)}
+            stroke={colors.red}
+            strokeWidth={14}
+            strokeLinecap="round"
+          />
+          <circle r={26} fill={colors.red} />
+        </g>
+      </svg>
+    );
+  }
+
   if (ep === 223) {
     // the cobweb for x = cos x closing on its fixed point
     const xs = [1];

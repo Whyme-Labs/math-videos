@@ -51,6 +51,11 @@
  },
  {
   "family": "Noto Sans SC",
+  "file": "fonts/zh/noto-sans-sc-41.woff2",
+  "unicodeRange": "U+82bc,U+82be,U+82c0-82c2,U+82c4-82c8,U+82ca-82cc,U+82ce,U+82d0,U+82d2-82d3,U+82d5-82d6,U+82d8-82d9,U+82dc-82de,U+82e0-82e4,U+82e7,U+82e9-82eb,U+82ed-82ee,U+82f3-82f4,U+82f7-82f8,U+82fa-8301,U+8306-8308,U+830c-830d,U+830f,U+8311,U+8313-8315,U+8318,U+831a-831b,U+831d,U+8324,U+8327,U+832a,U+832c-832d,U+832f,U+8331-8334,U+833a-833c,U+8340,U+8343-8345,U+8347-8348,U+834a,U+834c,U+834f,U+8351,U+8356,U+8358-835c,U+835e,U+8360,U+8364-8366,U+8368-836a,U+836c-836e,U+8373,U+8378,U+837b-837d,U+837f-8380,U+8382,U+8388,U+838a-838b,U+8392,U+8394,U+8396,U+8398-8399,U+839b-839c,U+83a0,U+83a2-83a3,U+83a8-83aa,U+83ae-83b0,U+83b3-83b4,U+83b6,U+83b8,U+83ba,U+83bc-83bd,U+83bf-83c0,U+83c2"
+ },
+ {
+  "family": "Noto Sans SC",
   "file": "fonts/zh/noto-sans-sc-44.woff2",
   "unicodeRange": "U+7ef0-7ef2,U+7ef6,U+7efa-7efb,U+7efe,U+7f01-7f04,U+7f08,U+7f0a-7f12,U+7f17,U+7f19,U+7f1b-7f1c,U+7f1f,U+7f21-7f23,U+7f25-7f28,U+7f2a-7f33,U+7f35-7f37,U+7f3d,U+7f42,U+7f44-7f45,U+7f4c-7f4d,U+7f52,U+7f54,U+7f58-7f59,U+7f5d,U+7f5f-7f61,U+7f63,U+7f65,U+7f68,U+7f70-7f71,U+7f73-7f75,U+7f77,U+7f79,U+7f7d-7f7e,U+7f85-7f86,U+7f88-7f89,U+7f8b-7f8c,U+7f90-7f91,U+7f94-7f96,U+7f98-7f9b,U+7f9d,U+7f9f,U+7fa3,U+7fa7-7fa9,U+7fac-7fb2,U+7fb4,U+7fb6,U+7fb8,U+7fbc,U+7fbf-7fc0,U+7fc3,U+7fca,U+7fcc,U+7fce,U+7fd2,U+7fd5,U+7fd9-7fdb,U+7fdf,U+7fe3,U+7fe5-7fe7,U+7fe9,U+7feb-7fec,U+7fee-7fef,U+7ff1,U+7ff3-7ff4,U+7ff9-7ffa,U+7ffe,U+8004,U+8006,U+800b,U+800e,U+8011-8012,U+8014"
  },
