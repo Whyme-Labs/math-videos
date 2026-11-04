@@ -1700,6 +1700,50 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 223) {
+    // the cobweb for x = cos x closing on its fixed point
+    const xs = [1];
+    for (let i = 0; i < 14; i++) xs.push(Math.cos(xs[i]));
+    const S = 520;
+    const O = { x: 1200, y: 900 };
+    const web = xs
+      .slice(0, 13)
+      .map(
+        (x, i) =>
+          `M ${O.x + S * x} ${O.y - S * (i ? x : 0)} L ${O.x + S * x} ${O.y - S * xs[i + 1]} L ${O.x + S * xs[i + 1]} ${O.y - S * xs[i + 1]}`,
+      )
+      .join(" ");
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={O.x}
+          y1={O.y}
+          x2={O.x + S}
+          y2={O.y - S}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={6}
+        />
+        <path
+          d={Array.from(
+            { length: 41 },
+            (_, i) =>
+              `${i ? "L" : "M"} ${O.x + (S * i) / 40} ${O.y - S * Math.cos(i / 40)}`,
+          ).join(" ")}
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={10}
+        />
+        <path d={web} fill="none" stroke={colors.orange} strokeWidth={6} />
+        <circle
+          cx={O.x + S * 0.739}
+          cy={O.y - S * 0.739}
+          r={22}
+          fill={colors.green}
+        />
+      </svg>
+    );
+  }
+
   if (ep === 222) {
     // the Cantor set, row by row
     const rows: [number, number][][] = [[[0, 1]]];
