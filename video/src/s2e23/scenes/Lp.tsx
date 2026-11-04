@@ -148,9 +148,10 @@ export const Lp: React.FC = () => {
         >
           {tx.coordinate} 3<br />
           <span style={{ fontFamily: fonts.mono }}>
-            {Array.from({ length: ROWS }, (_, n) => row(n)(2).toFixed(2)).join(
+            {Array.from({ length: 4 }, (_, n) => row(n)(2).toFixed(2)).join(
               ", ",
             )}
+            , …
           </span>
         </div>
         <div
