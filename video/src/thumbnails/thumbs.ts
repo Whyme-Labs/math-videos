@@ -265,6 +265,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Can you trust", "this reading?"], accent: 1, size: 120 },
     zh: { lines: ["这个读数", "靠得住吗？"], accent: 1, size: 140 },
   },
+  {
+    ep: 225,
+    en: { lines: ["1, 0, 1, 0, …", "a limit after all"], accent: 1, size: 120 },
+    zh: { lines: ["1, 0, 1, 0, …", "也有极限"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

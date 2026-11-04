@@ -1700,6 +1700,69 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 225) {
+    // bars 1, 0, 1, 0, … with their running average settling on ½
+    const n = 18;
+    const means: number[] = [];
+    let sum = 0;
+    for (let k = 0; k < n; k++) {
+      sum += k % 2 ? 0 : 1;
+      means.push(sum / (k + 1));
+    }
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1080}
+          y1={900}
+          x2={1840}
+          y2={900}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={6}
+        />
+        {Array.from({ length: n }, (_, k) =>
+          k % 2 ? null : (
+            <rect
+              key={k}
+              x={1090 + k * 42}
+              y={420}
+              width={30}
+              height={480}
+              fill={alpha(colors.primary, 0.55)}
+            />
+          ),
+        )}
+        <line
+          x1={1080}
+          y1={660}
+          x2={1840}
+          y2={660}
+          stroke={colors.green}
+          strokeWidth={8}
+          strokeDasharray="22 14"
+        />
+        <path
+          d={means
+            .map((m, k) => `${k ? "L" : "M"} ${1105 + k * 42} ${900 - 480 * m}`)
+            .join(" ")}
+          fill="none"
+          stroke={colors.highlight}
+          strokeWidth={10}
+        />
+        <text
+          x={1850}
+          y={640}
+          textAnchor="end"
+          fill={colors.green}
+          fontSize={110}
+          fontFamily={fonts.math}
+          fontWeight={800}
+        >
+          ½
+        </text>
+      </svg>
+    );
+  }
+
   if (ep === 224) {
     // a gauge whose needle jumps, over a tent at 0 too thin to see
     return (
