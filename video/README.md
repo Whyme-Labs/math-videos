@@ -92,6 +92,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E21-ZH` | 赋范空间与有界算子（中文版） | [`src/s2e21`](src/s2e21) | [`s2e21-narration-zh.md`](s2e21-narration-zh.md) |
 | `S2E22` | Measure: How Big Is a Set? | [`src/s2e22`](src/s2e22) | [`s2e22-narration.md`](s2e22-narration.md) |
 | `S2E22-ZH` | 测度：一个集合有多大？（中文版） | [`src/s2e22`](src/s2e22) | [`s2e22-narration-zh.md`](s2e22-narration-zh.md) |
+| `S2E23` | Banach Spaces | [`src/s2e23`](src/s2e23) | [`s2e23-narration.md`](s2e23-narration.md) |
+| `S2E23-ZH` | 巴拿赫空间（中文版） | [`src/s2e23`](src/s2e23) | [`s2e23-narration-zh.md`](s2e23-narration-zh.md) |
+| `S2E24` | The Continuous Dual | [`src/s2e24`](src/s2e24) | [`s2e24-narration.md`](s2e24-narration.md) |
+| `S2E24-ZH` | 连续对偶（中文版） | [`src/s2e24`](src/s2e24) | [`s2e24-narration-zh.md`](s2e24-narration-zh.md) |
+| `S2E25` | The Hahn–Banach Theorem | [`src/s2e25`](src/s2e25) | [`s2e25-narration.md`](s2e25-narration.md) |
+| `S2E25-ZH` | 哈恩–巴拿赫定理（中文版） | [`src/s2e25`](src/s2e25) | [`s2e25-narration-zh.md`](s2e25-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -246,8 +252,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e18-social.md`](s2e18-social.md), for S2E19 in
 [`s2e19-social.md`](s2e19-social.md), for S2E20 in
 [`s2e20-social.md`](s2e20-social.md), for S2E21 in
-[`s2e21-social.md`](s2e21-social.md), and for S2E22 in
-[`s2e22-social.md`](s2e22-social.md).
+[`s2e21-social.md`](s2e21-social.md), for S2E22 in
+[`s2e22-social.md`](s2e22-social.md), for S2E23 in
+[`s2e23-social.md`](s2e23-social.md), for S2E24 in
+[`s2e24-social.md`](s2e24-social.md), and for S2E25 in
+[`s2e25-social.md`](s2e25-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
