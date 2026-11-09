@@ -309,17 +309,19 @@ export const OnlyOne: React.FC = () => {
           = π²/6 ≈ 1.6449
         </div>
       </AbsoluteFill>
-      <Chip
-        frame={frame}
-        at={c0 + 6}
-        x={160}
-        y={120}
-        color={colors.text}
-        math
-        size={40}
-      >
-        e₁, e₂, e₃, … ⟂
-      </Chip>
+      <div style={{ opacity: fadeOut(frame, c4, 10) }}>
+        <Chip
+          frame={frame}
+          at={c0 + 6}
+          x={160}
+          y={120}
+          color={colors.text}
+          math
+          size={40}
+        >
+          e₁, e₂, e₃, … ⟂
+        </Chip>
+      </div>
     </SceneShell>
   );
 };
