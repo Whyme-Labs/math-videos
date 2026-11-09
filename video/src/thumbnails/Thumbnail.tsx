@@ -1700,6 +1700,43 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 226) {
+    // the Dirichlet kernel, tall and wiggly, its |D| area shaded
+    const n = 10;
+    const D = (t: number) =>
+      Math.abs(t) < 1e-6
+        ? 2 * n + 1
+        : Math.sin((n + 0.5) * t) / Math.sin(t / 2);
+    const X = (t: number) => 1460 + (380 * t) / Math.PI;
+    const Y = (v: number) => 760 - 26 * v;
+    const pts = Array.from(
+      { length: 601 },
+      (_, i) => -Math.PI + (2 * Math.PI * i) / 600,
+    );
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1060}
+          y1={760}
+          x2={1860}
+          y2={760}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={6}
+        />
+        <path
+          d={`${pts.map((t, i) => `${i ? "L" : "M"} ${X(t)} ${Y(Math.abs(D(t)))}`).join(" ")} L ${X(Math.PI)} 760 L ${X(-Math.PI)} 760 Z`}
+          fill={alpha(colors.orange, 0.35)}
+        />
+        <path
+          d={pts.map((t, i) => `${i ? "L" : "M"} ${X(t)} ${Y(D(t))}`).join(" ")}
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={8}
+        />
+      </svg>
+    );
+  }
+
   if (ep === 225) {
     // bars 1, 0, 1, 0, … with their running average settling on ½
     const n = 18;

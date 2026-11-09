@@ -270,6 +270,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["1, 0, 1, 0, …", "a limit after all"], accent: 1, size: 120 },
     zh: { lines: ["1, 0, 1, 0, …", "也有极限"], accent: 1, size: 140 },
   },
+  {
+    ep: 226,
+    en: { lines: ["A Fourier series", "that blows up"], accent: 1, size: 120 },
+    zh: { lines: ["会发散的", "傅里叶级数"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
