@@ -98,6 +98,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E24-ZH` | 连续对偶（中文版） | [`src/s2e24`](src/s2e24) | [`s2e24-narration-zh.md`](s2e24-narration-zh.md) |
 | `S2E25` | The Hahn–Banach Theorem | [`src/s2e25`](src/s2e25) | [`s2e25-narration.md`](s2e25-narration.md) |
 | `S2E25-ZH` | 哈恩–巴拿赫定理（中文版） | [`src/s2e25`](src/s2e25) | [`s2e25-narration-zh.md`](s2e25-narration-zh.md) |
+| `S2E26` | The Big Three Theorems | [`src/s2e26`](src/s2e26) | [`s2e26-narration.md`](s2e26-narration.md) |
+| `S2E26-ZH` | 三大定理（中文版） | [`src/s2e26`](src/s2e26) | [`s2e26-narration-zh.md`](s2e26-narration-zh.md) |
+| `S2E27` | Weak Convergence | [`src/s2e27`](src/s2e27) | [`s2e27-narration.md`](s2e27-narration.md) |
+| `S2E27-ZH` | 弱收敛（中文版） | [`src/s2e27`](src/s2e27) | [`s2e27-narration-zh.md`](s2e27-narration-zh.md) |
+| `S2E28` | Hilbert Spaces | [`src/s2e28`](src/s2e28) | [`s2e28-narration.md`](s2e28-narration.md) |
+| `S2E28-ZH` | 希尔伯特空间（中文版） | [`src/s2e28`](src/s2e28) | [`s2e28-narration-zh.md`](s2e28-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -255,8 +261,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e21-social.md`](s2e21-social.md), for S2E22 in
 [`s2e22-social.md`](s2e22-social.md), for S2E23 in
 [`s2e23-social.md`](s2e23-social.md), for S2E24 in
-[`s2e24-social.md`](s2e24-social.md), and for S2E25 in
-[`s2e25-social.md`](s2e25-social.md).
+[`s2e24-social.md`](s2e24-social.md), for S2E25 in
+[`s2e25-social.md`](s2e25-social.md), for S2E26 in
+[`s2e26-social.md`](s2e26-social.md), for S2E27 in
+[`s2e27-social.md`](s2e27-social.md), and for S2E28 in
+[`s2e28-social.md`](s2e28-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
