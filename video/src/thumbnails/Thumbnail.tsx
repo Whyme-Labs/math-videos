@@ -1700,6 +1700,40 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 228) {
+    // a point dropping a perpendicular onto a line, right angle at the foot
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1040}
+          y1={860}
+          x2={1880}
+          y2={560}
+          stroke={colors.primary}
+          strokeWidth={10}
+        />
+        <line
+          x1={1500}
+          y1={300}
+          x2={1617}
+          y2={628}
+          stroke={colors.red}
+          strokeWidth={8}
+        />
+        <circle cx={1500} cy={300} r={26} fill={colors.highlight} />
+        <circle cx={1617} cy={628} r={18} fill={colors.green} />
+        <g transform="translate(1617 628) rotate(-19.65)">
+          <path
+            d="M -44 0 L -44 -44 L 0 -44"
+            fill="none"
+            stroke={colors.paper}
+            strokeWidth={7}
+          />
+        </g>
+      </svg>
+    );
+  }
+
   if (ep === 227) {
     // a bump sliding away over a row of sensors that all read 0
     const W = 110;
