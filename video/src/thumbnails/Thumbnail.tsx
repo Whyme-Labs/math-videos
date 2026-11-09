@@ -1700,6 +1700,64 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 227) {
+    // a bump sliding away over a row of sensors that all read 0
+    const W = 110;
+    const bump = (d: number) => Math.max(0, 1 - (d / W) ** 2) ** 2;
+    const P = 1640;
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1040}
+          y1={760}
+          x2={1900}
+          y2={760}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={6}
+        />
+        <path
+          d={Array.from({ length: 81 }, (_, i) => {
+            const x = P - W + (2 * W * i) / 80;
+            return `${i ? "L" : "M"} ${x} ${760 - 380 * bump(x - P)}`;
+          }).join(" ")}
+          fill={alpha(colors.primary, 0.4)}
+          stroke={colors.primary}
+          strokeWidth={8}
+        />
+        {[1100, 1220, 1340, 1460].map((x) => (
+          <g key={x}>
+            <rect
+              x={x - 16}
+              y={776}
+              width={32}
+              height={70}
+              rx={8}
+              fill={colors.orange}
+            />
+            <text
+              x={x}
+              y={910}
+              textAnchor="middle"
+              fill={colors.orange}
+              fontSize={56}
+              fontFamily={fonts.mono}
+              fontWeight={800}
+            >
+              0
+            </text>
+          </g>
+        ))}
+        <path
+          d="M 1790 600 L 1860 600 M 1840 580 L 1860 600 L 1840 620"
+          fill="none"
+          stroke={colors.highlight}
+          strokeWidth={8}
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
   if (ep === 226) {
     // the Dirichlet kernel, tall and wiggly, its |D| area shaded
     const n = 10;

@@ -275,6 +275,15 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["A Fourier series", "that blows up"], accent: 1, size: 120 },
     zh: { lines: ["会发散的", "傅里叶级数"], accent: 1, size: 140 },
   },
+  {
+    ep: 227,
+    en: {
+      lines: ["Every sensor reads 0.", "It's still there."],
+      accent: 1,
+      size: 110,
+    },
+    zh: { lines: ["传感器都读 0", "它却还在"], accent: 1, size: 130 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
