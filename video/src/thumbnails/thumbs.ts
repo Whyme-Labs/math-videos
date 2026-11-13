@@ -294,6 +294,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["A function is", "a vector of tones"], accent: 1, size: 110 },
     zh: { lines: ["函数是", "纯音的向量"], accent: 1, size: 140 },
   },
+  {
+    ep: 230,
+    en: { lines: ["The spectral theorem", "survives"], accent: 1, size: 110 },
+    zh: { lines: ["谱定理", "活下来了"], accent: 1, size: 150 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

@@ -1700,6 +1700,44 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 230) {
+    // a string's first modes over eigenvalue dots piling up at 0
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {[1, 2, 3].map((n, i) => (
+          <path
+            key={n}
+            d={Array.from(
+              { length: 121 },
+              (_, j) =>
+                `${j ? "L" : "M"} ${1080 + (760 * j) / 120} ${300 + i * 170 - 70 * Math.sin((n * Math.PI * j) / 120)}`,
+            ).join(" ")}
+            fill="none"
+            stroke={[colors.primary, colors.orange, colors.green][i]}
+            strokeWidth={8}
+          />
+        ))}
+        <line
+          x1={1060}
+          y1={860}
+          x2={1860}
+          y2={860}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={5}
+        />
+        {Array.from({ length: 18 }, (_, k) => (
+          <circle
+            key={k}
+            cx={1460 + (k % 2 ? -1 : 1) * 380 * 0.8 ** k}
+            cy={860}
+            r={Math.max(7, 18 - k * 0.6)}
+            fill={colors.highlight}
+          />
+        ))}
+      </svg>
+    );
+  }
+
   if (ep === 229) {
     // a square wave built from sines, with its recipe bars
     const sq = (x: number) => {
