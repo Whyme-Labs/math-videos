@@ -289,6 +289,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Euclid in", "infinite dimensions"], accent: 1, size: 110 },
     zh: { lines: ["无穷维里的", "欧几里得"], accent: 1, size: 140 },
   },
+  {
+    ep: 229,
+    en: { lines: ["A function is", "a vector of tones"], accent: 1, size: 110 },
+    zh: { lines: ["函数是", "纯音的向量"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

@@ -1700,6 +1700,40 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 229) {
+    // a square wave built from sines, with its recipe bars
+    const sq = (x: number) => {
+      let v = 0;
+      for (let n = 1; n <= 19; n += 2)
+        v += ((4 / Math.PI) * Math.sin(n * x)) / n;
+      return v;
+    };
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <path
+          d={Array.from({ length: 601 }, (_, i) => {
+            const x = -Math.PI + (2 * Math.PI * i) / 600;
+            return `${i ? "L" : "M"} ${1060 + (800 * i) / 600} ${520 - 170 * sq(x)}`;
+          }).join(" ")}
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={9}
+        />
+        {Array.from({ length: 7 }, (_, j) => (
+          <rect
+            key={j}
+            x={1100 + j * 105}
+            y={930 - 220 / (2 * j + 1)}
+            width={70}
+            height={220 / (2 * j + 1)}
+            rx={8}
+            fill={colors.orange}
+          />
+        ))}
+      </svg>
+    );
+  }
+
   if (ep === 228) {
     // a point dropping a perpendicular onto a line, right angle at the foot
     return (
