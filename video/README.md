@@ -104,6 +104,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E27-ZH` | 弱收敛（中文版） | [`src/s2e27`](src/s2e27) | [`s2e27-narration-zh.md`](s2e27-narration-zh.md) |
 | `S2E28` | Hilbert Spaces | [`src/s2e28`](src/s2e28) | [`s2e28-narration.md`](s2e28-narration.md) |
 | `S2E28-ZH` | 希尔伯特空间（中文版） | [`src/s2e28`](src/s2e28) | [`s2e28-narration-zh.md`](s2e28-narration-zh.md) |
+| `S2E29` | Fourier | [`src/s2e29`](src/s2e29) | [`s2e29-narration.md`](s2e29-narration.md) |
+| `S2E29-ZH` | 傅里叶（中文版） | [`src/s2e29`](src/s2e29) | [`s2e29-narration-zh.md`](s2e29-narration-zh.md) |
+| `S2E30` | Compact Operators | [`src/s2e30`](src/s2e30) | [`s2e30-narration.md`](s2e30-narration.md) |
+| `S2E30-ZH` | 紧算子（中文版） | [`src/s2e30`](src/s2e30) | [`s2e30-narration-zh.md`](s2e30-narration-zh.md) |
+| `S2E31` | Spectrum and Quantum Mechanics | [`src/s2e31`](src/s2e31) | [`s2e31-narration.md`](s2e31-narration.md) |
+| `S2E31-ZH` | 谱与量子力学（中文版） | [`src/s2e31`](src/s2e31) | [`s2e31-narration-zh.md`](s2e31-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -264,8 +270,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e24-social.md`](s2e24-social.md), for S2E25 in
 [`s2e25-social.md`](s2e25-social.md), for S2E26 in
 [`s2e26-social.md`](s2e26-social.md), for S2E27 in
-[`s2e27-social.md`](s2e27-social.md), and for S2E28 in
-[`s2e28-social.md`](s2e28-social.md).
+[`s2e27-social.md`](s2e27-social.md), for S2E28 in
+[`s2e28-social.md`](s2e28-social.md), for S2E29 in
+[`s2e29-social.md`](s2e29-social.md), for S2E30 in
+[`s2e30-social.md`](s2e30-social.md), and for S2E31 in
+[`s2e31-social.md`](s2e31-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).

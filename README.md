@@ -24,7 +24,7 @@ Two seasons are planned, plus a third that connects them:
 ## Video
 
 [`video/`](video/README.md) is the Remotion project that renders the
-episodes. All of Season 1 (S1E01 to S1E20) and S2E01 to S2E28 of Season 2 (Part A, and the start of Part B)
+episodes. All of Season 1 (S1E01 to S1E20) and S2E01 to S2E31 of Season 2 (Part A, and the start of Part B)
 are done, each in English and Chinese; their narration scripts are
 in `video/s1eNN-narration*.md` and `video/s2eNN-narration*.md`. The official
 Remotion agent skills are installed in `.claude/skills`, along with two
