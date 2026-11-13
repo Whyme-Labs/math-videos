@@ -299,6 +299,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["The spectral theorem", "survives"], accent: 1, size: 110 },
     zh: { lines: ["谱定理", "活下来了"], accent: 1, size: 150 },
   },
+  {
+    ep: 231,
+    en: { lines: ["Position has", "no eigenvalues"], accent: 1, size: 108 },
+    zh: { lines: ["位置", "没有特征值"], accent: 1, size: 150 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +

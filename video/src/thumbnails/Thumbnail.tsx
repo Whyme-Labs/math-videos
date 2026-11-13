@@ -1700,6 +1700,68 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 231) {
+    // the closed disk of the shift, the band [0, 1] on the real line, and
+    // a histogram of detector hits for position
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={1080}
+          y1={420}
+          x2={1860}
+          y2={420}
+          stroke={alpha(colors.paper, 0.5)}
+          strokeWidth={4}
+        />
+        <line
+          x1={1300}
+          y1={140}
+          x2={1300}
+          y2={700}
+          stroke={alpha(colors.paper, 0.5)}
+          strokeWidth={4}
+        />
+        <circle
+          cx={1300}
+          cy={420}
+          r={200}
+          fill={alpha(colors.orange, 0.55)}
+          stroke={colors.orange}
+          strokeWidth={6}
+        />
+        <rect
+          x={1560}
+          y={402}
+          width={260}
+          height={36}
+          rx={18}
+          fill={colors.green}
+        />
+        <line
+          x1={1080}
+          y1={900}
+          x2={1860}
+          y2={900}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={5}
+        />
+        {Array.from({ length: 16 }, (_, k) => {
+          const h = 150 * Math.exp(-(((k - 7.5) / 3.6) ** 2));
+          return (
+            <rect
+              key={k}
+              x={1100 + k * 47}
+              y={900 - h}
+              width={38}
+              height={h}
+              fill={colors.highlight}
+            />
+          );
+        })}
+      </svg>
+    );
+  }
+
   if (ep === 230) {
     // a string's first modes over eigenvalue dots piling up at 0
     return (
