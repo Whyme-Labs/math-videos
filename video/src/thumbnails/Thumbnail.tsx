@@ -14,6 +14,7 @@ import { Tower } from "../shared/components/Tower";
 import { LocaleProvider, useLocale, type Locale } from "../shared/locale";
 import { alpha, colors, fonts, setSeason } from "../shared/theme";
 import { SetBox } from "../s1e04/components/sets";
+import { blob, stir, toXY } from "../s2e32/components/swirl";
 import { guestColor } from "../s1e11/components/hotel";
 import { Runner } from "../s1e13/components/race";
 import { Bag } from "../s1e14/components/study";
@@ -1696,6 +1697,36 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
           fill={colors.orange}
         />
         <circle cx={O.x + R} cy={O.y} r={30} fill={colors.green} />
+      </svg>
+    );
+  }
+
+  if (ep === 232) {
+    // cream stirred into filaments in a cup, beside the unit circle lit up
+    // as continuous spectrum
+    const fil = blob(420).map((d) => toXY(stir(d, 26), 1360, 520, 280));
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <circle
+          cx={1360}
+          cy={520}
+          r={300}
+          fill="#3a2414"
+          stroke={colors.paper}
+          strokeWidth={10}
+        />
+        {fil.map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r={6} fill={colors.paper} />
+        ))}
+        <circle
+          cx={1700}
+          cy={900}
+          r={100}
+          fill="none"
+          stroke={colors.orange}
+          strokeWidth={16}
+        />
+        <circle cx={1800} cy={900} r={18} fill={colors.green} />
       </svg>
     );
   }
