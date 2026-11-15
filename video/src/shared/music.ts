@@ -35,6 +35,10 @@ export const TRACKS: Record<number, Track> = {
   },
 };
 
+// Season 3 has no track of its own yet, so it borrows Season 2's grid and
+// file until one is supplied; swap in its measured values here when it is.
+TRACKS[3] = TRACKS[2];
+
 export type MusicSegment = {
   readonly src: string;
   readonly videoStart: number;

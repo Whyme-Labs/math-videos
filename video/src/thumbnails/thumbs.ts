@@ -314,6 +314,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["The delta is", "a measurement"], accent: 1, size: 116 },
     zh: { lines: ["δ 不是函数", "是一个测量"], accent: 1, size: 140 },
   },
+  {
+    ep: 301,
+    en: { lines: ["Fields are", "vector spaces"], accent: 1, size: 130 },
+    zh: { lines: ["域", "是向量空间"], accent: 1, size: 150 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
@@ -330,6 +335,7 @@ export const SERIES_NAME: Record<Locale, string> = {
 const SERIES_NAMES: Record<number, Record<Locale, string>> = {
   1: SERIES_NAME,
   2: { en: "SPACES, MAPS, AND MEASUREMENTS", zh: "空间、映射与度量" },
+  3: { en: "WHERE THE ROADS MEET", zh: "殊途同归" },
 };
 export const seriesName = (ep: number, locale: Locale) =>
   SERIES_NAMES[seasonOf(ep)][locale];

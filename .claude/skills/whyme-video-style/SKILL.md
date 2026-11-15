@@ -49,7 +49,10 @@ a legend. Pick a colour by role, not by taste.
 Season 2 (*Spaces, Maps, and Measurements*) uses a deep-teal stage: `bg` →
 `bgMid` → `bgGlow` `#03201e` → `#063d39` → `#0c6b62`, `highlight` coral
 `#ff8a80`, `violet` (the panel and card fill role) `#0f7f73`, `muted`
-`#a6d6cc`, `ink` `#062b28`, `paper` `#fffbea`. Lemon, orange, green, red and
+`#a6d6cc`, `ink` `#062b28`, `paper` `#fffbea`. Season 3 (*Where the Roads
+Meet*, 殊途同归) uses a midnight-navy stage: `#070f2b` → `#0f1f52` →
+`#1d3a8a`, `highlight` sky blue `#7ad3ff`, `violet` `#2a4aa8`, `muted`
+`#aebde6`, `ink` `#0a1638`. Lemon, orange, green, red and
 wood stay the same in every season, so the brand light and the roles (lemon
 vectors, orange covectors) carry over. The palettes live in `PALETTES` in
 `theme.ts`; an episode picks its season's palette from its code (`S2E01` →

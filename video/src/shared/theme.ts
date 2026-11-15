@@ -82,10 +82,25 @@ export const PALETTES: Record<string, Palette> = {
     paper: "#fffbea",
     ink: "#062b28",
   },
+  // Season 3, midnight navy: an ink-blue stage, sky blue for open questions
+  "3": {
+    ...SEASON1,
+    bg: "#070f2b",
+    bgMid: "#0f1f52",
+    bgGlow: "#1d3a8a",
+    panelEdge: "rgba(150,180,255,0.28)",
+    text: "#f5f8ff",
+    muted: "#aebde6",
+    violet: "#2a4aa8",
+    brandPurple: "#34508f",
+    highlight: "#7ad3ff",
+    paper: "#fffbea",
+    ink: "#0a1638",
+  },
 };
 
 // Which palette each season uses.
-export const SEASON_PALETTE: Record<number, string> = { 1: "1", 2: "2" };
+export const SEASON_PALETTE: Record<number, string> = { 1: "1", 2: "2", 3: "3" };
 
 // The palette in use. A composition (an episode, one of its scenes, or a
 // thumbnail) calls useSeasonPalette before rendering anything, and Remotion

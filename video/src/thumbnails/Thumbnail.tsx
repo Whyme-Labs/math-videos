@@ -1701,6 +1701,80 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 301) {
+    // the basis grid of ℚ(√2, √3) and the 2 × 2 × 2 cube of 𝔽₈
+    const cells = [
+      ["1", "√3"],
+      ["√2", "√6"],
+    ];
+    const pos = (q: number) => [
+      1240 + 250 * ((q >> 2) & 1) + 130 * (q & 1),
+      860 - 250 * ((q >> 1) & 1) - 100 * (q & 1),
+    ];
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {cells.map((row, i) =>
+          row.map((c, j) => (
+            <g key={c}>
+              <rect
+                x={1180 + j * 230}
+                y={170 + i * 170}
+                width={210}
+                height={150}
+                rx={20}
+                fill={alpha(colors.paper, 0.1)}
+                stroke={colors.paper}
+                strokeWidth={5}
+              />
+              <text
+                x={1285 + j * 230}
+                y={268 + i * 170}
+                textAnchor="middle"
+                fill={i + j === 2 ? colors.primary : colors.text}
+                fontSize={72}
+                fontFamily={fonts.math}
+                fontWeight={800}
+              >
+                {c}
+              </text>
+            </g>
+          )),
+        )}
+        {Array.from({ length: 8 }, (_, k) =>
+          [1, 2, 4]
+            .filter((m) => (k & m) === 0)
+            .map((m) => {
+              const [x1, y1] = pos(k);
+              const [x2, y2] = pos(k | m);
+              return (
+                <line
+                  key={`${k}-${m}`}
+                  x1={x1}
+                  y1={y1 + 120}
+                  x2={x2}
+                  y2={y2 + 120}
+                  stroke={alpha(colors.paper, 0.5)}
+                  strokeWidth={4}
+                />
+              );
+            }),
+        )}
+        {Array.from({ length: 8 }, (_, k) => {
+          const [x, y] = pos(k);
+          return (
+            <circle
+              key={k}
+              cx={x}
+              cy={y + 120}
+              r={18}
+              fill={colors.highlight}
+            />
+          );
+        })}
+      </svg>
+    );
+  }
+
   if (ep === 233) {
     // a delta spike over a smooth test bump, with φ(0) ringed
     const pts = (f: (x: number) => number, sx: number, sy: number) =>
