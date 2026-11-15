@@ -21,6 +21,9 @@ import { Bag } from "../s1e14/components/study";
 import { Card, Robot } from "../s1e15/components/world";
 import { Clock, CubeFace, Tile } from "../s1e16/components/props";
 import { IDial } from "../s1e17/components/dial";
+import { Clock as ModClock } from "../s3e02/components/draw";
+import { Molecule } from "../s3e03/components/water";
+import { Dial } from "../s3e04/components/dial";
 import { splitMath } from "./math-chars";
 import {
   badge,
@@ -1701,6 +1704,96 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 304) {
+    // the DFT matrix of ℤ/8 as a grid of clock hands
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {Array.from({ length: 8 }, (_, k) =>
+          Array.from({ length: 8 }, (_, j) => (
+            <Dial
+              key={`${j}-${k}`}
+              cx={1150 + j * 88}
+              cy={250 + k * 88}
+              r={36}
+              angle={(-2 * Math.PI * j * k) / 8}
+              lit={k === 1}
+            />
+          )),
+        )}
+      </svg>
+    );
+  }
+  if (ep === 303) {
+    // a water molecule over its table of ±1s
+    const rows = [
+      [1, 1, 1, 1],
+      [1, 1, -1, -1],
+      [1, -1, 1, -1],
+      [1, -1, -1, 1],
+    ];
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <Molecule x={1460} y={300} s={1.5} />
+        {rows.map((r, i) =>
+          r.map((v, j) => (
+            <text
+              key={`${i}-${j}`}
+              x={1220 + j * 160}
+              y={600 + i * 95}
+              textAnchor="middle"
+              fill={
+                i === 0
+                  ? colors.green
+                  : i === 2
+                    ? colors.orange
+                    : alpha(colors.paper, 0.55)
+              }
+              fontSize={70}
+              fontFamily={fonts.math}
+              fontWeight={800}
+            >
+              {v > 0 ? "1" : "−1"}
+            </text>
+          )),
+        )}
+      </svg>
+    );
+  }
+  if (ep === 302) {
+    // the Smith normal form diag(2, 6, 12) and its three clocks
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        {[2, 6, 12].map((n, i) => (
+          <g key={n}>
+            <text
+              x={1240 + i * 190}
+              y={350 + i * 120}
+              textAnchor="middle"
+              fill={colors.green}
+              fontSize={92}
+              fontFamily={fonts.math}
+              fontWeight={800}
+            >
+              {n}
+            </text>
+            <ModClock
+              cx={1180 + i * 250}
+              cy={840}
+              r={70 + i * 25}
+              n={n}
+              dot={14}
+            />
+          </g>
+        ))}
+        <path
+          d="M 1160 230 L 1135 230 L 1135 620 L 1160 620 M 1680 230 L 1705 230 L 1705 620 L 1680 620"
+          fill="none"
+          stroke={colors.text}
+          strokeWidth={8}
+        />
+      </svg>
+    );
+  }
   if (ep === 301) {
     // the basis grid of ℚ(√2, √3) and the 2 × 2 × 2 cube of 𝔽₈
     const cells = [

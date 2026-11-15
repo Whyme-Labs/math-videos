@@ -52,6 +52,9 @@ import { S2E31Compositions } from "./s2e31/Episode";
 import { S2E32Compositions } from "./s2e32/Episode";
 import { S2E33Compositions } from "./s2e33/Episode";
 import { S3E01Compositions } from "./s3e01/Episode";
+import { S3E02Compositions } from "./s3e02/Episode";
+import { S3E03Compositions } from "./s3e03/Episode";
+import { S3E04Compositions } from "./s3e04/Episode";
 import { ThumbnailStills } from "./thumbnails/Thumbnails";
 
 // One entry per episode: the full film in English and Chinese, plus every
@@ -113,6 +116,9 @@ export const RemotionRoot: React.FC = () => {
       <S2E32Compositions />
       <S2E33Compositions />
       <S3E01Compositions />
+      <S3E02Compositions />
+      <S3E03Compositions />
+      <S3E04Compositions />
       <ThumbnailStills />
     </>
   );

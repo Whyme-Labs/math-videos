@@ -1,0 +1,131 @@
+import { useLocale, type Locale } from "../shared/locale";
+
+// On-screen text for each language. Narration lives in narration.ts.
+const EN = {
+  season: "Season 3 · Episode 2",
+  title: "Modules",
+  subtitle: "one theorem, two classifications",
+  // Cold open
+  s1: "Season 1",
+  s2: "Season 2",
+  groups144: "abelian groups of order 144",
+  onlyEigen2: "only eigenvalue 2",
+  symmetry: "symmetry",
+  stretching: "stretching",
+  sameQuestion: "the same question",
+  fieldToRing: "scalars: field → ring",
+  // Hamming
+  data: "data",
+  parity: "parity",
+  codeKer: "code = ker H",
+  dimCode: "dim = 7 − 3 = 4",
+  address: "address of the error",
+  isField: "𝔽₂ is a field",
+  // Module
+  vectorSpace: "vector space over a field F",
+  module: "module over a ring R",
+  noInverse: "r⁻¹ ?",
+  abelian: "ℤ-module = abelian group",
+  withT: "F[x]-module = (V, T)",
+  // Torsion
+  asModule: "ℤ/2 as a ℤ-module",
+  torsion: "torsion",
+  noBasis: "no basis",
+  lost: ["bases", "complements", "dimension"],
+  // Smith
+  gens: "generators",
+  rels: "relations",
+  rowMove: "row move",
+  colMove: "column move",
+  snf: "Smith normal form",
+  // 更相减损 (Chinese edition only; kept for type parity)
+  gxTitle: "《九章算术·方田》",
+  gxQuote: "可半者半之，不可半者……以少减多，更相减损，求其等也。",
+  gxGcd: "等数 7",
+  gxSnf: "更相减损 → 史密斯标准形",
+  // Count
+  splits: "every module splits",
+  divides: "each divides the next",
+  twoPart: "2⁴: split 4",
+  threePart: "3²: split 2",
+  tenGroups: "10 groups",
+  // Jordan
+  jordanBlock: "Jordan block",
+  partitions: "partitions of 3",
+  three: "exactly 3",
+  // Merge
+  colZ: "over ℤ",
+  colFx: "over F[x]",
+  rowsZ: ["prime p", "ℤ/pᵏ", "order |A|", "largest order"],
+  rowsFx: [
+    "x − λ",
+    "k × k Jordan block",
+    "characteristic polynomial",
+    "minimal polynomial",
+  ],
+  oneTheorem: "one theorem",
+  // End card
+  nextEpisode: "Next episode · ",
+  nextTitle: "Representations",
+  seriesLine: "Where the Roads Meet · Season 3",
+};
+
+export type Strings = typeof EN;
+
+const ZH: Strings = {
+  season: "第三季 · 第 2 集",
+  title: "模",
+  subtitle: "一个定理，两种分类",
+  s1: "第一季",
+  s2: "第二季",
+  groups144: "144 阶交换群",
+  onlyEigen2: "唯一特征值 2",
+  symmetry: "对称",
+  stretching: "拉伸",
+  sameQuestion: "同一个问题",
+  fieldToRing: "标量：域 → 环",
+  data: "数据",
+  parity: "校验",
+  codeKer: "码 = ker H",
+  dimCode: "维数 = 7 − 3 = 4",
+  address: "出错的位置",
+  isField: "𝔽₂ 是域",
+  vectorSpace: "域 F 上的向量空间",
+  module: "环 R 上的模",
+  noInverse: "r⁻¹ ?",
+  abelian: "ℤ 模 = 交换群",
+  withT: "F[x] 模 = (V, T)",
+  asModule: "把 ℤ/2 看成 ℤ 模",
+  torsion: "挠",
+  noBasis: "没有基",
+  lost: ["基", "补空间", "维数"],
+  gens: "生成元",
+  rels: "关系",
+  rowMove: "行变换",
+  colMove: "列变换",
+  snf: "史密斯标准形",
+  gxTitle: "《九章算术·方田》",
+  gxQuote: "可半者半之，不可半者……以少减多，更相减损，求其等也。",
+  gxGcd: "等数 7",
+  gxSnf: "更相减损 → 史密斯标准形",
+  splits: "每个模都能拆开",
+  divides: "前一个整除后一个",
+  twoPart: "2⁴：拆开 4",
+  threePart: "3²：拆开 2",
+  tenGroups: "十种",
+  jordanBlock: "若尔当块",
+  partitions: "3 的拆分",
+  three: "恰好三种",
+  colZ: "在 ℤ 上",
+  colFx: "在 F[x] 上",
+  rowsZ: ["素数 p", "ℤ/pᵏ", "群的阶 |A|", "最大的阶"],
+  rowsFx: ["x − λ", "k × k 若尔当块", "特征多项式", "极小多项式"],
+  oneTheorem: "一个定理",
+  nextEpisode: "下一集 · ",
+  nextTitle: "表示论",
+  seriesLine: "殊途同归 · 第三季",
+};
+
+const STRINGS: Record<Locale, Strings> = { en: EN, zh: ZH };
+
+export const useStrings = () => STRINGS[useLocale()];

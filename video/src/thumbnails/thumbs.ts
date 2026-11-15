@@ -319,6 +319,21 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Fields are", "vector spaces"], accent: 1, size: 130 },
     zh: { lines: ["域", "是向量空间"], accent: 1, size: 150 },
   },
+  {
+    ep: 302,
+    en: { lines: ["Two puzzles,", "one theorem"], accent: 1, size: 130 },
+    zh: { lines: ["两道题", "一个定理"], accent: 1, size: 150 },
+  },
+  {
+    ep: 303,
+    en: { lines: ["One number", "per symmetry"], accent: 1, size: 130 },
+    zh: { lines: ["每个对称", "只记一个数"], accent: 1, size: 150 },
+  },
+  {
+    ep: 304,
+    en: { lines: ["Fourier is", "duality"], accent: 1, size: 140 },
+    zh: { lines: ["傅里叶", "就是对偶"], accent: 1, size: 150 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
