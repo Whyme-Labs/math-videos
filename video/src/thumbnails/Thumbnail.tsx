@@ -1701,6 +1701,53 @@ const Art: React.FC<{ readonly ep: number }> = ({ ep }) => {
     );
   }
 
+  if (ep === 233) {
+    // a delta spike over a smooth test bump, with φ(0) ringed
+    const pts = (f: (x: number) => number, sx: number, sy: number) =>
+      Array.from({ length: 801 }, (_, i) => {
+        const x = -1 + i / 400;
+        return `${i ? "L" : "M"} ${1360 + 440 * x} ${880 - sy * f(x)} `;
+      }).join("") + (sx ? "" : "");
+    const bumpF = (x: number) =>
+      Math.abs(x) < 0.95 ? Math.exp(1 - 1 / (1 - (x / 0.95) ** 2)) : 0;
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <line
+          x1={900}
+          y1={880}
+          x2={1820}
+          y2={880}
+          stroke={alpha(colors.paper, 0.6)}
+          strokeWidth={5}
+        />
+        <path
+          d={pts(bumpF, 0, 330)}
+          fill={alpha(colors.green, 0.2)}
+          stroke={colors.green}
+          strokeWidth={9}
+        />
+        <path
+          d={pts(
+            (x) => Math.min(1.75, Math.exp(-((x / 0.02) ** 2)) * 1.75),
+            0,
+            330,
+          )}
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={10}
+        />
+        <circle
+          cx={1360}
+          cy={550}
+          r={30}
+          fill="none"
+          stroke={colors.highlight}
+          strokeWidth={9}
+        />
+      </svg>
+    );
+  }
+
   if (ep === 232) {
     // cream stirred into filaments in a cup, beside the unit circle lit up
     // as continuous spectrum

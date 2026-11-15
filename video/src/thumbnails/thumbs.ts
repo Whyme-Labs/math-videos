@@ -309,6 +309,11 @@ export const THUMBS: Thumb[] = [
     en: { lines: ["Chaos,", "made linear"], accent: 1, size: 130 },
     zh: { lines: ["混沌", "变成线性"], accent: 1, size: 150 },
   },
+  {
+    ep: 233,
+    en: { lines: ["The delta is", "a measurement"], accent: 1, size: 116 },
+    zh: { lines: ["δ 不是函数", "是一个测量"], accent: 1, size: 140 },
+  },
 ];
 
 // Season 1 episodes are numbered 1–20; later seasons are 100 × season +
