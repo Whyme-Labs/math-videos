@@ -6,7 +6,7 @@ description: House rules and the end-to-end workflow for Whyme Labs math videos 
 # Whyme Labs math videos
 
 Every episode of the series should look, sound and move like the same show.
-S1E01–S1E20 (`video/src/s1e01` … `s1e20`) S2E01–S2E33 (`video/src/s2e01` … `s2e33`) and S3E01 (`video/src/s3e01`)
+S1E01–S1E20 (`video/src/s1e01` … `s1e20`) S2E01–S2E33 (`video/src/s2e01` … `s2e33`) and S3E01–S3E04 (`video/src/s3e01` … `s3e04`)
 are the reference implementations, built on the shared code in `video/src/shared`. When this
 skill and the code disagree, fix one of them so they agree again.
 

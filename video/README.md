@@ -116,6 +116,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E33-ZH` | 广义函数（中文版） | [`src/s2e33`](src/s2e33) | [`s2e33-narration-zh.md`](s2e33-narration-zh.md) |
 | `S3E01` | Fields Are Vector Spaces | [`src/s3e01`](src/s3e01) | [`s3e01-narration.md`](s3e01-narration.md) |
 | `S3E01-ZH` | 域是向量空间（中文版） | [`src/s3e01`](src/s3e01) | [`s3e01-narration-zh.md`](s3e01-narration-zh.md) |
+| `S3E02` | Modules: One Theorem, Two Classifications | [`src/s3e02`](src/s3e02) | [`s3e02-narration.md`](s3e02-narration.md) |
+| `S3E02-ZH` | 模：一个定理，两种分类（中文版） | [`src/s3e02`](src/s3e02) | [`s3e02-narration-zh.md`](s3e02-narration-zh.md) |
+| `S3E03` | Representations: Groups Acting by Matrices | [`src/s3e03`](src/s3e03) | [`s3e03-narration.md`](s3e03-narration.md) |
+| `S3E03-ZH` | 表示论：群用矩阵来作用（中文版） | [`src/s3e03`](src/s3e03) | [`s3e03-narration-zh.md`](s3e03-narration-zh.md) |
+| `S3E04` | Fourier Is Duality | [`src/s3e04`](src/s3e04) | [`s3e04-narration.md`](s3e04-narration.md) |
+| `S3E04-ZH` | 傅里叶就是对偶（中文版） | [`src/s3e04`](src/s3e04) | [`s3e04-narration-zh.md`](s3e04-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -282,8 +288,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e30-social.md`](s2e30-social.md), for S2E31 in
 [`s2e31-social.md`](s2e31-social.md), for S2E32 in
 [`s2e32-social.md`](s2e32-social.md), for S2E33 in
-[`s2e33-social.md`](s2e33-social.md), and for S3E01 in
-[`s3e01-social.md`](s3e01-social.md).
+[`s2e33-social.md`](s2e33-social.md), for S3E01 in
+[`s3e01-social.md`](s3e01-social.md), for S3E02 in
+[`s3e02-social.md`](s3e02-social.md), for S3E03 in
+[`s3e03-social.md`](s3e03-social.md), and for S3E04 in
+[`s3e04-social.md`](s3e04-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
