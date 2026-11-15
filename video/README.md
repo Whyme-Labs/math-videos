@@ -110,6 +110,12 @@ and written up in [`../lessons`](../lessons), built with
 | `S2E30-ZH` | 紧算子（中文版） | [`src/s2e30`](src/s2e30) | [`s2e30-narration-zh.md`](s2e30-narration-zh.md) |
 | `S2E31` | Spectrum and Quantum Mechanics | [`src/s2e31`](src/s2e31) | [`s2e31-narration.md`](s2e31-narration.md) |
 | `S2E31-ZH` | 谱与量子力学（中文版） | [`src/s2e31`](src/s2e31) | [`s2e31-narration-zh.md`](s2e31-narration-zh.md) |
+| `S2E32` | Measure-Preserving Systems | [`src/s2e32`](src/s2e32) | [`s2e32-narration.md`](s2e32-narration.md) |
+| `S2E32-ZH` | 保测系统（中文版） | [`src/s2e32`](src/s2e32) | [`s2e32-narration-zh.md`](s2e32-narration-zh.md) |
+| `S2E33` | Distributions | [`src/s2e33`](src/s2e33) | [`s2e33-narration.md`](s2e33-narration.md) |
+| `S2E33-ZH` | 广义函数（中文版） | [`src/s2e33`](src/s2e33) | [`s2e33-narration-zh.md`](s2e33-narration-zh.md) |
+| `S3E01` | Fields Are Vector Spaces | [`src/s3e01`](src/s3e01) | [`s3e01-narration.md`](s3e01-narration.md) |
+| `S3E01-ZH` | 域是向量空间（中文版） | [`src/s3e01`](src/s3e01) | [`s3e01-narration-zh.md`](s3e01-narration-zh.md) |
 
 Each scene is also registered on its own (folder `S1E01-Scenes` in Studio),
 so it can be previewed and rendered separately.
@@ -273,8 +279,11 @@ S1E02 in [`s1e02-social.md`](s1e02-social.md), for S1E03 in
 [`s2e27-social.md`](s2e27-social.md), for S2E28 in
 [`s2e28-social.md`](s2e28-social.md), for S2E29 in
 [`s2e29-social.md`](s2e29-social.md), for S2E30 in
-[`s2e30-social.md`](s2e30-social.md), and for S2E31 in
-[`s2e31-social.md`](s2e31-social.md).
+[`s2e30-social.md`](s2e30-social.md), for S2E31 in
+[`s2e31-social.md`](s2e31-social.md), for S2E32 in
+[`s2e32-social.md`](s2e32-social.md), for S2E33 in
+[`s2e33-social.md`](s2e33-social.md), and for S3E01 in
+[`s3e01-social.md`](s3e01-social.md).
 
 Thumbnails for every episode (upload-ready PNGs, editable SVGs and
 text-free art) are in [`thumbnails/`](thumbnails/README.md).
